@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "thesiscancer7a6cf6e7": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
