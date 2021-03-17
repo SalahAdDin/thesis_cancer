@@ -41,6 +41,26 @@ const amplifyconfig = ''' {
                         },
                         "authenticationFlowType": "USER_SRP_AUTH"
                     }
+                },
+                "AppSync": {
+                    "Default": {
+                        "ApiUrl": "https://p3o4h4hvjnbo7egioreosmys7u.appsync-api.us-east-2.amazonaws.com/graphql",
+                        "Region": "us-east-2",
+                        "AuthMode": "AMAZON_COGNITO_USER_POOLS",
+                        "ClientDatabasePrefix": "thesiscancergraphql_AMAZON_COGNITO_USER_POOLS"
+                    }
+                }
+            }
+        }
+    },
+    "api": {
+        "plugins": {
+            "awsAPIPlugin": {
+                "thesiscancergraphql": {
+                    "endpointType": "GraphQL",
+                    "endpoint": "https://p3o4h4hvjnbo7egioreosmys7u.appsync-api.us-east-2.amazonaws.com/graphql",
+                    "region": "us-east-2",
+                    "authorizationType": "AMAZON_COGNITO_USER_POOLS"
                 }
             }
         }
