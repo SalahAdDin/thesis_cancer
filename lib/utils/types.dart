@@ -1,0 +1,5 @@
+enum ActivityType { LIKE, COMMENT, FOLLOW, NEW_POSt }
+
+enum ContentType { INFORMATION, TREATMENT, ACADEMY, SUCCESS_STORIES }
+
+enum QuestionType { MULTIPLE, OPEN }
