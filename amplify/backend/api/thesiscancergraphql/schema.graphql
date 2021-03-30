@@ -13,8 +13,10 @@ enum ContentType {
 }
 
 enum QuestionType {
+  BOOL
   MULTIPLE
   OPEN
+  SINGLE
 }
 
 type User

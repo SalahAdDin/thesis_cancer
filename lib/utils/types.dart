@@ -2,4 +2,8 @@ enum ActivityType { LIKE, COMMENT, FOLLOW, NEW_POSt }
 
 enum ContentType { INFORMATION, TREATMENT, ACADEMY, SUCCESS_STORIES }
 
-enum QuestionType { MULTIPLE, OPEN }
+enum QuestionType { BOOL, MULTIPLE, OPEN, SINGLE }
+
+enum UserRole { PILOT, TEST, CONTROL }
+
+enum ModuleTab { KNOWLEDGE, RESEARCH, STORIES, THERAPY }
