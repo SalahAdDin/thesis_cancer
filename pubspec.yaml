@@ -3,7 +3,7 @@ description: A new Cancer social and control application.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -18,21 +18,36 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  amplify_analytics_pinpoint: '<1.0.0'
-  amplify_api: '<1.0.0'
-  amplify_auth_cognito: '<1.0.0'
-  amplify_flutter: '<1.0.0'
-  amplify_storage_s3: '<1.0.0'
-  flutter_bloc: ^6.1.3
+  amplify_analytics_pinpoint: ^0.1.1
+  amplify_api: ^0.1.1
+  amplify_auth_cognito: ^0.1.1
+  amplify_flutter: ^0.1.1
+  amplify_storage_s3: ^0.1.1
+  # connectivity: ^3.0.3
+  # device_info: ^2.0.0
+  # fluro: ^2.0.3
+  # flutter_bloc: ^7.0.0
+  form_field_validator: ^1.1.0
+  flutter_hooks: ^0.16.0
+  # flutter_local_notifications: ^5.0.0
   flutter_login: ^1.0.15
+  # flutter_markdown: ^0.6.1
+  # flutter_riverpod: ^0.13.1+1
+  # fluttertoast: ^8.0.3
+  # flutter_whatsnew: ^1.0.3
+  freezed: ^0.14.1+1
+  hooks_riverpod: ^0.13.1+1
+  introduction_screen: ^2.0.0
+  # pin_code_fields: ^7.0.0
+  # pull_to_refresh: ^1.6.4
+  # responsive: ^0.2.8+3
   # injector: ^2.0.0
   shared_preferences: ^2.0.4
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -47,7 +62,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
