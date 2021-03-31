@@ -35,7 +35,7 @@ dependencies:
   form_field_validator: ^1.1.0
   flutter_hooks: ^0.16.0
   # flutter_local_notifications: ^5.0.0
-  flutter_login: ^1.0.15
+  flutter_login: ^1.1.0
   # flutter_markdown: ^0.6.1
   # flutter_riverpod: ^0.13.1+1
   # fluttertoast: ^8.0.3
@@ -43,6 +43,7 @@ dependencies:
   freezed_annotation: ^0.14.1
   hooks_riverpod: ^0.13.1+1
   introduction_screen: ^2.0.0
+  material_design_icons_flutter: ^4.0.5955
   path_provider: ^2.0.1
   # pin_code_fields: ^7.0.0
   # pull_to_refresh: ^1.6.4

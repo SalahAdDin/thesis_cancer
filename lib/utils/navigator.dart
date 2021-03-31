@@ -10,5 +10,8 @@ Future pushAndReplaceToPage(BuildContext context, Widget widget) async {
 }
 
 Future popAllAndPush(BuildContext context, Widget widget) async {
-  await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => widget), ModalRoute.withName('/'))
+  await Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (BuildContext context) => widget),
+      ModalRoute.withName('/'));
 }
