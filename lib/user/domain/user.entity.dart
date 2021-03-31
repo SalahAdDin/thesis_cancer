@@ -1,30 +1,24 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:thesis_cancer/utils/types.dart';
 
-class User {
-  final String id;
-  final String email;
-  final String displayName;
-  final UserRole role;
-  final bool? hasSeenTutorial;
-  final bool? hasSeenIntroductoryVideo;
-  final String? bio;
-  final String? photoID;
-  final Map? gallery;
-  final Map? posts;
-  final Map? comments;
-  final Map? likes;
+part 'user.entity.freezed.dart';
 
-  const User(
-      {required this.id,
-      required this.email,
-      required this.displayName,
-      required this.role,
-      this.hasSeenTutorial = false,
-      this.hasSeenIntroductoryVideo = false,
-      this.bio,
-      this.photoID,
-      this.gallery,
-      this.posts,
-      this.comments,
-      this.likes});
+@freezed
+abstract class User with _$User {
+  const factory User(
+      {required String id,
+      required String email,
+      required String displayName,
+      required UserRole role,
+      bool? hasSeenTutorial,
+      bool? hasSeenIntroductoryVideo,
+      bool? darkMode,
+      String? bio,
+      String? photoID,
+      Map? gallery,
+      Map? posts,
+      Map? comments,
+      Map? likes}) = _User;
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }

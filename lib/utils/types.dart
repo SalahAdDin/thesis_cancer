@@ -4,6 +4,8 @@ enum ContentType { INFORMATION, TREATMENT, ACADEMY, SUCCESS_STORIES }
 
 enum QuestionType { BOOL, MULTIPLE, OPEN, SINGLE }
 
-enum UserRole { PILOT, TEST, CONTROL }
-
 enum ModuleTab { KNOWLEDGE, RESEARCH, STORIES, THERAPY }
+
+enum SplashState { NONE, EXISTING_USER, NEW_USER }
+
+enum UserRole { ADMIN, PILOT, TEST, CONTROL }
