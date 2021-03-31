@@ -1,10 +1,7 @@
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_flutter/amplify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_login/flutter_login.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:thesis_cancer/amplifyconfiguration.dart';
 import 'package:thesis_cancer/home/infraestructure/datastore.repository.dart';
 import 'package:thesis_cancer/home/presentation/pages/splash.dart';
 import 'package:thesis_cancer/provider.dart';
@@ -27,7 +24,7 @@ Future<void> main() async {
       child: CancerApp()));
 }
 
-class CancerApp extends StatelessWidget {
+class CancerApp extends HookWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

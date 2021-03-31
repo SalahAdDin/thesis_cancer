@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/auth/presentation/pages/login.dart';
 import 'package:thesis_cancer/provider.dart';
 
-class SplashView extends StatelessWidget {
+class SplashView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final splashScreenState = useProvider(splashScreenProvider.state);
