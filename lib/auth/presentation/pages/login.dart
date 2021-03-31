@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:thesis_cancer/utils/navigator.dart';
 
 class LoginPageLiterals {
   static const title = 'TODO: Make me better';
@@ -20,14 +19,20 @@ class LoginScreen extends StatelessWidget {
       // TODO: logo: '',
       messages: LoginMessages(usernameHint: "e-postanın adresi!"),
       loginProviders: <LoginProvider>[
-        LoginProvider(icon: MdiIcons.facebook, callback: () async => null),
-        LoginProvider(icon: MdiIcons.google, callback: () async => null),
-        LoginProvider(icon: MdiIcons.apple, callback: () async => null),
+        LoginProvider(
+            icon: MdiIcons.facebook,
+            callback: () async => await Future.delayed(loginTime)),
+        LoginProvider(
+            icon: MdiIcons.google,
+            callback: () async => await Future.delayed(loginTime)),
+        LoginProvider(
+            icon: MdiIcons.apple,
+            callback: () async => await Future.delayed(loginTime)),
       ],
       onSignup: (_) => null,
       onLogin: (_) => null,
       onRecoverPassword: (_) => null,
-      /* TODO: 
+      /* TODO:
       - after sign in go to waiting state, 
       - after login: 
         ADMIN -> Dashboard,

@@ -14,6 +14,7 @@ class SembastDataStore implements DataStoreRepository {
   static DatabaseFactory databaseFactory = databaseFactoryIo;
 
   SembastDataStore(this.database);
+
   final Database database;
   final store = StoreRef.main();
 
@@ -29,11 +30,12 @@ class SembastDataStore implements DataStoreRepository {
   @override
   Future<void> createUserProfile(User user) async {
     final recordName = StorePath.profile;
-    final profileJson = await store.record(recordName).get(database) as String;
+    /*final Map<String, dynamic> profileJson =
+        await store.record(recordName).get(database);
     if (profileJson != null) {
       final profileData = User.fromJson(profileJson);
-    } else
-      await store.record(recordName).put(database, user.toJson());
+    } else*/
+    await store.record(recordName).put(database, user.toJson());
   }
 
   @override
