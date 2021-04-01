@@ -1,21 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
-class LoginPageLiterals {
-  static const title = 'TODO: Make me better';
-  static const logo = 'assets/images/TODO:';
-  static const copyRight = 'TODO: Make better with link';
-}
+import 'package:thesis_cancer/utils/configuration.dart';
 
 class LoginScreen extends StatelessWidget {
   Duration get loginTime => Duration(milliseconds: 2250);
 
+  /*final emailController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    // phoneNumberController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }*/
+
+  // Future<String> _registerUser(LoginData data) async {}
+
+  // Future<String> _signIn(LoginData data) async {}
+
+  // Future<String> _signInWithFacebook(LoginData data) async {}
+
+  // Future<String> _signInWithGoogle(LoginData data) async {}
+
+  // Future<String> _signInWithApple(LoginData data) async {}
+
+  // Future<String> _recoverPassword(LoginData data) async {}
+
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
-      title: LoginPageLiterals.title,
-      footer: LoginPageLiterals.copyRight,
+      title: AppLiterals.title,
+      footer: AppLiterals.copyRight,
       // TODO: logo: '',
       messages: LoginMessages(usernameHint: "e-postanın adresi!"),
       loginProviders: <LoginProvider>[
