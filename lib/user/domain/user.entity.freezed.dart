@@ -25,6 +25,8 @@ class _$UserTearOff {
       required String email,
       required String displayName,
       required UserRole role,
+      bool? isConfirmed,
+      bool? isLoggedIn,
       bool? hasSeenTutorial,
       bool? hasSeenIntroductoryVideo,
       bool? darkMode,
@@ -39,6 +41,8 @@ class _$UserTearOff {
       email: email,
       displayName: displayName,
       role: role,
+      isConfirmed: isConfirmed,
+      isLoggedIn: isLoggedIn,
       hasSeenTutorial: hasSeenTutorial,
       hasSeenIntroductoryVideo: hasSeenIntroductoryVideo,
       darkMode: darkMode,
@@ -65,6 +69,8 @@ mixin _$User {
   String get email => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   UserRole get role => throw _privateConstructorUsedError;
+  bool? get isConfirmed => throw _privateConstructorUsedError;
+  bool? get isLoggedIn => throw _privateConstructorUsedError;
   bool? get hasSeenTutorial => throw _privateConstructorUsedError;
   bool? get hasSeenIntroductoryVideo => throw _privateConstructorUsedError;
   bool? get darkMode => throw _privateConstructorUsedError;
@@ -89,6 +95,8 @@ abstract class $UserCopyWith<$Res> {
       String email,
       String displayName,
       UserRole role,
+      bool? isConfirmed,
+      bool? isLoggedIn,
       bool? hasSeenTutorial,
       bool? hasSeenIntroductoryVideo,
       bool? darkMode,
@@ -114,6 +122,8 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? email = freezed,
     Object? displayName = freezed,
     Object? role = freezed,
+    Object? isConfirmed = freezed,
+    Object? isLoggedIn = freezed,
     Object? hasSeenTutorial = freezed,
     Object? hasSeenIntroductoryVideo = freezed,
     Object? darkMode = freezed,
@@ -141,6 +151,14 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
+      isConfirmed: isConfirmed == freezed
+          ? _value.isConfirmed
+          : isConfirmed // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isLoggedIn: isLoggedIn == freezed
+          ? _value.isLoggedIn
+          : isLoggedIn // ignore: cast_nullable_to_non_nullable
+              as bool?,
       hasSeenTutorial: hasSeenTutorial == freezed
           ? _value.hasSeenTutorial
           : hasSeenTutorial // ignore: cast_nullable_to_non_nullable
@@ -191,6 +209,8 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String email,
       String displayName,
       UserRole role,
+      bool? isConfirmed,
+      bool? isLoggedIn,
       bool? hasSeenTutorial,
       bool? hasSeenIntroductoryVideo,
       bool? darkMode,
@@ -217,6 +237,8 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? email = freezed,
     Object? displayName = freezed,
     Object? role = freezed,
+    Object? isConfirmed = freezed,
+    Object? isLoggedIn = freezed,
     Object? hasSeenTutorial = freezed,
     Object? hasSeenIntroductoryVideo = freezed,
     Object? darkMode = freezed,
@@ -244,6 +266,14 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
+      isConfirmed: isConfirmed == freezed
+          ? _value.isConfirmed
+          : isConfirmed // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isLoggedIn: isLoggedIn == freezed
+          ? _value.isLoggedIn
+          : isLoggedIn // ignore: cast_nullable_to_non_nullable
+              as bool?,
       hasSeenTutorial: hasSeenTutorial == freezed
           ? _value.hasSeenTutorial
           : hasSeenTutorial // ignore: cast_nullable_to_non_nullable
@@ -293,6 +323,8 @@ class _$_User implements _User {
       required this.email,
       required this.displayName,
       required this.role,
+      this.isConfirmed,
+      this.isLoggedIn,
       this.hasSeenTutorial,
       this.hasSeenIntroductoryVideo,
       this.darkMode,
@@ -315,6 +347,10 @@ class _$_User implements _User {
   @override
   final UserRole role;
   @override
+  final bool? isConfirmed;
+  @override
+  final bool? isLoggedIn;
+  @override
   final bool? hasSeenTutorial;
   @override
   final bool? hasSeenIntroductoryVideo;
@@ -335,7 +371,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, displayName: $displayName, role: $role, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, darkMode: $darkMode, bio: $bio, photoID: $photoID, gallery: $gallery, posts: $posts, comments: $comments, likes: $likes)';
+    return 'User(id: $id, email: $email, displayName: $displayName, role: $role, isConfirmed: $isConfirmed, isLoggedIn: $isLoggedIn, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, darkMode: $darkMode, bio: $bio, photoID: $photoID, gallery: $gallery, posts: $posts, comments: $comments, likes: $likes)';
   }
 
   @override
@@ -351,6 +387,12 @@ class _$_User implements _User {
                     .equals(other.displayName, displayName)) &&
             (identical(other.role, role) ||
                 const DeepCollectionEquality().equals(other.role, role)) &&
+            (identical(other.isConfirmed, isConfirmed) ||
+                const DeepCollectionEquality()
+                    .equals(other.isConfirmed, isConfirmed)) &&
+            (identical(other.isLoggedIn, isLoggedIn) ||
+                const DeepCollectionEquality()
+                    .equals(other.isLoggedIn, isLoggedIn)) &&
             (identical(other.hasSeenTutorial, hasSeenTutorial) ||
                 const DeepCollectionEquality()
                     .equals(other.hasSeenTutorial, hasSeenTutorial)) &&
@@ -386,6 +428,8 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(displayName) ^
       const DeepCollectionEquality().hash(role) ^
+      const DeepCollectionEquality().hash(isConfirmed) ^
+      const DeepCollectionEquality().hash(isLoggedIn) ^
       const DeepCollectionEquality().hash(hasSeenTutorial) ^
       const DeepCollectionEquality().hash(hasSeenIntroductoryVideo) ^
       const DeepCollectionEquality().hash(darkMode) ^
@@ -413,6 +457,8 @@ abstract class _User implements User {
       required String email,
       required String displayName,
       required UserRole role,
+      bool? isConfirmed,
+      bool? isLoggedIn,
       bool? hasSeenTutorial,
       bool? hasSeenIntroductoryVideo,
       bool? darkMode,
@@ -433,6 +479,10 @@ abstract class _User implements User {
   String get displayName => throw _privateConstructorUsedError;
   @override
   UserRole get role => throw _privateConstructorUsedError;
+  @override
+  bool? get isConfirmed => throw _privateConstructorUsedError;
+  @override
+  bool? get isLoggedIn => throw _privateConstructorUsedError;
   @override
   bool? get hasSeenTutorial => throw _privateConstructorUsedError;
   @override

@@ -7,6 +7,8 @@ part 'splash.state.freezed.dart';
 @freezed
 abstract class SplashScreenState with _$SplashScreenState {
   const factory SplashScreenState.loading() = _Loading;
+
   const factory SplashScreenState.needsProfile() = _NeedsProfile;
+
   const factory SplashScreenState.profileLoaded(User user) = _ProfileLoaded;
 }
