@@ -3,7 +3,6 @@ import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:thesis_cancer/home/domain/datastore.repository.dart';
 import 'package:thesis_cancer/user/domain/user.entity.dart';
-import 'package:thesis_cancer/utils/types.dart';
 
 class StorePath {
   static const profile = 'profile';
@@ -59,8 +58,7 @@ class SembastDataStore implements DataStoreRepository {
   @override
   Stream<User> userProfileData() {
     final record = store.record(StorePath.profile);
-    return record.onSnapshot(database).map((snapshot) => snapshot?.value != null
-        ? User.fromJson(snapshot?.value)
-        : User(displayName: '', email: '', id: '', role: UserRole.PILOT));
+    return record.onSnapshot(database).map((snapshot) =>
+        snapshot?.value != null ? User.fromJson(snapshot?.value) : User.empty);
   }
 }

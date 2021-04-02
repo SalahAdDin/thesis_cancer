@@ -78,13 +78,17 @@ class AmplifyAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<String> getCurrentUser() async {
+  Future<Map<String, String>> getCurrentUser() async {
     try {
       AuthUser result = await _authCategory.getCurrentUser();
-      return result.username;
+      Map<String, String> currentUser = {
+        'userId': result.userId,
+        'username': result.username
+      };
+      return currentUser;
     } on AmplifyException catch (error) {
       // TODO: Catch error for analytics, not required for frontend.
-
+      throw GettingCurrentUserFailure(error);
     }
   }
 
@@ -115,8 +119,7 @@ class AmplifyAuthRepository implements AuthRepository {
           await _authCategory.resetPassword(username: username);
       return result.isPasswordReset;
     } on AmplifyException catch (error) {
-      // TODO: Catch error for analytics, not required for frontend.
-      return false;
+      throw ResetPasswordFailure(error);
     }
   }
 
@@ -156,11 +159,9 @@ class AmplifyAuthRepository implements AuthRepository {
 
   @override
   Future<bool> signUp(
-      {required String username,
-      required String password,
-      required String emailControllerText}) async {
+      {required String username, required String password}) async {
     try {
-      Map<String, String> userAttributes = {"email": emailControllerText};
+      Map<String, String> userAttributes = {"email": username};
       SignUpResult result = await _authCategory.signUp(
           username: username,
           password: password,
