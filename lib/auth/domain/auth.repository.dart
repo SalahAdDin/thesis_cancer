@@ -20,7 +20,7 @@ abstract class AuthRepository {
 
   Future<List<T>> fetchUserAttributes<T>();
 
-  Future<String> getCurrentUser();
+  Future<Map<String, String>> getCurrentUser();
 
   Future<bool> isSignedIn();
 
@@ -28,17 +28,13 @@ abstract class AuthRepository {
 
   Future<bool> resetPassword({required String username});
 
-  // Future<bool> signIn<T>({required T authData});
   Future<bool> signIn({required String username, required String password});
 
   Future<bool> signInWithSocialWebUI({required provider});
 
   Future<void> signOut();
 
-  Future<bool> signUp(
-      {required String username,
-      required String password,
-      required String emailControllerText});
+  Future<bool> signUp({required String username, required String password});
 
   Future<void> updatePassword(
       {required String oldPassword, required String newPassword});
