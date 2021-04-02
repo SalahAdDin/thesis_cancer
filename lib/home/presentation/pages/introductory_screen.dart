@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class IntroductoryScreen extends StatefulWidget {
-  IntroductoryScreen({Key key}) : super(key: key);
+  IntroductoryScreen({Key? key}) : super(key: key);
 
   @override
   _IntroductoryScreenState createState() => _IntroductoryScreenState();

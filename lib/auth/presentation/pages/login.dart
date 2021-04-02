@@ -44,7 +44,11 @@ class LoginScreen extends HookWidget {
           loading: () => Center(child: CircularProgressIndicator()),
           signedUp: (signedUpUser) => pushToPage(context, LobbyScreen()),
           requestedResetPassword: () => null,
-          loggedIn: (loggedInUser) => pushToPage(context, HomeScreen()),
+          loggedIn: (loggedInUser) => pushToPage(
+              context,
+              HomeScreen(
+                currentUser: loggedInUser,
+              )),
           error: (error) {
             final errorSnackBar = SnackBar(
               content: Row(

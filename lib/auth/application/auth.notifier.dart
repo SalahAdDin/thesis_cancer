@@ -11,9 +11,7 @@ import 'package:uuid/uuid.dart';
 
 class AuthNotifier extends StateNotifier<AuthState> {
   AuthNotifier({required this.authRepository, required this.dataStore})
-      : super(const AuthState.loading()) {
-    init();
-  }
+      : super(const AuthState.loading());
 
   var uuid = Uuid();
 
@@ -138,6 +136,4 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = AuthState.error(error.toString());
     }
   }
-
-  void init() {}
 }
