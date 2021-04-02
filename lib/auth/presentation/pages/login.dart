@@ -18,18 +18,6 @@ class LoginScreen extends StatelessWidget {
     super.dispose();
   }*/
 
-  // Future<String> _registerUser(LoginData data) async {}
-
-  // Future<String> _signIn(LoginData data) async {}
-
-  // Future<String> _signInWithFacebook(LoginData data) async {}
-
-  // Future<String> _signInWithGoogle(LoginData data) async {}
-
-  // Future<String> _signInWithApple(LoginData data) async {}
-
-  // Future<String> _recoverPassword(LoginData data) async {}
-
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(

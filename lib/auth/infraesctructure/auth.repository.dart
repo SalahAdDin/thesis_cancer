@@ -3,6 +3,8 @@ import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_flutter/categories/amplify_categories.dart';
 import 'package:thesis_cancer/auth/domain/auth.repository.dart';
 
+import 'failure.dart';
+
 class AmplifyAuthRepository implements AuthRepository {
   AmplifyAuthRepository({AuthCategory? authCategory})
       : _authCategory = authCategory ?? Amplify.Auth;
@@ -65,12 +67,13 @@ class AmplifyAuthRepository implements AuthRepository {
   Future<List<AuthUserAttribute>>
       fetchUserAttributes<AuthUserAttribute>() async {
     try {
+      // TODO: verify which attributes comes: confirmed and roles(groups) are required.
       List<AuthUserAttribute> result =
-          await _authCategory.fetchUserAttributes();
+          (await _authCategory.fetchUserAttributes()).cast<AuthUserAttribute>();
+      print("User attributes: $result");
       return result;
     } on AmplifyException catch (error) {
-      // TODO: Catch error for analytics, not required for frontend.
-
+      throw FetchUserAttributesFailure(error);
     }
   }
 
@@ -126,20 +129,19 @@ class AmplifyAuthRepository implements AuthRepository {
       return result.isSignedIn;
     } on AmplifyException catch (error) {
       // TODO: Catch error for analytics, not required for frontend.
-      return false;
+      throw LogInWithEmailAndPasswordFailure(error);
     }
   }
 
   @override
-  Future<bool> signInWithSocialWebUI<AuthProvider>(
-      {required AuthProvider provider}) async {
+  Future<bool> signInWithSocialWebUI({required provider}) async {
     try {
       SignInResult result =
           await _authCategory.signInWithWebUI(provider: provider);
       return result.isSignedIn;
     } on AmplifyException catch (error) {
       // TODO: Catch error for analytics, not required for frontend.
-      return false;
+      throw LogInWithSocialProviderFailure(error);
     }
   }
 
@@ -151,8 +153,6 @@ class AmplifyAuthRepository implements AuthRepository {
       // TODO: Catch error for analytics, not required for frontend.
     }
   }
-
-  // Future<bool> signUp<NamePasswordAmplifyCredential>({required NamePasswordAmplifyCredential authData})
 
   @override
   Future<bool> signUp(
@@ -168,7 +168,7 @@ class AmplifyAuthRepository implements AuthRepository {
       return result.isSignUpComplete;
     } on AmplifyException catch (error) {
       // TODO: Catch error for analytics, not required for frontend.
-      return false;
+      throw SignUpFailure(error);
     }
   }
 
@@ -182,4 +182,13 @@ class AmplifyAuthRepository implements AuthRepository {
       // TODO: Catch error for analytics, not required for frontend.
     }
   }
+
+  @override
+  get appleProvider => AuthProvider.apple;
+
+  @override
+  get facebookProvider => AuthProvider.facebook;
+
+  @override
+  get googleProvider => AuthProvider.google;
 }
