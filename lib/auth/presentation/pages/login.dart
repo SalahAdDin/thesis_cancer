@@ -43,6 +43,7 @@ class LoginScreen extends HookWidget {
       onSubmitAnimationCompleted: () => authScreenState.when(
           loading: () => Center(child: CircularProgressIndicator()),
           signedUp: (signedUpUser) => pushToPage(context, LobbyScreen()),
+          // TODO: create ChangePassword screen.
           requestedResetPassword: () => null,
           loggedIn: (loggedInUser) => pushToPage(
               context,

@@ -40,12 +40,14 @@ class HomeScreen extends StatelessWidget {
         return pushToPage(context, IntroductoryScreen());
         break;
       case UserStatus.TUTORIAL:
-        return pushToPage(
-            context, HomeNavigationBuilder(builder: (context, moduleTab) {}));
+        return pushToPage(context, IntroductoryScreen());
+        // return pushToPage(
+        //     context, HomeNavigationBuilder(builder: (context, moduleTab) {}));
         break;
       case UserStatus.FINAL:
-        return pushToPage(
-            context, HomeNavigationBuilder(builder: (context, moduleTab) {}));
+        return pushToPage(context, IntroductoryScreen());
+        // return pushToPage(
+        //     context, HomeNavigationBuilder(builder: (context, moduleTab) {}));
         break;
     }
   }

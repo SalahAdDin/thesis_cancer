@@ -24,4 +24,6 @@ abstract class User with _$User {
       Map? likes}) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  static const empty =
+      User(id: '', email: '', displayName: '', role: UserRole.PILOT);
 }
