@@ -17,11 +17,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   final AuthRepository authRepository;
   final DataStoreRepository dataStore;
-  StreamSubscription? _subscription;
+  // StreamSubscription? _subscription;
 
   @override
   void dispose() {
-    _subscription?.cancel();
+    // _subscription?.cancel();
     super.dispose();
   }
 
@@ -68,9 +68,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
   Future<String?> signIn(
       {required String username, required String password}) async {
     try {
+      User storedUser = await dataStore.getUserProfileData();
       bool result =
           await authRepository.signIn(username: username, password: password);
-      User storedUser = await dataStore.getUserProfileData();
       if (result)
         await createUserProfile(storedUser);
       else

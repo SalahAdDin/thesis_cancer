@@ -48,11 +48,7 @@ class SembastDataStore implements DataStoreRepository {
     final Map<String, dynamic> profileJson =
         await store.record(StorePath.profile).get(database);
 
-    // TODO: review
-    // return profileJson != null
-    //     ? User.fromJson(profileJson)
-    //     : User(displayName: '', email: '', id: '', role: UserRole.PILOT);
-    return User.fromJson(profileJson);
+    return profileJson != null ? User.fromJson(profileJson) : User.empty;
   }
 
   @override
