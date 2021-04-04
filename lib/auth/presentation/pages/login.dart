@@ -6,6 +6,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:thesis_cancer/auth/presentation/provider.dart';
 import 'package:thesis_cancer/home/presentation/pages/home.dart';
 import 'package:thesis_cancer/home/presentation/pages/lobby_screen.dart';
+import 'package:thesis_cancer/user/presentation/provider.dart';
 import 'package:thesis_cancer/utils/configuration.dart';
 import 'package:thesis_cancer/utils/navigator.dart';
 
@@ -45,11 +46,13 @@ class LoginScreen extends HookWidget {
           signedUp: (signedUpUser) => pushToPage(context, LobbyScreen()),
           // TODO: create ChangePassword screen.
           requestedResetPassword: () => null,
-          loggedIn: (loggedInUser) => pushToPage(
+          // TODO: How to get the first time at login (create a new profile on database here)?
+          loggedIn: (loggedInUser) => pushAndReplaceToPage(
               context,
-              HomeScreen(
-                currentUser: loggedInUser,
-              )),
+              ProviderScope(overrides: [
+                userEntityProvider.overrideWithValue(loggedInUser)
+              ], child: HomeScreen())),
+          // TODO: extract to a widget to avoid boilerplate
           error: (error) {
             final errorSnackBar = SnackBar(
               content: Row(

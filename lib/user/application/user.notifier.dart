@@ -1,0 +1,77 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/user/domain/user.entity.dart';
+import 'package:thesis_cancer/user/domain/user.repository.dart';
+import 'package:thesis_cancer/user/domain/user.state.dart';
+import 'package:thesis_cancer/utils/types.dart';
+
+class UserNotifier extends StateNotifier<UserState> {
+  UserNotifier({required this.currentUser, required this.userRepository})
+      : super(const UserState.loading()) {
+    init();
+  }
+
+  final UserRepository userRepository;
+  final User currentUser;
+
+  // StreamSubscription? _subscription;
+
+  @override
+  void dispose() {
+    // _subscription?.cancel();
+    super.dispose();
+  }
+
+  UserStatus assignUserStatus(User targetUser) {
+    if (targetUser.isConfirmed == true) {
+      if (targetUser.role == UserRole.ADMIN)
+        return UserStatus.ADMIN;
+      else if (targetUser.hasSeenIntroductoryVideo ==
+          true) if (targetUser.hasSeenTutorial == true)
+        return UserStatus.FINAL;
+      else
+        return UserStatus.TUTORIAL;
+      else
+        return UserStatus.INTRODUCTION;
+    } else
+      return UserStatus.UNCONFIRMED;
+  }
+
+  void deliverUserScreen(User targetUser) {
+    UserStatus userStatus = assignUserStatus(currentUser);
+    switch (userStatus) {
+      case UserStatus.UNCONFIRMED:
+        state = UserState.unConfirmed();
+        break;
+      case UserStatus.ADMIN:
+        state = UserState.isAdmin();
+        break;
+      case UserStatus.INTRODUCTION:
+        state = UserState.mustSeeIntroduction();
+        break;
+      case UserStatus.TUTORIAL:
+        state = UserState.mustSeeTutorial();
+        break;
+      case UserStatus.FINAL:
+        state = UserState.completed();
+        break;
+    }
+  }
+
+  Future<void> createNewProfile(User newProfile) async {
+    try {
+      await userRepository.createUser(newProfile);
+    } on Exception catch (error) {
+      state = UserState.error(error.toString());
+    }
+  }
+
+  Future<void> updateProfile(User currentProfile) async {}
+
+  Future<void> deleteProfile(User currentProfile) async {}
+
+  void init() {
+    if (this.currentUser != null) {
+      this.deliverUserScreen(this.currentUser);
+    }
+  }
+}

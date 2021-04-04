@@ -1,61 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:thesis_cancer/home/presentation/pages/introductory_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/lobby_screen.dart';
-import 'package:thesis_cancer/user/domain/user.entity.dart';
 import 'package:thesis_cancer/user/presentation/pages/dash_board_screen.dart';
+import 'package:thesis_cancer/user/presentation/provider.dart';
 import 'package:thesis_cancer/utils/navigator.dart';
 import 'package:thesis_cancer/utils/types.dart';
 
-class HomeScreen extends StatelessWidget {
-  final User currentUser;
-
-  HomeScreen({required this.currentUser});
-
-  UserStatus assignUserStatus(User targetUser) {
-    if (targetUser.isConfirmed == true) {
-      if (targetUser.role == UserRole.ADMIN)
-        return UserStatus.ADMIN;
-      else if (targetUser.hasSeenIntroductoryVideo ==
-          true) if (targetUser.hasSeenTutorial == true)
-        return UserStatus.FINAL;
-      else
-        return UserStatus.TUTORIAL;
-      else
-        return UserStatus.INTRODUCTION;
-    } else
-      return UserStatus.UNCONFIRMED;
-  }
-
-  Future deliverUserScreen(BuildContext context, User targetUser) {
-    UserStatus userStatus = assignUserStatus(currentUser);
-    switch (userStatus) {
-      case UserStatus.UNCONFIRMED:
-        return pushToPage(context, LobbyScreen());
-        break;
-      case UserStatus.ADMIN:
-        return pushToPage(context, DashBoardScreen());
-        break;
-      case UserStatus.INTRODUCTION:
-        return pushToPage(context, IntroductoryScreen());
-        break;
-      case UserStatus.TUTORIAL:
-        return pushToPage(context, IntroductoryScreen());
-        // return pushToPage(
-        //     context, HomeNavigationBuilder(builder: (context, moduleTab) {}));
-        break;
-      case UserStatus.FINAL:
-        return pushToPage(context, IntroductoryScreen());
-        // return pushToPage(
-        //     context, HomeNavigationBuilder(builder: (context, moduleTab) {}));
-        break;
-    }
-  }
-
+class HomeScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Container();
+    final currentUserState = useProvider(homeScreenProvider.state);
+    return currentUserState.when(
+        loading: () => Center(child: CircularProgressIndicator()),
+        isAdmin: () => pushToPage(context, DashBoardScreen()),
+        unConfirmed: () => pushToPage(context, LobbyScreen()),
+        mustSeeIntroduction: () => pushToPage(context, IntroductoryScreen()),
+        mustSeeTutorial: () => pushToPage(context, IntroductoryScreen()),
+        completed: () => pushToPage(context, IntroductoryScreen()),
+        error: (error) {
+          final errorSnackBar = SnackBar(
+            content: Row(
+              children: [
+                Icon(Icons.bolt, color: Theme.of(context).errorColor),
+                Text(
+                  error,
+                  style: TextStyle(color: Theme.of(context).errorColor),
+                )
+              ],
+            ),
+            backgroundColor: Theme.of(context).backgroundColor,
+            duration: Duration(milliseconds: 1500),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
+          // TODO: Keep on here: right now it keeps on Loading screen.
+          // pushToPage(context, SplashScreenState());
+        });
   }
 }
 

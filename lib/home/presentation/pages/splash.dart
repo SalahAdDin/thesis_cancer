@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/auth/presentation/pages/login.dart';
 import 'package:thesis_cancer/home/presentation/pages/home.dart';
 import 'package:thesis_cancer/provider.dart';
+import 'package:thesis_cancer/user/presentation/provider.dart';
 import 'package:thesis_cancer/utils/configuration.dart';
 
 class SplashView extends HookWidget {
@@ -30,14 +31,9 @@ class SplashView extends HookWidget {
           ],
         ),
       ),
-      // TODO: Improve this using an image before the text or using a Snack Bar.
-      // error: (err, stack) => Scaffold(
-      //       appBar: AppBar(
-      //         title: const Text('Error'),
-      //       ),
-      //     ),
-      needsProfile: () => LoginScreen(),
-      profileLoaded: (profileData) => HomeScreen(currentUser: profileData),
-    );
+        needsProfile: () => LoginScreen(),
+        profileLoaded: (profileData) => ProviderScope(
+            overrides: [userEntityProvider.overrideWithValue(profileData)],
+            child: HomeScreen()));
   }
 }
