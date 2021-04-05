@@ -27,7 +27,7 @@ class SembastDataStore implements DataStoreRepository {
       SembastDataStore(await databaseFactory.openDatabase(databasePath));
 
   @override
-  Future<void> createUserProfile(User user) async {
+  Future<void> writeUserProfile(User user) async {
     final recordName = StorePath.profile;
     /*final Map<String, dynamic> profileJson =
         await store.record(recordName).get(database);

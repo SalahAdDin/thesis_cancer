@@ -17,6 +17,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   final AuthRepository authRepository;
   final DataStoreRepository dataStore;
+
   // StreamSubscription? _subscription;
 
   @override
@@ -27,7 +28,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> createUserProfile(User storedUser) async {
     final userAttributes = authRepository.fetchUserAttributes();
-    /* TODO: Getting use from API by userId or username?
+    /* TODO: Getting user from API by userId or username?
         *   Must the userId from Cognito saved on backend?*/
     // final backendStoredUser = apiRepository.getUserAccount(username: username);
     // TODO: verify which attributes comes: confirmed and roles(groups) are required.
@@ -40,10 +41,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
     // TODO: Ensure every new change on the user profile will be persisted on backend
     if (storedUser == User.empty)
-      await dataStore.createUserProfile(newProfile);
+      await dataStore.writeUserProfile(newProfile);
     else if (newProfile == storedUser) {
     } else
-      await dataStore.createUserProfile(newProfile);
+      await dataStore.writeUserProfile(newProfile);
     state = AuthState.loggedIn(newProfile);
   }
 
