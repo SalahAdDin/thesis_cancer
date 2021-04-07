@@ -155,6 +155,7 @@ class AmplifyAuthRepository implements AuthRepository {
   @override
   Future<void> signOut() async {
     try {
+      // TODO: Review the result.
       await _authCategory.signOut();
     } on AmplifyException catch (error) {
       // TODO: Catch error for analytics, not required for frontend.

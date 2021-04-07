@@ -80,7 +80,8 @@ class LoginScreen extends HookWidget {
             ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
             // TODO: Keep on here: right now it keeps on Loading screen.
             // pushToPage(context, SplashScreenState());
-          }),
+          },
+          loggedOut: () => null),
     );
   }
 }

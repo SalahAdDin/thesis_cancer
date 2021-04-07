@@ -49,6 +49,17 @@ class AuthNotifier extends StateNotifier<AuthState> {
     state = AuthState.loggedIn(newProfile);
   }
 
+  Future<void> signOut() async {
+    try {
+      await authRepository.signOut();
+      await dataStore.removeUserProfile();
+      state = AuthState.loggedOut();
+    } on Exception catch (error) {
+      // TODO: Which exception?
+      state = AuthState.error(error.toString());
+    }
+  }
+
   Future<String?> registerUser({
     required String username,
     required String password,
@@ -143,10 +154,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> confirmSignIn({required String confirmationCode}) async {
     try {
-      final result = await authRepository.confirmSignIn(
+      User storedUser = await dataStore.getUserProfileData();
+      AmplifyResult result = await authRepository.confirmSignIn(
           confirmationCode: confirmationCode);
       if (result.isSuccess)
-        return;
+        createUserProfile(storedUser);
       else
         state = AuthState.error('It is not possible to confirm your password.');
     } on ConfirmSignInFailure catch (error) {
