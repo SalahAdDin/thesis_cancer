@@ -56,6 +56,10 @@ class LoginScreen extends HookWidget {
               ], child: HomeScreen())),
           requiresConfirmSignIn: () => pushToPage(
               context,
+              /* TODO: In theory, after confirming the new password,
+                  it changes the status to logged in, then, going to
+                  the splashScreen will load the LogInScreen,
+                  which is in loggedIn state, sending us to the home page. */
               ConfirmPasswordWidget(
                   onConfirm: (String confirmationCode) => context
                       .read(authNotifierProvider)

@@ -91,6 +91,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
       else
         state = AuthState.error(
             'It was not possible to log in with your credentials.');
+    } on LogInUnconfirmedUserFailure {
+      User newProfile = User(
+          id: uuid.v4(),
+          email: username,
+          displayName: '',
+          role: UserRole.PILOT,
+          isConfirmed: false);
+      state = AuthState.loggedIn(newProfile);
     } on LogInWithEmailAndPasswordFailure catch (error) {
       state = AuthState.error(error.toString());
     }
@@ -157,7 +165,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
       User storedUser = await dataStore.getUserProfileData();
       AmplifyResult result = await authRepository.confirmSignIn(
           confirmationCode: confirmationCode);
-      if (result.isSuccess)
+      if (result.isSuccess && storedUser == User.empty)
+        // As this function can be called for both confirm the
+        // first login(by changing the password) and for each sign in,
+        // we check first login to create a new profile.
         createUserProfile(storedUser);
       else
         state = AuthState.error('It is not possible to confirm your password.');

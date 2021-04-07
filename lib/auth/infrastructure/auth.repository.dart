@@ -134,6 +134,8 @@ class AmplifyAuthRepository implements AuthRepository {
           await _authCategory.signIn(username: username, password: password);
       return AmplifyResult(
           isSuccess: result.isSignedIn, nextStep: result.nextStep.signInStep);
+    } on UserNotConfirmedException catch (error) {
+      throw LogInUnconfirmedUserFailure(error);
     } on AmplifyException catch (error) {
       // TODO: Catch error for analytics, not required for frontend.
       throw LogInWithEmailAndPasswordFailure(error);

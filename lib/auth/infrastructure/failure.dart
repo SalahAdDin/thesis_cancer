@@ -1,3 +1,4 @@
+import 'package:amplify_auth_plugin_interface/src/Exceptions/UserNotConfirmedException.dart';
 import 'package:amplify_flutter/amplify.dart';
 
 class SignUpFailure implements Exception {
@@ -14,6 +15,10 @@ class LogInWithSocialProviderFailure implements Exception {
 
 class LogInWithEmailAndPasswordFailure implements Exception {
   LogInWithEmailAndPasswordFailure(AmplifyException error);
+}
+
+class LogInUnconfirmedUserFailure implements Exception {
+  LogInUnconfirmedUserFailure(UserNotConfirmedException error);
 }
 
 class FetchUserAttributesFailure implements Exception {
