@@ -4,8 +4,10 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:thesis_cancer/auth/presentation/provider.dart';
+import 'package:thesis_cancer/auth/presentation/widgets/confirm_password.dart';
 import 'package:thesis_cancer/home/presentation/pages/home.dart';
 import 'package:thesis_cancer/home/presentation/pages/lobby_screen.dart';
+import 'package:thesis_cancer/home/presentation/pages/splash.dart';
 import 'package:thesis_cancer/user/presentation/provider.dart';
 import 'package:thesis_cancer/utils/configuration.dart';
 import 'package:thesis_cancer/utils/navigator.dart';
@@ -52,6 +54,14 @@ class LoginScreen extends HookWidget {
               ProviderScope(overrides: [
                 userEntityProvider.overrideWithValue(loggedInUser)
               ], child: HomeScreen())),
+          requiresConfirmSignIn: () => pushToPage(
+              context,
+              ConfirmPasswordWidget(
+                  onConfirm: (String confirmationCode) => context
+                      .read(authNotifierProvider)
+                      .confirmSignIn(confirmationCode: confirmationCode)
+                      .then((value) =>
+                          pushAndReplaceToPage(context, SplashView())))),
           // TODO: extract to a widget to avoid boilerplate
           error: (error) {
             final errorSnackBar = SnackBar(
@@ -68,6 +78,8 @@ class LoginScreen extends HookWidget {
               duration: Duration(milliseconds: 1500),
             );
             ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
+            // TODO: Keep on here: right now it keeps on Loading screen.
+            // pushToPage(context, SplashScreenState());
           }),
     );
   }

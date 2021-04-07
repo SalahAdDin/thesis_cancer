@@ -41,6 +41,10 @@ class _$AuthStateTearOff {
       error,
     );
   }
+
+  _RequiresConfirmSignIn requiresConfirmSignIn() {
+    return const _RequiresConfirmSignIn();
+  }
 }
 
 /// @nodoc
@@ -55,6 +59,7 @@ mixin _$AuthState {
     required TResult Function() requestedResetPassword,
     required TResult Function(User loggedInUser) loggedIn,
     required TResult Function(String error) error,
+    required TResult Function() requiresConfirmSignIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -64,6 +69,7 @@ mixin _$AuthState {
     TResult Function()? requestedResetPassword,
     TResult Function(User loggedInUser)? loggedIn,
     TResult Function(String error)? error,
+    TResult Function()? requiresConfirmSignIn,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -75,6 +81,8 @@ mixin _$AuthState {
         requestedResetPassword,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_Error value) error,
+    required TResult Function(_RequiresConfirmSignIn value)
+        requiresConfirmSignIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -84,6 +92,7 @@ mixin _$AuthState {
     TResult Function(_RequestedResetPassword value)? requestedResetPassword,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_Error value)? error,
+    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -145,6 +154,7 @@ class _$_Loading implements _Loading {
     required TResult Function() requestedResetPassword,
     required TResult Function(User loggedInUser) loggedIn,
     required TResult Function(String error) error,
+    required TResult Function() requiresConfirmSignIn,
   }) {
     return loading();
   }
@@ -157,6 +167,7 @@ class _$_Loading implements _Loading {
     TResult Function()? requestedResetPassword,
     TResult Function(User loggedInUser)? loggedIn,
     TResult Function(String error)? error,
+    TResult Function()? requiresConfirmSignIn,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -174,6 +185,8 @@ class _$_Loading implements _Loading {
         requestedResetPassword,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_Error value) error,
+    required TResult Function(_RequiresConfirmSignIn value)
+        requiresConfirmSignIn,
   }) {
     return loading(this);
   }
@@ -186,6 +199,7 @@ class _$_Loading implements _Loading {
     TResult Function(_RequestedResetPassword value)? requestedResetPassword,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_Error value)? error,
+    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -275,6 +289,7 @@ class _$_SignedUp implements _SignedUp {
     required TResult Function() requestedResetPassword,
     required TResult Function(User loggedInUser) loggedIn,
     required TResult Function(String error) error,
+    required TResult Function() requiresConfirmSignIn,
   }) {
     return signedUp(signedUpUser);
   }
@@ -287,6 +302,7 @@ class _$_SignedUp implements _SignedUp {
     TResult Function()? requestedResetPassword,
     TResult Function(User loggedInUser)? loggedIn,
     TResult Function(String error)? error,
+    TResult Function()? requiresConfirmSignIn,
     required TResult orElse(),
   }) {
     if (signedUp != null) {
@@ -304,6 +320,8 @@ class _$_SignedUp implements _SignedUp {
         requestedResetPassword,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_Error value) error,
+    required TResult Function(_RequiresConfirmSignIn value)
+        requiresConfirmSignIn,
   }) {
     return signedUp(this);
   }
@@ -316,6 +334,7 @@ class _$_SignedUp implements _SignedUp {
     TResult Function(_RequestedResetPassword value)? requestedResetPassword,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_Error value)? error,
+    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
     required TResult orElse(),
   }) {
     if (signedUp != null) {
@@ -378,6 +397,7 @@ class _$_RequestedResetPassword implements _RequestedResetPassword {
     required TResult Function() requestedResetPassword,
     required TResult Function(User loggedInUser) loggedIn,
     required TResult Function(String error) error,
+    required TResult Function() requiresConfirmSignIn,
   }) {
     return requestedResetPassword();
   }
@@ -390,6 +410,7 @@ class _$_RequestedResetPassword implements _RequestedResetPassword {
     TResult Function()? requestedResetPassword,
     TResult Function(User loggedInUser)? loggedIn,
     TResult Function(String error)? error,
+    TResult Function()? requiresConfirmSignIn,
     required TResult orElse(),
   }) {
     if (requestedResetPassword != null) {
@@ -407,6 +428,8 @@ class _$_RequestedResetPassword implements _RequestedResetPassword {
         requestedResetPassword,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_Error value) error,
+    required TResult Function(_RequiresConfirmSignIn value)
+        requiresConfirmSignIn,
   }) {
     return requestedResetPassword(this);
   }
@@ -419,6 +442,7 @@ class _$_RequestedResetPassword implements _RequestedResetPassword {
     TResult Function(_RequestedResetPassword value)? requestedResetPassword,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_Error value)? error,
+    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
     required TResult orElse(),
   }) {
     if (requestedResetPassword != null) {
@@ -508,6 +532,7 @@ class _$_LoggedIn implements _LoggedIn {
     required TResult Function() requestedResetPassword,
     required TResult Function(User loggedInUser) loggedIn,
     required TResult Function(String error) error,
+    required TResult Function() requiresConfirmSignIn,
   }) {
     return loggedIn(loggedInUser);
   }
@@ -520,6 +545,7 @@ class _$_LoggedIn implements _LoggedIn {
     TResult Function()? requestedResetPassword,
     TResult Function(User loggedInUser)? loggedIn,
     TResult Function(String error)? error,
+    TResult Function()? requiresConfirmSignIn,
     required TResult orElse(),
   }) {
     if (loggedIn != null) {
@@ -537,6 +563,8 @@ class _$_LoggedIn implements _LoggedIn {
         requestedResetPassword,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_Error value) error,
+    required TResult Function(_RequiresConfirmSignIn value)
+        requiresConfirmSignIn,
   }) {
     return loggedIn(this);
   }
@@ -549,6 +577,7 @@ class _$_LoggedIn implements _LoggedIn {
     TResult Function(_RequestedResetPassword value)? requestedResetPassword,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_Error value)? error,
+    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
     required TResult orElse(),
   }) {
     if (loggedIn != null) {
@@ -633,6 +662,7 @@ class _$_Error implements _Error {
     required TResult Function() requestedResetPassword,
     required TResult Function(User loggedInUser) loggedIn,
     required TResult Function(String error) error,
+    required TResult Function() requiresConfirmSignIn,
   }) {
     return error(this.error);
   }
@@ -645,6 +675,7 @@ class _$_Error implements _Error {
     TResult Function()? requestedResetPassword,
     TResult Function(User loggedInUser)? loggedIn,
     TResult Function(String error)? error,
+    TResult Function()? requiresConfirmSignIn,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -662,6 +693,8 @@ class _$_Error implements _Error {
         requestedResetPassword,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_Error value) error,
+    required TResult Function(_RequiresConfirmSignIn value)
+        requiresConfirmSignIn,
   }) {
     return error(this);
   }
@@ -674,6 +707,7 @@ class _$_Error implements _Error {
     TResult Function(_RequestedResetPassword value)? requestedResetPassword,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_Error value)? error,
+    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -689,4 +723,107 @@ abstract class _Error implements AuthState {
   String get error => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$RequiresConfirmSignInCopyWith<$Res> {
+  factory _$RequiresConfirmSignInCopyWith(_RequiresConfirmSignIn value,
+          $Res Function(_RequiresConfirmSignIn) then) =
+      __$RequiresConfirmSignInCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$RequiresConfirmSignInCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res>
+    implements _$RequiresConfirmSignInCopyWith<$Res> {
+  __$RequiresConfirmSignInCopyWithImpl(_RequiresConfirmSignIn _value,
+      $Res Function(_RequiresConfirmSignIn) _then)
+      : super(_value, (v) => _then(v as _RequiresConfirmSignIn));
+
+  @override
+  _RequiresConfirmSignIn get _value => super._value as _RequiresConfirmSignIn;
+}
+
+/// @nodoc
+class _$_RequiresConfirmSignIn implements _RequiresConfirmSignIn {
+  const _$_RequiresConfirmSignIn();
+
+  @override
+  String toString() {
+    return 'AuthState.requiresConfirmSignIn()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _RequiresConfirmSignIn);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(User signedUpUser) signedUp,
+    required TResult Function() requestedResetPassword,
+    required TResult Function(User loggedInUser) loggedIn,
+    required TResult Function(String error) error,
+    required TResult Function() requiresConfirmSignIn,
+  }) {
+    return requiresConfirmSignIn();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(User signedUpUser)? signedUp,
+    TResult Function()? requestedResetPassword,
+    TResult Function(User loggedInUser)? loggedIn,
+    TResult Function(String error)? error,
+    TResult Function()? requiresConfirmSignIn,
+    required TResult orElse(),
+  }) {
+    if (requiresConfirmSignIn != null) {
+      return requiresConfirmSignIn();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_SignedUp value) signedUp,
+    required TResult Function(_RequestedResetPassword value)
+        requestedResetPassword,
+    required TResult Function(_LoggedIn value) loggedIn,
+    required TResult Function(_Error value) error,
+    required TResult Function(_RequiresConfirmSignIn value)
+        requiresConfirmSignIn,
+  }) {
+    return requiresConfirmSignIn(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_SignedUp value)? signedUp,
+    TResult Function(_RequestedResetPassword value)? requestedResetPassword,
+    TResult Function(_LoggedIn value)? loggedIn,
+    TResult Function(_Error value)? error,
+    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
+    required TResult orElse(),
+  }) {
+    if (requiresConfirmSignIn != null) {
+      return requiresConfirmSignIn(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RequiresConfirmSignIn implements AuthState {
+  const factory _RequiresConfirmSignIn() = _$_RequiresConfirmSignIn;
 }

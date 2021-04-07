@@ -2,6 +2,7 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_flutter/categories/amplify_categories.dart';
 import 'package:thesis_cancer/auth/domain/auth.repository.dart';
+import 'package:thesis_cancer/auth/infrastructure/utils.dart';
 
 import 'failure.dart';
 
@@ -27,14 +28,16 @@ class AmplifyAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<bool> confirmSignIn({required String confirmationCode}) async {
+  Future<AmplifyResult> confirmSignIn(
+      {required String confirmationCode}) async {
     try {
       SignInResult result = await _authCategory.confirmSignIn(
           confirmationValue: confirmationCode);
-      return result.isSignedIn;
+      return AmplifyResult(
+          isSuccess: result.isSignedIn, nextStep: result.nextStep.signInStep);
     } on AmplifyException catch (error) {
       // TODO: Catch error for analytics, not required for frontend.
-      return false;
+      throw ConfirmSignInFailure(error);
     }
   }
 
@@ -124,12 +127,13 @@ class AmplifyAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<bool> signIn(
+  Future<AmplifyResult> signIn(
       {required String username, required String password}) async {
     try {
       SignInResult result =
           await _authCategory.signIn(username: username, password: password);
-      return result.isSignedIn;
+      return AmplifyResult(
+          isSuccess: result.isSignedIn, nextStep: result.nextStep.signInStep);
     } on AmplifyException catch (error) {
       // TODO: Catch error for analytics, not required for frontend.
       throw LogInWithEmailAndPasswordFailure(error);

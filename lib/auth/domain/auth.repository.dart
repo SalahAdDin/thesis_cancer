@@ -11,7 +11,7 @@ abstract class AuthRepository {
       required String newPassword,
       required String confirmationCode});
 
-  Future<bool> confirmSignIn({required String confirmationCode});
+  Future<dynamic> confirmSignIn({required String confirmationCode});
 
   Future<bool> confirmSignUp(
       {required String username, required String confirmationCode});
@@ -28,7 +28,7 @@ abstract class AuthRepository {
 
   Future<bool> resetPassword({required String username});
 
-  Future<bool> signIn({required String username, required String password});
+  Future<dynamic> signIn({required String username, required String password});
 
   Future<bool> signInWithSocialWebUI({required provider});
 

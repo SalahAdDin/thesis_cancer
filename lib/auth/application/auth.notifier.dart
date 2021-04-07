@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/auth/domain/auth.state.dart';
 import 'package:thesis_cancer/auth/infrastructure/failure.dart';
+import 'package:thesis_cancer/auth/infrastructure/utils.dart';
 import 'package:thesis_cancer/home/domain/datastore.repository.dart';
 import 'package:thesis_cancer/user/domain/user.entity.dart';
 import 'package:thesis_cancer/utils/types.dart';
@@ -70,10 +71,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
       {required String username, required String password}) async {
     try {
       User storedUser = await dataStore.getUserProfileData();
-      bool result =
+      AmplifyResult result =
           await authRepository.signIn(username: username, password: password);
-      if (result)
+      if (result.isSuccess)
         await createUserProfile(storedUser);
+      else if (result.nextStep == 'CONFIRM_SIGN_IN_WITH_NEW_PASSWORD')
+        state = AuthState.requiresConfirmSignIn();
       else
         state = AuthState.error(
             'It was not possible to log in with your credentials.');
@@ -134,6 +137,19 @@ class AuthNotifier extends StateNotifier<AuthState> {
         state = AuthState.error(
             'It was not possible to send a reset password request.');
     } on ResetPasswordFailure catch (error) {
+      state = AuthState.error(error.toString());
+    }
+  }
+
+  Future<void> confirmSignIn({required String confirmationCode}) async {
+    try {
+      final result = await authRepository.confirmSignIn(
+          confirmationCode: confirmationCode);
+      if (result.isSuccess)
+        return;
+      else
+        state = AuthState.error('It is not possible to confirm your password.');
+    } on ConfirmSignInFailure catch (error) {
       state = AuthState.error(error.toString());
     }
   }
