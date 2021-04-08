@@ -1,14 +1,18 @@
 [
-  {
-    "groupName": "Admin",
-    "precedence": 1
-  },
-  {
-    "groupName": "Doctors",
-    "precedence": 2
-  },
-  {
-    "groupName": "Users",
-    "precedence": 3
-  }
+    {
+        "groupName": "Admin",
+        "precedence": 1
+    },
+    {
+        "groupName": "Control",
+        "precedence": 2
+    },
+    {
+        "groupName": "Test",
+        "precedence": 3
+    },
+    {
+        "groupName": "Pilot",
+        "precedence": 4
+    }
 ]

@@ -95,15 +95,15 @@
         },
      
     
-        "DoctorsGroup": {
+        "ControlGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "Doctors",
+              "GroupName" : "Control",
               "Precedence" : 2,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "DoctorsGroupRole",
+                    "ControlGroupRole",
                     "Arn"
                 ]
               },
@@ -114,7 +114,7 @@
             }
         },
         
-        "DoctorsGroupRole": {
+        "ControlGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -124,7 +124,7 @@
                           {
                             "Ref": "auththesiscancer7a6cf6e7UserPoolId"
                           },
-                          "-DoctorsGroupRole"
+                          "-ControlGroupRole"
                         ]
                     ]
                 },
@@ -149,15 +149,15 @@
         },
      
     
-        "UsersGroup": {
+        "TestGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "Users",
+              "GroupName" : "Test",
               "Precedence" : 3,
               
               "RoleArn" : {
                 "Fn::GetAtt": [
-                    "UsersGroupRole",
+                    "TestGroupRole",
                     "Arn"
                 ]
               },
@@ -168,7 +168,7 @@
             }
         },
         
-        "UsersGroupRole": {
+        "TestGroupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName":{
@@ -178,7 +178,61 @@
                           {
                             "Ref": "auththesiscancer7a6cf6e7UserPoolId"
                           },
-                          "-UsersGroupRole"
+                          "-TestGroupRole"
+                        ]
+                    ]
+                },
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Sid": "",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Federated": "cognito-identity.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRoleWithWebIdentity",
+                            "Condition": {
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"auththesiscancer7a6cf6e7IdentityPoolId"}},
+                              "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+     
+    
+        "PilotGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "Pilot",
+              "Precedence" : 4,
+              
+              "RoleArn" : {
+                "Fn::GetAtt": [
+                    "PilotGroupRole",
+                    "Arn"
+                ]
+              },
+              
+              "UserPoolId" : {
+                "Ref": "auththesiscancer7a6cf6e7UserPoolId"
+              }
+            }
+        },
+        
+        "PilotGroupRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "RoleName":{
+                    "Fn::Join": [
+                        "",
+                        [
+                          {
+                            "Ref": "auththesiscancer7a6cf6e7UserPoolId"
+                          },
+                          "-PilotGroupRole"
                         ]
                     ]
                 },
@@ -414,10 +468,10 @@
         },
         
       
-        "DoctorsGroupRole": {
+        "ControlGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "DoctorsGroupRole",
+                    "ControlGroupRole",
                     "Arn"
                 ]
             }
@@ -425,10 +479,21 @@
         },
         
       
-        "UsersGroupRole": {
+        "TestGroupRole": {
             "Value": {
                 "Fn::GetAtt": [
-                    "UsersGroupRole",
+                    "TestGroupRole",
+                    "Arn"
+                ]
+            }
+        
+        },
+        
+      
+        "PilotGroupRole": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "PilotGroupRole",
                     "Arn"
                 ]
             }
