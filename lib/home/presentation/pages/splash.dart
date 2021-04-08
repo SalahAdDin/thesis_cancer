@@ -32,8 +32,10 @@ class SplashView extends HookWidget {
         ),
       ),
         needsProfile: () => LoginScreen(),
-        profileLoaded: (profileData) => ProviderScope(
-            overrides: [userEntityProvider.overrideWithValue(profileData)],
-            child: HomeScreen()));
+        profileLoaded: (profileData) {
+          context.read(homeScreenProvider).setCurrentUser(profileData);
+          context.read(homeScreenProvider).deliverUserScreen();
+          return HomeScreen();
+        });
   }
 }

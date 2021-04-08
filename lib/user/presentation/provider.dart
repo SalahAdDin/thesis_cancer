@@ -7,7 +7,7 @@ import 'package:thesis_cancer/user/infrastructure/user.api.repository.dart';
 final userRepositoryProvider =
     Provider<UserRepository>((ref) => AmplifyGraphQLUserRepository());
 
-final userEntityProvider = Provider<User>((ref) => throw UnimplementedError());
+final userEntityProvider = Provider<User>((ref) => User.empty);
 
 final homeScreenProvider = StateNotifierProvider<UserNotifier>((ref) {
   final userEntity = ref.watch(userEntityProvider);

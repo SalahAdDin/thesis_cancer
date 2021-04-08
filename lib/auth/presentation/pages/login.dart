@@ -49,11 +49,11 @@ class LoginScreen extends HookWidget {
           // TODO: create ChangePassword screen.
           requestedResetPassword: () => null,
           // TODO: How to get the first time at login (create a new profile on database here)?
-          loggedIn: (loggedInUser) => pushAndReplaceToPage(
-              context,
-              ProviderScope(overrides: [
-                userEntityProvider.overrideWithValue(loggedInUser)
-              ], child: HomeScreen())),
+          loggedIn: (loggedInUser) {
+            context.read(homeScreenProvider).setCurrentUser(loggedInUser);
+            context.read(homeScreenProvider).deliverUserScreen();
+            pushAndReplaceToPage(context, HomeScreen());
+          },
           requiresConfirmSignIn: () => pushToPage(
               context,
               /* TODO: In theory, after confirming the new password,
