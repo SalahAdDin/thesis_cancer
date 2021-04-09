@@ -28,17 +28,22 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<void> createUserProfile(User storedUser) async {
-    final userAttributes = authRepository.fetchUserAttributes();
+    Map<String, String> userAttributes =
+        await authRepository.fetchUserAttributes();
     /* TODO: Getting user from API by userId or username?
         *   Must the userId from Cognito saved on backend?*/
     // final backendStoredUser = apiRepository.getUserAccount(username: username);
     // TODO: verify which attributes comes: confirmed and roles(groups) are required.
     User newProfile = User(
         id: uuid.v4(),
-        email: '',
+        email: userAttributes['email']!,
         displayName: '',
+        phoneNumber: userAttributes['phone_number']!,
         role: UserRole.PILOT,
-        isConfirmed: true);
+        isConfirmed: userAttributes['email_verified'] == 'true' ||
+                userAttributes['phone_number_verified'] == 'true'
+            ? true
+            : false);
 
     // TODO: Ensure every new change on the user profile will be persisted on backend
     if (storedUser == User.empty)
@@ -49,7 +54,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     state = AuthState.loggedIn(newProfile);
   }
 
-  Future<void> signOut() async {
+  Future<String?> signOut() async {
     try {
       await authRepository.signOut();
       await dataStore.removeUserProfile();

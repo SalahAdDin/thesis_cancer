@@ -22,6 +22,8 @@ class AmplifyAuthRepository implements AuthRepository {
           username: username,
           newPassword: newPassword,
           confirmationCode: confirmationCode);
+      // TODO: review the result and work base on it.
+      print('Result: $result');
     } on AmplifyException catch (error) {
       // TODO: Catch error for analytics, not required for frontend.
     }
@@ -55,25 +57,37 @@ class AmplifyAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<bool> fetchSession() async {
+  Future<Map<String, dynamic>> fetchSession() async {
     try {
-      AuthSession result = await _authCategory.fetchAuthSession(
+      AuthSession fetchedSession = await _authCategory.fetchAuthSession(
           options: CognitoSessionOptions(getAWSCredentials: true));
-      return result.isSignedIn;
+      /* TODO: https://github.com/aws-amplify/amplify-flutter/issues/504
+      CognitoAuthSession fetchedSession = await _authCategory.fetchAuthSession(
+          options: CognitoSessionOptions(getAWSCredentials: true));
+      String token = fetchedSession.userPoolTokens.idToken;
+      Map<String, dynamic> payload = Jwt.parseJwt(token);
+      // Access the groups
+      List groups = payload['cognito:groups'];
+      */
+      Map<String, dynamic> result = {
+        'isSignedIn': fetchedSession.isSignedIn,
+        // 'roles': groups
+      };
+      return result;
     } on AmplifyException catch (error) {
       // TODO: Catch error for analytics, not required for frontend.
-      return false;
+      throw AmplifyException(error.toString());
     }
   }
 
   @override
-  Future<List<AuthUserAttribute>>
-      fetchUserAttributes<AuthUserAttribute>() async {
+  Future<Map<String, String>> fetchUserAttributes() async {
     try {
       // TODO: verify which attributes comes: confirmed and roles(groups) are required.
-      List<AuthUserAttribute> result =
-          (await _authCategory.fetchUserAttributes()).cast<AuthUserAttribute>();
-      print("User attributes: $result");
+      final fetchedUserAttributes = await _authCategory.fetchUserAttributes();
+      Map<String, String> result = Map.fromIterable(fetchedUserAttributes,
+          key: (element) => element.userAttributeKey,
+          value: (element) => element.value);
       return result;
     } on AmplifyException catch (error) {
       throw FetchUserAttributesFailure(error);

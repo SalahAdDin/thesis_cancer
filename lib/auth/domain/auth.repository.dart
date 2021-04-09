@@ -16,9 +16,9 @@ abstract class AuthRepository {
   Future<bool> confirmSignUp(
       {required String username, required String confirmationCode});
 
-  Future<bool> fetchSession();
+  Future<Map<String, dynamic>> fetchSession();
 
-  Future<List<T>> fetchUserAttributes<T>();
+  Future<Map<String, String>> fetchUserAttributes();
 
   Future<Map<String, String>> getCurrentUser();
 
