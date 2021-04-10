@@ -5,9 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:thesis_cancer/auth/presentation/provider.dart';
 import 'package:thesis_cancer/auth/presentation/widgets/confirm_password.dart';
-import 'package:thesis_cancer/home/presentation/pages/home.dart';
 import 'package:thesis_cancer/home/presentation/pages/lobby_screen.dart';
-import 'package:thesis_cancer/home/presentation/pages/splash.dart';
+import 'package:thesis_cancer/home/presentation/pages/main_screen.dart';
+import 'package:thesis_cancer/home/presentation/pages/splash_screen.dart';
 import 'package:thesis_cancer/user/presentation/provider.dart';
 import 'package:thesis_cancer/utils/configuration.dart';
 import 'package:thesis_cancer/utils/navigator.dart';
@@ -52,7 +52,7 @@ class LoginScreen extends HookWidget {
           loggedIn: (loggedInUser) {
             context.read(homeScreenProvider).setCurrentUser(loggedInUser);
             context.read(homeScreenProvider).deliverUserScreen();
-            pushAndReplaceToPage(context, HomeScreen());
+            pushAndReplaceToPage(context, MainScreen());
           },
           requiresConfirmSignIn: () => pushToPage(
               context,
@@ -65,7 +65,7 @@ class LoginScreen extends HookWidget {
                       .read(authNotifierProvider)
                       .confirmSignIn(confirmationCode: confirmationCode)
                       .then((value) =>
-                          pushAndReplaceToPage(context, SplashView())))),
+                          pushAndReplaceToPage(context, SplashScreen())))),
           // TODO: extract to a widget to avoid boilerplate
           error: (error) {
             final errorSnackBar = SnackBar(

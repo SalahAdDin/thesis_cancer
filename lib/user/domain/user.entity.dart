@@ -4,6 +4,7 @@ import 'package:thesis_cancer/utils/types.dart';
 part 'user.entity.freezed.dart';
 part 'user.entity.g.dart';
 
+// TODO: First name, last name?
 @freezed
 abstract class User with _$User {
   const factory User(

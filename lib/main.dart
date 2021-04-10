@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/home/infrastructure/datastore.repository.dart';
-import 'package:thesis_cancer/home/presentation/pages/splash.dart';
+import 'package:thesis_cancer/home/presentation/pages/splash_screen.dart';
 import 'package:thesis_cancer/provider.dart';
 
 import 'amplifyconfiguration.dart';
@@ -46,6 +46,6 @@ class CancerApp extends HookWidget {
     return MaterialApp(
         title: 'Thesis Cancer',
         theme: darkTheme ? ThemeData.dark() : ThemeData.light(),
-        home: SplashView());
+        home: SplashScreen());
   }
 }
