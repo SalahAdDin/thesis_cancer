@@ -16,7 +16,6 @@ class SplashScreen extends HookWidget {
         needsProfile: () => LoginScreen(),
         profileLoaded: (profileData) {
           context.read(homeScreenProvider).setCurrentUser(profileData);
-          context.read(homeScreenProvider).deliverUserScreen();
           return MainScreen();
         });
   }

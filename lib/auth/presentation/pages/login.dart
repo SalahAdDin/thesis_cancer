@@ -51,7 +51,6 @@ class LoginScreen extends HookWidget {
           // TODO: How to get the first time at login (create a new profile on database here)?
           loggedIn: (loggedInUser) {
             context.read(homeScreenProvider).setCurrentUser(loggedInUser);
-            context.read(homeScreenProvider).deliverUserScreen();
             pushAndReplaceToPage(context, MainScreen());
           },
           requiresConfirmSignIn: () => pushToPage(
