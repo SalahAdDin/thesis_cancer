@@ -1,7 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/home/application/splash.notifier.dart';
 import 'package:thesis_cancer/home/domain/datastore.repository.dart';
-import 'package:thesis_cancer/user/domain/user.entity.dart';
 
 final darkThemeProvider = Provider<bool>((ref) => true);
 
