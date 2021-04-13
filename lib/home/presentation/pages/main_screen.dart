@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/dashboard/presentation/pages/dash_board_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/introductory_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/splash_screen.dart';
 import 'package:thesis_cancer/home/presentation/widgets/header.dart';
 import 'package:thesis_cancer/home/presentation/widgets/side_menu/side_menu.dart';
-import 'package:thesis_cancer/user/presentation/pages/dash_board_screen.dart';
 import 'package:thesis_cancer/user/presentation/provider.dart';
 import 'package:thesis_cancer/utils/navigator.dart';
 
@@ -75,18 +75,8 @@ class MainLayout extends HookWidget {
         constraints: BoxConstraints(maxWidth: 300),
         child: SideMenu(),
       ),
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Container(
-            width: size.width,
-            constraints: BoxConstraints(minHeight: size.height),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[Container()],
-            ),
-          ),
-        ),
+      body: SafeArea(
+        child: DashBoardScreen(),
       ),
     );
   }

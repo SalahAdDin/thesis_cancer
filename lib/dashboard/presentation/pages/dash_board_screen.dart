@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thesis_cancer/dashboard/presentation/pages/users_data_table.dart';
 
 class DashBoardScreen extends StatefulWidget {
   DashBoardScreen({Key? key}) : super(key: key);
@@ -26,12 +27,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: PageView(
-      children: [],
+    return PageView(
+      children: [UsersDataTable()],
       controller: pageController,
       physics: BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
-    ));
+    );
   }
 }

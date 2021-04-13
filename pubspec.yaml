@@ -30,6 +30,7 @@ dependencies:
   amplify_storage_s3: ^0.1.1
   # connectivity: ^3.0.3
   # device_info: ^2.0.0
+  enum_to_string: ^2.0.1
   # fluro: ^2.0.3
   form_field_validator: ^1.1.0
   flutter_hooks: ^0.16.0
