@@ -5,14 +5,40 @@ import 'package:thesis_cancer/utils/responsive.dart';
 class Header extends StatelessWidget with PreferredSizeWidget {
   const Header({
     Key? key,
+    required this.displayedUserName,
   }) : super(key: key);
+
+  final String displayedUserName;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: isMobile(context),
       title: Text(AppLiterals.title),
       actions: <Widget>[
+        GestureDetector(
+            onTap: () {},
+            child: Row(
+              children: <Widget>[
+                SizedBox(
+                  height: 100,
+                ),
+                CircleAvatar(
+                  radius: isMobile(context) ? 10 : 15,
+                  child: Icon(Icons.account_circle_outlined),
+                  // TODO: backgroundImage: Image.network(src),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  this.displayedUserName,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+              ],
+            )),
         IconButton(
             icon: const Icon(Icons.exit_to_app),
             tooltip: "Logout",

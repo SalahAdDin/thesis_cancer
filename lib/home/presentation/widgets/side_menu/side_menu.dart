@@ -12,15 +12,13 @@ class SideMenu extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: <Widget>[
-              SideMenuHeader(
-                displayedUserName: 'Luis Alaguna',
-              ),
+              SideMenuHeader(),
               Expanded(
                   child: ListView(
                 padding: EdgeInsets.zero,
                 children: <Widget>[
                   ExpansionTile(
-                    title: Text("Dashboad"),
+                    title: Text("Administration"),
                     children: <Widget>[
                       ListTile(
                         leading: Icon(

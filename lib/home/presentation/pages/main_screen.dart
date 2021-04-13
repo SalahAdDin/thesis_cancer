@@ -5,7 +5,6 @@ import 'package:thesis_cancer/home/presentation/pages/introductory_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/splash_screen.dart';
 import 'package:thesis_cancer/home/presentation/widgets/header.dart';
-import 'package:thesis_cancer/home/presentation/widgets/side_menu/foldable_sidebar.dart';
 import 'package:thesis_cancer/home/presentation/widgets/side_menu/side_menu.dart';
 import 'package:thesis_cancer/user/presentation/pages/dash_board_screen.dart';
 import 'package:thesis_cancer/user/presentation/provider.dart';
@@ -69,7 +68,9 @@ class MainLayout extends HookWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: Header(),
+      appBar: Header(
+        displayedUserName: 'Luis Alaguna',
+      ),
       drawer: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: 300),
         child: SideMenu(),
