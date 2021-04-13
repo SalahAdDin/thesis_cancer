@@ -15,6 +15,11 @@ class Header extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       title: Text(AppLiterals.title),
       actions: <Widget>[
+        IconButton(
+            // TODO: Change this when notifications, show a red point
+            icon: Icon(Icons.notifications),
+            tooltip: 'Bildirim',
+            onPressed: () {}),
         GestureDetector(
             onTap: () {},
             child: Row(
