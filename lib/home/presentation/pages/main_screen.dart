@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/dashboard/presentation/pages/dash_board_screen.dart';
+import 'package:thesis_cancer/home/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/introductory_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/splash_screen.dart';
@@ -36,28 +37,10 @@ class MainScreen extends HookWidget {
                 }
               },
             ),*/
-        error: (error) {
-          // TODO: Does this show an error before to come back to the SplashView
-          final errorSnackBar = SnackBar(
-            content: Row(
-              children: [
-                Icon(Icons.bolt, color: Theme.of(context).errorColor),
-                Text(
-                  error,
-                  style: TextStyle(color: Theme.of(context).errorColor),
-                )
-              ],
-            ),
-            backgroundColor: Theme.of(context).backgroundColor,
-            duration: Duration(milliseconds: 1500),
-            action: SnackBarAction(
-              label: 'Yenileme',
+        error: (error) => ErrorScreen(
+              message: error,
               onPressed: () => pushAndReplaceToPage(context, SplashScreen()),
-            ),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
-          return Center();
-        });
+            ));
   }
 }
 

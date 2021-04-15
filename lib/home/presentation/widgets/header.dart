@@ -6,14 +6,16 @@ class Header extends StatelessWidget with PreferredSizeWidget {
   const Header({
     Key? key,
     required this.displayedUserName,
+    this.pageTitle,
   }) : super(key: key);
 
   final String displayedUserName;
+  final String? pageTitle;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(AppLiterals.title),
+      title: Text(pageTitle ?? AppLiterals.title),
       actions: <Widget>[
         IconButton(
             // TODO: Change this when notifications, show a red point

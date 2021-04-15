@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:thesis_cancer/auth/application/provider.dart';
 import 'package:thesis_cancer/auth/presentation/widgets/confirm_password.dart';
+import 'package:thesis_cancer/home/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/splash_screen.dart';
@@ -66,25 +67,11 @@ class LoginScreen extends HookWidget {
                       .then((value) =>
                           pushAndReplaceToPage(context, SplashScreen())))),
           // TODO: extract to a widget to avoid boilerplate
-          error: (error) {
-            final errorSnackBar = SnackBar(
-              content: Row(
-                children: [
-                  Icon(Icons.bolt, color: Theme.of(context).errorColor),
-                  Text(
-                    error,
-                    style: TextStyle(color: Theme.of(context).errorColor),
-                  )
-                ],
+          error: (error) => ErrorScreen(
+                message: error,
+                onPressed: () => pushAndReplaceToPage(context, SplashScreen()),
               ),
-              backgroundColor: Theme.of(context).backgroundColor,
-              duration: Duration(milliseconds: 1500),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
-            // TODO: Keep on here: right now it keeps on Loading screen.
-            // pushToPage(context, SplashScreenState());
-          },
-          loggedOut: () => null),
+          loggedOut: () => pushAndReplaceToPage(context, SplashScreen())),
     );
   }
 }
