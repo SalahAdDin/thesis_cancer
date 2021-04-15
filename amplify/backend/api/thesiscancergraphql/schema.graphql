@@ -2,7 +2,10 @@ enum ActivityType {
     LIKE
     COMMENT
     FOLLOW
-    NEW_POSt
+    NEW_POST
+    NEW_USER
+    NEW_SURVEY_ANSWER
+    NEW_SURVEY_AVAILABLE
 }
 
 enum ContentType {
@@ -15,7 +18,8 @@ enum ContentType {
 enum QuestionType {
     BOOL
     MULTIPLE
-    OPEN
+    OPEN_SHORT
+    OPEN_LONG
     SINGLE
 }
 
