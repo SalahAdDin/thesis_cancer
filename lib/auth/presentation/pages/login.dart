@@ -3,12 +3,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:thesis_cancer/auth/presentation/provider.dart';
+import 'package:thesis_cancer/auth/application/provider.dart';
 import 'package:thesis_cancer/auth/presentation/widgets/confirm_password.dart';
 import 'package:thesis_cancer/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/splash_screen.dart';
-import 'package:thesis_cancer/user/presentation/provider.dart';
+import 'package:thesis_cancer/user/application/provider.dart';
 import 'package:thesis_cancer/utils/configuration.dart';
 import 'package:thesis_cancer/utils/navigator.dart';
 

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/auth/application/auth.state.dart';
 import 'package:thesis_cancer/auth/domain/auth.repository.dart';
-import 'package:thesis_cancer/auth/domain/auth.state.dart';
 import 'package:thesis_cancer/auth/infrastructure/failure.dart';
 import 'package:thesis_cancer/auth/infrastructure/utils.dart';
 import 'package:thesis_cancer/home/domain/datastore.repository.dart';

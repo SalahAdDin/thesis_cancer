@@ -7,7 +7,7 @@ import 'package:thesis_cancer/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/splash_screen.dart';
 import 'package:thesis_cancer/home/presentation/widgets/header.dart';
 import 'package:thesis_cancer/home/presentation/widgets/side_menu/side_menu.dart';
-import 'package:thesis_cancer/user/presentation/provider.dart';
+import 'package:thesis_cancer/user/application/provider.dart';
 import 'package:thesis_cancer/utils/navigator.dart';
 
 class MainScreen extends HookWidget {
