@@ -40,8 +40,10 @@ dependencies:
   # fluttertoast: ^8.0.3
   # flutter_whatsnew: ^1.0.3
   freezed_annotation: ^0.14.1
+  group_button: ^2.1.0
   hooks_riverpod: ^0.13.1+1
   introduction_screen: ^2.0.0
+  jwt_decode: ^0.3.1
   material_design_icons_flutter: ^5.0.5955-rc.1
   package_info: ^2.0.0
   path_provider: ^2.0.1
