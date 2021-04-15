@@ -1,35 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:package_info/package_info.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/provider.dart';
 import 'package:thesis_cancer/utils/configuration.dart';
 
-class SideMenuFooter extends StatefulWidget {
-  SideMenuFooter({Key? key}) : super(key: key);
-
-  @override
-  _SideMenuFooterState createState() => _SideMenuFooterState();
-}
-
-class _SideMenuFooterState extends State<SideMenuFooter> {
-  PackageInfo _packageInfo = PackageInfo(
-    appName: 'Unknown',
-    packageName: 'Unknown',
-    version: 'Unknown',
-    buildNumber: 'Unknown',
-  );
-
-  @override
-  void initState() {
-    super.initState();
-    _initPackageInfo();
-  }
-
-  Future<void> _initPackageInfo() async {
-    final PackageInfo info = await PackageInfo.fromPlatform();
-    setState(() {
-      _packageInfo = info;
-    });
-  }
-
+class SideMenuFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,14 +13,25 @@ class _SideMenuFooterState extends State<SideMenuFooter> {
               top: BorderSide(width: 1, color: Theme.of(context).accentColor))),
       width: double.infinity,
       child: Align(
-        alignment: Alignment.center,
-        child: Container(
+          alignment: Alignment.center,
+          child: Container(
             padding: EdgeInsets.all(10),
-            child: Text(
-              "${AppLiterals.title}( v${_packageInfo.version}+${_packageInfo.buildNumber})",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            )),
-      ),
+            child: AppInfo(),
+          )),
+    );
+  }
+}
+
+// TODO: could be a global(core) widget
+class AppInfo extends HookWidget {
+  @override
+  Widget build(BuildContext context) {
+    return useProvider(packageInfoProvider).when(
+      data: (info) => Text(
+          "${AppLiterals.title}( v${info.version}+${info.buildNumber})",
+          style: TextStyle(fontWeight: FontWeight.bold)),
+      loading: () => CircularProgressIndicator(),
+      error: (error, _) => Text(error.toString()),
     );
   }
 }

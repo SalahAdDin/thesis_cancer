@@ -1,8 +1,13 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:package_info/package_info.dart';
 import 'package:thesis_cancer/home/application/splash.notifier.dart';
 import 'package:thesis_cancer/home/domain/datastore.repository.dart';
 
 final darkThemeProvider = Provider<bool>((ref) => true);
+
+final packageInfoProvider = FutureProvider<PackageInfo>(
+  (_) async => await PackageInfo.fromPlatform(),
+);
 
 final dataStoreRepositoryProvider =
     Provider<DataStoreRepository>((ref) => throw UnimplementedError());
