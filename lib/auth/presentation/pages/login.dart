@@ -69,6 +69,7 @@ class LoginScreen extends HookWidget {
           // TODO: extract to a widget to avoid boilerplate
           error: (error) => ErrorScreen(
                 message: error,
+                actionLabel: 'Home',
                 onPressed: () => pushAndReplaceToPage(context, SplashScreen()),
               ),
           loggedOut: () => pushAndReplaceToPage(context, SplashScreen())),

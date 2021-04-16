@@ -39,6 +39,7 @@ class MainScreen extends HookWidget {
             ),*/
         error: (error) => ErrorScreen(
               message: error,
+              actionLabel: 'Home',
               onPressed: () => pushAndReplaceToPage(context, SplashScreen()),
             ));
   }

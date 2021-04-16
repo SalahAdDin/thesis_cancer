@@ -26,24 +26,17 @@ class Header extends StatelessWidget with PreferredSizeWidget {
             onTap: () {},
             child: Row(
               children: <Widget>[
-                SizedBox(
-                  height: 100,
-                ),
                 CircleAvatar(
                   radius: isMobile(context) ? 10 : 15,
                   child: Icon(Icons.account_circle_outlined),
                   // TODO: backgroundImage: Image.network(src),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
+                SizedBox(width: 10),
                 Text(
                   this.displayedUserName,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
-                  width: 20,
-                ),
+                SizedBox(width: 20),
               ],
             )),
         IconButton(
