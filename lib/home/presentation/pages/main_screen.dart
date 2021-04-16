@@ -19,7 +19,8 @@ class MainScreen extends HookWidget {
     final currentUserState = useProvider(homeScreenProvider.state);
     return currentUserState.when(
         loading: () => Center(child: CircularProgressIndicator()),
-        isAdmin: () => DashBoardScreen(),
+        // TODO: Handle the main layout builder to navigate to isAdmin: () => DashBoardScreen(),
+        isAdmin: () => MainLayout(),
         unConfirmed: () => LobbyScreen(),
         mustSeeIntroduction: () => IntroductoryScreen(),
         mustSeeTutorial: () => IntroductoryScreen(),

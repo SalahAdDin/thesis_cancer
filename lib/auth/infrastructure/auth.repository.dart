@@ -1,6 +1,7 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_flutter/categories/amplify_categories.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:thesis_cancer/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/auth/infrastructure/utils.dart';
 
@@ -59,19 +60,15 @@ class AmplifyAuthRepository implements AuthRepository {
   @override
   Future<Map<String, dynamic>> fetchSession() async {
     try {
-      AuthSession fetchedSession = await _authCategory.fetchAuthSession(
-          options: CognitoSessionOptions(getAWSCredentials: true));
-      /* TODO: https://github.com/aws-amplify/amplify-flutter/issues/504
       CognitoAuthSession fetchedSession = await _authCategory.fetchAuthSession(
-          options: CognitoSessionOptions(getAWSCredentials: true));
+              options: CognitoSessionOptions(getAWSCredentials: true))
+          as CognitoAuthSession;
       String token = fetchedSession.userPoolTokens.idToken;
       Map<String, dynamic> payload = Jwt.parseJwt(token);
-      // Access the groups
       List groups = payload['cognito:groups'];
-      */
       Map<String, dynamic> result = {
         'isSignedIn': fetchedSession.isSignedIn,
-        // 'roles': groups
+        'roles': groups
       };
       return result;
     } on AmplifyException catch (error) {

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/auth/application/auth.state.dart';
 import 'package:thesis_cancer/auth/domain/auth.repository.dart';
@@ -31,23 +32,29 @@ class AuthNotifier extends StateNotifier<AuthState> {
     Map<String, String> userAttributes =
         await authRepository.fetchUserAttributes();
     /* TODO: Getting user from API by userId or username?
-        *   Must the userId from Cognito saved on backend?*/
+        *   Must the userId from Cognito saved on backend?
+        * */
     // final backendStoredUser = apiRepository.getUserAccount(username: username);
-    // TODO: verify which attributes comes: confirmed and roles(groups) are required.
+    Map<String, dynamic> userSession = await authRepository.fetchSession();
+    // TODO: what if userSession['roles'][0] does not exist?
+    String? userSessionRole = userSession['roles'][0];
     User newProfile = User(
         id: uuid.v4(),
         email: userAttributes['email']!,
         displayName: '',
         phoneNumber: userAttributes['phone_number']!,
-        role: UserRole.PILOT,
+        role: userSessionRole != null
+            ? EnumToString.fromString(
+                UserRole.values, userSessionRole.toUpperCase())!
+            : UserRole.PILOT,
         isConfirmed: userAttributes['email_verified'] == 'true' ||
                 userAttributes['phone_number_verified'] == 'true'
             ? true
             : false);
-
     // TODO: Ensure every new change on the user profile will be persisted on backend
     if (storedUser == User.empty)
       await dataStore.writeUserProfile(newProfile);
+    // TODO: call to API
     else if (newProfile == storedUser) {
     } else
       await dataStore.writeUserProfile(newProfile);
