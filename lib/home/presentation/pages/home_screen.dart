@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/home/presentation/pages/knowledge_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/research_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/stories_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/therapy_screen.dart';
-import 'package:thesis_cancer/utils/types.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);

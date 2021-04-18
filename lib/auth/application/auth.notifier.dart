@@ -6,9 +6,9 @@ import 'package:thesis_cancer/auth/application/auth.state.dart';
 import 'package:thesis_cancer/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/auth/infrastructure/failure.dart';
 import 'package:thesis_cancer/auth/infrastructure/utils.dart';
-import 'package:thesis_cancer/home/domain/datastore.repository.dart';
+import 'package:thesis_cancer/core/domain/datastore.repository.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/user/domain/user.entity.dart';
-import 'package:thesis_cancer/utils/types.dart';
 import 'package:uuid/uuid.dart';
 
 class AuthNotifier extends StateNotifier<AuthState> {

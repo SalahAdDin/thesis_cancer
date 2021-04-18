@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/user/application/user.state.dart';
 import 'package:thesis_cancer/user/domain/user.entity.dart';
 import 'package:thesis_cancer/user/domain/user.repository.dart';
-import 'package:thesis_cancer/utils/types.dart';
 
 class UserNotifier extends StateNotifier<UserState> {
   UserNotifier({required this.currentUser, required this.userRepository})

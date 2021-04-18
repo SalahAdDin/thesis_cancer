@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:thesis_cancer/utils/types.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
 
 part 'user.entity.freezed.dart';
 part 'user.entity.g.dart';

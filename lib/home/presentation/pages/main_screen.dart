@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/navigator.dart';
+import 'package:thesis_cancer/core/presentation/widgets/header.dart';
+import 'package:thesis_cancer/core/presentation/widgets/side_menu/side_menu.dart';
 import 'package:thesis_cancer/dashboard/presentation/pages/dash_board_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/introductory_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/home/presentation/pages/splash_screen.dart';
-import 'package:thesis_cancer/home/presentation/widgets/header.dart';
-import 'package:thesis_cancer/home/presentation/widgets/side_menu/side_menu.dart';
 import 'package:thesis_cancer/user/application/provider.dart';
-import 'package:thesis_cancer/utils/navigator.dart';
 
 class MainScreen extends HookWidget {
   @override

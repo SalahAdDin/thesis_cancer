@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:thesis_cancer/home/application/splash.state.dart';
-import 'package:thesis_cancer/home/domain/datastore.repository.dart';
+import 'package:thesis_cancer/core/application/splash.state.dart';
+import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 
 class SplashScreenNotifier extends StateNotifier<SplashScreenState> {
   SplashScreenNotifier({required this.dataStore})

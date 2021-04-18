@@ -1,6 +1,6 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
-import 'package:thesis_cancer/utils/types.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
 
 class UsersDataTable extends StatefulWidget {
   UsersDataTable({Key? key}) : super(key: key);

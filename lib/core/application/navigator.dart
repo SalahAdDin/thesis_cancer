@@ -15,3 +15,7 @@ Future popAllAndPush(BuildContext context, Widget widget) async {
       MaterialPageRoute(builder: (BuildContext context) => widget),
       ModalRoute.withName('/'));
 }
+
+Future popToBack(BuildContext context, Widget widget) async {
+  Navigator.of(context).pop(MaterialPageRoute(builder: (_) => widget));
+}

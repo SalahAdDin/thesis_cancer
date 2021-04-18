@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thesis_cancer/home/presentation/widgets/button.dart';
+import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 
 class ErrorScreen extends StatelessWidget {
   ErrorScreen(

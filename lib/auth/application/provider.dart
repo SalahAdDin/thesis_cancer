@@ -2,7 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/auth/application/auth.notifier.dart';
 import 'package:thesis_cancer/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/auth/infrastructure/auth.repository.dart';
-import 'package:thesis_cancer/provider.dart';
+import 'package:thesis_cancer/core/application/provider.dart';
 
 final authRepositoryProvider =
     Provider<AuthRepository>((ref) => AmplifyAuthRepository());

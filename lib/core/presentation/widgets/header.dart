@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:thesis_cancer/utils/configuration.dart';
-import 'package:thesis_cancer/utils/responsive.dart';
+import 'package:thesis_cancer/core/application/responsive.dart';
+import 'package:thesis_cancer/core/domain/configuration.dart';
 
 class Header extends StatelessWidget with PreferredSizeWidget {
   const Header({

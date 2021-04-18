@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thesis_cancer/home/presentation/widgets/app_info.dart';
+import 'package:thesis_cancer/core/presentation/widgets/app_info.dart';
 
 class SideMenuFooter extends StatelessWidget {
   @override

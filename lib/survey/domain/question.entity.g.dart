@@ -54,6 +54,7 @@ K _$enumDecode<K, V>(
 const _$QuestionTypeEnumMap = {
   QuestionType.BOOL: 'BOOL',
   QuestionType.MULTIPLE: 'MULTIPLE',
-  QuestionType.OPEN: 'OPEN',
+  QuestionType.OPEN_SHORT: 'OPEN_SHORT',
+  QuestionType.OPEN_LONG: 'OPEN_LONG',
   QuestionType.SINGLE: 'SINGLE',
 };

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:thesis_cancer/home/presentation/widgets/side_menu/side_menu_footer.dart';
-import 'package:thesis_cancer/home/presentation/widgets/side_menu/side_menu_header.dart';
+import 'package:thesis_cancer/core/presentation/widgets/side_menu/side_menu_footer.dart';
+import 'package:thesis_cancer/core/presentation/widgets/side_menu/side_menu_header.dart';
 
 class SideMenu extends StatelessWidget {
   @override
