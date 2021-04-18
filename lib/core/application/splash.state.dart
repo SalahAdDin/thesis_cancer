@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:thesis_cancer/user/domain/user.entity.dart';
+import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 part 'splash.state.freezed.dart';
 

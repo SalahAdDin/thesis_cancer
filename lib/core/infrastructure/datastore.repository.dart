@@ -2,9 +2,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
-import 'package:thesis_cancer/survey/domain/survey.entity.dart';
-import 'package:thesis_cancer/survey/domain/usersurveyanswer.entity.dart';
-import 'package:thesis_cancer/user/domain/user.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/survey.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/usersurveyanswer.entity.dart';
+import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 class StorePath {
   static const profile = 'profile';
