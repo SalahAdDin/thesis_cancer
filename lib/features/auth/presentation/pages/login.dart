@@ -17,7 +17,7 @@ import 'package:thesis_cancer/features/user/application/provider.dart';
 class LoginScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final authScreenState = useProvider(authNotifierProvider.state);
+    final authScreenState = useProvider(authNotifierProvider);
     return FlutterLogin(
       title: AppLiterals.title,
       footer: AppLiterals.copyRight,
@@ -26,25 +26,27 @@ class LoginScreen extends HookWidget {
       loginProviders: <LoginProvider>[
         LoginProvider(
             icon: MdiIcons.facebook,
-            callback: () =>
-                context.read(authNotifierProvider).signInWithFacebook()),
+            callback: () => context
+                .read(authNotifierProvider.notifier)
+                .signInWithFacebook()),
         LoginProvider(
             icon: MdiIcons.google,
             callback: () =>
-                context.read(authNotifierProvider).signInWithGoogle()),
+                context.read(authNotifierProvider.notifier).signInWithGoogle()),
         LoginProvider(
             icon: MdiIcons.apple,
             callback: () =>
-                context.read(authNotifierProvider).signInWithApple()),
+                context.read(authNotifierProvider.notifier).signInWithApple()),
       ],
       onSignup: (LoginData data) => context
-          .read(authNotifierProvider)
+          .read(authNotifierProvider.notifier)
           .registerUser(username: data.name, password: data.password),
       onLogin: (LoginData data) => context
-          .read(authNotifierProvider)
+          .read(authNotifierProvider.notifier)
           .signIn(username: data.name, password: data.password),
-      onRecoverPassword: (String name) =>
-          context.read(authNotifierProvider).recoverPassword(username: name),
+      onRecoverPassword: (String name) => context
+          .read(authNotifierProvider.notifier)
+          .recoverPassword(username: name),
       onSubmitAnimationCompleted: () => authScreenState.when(
           loading: () => Center(child: CircularProgressIndicator()),
           // TODO: How to pass this user to survey? to LobbyScreen? Is it needed?
@@ -56,7 +58,9 @@ class LoginScreen extends HookWidget {
           requestedResetPassword: () => null,
           // TODO: How to get the first time at login (create a new profile on database here)?
           loggedIn: (loggedInUser) {
-            context.read(homeScreenProvider).setCurrentUser(loggedInUser);
+            context
+                .read(homeScreenProvider.notifier)
+                .setCurrentUser(loggedInUser);
             pushAndReplaceToPage(context, MainScreen());
           },
           requiresConfirmSignIn: () => pushToPage(
@@ -67,7 +71,7 @@ class LoginScreen extends HookWidget {
                   which is in loggedIn state, sending us to the home page. */
               ConfirmPasswordWidget(
                   onConfirm: (String confirmationCode) => context
-                      .read(authNotifierProvider)
+                      .read(authNotifierProvider.notifier)
                       .confirmSignIn(confirmationCode: confirmationCode)
                       .then((value) =>
                           pushAndReplaceToPage(context, SplashScreen())))),

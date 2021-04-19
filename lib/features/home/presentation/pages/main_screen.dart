@@ -15,8 +15,8 @@ class MainScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance!.addPostFrameCallback(
-        (_) => context.read(homeScreenProvider).deliverUserScreen());
-    final currentUserState = useProvider(homeScreenProvider.state);
+        (_) => context.read(homeScreenProvider.notifier).deliverUserScreen());
+    final currentUserState = useProvider(homeScreenProvider);
     return currentUserState.when(
         loading: () => Center(child: CircularProgressIndicator()),
         // TODO: Handle the main layout builder to navigate to isAdmin: () => DashBoardScreen(),

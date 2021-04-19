@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:package_info/package_info.dart';
 import 'package:thesis_cancer/core/application/splash.notifier.dart';
+import 'package:thesis_cancer/core/application/splash.state.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 
 final darkThemeProvider = Provider<bool>((ref) => true);
@@ -15,7 +16,8 @@ final packageInfoProvider = FutureProvider<PackageInfo>(
 final dataStoreRepositoryProvider =
     Provider<DataStoreRepository>((ref) => throw UnimplementedError());
 
-final splashScreenProvider = StateNotifierProvider<SplashScreenNotifier>((ref) {
+final splashScreenProvider =
+    StateNotifierProvider<SplashScreenNotifier, SplashScreenState>((ref) {
   final dataStore = ref.watch(dataStoreRepositoryProvider);
   return SplashScreenNotifier(dataStore: dataStore);
 });

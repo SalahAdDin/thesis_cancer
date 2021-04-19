@@ -9,12 +9,12 @@ import 'package:thesis_cancer/features/user/application/provider.dart';
 class SplashScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final splashScreenState = useProvider(splashScreenProvider.state);
+    final splashScreenState = useProvider(splashScreenProvider);
     return splashScreenState.when(
         loading: () => Center(child: CircularProgressIndicator()),
         needsProfile: () => LoginScreen(),
         profileLoaded: (profileData) {
-          context.read(homeScreenProvider).setCurrentUser(profileData);
+          context.read(homeScreenProvider.notifier).setCurrentUser(profileData);
           return MainScreen();
         });
   }
