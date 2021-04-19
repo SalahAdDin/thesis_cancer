@@ -77,21 +77,29 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String password,
   }) async {
     try {
-      bool result =
+      AmplifyResult result =
           await authRepository.signUp(username: username, password: password);
       // TODO: Fetch attributes to get the sub from user.
+      /* TODO: How to get the user identifier to send to API for further setting up the role?
       Map<String, String> userAttributes =
-          await authRepository.fetchUserAttributes();
-      if (!result)
+          await authRepository.fetchUserAttributes();*/
+      // TODO: should we trust on success or on next step?
+      if (result.nextStep ==
+          EnumToString.convertToString(NextStep.CONFIRM_SIGN_UP_STEP))
         state = AuthState.signedUp(User(
             id: uuid.v4(),
-            email: userAttributes['email']!,
+            // email: userAttributes['email']!,
+            email: username,
             displayName: username,
-            phoneNumber: userAttributes['phone_number']!,
+            // phoneNumber: userAttributes['phone_number']!,
             role: UserRole.PILOT,
             isConfirmed: false));
+    } on SignUpWithInvalidPasswordFailure catch (error) {
+      // state = AuthState.error(error.toString());
+      return error.toString();
     } on SignUpFailure catch (error) {
-      state = AuthState.error(error.toString());
+      // state = AuthState.error(error.toString());
+      return error.toString();
     }
   }
 
@@ -103,11 +111,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
           await authRepository.signIn(username: username, password: password);
       if (result.isSuccess)
         await createUserProfile(storedUser);
-      else if (result.nextStep == 'CONFIRM_SIGN_IN_WITH_NEW_PASSWORD')
+      else if (result.nextStep ==
+          EnumToString.convertToString(
+              NextStep.CONFIRM_SIGN_IN_WITH_NEW_PASSWORD))
         state = AuthState.requiresConfirmSignIn();
       else
-        state = AuthState.error(
-            'It was not possible to log in with your credentials.');
+        // state = AuthState.error('It was not possible to log in with your credentials.');
+        return 'It was not possible to log in with your credentials.';
     } on LogInUnconfirmedUserFailure {
       User newProfile = User(
           id: uuid.v4(),
@@ -117,7 +127,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
           isConfirmed: false);
       state = AuthState.loggedIn(newProfile);
     } on LogInWithEmailAndPasswordFailure catch (error) {
-      state = AuthState.error(error.toString());
+      // state = AuthState.error(error.toString());
+      return error.toString();
     }
   }
 
@@ -129,10 +140,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
       if (result) {
         await createUserProfile(storedUser);
       } else {
-        state = AuthState.error('It was not possible to log in with Facebook.');
+        // state = AuthState.error('It was not possible to log in with Facebook.');
+        return 'It was not possible to log in with Facebook.';
       }
     } on LogInWithSocialProviderFailure catch (error) {
-      state = AuthState.error(error.toString());
+      // state = AuthState.error(error.toString());
+      return error.toString();
     }
   }
 
@@ -144,9 +157,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
       if (result)
         await createUserProfile(storedUser);
       else
-        state = AuthState.error('It was not possible to log in with Google.');
+        // state = AuthState.error('It was not possible to log in with Google.');
+        return 'It was not possible to log in with Google.';
     } on LogInWithSocialProviderFailure catch (error) {
-      state = AuthState.error(error.toString());
+      // state = AuthState.error(error.toString());
+      return error.toString();
     }
   }
 
@@ -158,9 +173,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
       if (result)
         await createUserProfile(storedUser);
       else
-        state = AuthState.error('It was not possible to log in with Apple.');
+        // state = AuthState.error('It was not possible to log in with Apple.');
+        return 'It was not possible to log in with Apple.';
     } on LogInWithSocialProviderFailure catch (error) {
-      state = AuthState.error(error.toString());
+      // state = AuthState.error(error.toString());
+      return error.toString();
     }
   }
 
@@ -170,10 +187,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
       if (result)
         state = AuthState.requestedResetPassword();
       else
-        state = AuthState.error(
-            'It was not possible to send a reset password request.');
+        //state = AuthState.error('It was not possible to send a reset password request.');
+        return 'It was not possible to send a reset password request.';
     } on ResetPasswordFailure catch (error) {
-      state = AuthState.error(error.toString());
+      // state = AuthState.error(error.toString());
+      return error.toString();
     }
   }
 
@@ -189,8 +207,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
         createUserProfile(storedUser);
       else
         state = AuthState.error('It is not possible to confirm your password.');
+      // return 'It is not possible to confirm your password.';
     } on ConfirmSignInFailure catch (error) {
       state = AuthState.error(error.toString());
+      // return error.toString();
     }
   }
 }

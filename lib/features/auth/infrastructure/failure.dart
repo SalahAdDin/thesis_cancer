@@ -1,8 +1,13 @@
+import 'package:amplify_auth_plugin_interface/src/Exceptions/InvalidPasswordException.dart';
 import 'package:amplify_auth_plugin_interface/src/Exceptions/UserNotConfirmedException.dart';
 import 'package:amplify_flutter/amplify.dart';
 
 class SignUpFailure implements Exception {
   SignUpFailure(AmplifyException error);
+}
+
+class SignUpWithInvalidPasswordFailure implements Exception {
+  SignUpWithInvalidPasswordFailure(InvalidPasswordException error);
 }
 
 class ResetPasswordFailure implements Exception {

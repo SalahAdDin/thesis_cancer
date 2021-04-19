@@ -34,7 +34,7 @@ abstract class AuthRepository {
 
   Future<void> signOut();
 
-  Future<bool> signUp({required String username, required String password});
+  Future<dynamic> signUp({required String username, required String password});
 
   Future<void> updatePassword(
       {required String oldPassword, required String newPassword});

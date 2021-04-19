@@ -176,7 +176,7 @@ class AmplifyAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<bool> signUp(
+  Future<AmplifyResult> signUp(
       {required String username, required String password}) async {
     try {
       Map<String, String> userAttributes = {"email": username};
@@ -184,7 +184,11 @@ class AmplifyAuthRepository implements AuthRepository {
           username: username,
           password: password,
           options: CognitoSignUpOptions(userAttributes: userAttributes));
-      return result.isSignUpComplete;
+      return AmplifyResult(
+          isSuccess: result.isSignUpComplete,
+          nextStep: result.nextStep.signUpStep);
+    } on InvalidPasswordException catch (error) {
+      throw SignUpWithInvalidPasswordFailure(error);
     } on AmplifyException catch (error) {
       // TODO: Catch error for analytics, not required for frontend.
       throw SignUpFailure(error);

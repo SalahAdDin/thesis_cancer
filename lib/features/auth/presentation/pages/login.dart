@@ -6,6 +6,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/domain/configuration.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
+import 'package:thesis_cancer/features/auth/application/auth.notifier.dart';
+import 'package:thesis_cancer/features/auth/application/auth.state.dart';
 import 'package:thesis_cancer/features/auth/application/provider.dart';
 import 'package:thesis_cancer/features/auth/presentation/widgets/confirm_password.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart';
@@ -17,7 +19,13 @@ import 'package:thesis_cancer/features/user/application/provider.dart';
 class LoginScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final authScreenState = useProvider(authNotifierProvider);
+    final AuthState authScreenState = useProvider(authNotifierProvider);
+
+    final AuthNotifier authNotifier =
+        useProvider(authNotifierProvider.notifier);
+
+    final homeScreenProvider = useProvider(homeScreenNotifierProvider.notifier);
+
     return FlutterLogin(
       title: AppLiterals.title,
       footer: AppLiterals.copyRight,
@@ -26,31 +34,24 @@ class LoginScreen extends HookWidget {
       loginProviders: <LoginProvider>[
         LoginProvider(
             icon: MdiIcons.facebook,
-            callback: () => context
-                .read(authNotifierProvider.notifier)
-                .signInWithFacebook()),
+            callback: () => authNotifier.signInWithFacebook()),
         LoginProvider(
             icon: MdiIcons.google,
-            callback: () =>
-                context.read(authNotifierProvider.notifier).signInWithGoogle()),
+            callback: () => authNotifier.signInWithGoogle()),
         LoginProvider(
             icon: MdiIcons.apple,
-            callback: () =>
-                context.read(authNotifierProvider.notifier).signInWithApple()),
+            callback: () => authNotifier.signInWithApple()),
       ],
-      onSignup: (LoginData data) => context
-          .read(authNotifierProvider.notifier)
-          .registerUser(username: data.name, password: data.password),
-      onLogin: (LoginData data) => context
-          .read(authNotifierProvider.notifier)
-          .signIn(username: data.name, password: data.password),
-      onRecoverPassword: (String name) => context
-          .read(authNotifierProvider.notifier)
-          .recoverPassword(username: name),
+      onSignup: (LoginData data) => authNotifier.registerUser(
+          username: data.name, password: data.password),
+      onLogin: (LoginData data) =>
+          authNotifier.signIn(username: data.name, password: data.password),
+      onRecoverPassword: (String name) =>
+          authNotifier.recoverPassword(username: name),
       onSubmitAnimationCompleted: () => authScreenState.when(
           loading: () => Center(child: CircularProgressIndicator()),
           // TODO: How to pass this user to survey? to LobbyScreen? Is it needed?
-          signedUp: (signedUpUser) => pushToPage(
+          signedUp: (signedUpUser) => pushAndReplaceToPage(
               context,
               SurveyScreen(
                   onCompleteSurvey: () => pushToPage(context, LobbyScreen()))),
@@ -58,9 +59,7 @@ class LoginScreen extends HookWidget {
           requestedResetPassword: () => null,
           // TODO: How to get the first time at login (create a new profile on database here)?
           loggedIn: (loggedInUser) {
-            context
-                .read(homeScreenProvider.notifier)
-                .setCurrentUser(loggedInUser);
+            homeScreenProvider.setCurrentUser(loggedInUser);
             pushAndReplaceToPage(context, MainScreen());
           },
           requiresConfirmSignIn: () => pushToPage(
