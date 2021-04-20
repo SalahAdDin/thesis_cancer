@@ -14,7 +14,7 @@ import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart
 import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
-import 'package:thesis_cancer/features/user/application/provider.dart';
+import 'package:thesis_cancer/features/user/application/user.provider.dart';
 
 class LoginScreen extends HookWidget {
   @override

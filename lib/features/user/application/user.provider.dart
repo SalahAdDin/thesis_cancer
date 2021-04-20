@@ -10,7 +10,7 @@ final userRepositoryProvider =
 
 final userEntityProvider = Provider<User>((ref) => User.empty);
 
-final homeScreenProvider =
+final homeScreenNotifierProvider =
     StateNotifierProvider<UserNotifier, UserState>((ref) {
   final userEntity = ref.watch(userEntityProvider);
   final userRepository = ref.watch(userRepositoryProvider);
