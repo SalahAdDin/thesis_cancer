@@ -19,3 +19,5 @@ enum SplashState { NONE, EXISTING_USER, NEW_USER }
 enum UserRole { ADMIN, PILOT, TEST, CONTROL }
 
 enum UserStatus { UNCONFIRMED, ADMIN, INTRODUCTION, TUTORIAL, FINAL }
+
+typedef onPressedButton = void Function();

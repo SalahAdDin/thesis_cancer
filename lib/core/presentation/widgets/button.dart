@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
+
+// TODO: Improve a disable button style(as in web).
 
 class Button extends StatelessWidget {
   final String buttonLabel;
-  final Function onPressed;
+  final onPressedButton onPressed;
   final bool isPrimary;
 
   Button.primary({
@@ -22,15 +25,8 @@ class Button extends StatelessWidget {
         primary: isPrimary
             ? Theme.of(context).primaryColor
             : Theme.of(context).accentColor,
-        shape: isPrimary
-            ? null
-            : RoundedRectangleBorder(
-                side: BorderSide(
-                  color: Theme.of(context).disabledColor,
-                ),
-              ),
       ),
-      onPressed: () => onPressed,
+      onPressed: onPressed,
       child: Text(
         buttonLabel,
         style: isPrimary
