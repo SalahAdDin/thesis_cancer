@@ -7,8 +7,8 @@ import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/domain/configuration.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/features/auth/application/auth.notifier.dart';
+import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
-import 'package:thesis_cancer/features/auth/application/provider.dart';
 import 'package:thesis_cancer/features/auth/presentation/widgets/confirm_password.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
@@ -53,8 +53,10 @@ class LoginScreen extends HookWidget {
           // TODO: How to pass this user to survey? to LobbyScreen? Is it needed?
           signedUp: (signedUpUser) => pushAndReplaceToPage(
               context,
-              SurveyScreen(
-                  onCompleteSurvey: () => pushToPage(context, LobbyScreen()))),
+              Scaffold(
+                body: SurveyScreen(
+                    onCompleteSurvey: () => pushToPage(context, LobbyScreen())),
+              )),
           // TODO: create ChangePassword screen.
           requestedResetPassword: () => null,
           // TODO: How to get the first time at login (create a new profile on database here)?
