@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 
 class CompletedSurvey extends StatelessWidget {
-  final Function onPressed;
+  final onPressedButton onPressed;
   final String actionLabel;
 
   const CompletedSurvey(
@@ -28,11 +30,17 @@ class CompletedSurvey extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text('Teşekkür ederiz',
-                      style: Theme.of(context).textTheme.headline1),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .copyWith(fontSize: 40),
+                      textAlign: TextAlign.center),
                   SizedBox(height: 15),
                   Text(
-                      'Anketimize verdiğiniz yanıtları aldık, bu anketi doldurmak için ayırdığınız zaman için teşekkür ederiz.',
-                      style: Theme.of(context).textTheme.bodyText1),
+                    'Anketimize verdiğiniz yanıtları aldık, bu anketi doldurmak için ayırdığınız zaman için teşekkür ederiz.',
+                    style: Theme.of(context).textTheme.bodyText1,
+                    textAlign: TextAlign.center,
+                  ),
                   SizedBox(height: 30),
                   Button.primary(buttonLabel: actionLabel, onPressed: onPressed)
                 ],

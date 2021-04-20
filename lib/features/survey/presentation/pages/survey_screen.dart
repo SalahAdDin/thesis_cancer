@@ -2,10 +2,10 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 import 'package:thesis_cancer/features/survey/application/survey.provider.dart';
-import 'package:thesis_cancer/features/survey/domain/question.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/survey.entity.dart';
 import 'package:thesis_cancer/features/survey/presentation/widgets/completed_survey.dart';
 import 'package:thesis_cancer/features/survey/presentation/widgets/question_widget.dart';
@@ -16,7 +16,7 @@ typedef FinishSurveyCallback = Future<void> Function();
 class SurveyScreen extends HookWidget {
   SurveyScreen({required this.onCompleteSurvey});
 
-  final Function onCompleteSurvey;
+  final onPressedButton onCompleteSurvey;
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +45,8 @@ class SurveyScreen extends HookWidget {
 class SurveyWidget extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    // We get the state(not the StateController).
     final Survey currentSurvey = useProvider(surveyEntityProvider).state;
-    Question currentQuestion = useProvider(questionEntityProvider).state;
     final currentSurveyNotifier = useProvider(surveyNotifierProvider.notifier);
     return SingleChildScrollView(
       child: Column(
@@ -84,12 +84,14 @@ class SurveyWidget extends HookWidget {
                         activeColor: Theme.of(context).primaryColor,
                         color: Theme.of(context).disabledColor,
                       ),
-                      onTap: (position) {
-                        currentSurveyNotifier.goTo(position.toInt());
-                        currentQuestion = currentSurvey.questions![
-                            currentSurveyNotifier.currentQuestionIndex];
-                        // print("Current index: $currentQuestion");
-                      },
+                      onTap: (position) =>
+                          currentSurveyNotifier.isAnsweredQuestion(
+                                  questionId: currentSurveyNotifier
+                                      .questionController.state.id)
+                              ? currentSurveyNotifier.goTo(position.toInt())
+                              : null
+                      // print("Current index: $currentQuestion");
+                      ,
                     ),
                   ),
                   SizedBox(height: 24),
@@ -120,10 +122,8 @@ class SurveyWidget extends HookWidget {
                               : null,*/
                           onPressed: () =>
                               currentSurveyNotifier.isAnsweredQuestion(
-                                      questionId: currentSurvey
-                                          .questions![currentSurveyNotifier
-                                              .currentQuestionIndex]
-                                          .id)
+                                      questionId: currentSurveyNotifier
+                                          .questionController.state.id)
                                   ? currentSurveyNotifier.nextQuestion()
                                   : null,
                         )

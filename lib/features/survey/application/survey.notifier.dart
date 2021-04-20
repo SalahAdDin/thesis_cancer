@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/features/survey/application/survey.state.dart';
+import 'package:thesis_cancer/features/survey/domain/question.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/survey.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/usersurveyanswer.entity.dart';
 import 'package:uuid/uuid.dart';
@@ -9,12 +10,11 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   SurveyNotifier(
       {required this.currentSurvey,
       required this.currentUserId,
+      required this.questionController,
       // required this.surveyRepository,
       // required this.userSurveyAnswerRepository,
       required this.dataStore})
-      : super(const SurveyState.loading()) {
-    init();
-  }
+      : super(const SurveyState.data());
 
   Uuid uuid = Uuid();
 
@@ -24,8 +24,10 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   final Survey currentSurvey;
   final String currentUserId;
 
-  late int currentQuestionIndex;
-  late Map<String, String> answers;
+  final StateController<Question> questionController;
+
+  int currentQuestionIndex = 0;
+  Map<String, String> answers = {};
 
   Future<void> completeSurvey() async {
     try {
@@ -44,7 +46,12 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
     }
   }
 
-  goTo(int step) => this.currentQuestionIndex = step;
+  goTo(int step) {
+    this.currentQuestionIndex = step;
+    questionController.state =
+        this.currentSurvey.questions![this.currentQuestionIndex];
+    state = SurveyState.data();
+  }
 
   nextQuestion() =>
       this.currentQuestionIndex + 1 != currentSurvey.questions?.length
@@ -55,8 +62,14 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
     if (this.currentQuestionIndex > 0) goTo(this.currentQuestionIndex - 1);
   }
 
-  answerQuestion({required String questionId, required String answer}) =>
+  /*answerQuestion({required String questionId, required String answer}) =>
       this.answers[questionId] = answer;
+*/
+
+  answerQuestion({required String questionId, required String answer}) {
+    this.answers[questionId] = answer;
+    print("Answers till now: ${this.answers}");
+  }
 
   bool isAnsweredQuestion({required String questionId}) =>
       this.answers[questionId] != null ? true : false;
@@ -69,8 +82,7 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   * TODO: how to check the iteration number?
   *  */
   void init() {
-    this.currentQuestionIndex = 0;
-    this.answers = {};
-    state = SurveyState.data();
+    // questionController.state = this.currentSurvey.questions![0];
+    print(currentSurvey.questions);
   }
 }
