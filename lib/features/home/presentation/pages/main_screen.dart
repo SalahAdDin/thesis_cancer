@@ -9,14 +9,14 @@ import 'package:thesis_cancer/features/dashboard/presentation/pages/dash_board_s
 import 'package:thesis_cancer/features/home/presentation/pages/introductory_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
-import 'package:thesis_cancer/features/user/application/provider.dart';
+import 'package:thesis_cancer/features/user/application/user.provider.dart';
 
 class MainScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback(
-        (_) => context.read(homeScreenProvider.notifier).deliverUserScreen());
-    final currentUserState = useProvider(homeScreenProvider);
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>
+        context.read(homeScreenNotifierProvider.notifier).deliverUserScreen());
+    final currentUserState = useProvider(homeScreenNotifierProvider);
     return currentUserState.when(
         loading: () => Center(child: CircularProgressIndicator()),
         // TODO: Handle the main layout builder to navigate to isAdmin: () => DashBoardScreen(),
