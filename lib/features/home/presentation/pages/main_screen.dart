@@ -21,7 +21,9 @@ class MainScreen extends HookWidget {
         loading: () => Center(child: CircularProgressIndicator()),
         // TODO: Handle the main layout builder to navigate to isAdmin: () => DashBoardScreen(),
         isAdmin: () => MainLayout(),
-        unConfirmed: () => LobbyScreen(),
+        unConfirmed: () => Scaffold(
+              body: LobbyScreen(),
+            ),
         mustSeeIntroduction: () => IntroductoryScreen(),
         mustSeeTutorial: () => IntroductoryScreen(),
         completed: () => MainLayout(),

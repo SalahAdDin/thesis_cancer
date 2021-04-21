@@ -11,6 +11,7 @@ class CompletedSurvey extends StatelessWidget {
       {Key? key, required this.onPressed, required this.actionLabel})
       : super(key: key);
 
+  // TODO: review here: column inside of column, why?
   @override
   Widget build(BuildContext context) {
     return Column(

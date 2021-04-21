@@ -51,11 +51,15 @@ class LoginScreen extends HookWidget {
       onSubmitAnimationCompleted: () => authScreenState.when(
           loading: () => Center(child: CircularProgressIndicator()),
           // TODO: How to pass this user to survey? to LobbyScreen? Is it needed?
-          signedUp: (signedUpUser) => pushAndReplaceToPage(
+          signedUp: (signedUpUser) => pushToPage(
               context,
               Scaffold(
                 body: SurveyScreen(
-                    onCompleteSurvey: () => pushToPage(context, LobbyScreen())),
+                    onCompleteSurvey: () => pushAndReplaceToPage(
+                        context,
+                        Scaffold(
+                          body: LobbyScreen(),
+                        ))),
               )),
           // TODO: create ChangePassword screen.
           requestedResetPassword: () => null,
