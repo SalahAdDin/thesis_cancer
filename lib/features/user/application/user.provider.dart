@@ -8,11 +8,14 @@ import 'package:thesis_cancer/features/user/infrastructure/user.api.repository.d
 final userRepositoryProvider =
     Provider<UserRepository>((ref) => AmplifyGraphQLUserRepository());
 
-final userEntityProvider = Provider<User>((ref) => User.empty);
+final StateProvider<User> userEntityProvider =
+    StateProvider<User>((ref) => User.empty);
+// final userEntityProvider = Provider<User>((ref) => User.empty);
 
 final homeScreenNotifierProvider =
     StateNotifierProvider<UserNotifier, UserState>((ref) {
-  final userEntity = ref.watch(userEntityProvider);
   final userRepository = ref.watch(userRepositoryProvider);
-  return UserNotifier(currentUser: userEntity, userRepository: userRepository);
+  return UserNotifier(
+      userController: ref.watch(userEntityProvider.notifier),
+      userRepository: userRepository);
 });

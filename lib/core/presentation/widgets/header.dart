@@ -31,12 +31,19 @@ class Header extends StatelessWidget with PreferredSizeWidget {
                   child: Icon(Icons.account_circle_outlined),
                   // TODO: backgroundImage: Image.network(src),
                 ),
-                SizedBox(width: 10),
-                Text(
-                  this.displayedUserName,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Visibility(
+                  visible: !isMobile(context),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 10),
+                      Text(
+                        this.displayedUserName,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(width: 20)
+                    ],
+                  ),
                 ),
-                SizedBox(width: 20),
               ],
             )),
         IconButton(

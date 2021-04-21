@@ -10,12 +10,12 @@ class SplashScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final splashScreenState = useProvider(splashScreenProvider);
-    final homeScreenNotifier = useProvider(homeScreenNotifierProvider.notifier);
+    final userState = useProvider(userEntityProvider);
     return splashScreenState.when(
         loading: () => Center(child: CircularProgressIndicator()),
         needsProfile: () => LoginScreen(),
         profileLoaded: (profileData) {
-          homeScreenNotifier.setCurrentUser(profileData);
+          userState.state = profileData;
           return MainScreen();
         });
   }

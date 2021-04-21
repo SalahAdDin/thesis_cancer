@@ -5,11 +5,13 @@ import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.repository.dart';
 
 class UserNotifier extends StateNotifier<UserState> {
-  UserNotifier({required this.currentUser, required this.userRepository})
-      : super(const UserState.loading());
+  UserNotifier({
+    required this.userRepository,
+    required this.userController,
+  }) : super(const UserState.loading());
 
   final UserRepository userRepository;
-  User currentUser;
+  final StateController<User?> userController;
 
   // StreamSubscription? _subscription;
 
@@ -35,7 +37,7 @@ class UserNotifier extends StateNotifier<UserState> {
   }
 
   void deliverUserScreen() {
-    UserStatus userStatus = assignUserStatus(this.currentUser);
+    UserStatus userStatus = assignUserStatus(this.userController.state!);
     switch (userStatus) {
       case UserStatus.UNCONFIRMED:
         state = UserState.unConfirmed();
@@ -53,10 +55,6 @@ class UserNotifier extends StateNotifier<UserState> {
         state = UserState.completed();
         break;
     }
-  }
-
-  void setCurrentUser(User sessionUser) {
-    this.currentUser = sessionUser;
   }
 
   Future<void> createNewProfile(User newProfile) async {

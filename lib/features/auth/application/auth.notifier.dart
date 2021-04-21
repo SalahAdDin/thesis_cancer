@@ -12,13 +12,17 @@ import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:uuid/uuid.dart';
 
 class AuthNotifier extends StateNotifier<AuthState> {
-  AuthNotifier({required this.authRepository, required this.dataStore})
+  AuthNotifier(
+      {required this.authRepository,
+      required this.dataStore,
+      required this.userController})
       : super(const AuthState.loading());
 
   var uuid = Uuid();
 
   final AuthRepository authRepository;
   final DataStoreRepository dataStore;
+  final StateController<User?> userController;
 
   // StreamSubscription? _subscription;
 
@@ -52,12 +56,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
             ? true
             : false);
     // TODO: Ensure every new change on the user profile will be persisted on backend
-    if (storedUser == User.empty)
-      await dataStore.writeUserProfile(newProfile);
     // TODO: call to API
-    else if (newProfile == storedUser) {
+    if (newProfile == storedUser) {
+//      state = AuthState.loggedIn(loggedInUser);
     } else
-      await dataStore.writeUserProfile(newProfile);
+      // TODO: at writing on dataStore, SplashScreen stream is triggered and its
+      //  state change to Profile, which send us to the screen and break all.
+      // await dataStore.writeUserProfile(newProfile);
+      this.userController.state = newProfile;
     state = AuthState.loggedIn(newProfile);
   }
 
@@ -125,6 +131,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
           displayName: '',
           role: UserRole.PILOT,
           isConfirmed: false);
+      this.userController.state = newProfile;
       state = AuthState.loggedIn(newProfile);
     } on LogInWithEmailAndPasswordFailure catch (error) {
       // state = AuthState.error(error.toString());

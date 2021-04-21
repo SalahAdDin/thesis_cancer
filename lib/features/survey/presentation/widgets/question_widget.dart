@@ -65,7 +65,13 @@ class QuestionWidget extends HookWidget {
         answerWidget = GroupButton(
           spacing: 10,
           buttons: buttons,
-          onSelected: (index, isSelected) => print('$index button is selected'),
+          onSelected: (index, isSelected) {
+            List<String> currentAnswer =
+                surveyNotifier.answers[question.id]!.split(',');
+            currentAnswer.add(buttons[index]);
+            surveyNotifier.answerQuestion(
+                questionId: question.id, answer: currentAnswer.toString());
+          },
           direction: Axis.vertical,
           isRadio: false,
         );

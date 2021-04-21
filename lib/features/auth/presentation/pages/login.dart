@@ -24,7 +24,7 @@ class LoginScreen extends HookWidget {
     final AuthNotifier authNotifier =
         useProvider(authNotifierProvider.notifier);
 
-    final homeScreenProvider = useProvider(homeScreenNotifierProvider.notifier);
+    final userState = useProvider(userEntityProvider);
 
     return FlutterLogin(
       title: AppLiterals.title,
@@ -50,7 +50,6 @@ class LoginScreen extends HookWidget {
           authNotifier.recoverPassword(username: name),
       onSubmitAnimationCompleted: () => authScreenState.when(
           loading: () => Center(child: CircularProgressIndicator()),
-          // TODO: How to pass this user to survey? to LobbyScreen? Is it needed?
           signedUp: (signedUpUser) => pushToPage(
               context,
               Scaffold(
@@ -63,9 +62,8 @@ class LoginScreen extends HookWidget {
               )),
           // TODO: create ChangePassword screen.
           requestedResetPassword: () => null,
-          // TODO: How to get the first time at login (create a new profile on database here)?
           loggedIn: (loggedInUser) {
-            homeScreenProvider.setCurrentUser(loggedInUser);
+            userState.state = loggedInUser;
             pushAndReplaceToPage(context, MainScreen());
           },
           requiresConfirmSignIn: () => pushToPage(
@@ -75,8 +73,7 @@ class LoginScreen extends HookWidget {
                   the splashScreen will load the LogInScreen,
                   which is in loggedIn state, sending us to the home page. */
               ConfirmPasswordWidget(
-                  onConfirm: (String confirmationCode) => context
-                      .read(authNotifierProvider.notifier)
+                  onConfirm: (String confirmationCode) => authNotifier
                       .confirmSignIn(confirmationCode: confirmationCode)
                       .then((value) =>
                           pushAndReplaceToPage(context, SplashScreen())))),

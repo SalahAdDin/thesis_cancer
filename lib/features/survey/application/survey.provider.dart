@@ -7,6 +7,7 @@ import 'package:thesis_cancer/features/survey/application/survey.state.dart';
 import 'package:thesis_cancer/features/survey/domain/question.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/survey.entity.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
+import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:uuid/uuid.dart';
 
 // final surveyEntityProvider = StateProvider<Survey>((_)=> Survey.empty)
@@ -42,6 +43,7 @@ List<Question> questions = [
       surveyID: mockSurvey.id)
 ];
 
+// TODO: pass as null and handle it on widget by rendering a container with text as Elian's example
 final questionEntityProvider =
     StateProvider.autoDispose<Question>((_) => Question.empty);
 
@@ -51,15 +53,14 @@ final StateProvider<Survey> surveyEntityProvider =
 final surveyNotifierProvider =
     StateNotifierProvider.autoDispose<SurveyNotifier, SurveyState>((ref) {
   // TODO: It should be a general userProvider and not just related to MainScreen
-  String currentUserId =
-      ref.read(homeScreenNotifierProvider.notifier).currentUser.id;
+  User currentUser = ref.watch(userEntityProvider).state;
   Survey currentSurvey = ref.read(surveyEntityProvider).state;
   DataStoreRepository dataStore = ref.watch(dataStoreRepositoryProvider);
 
   // ref.read(questionEntityProvider).state = currentSurvey.questions![0];
   return SurveyNotifier(
       currentSurvey: currentSurvey,
-      currentUserId: currentUserId,
+      currentUserId: currentUser.id,
       questionController: ref.watch(questionEntityProvider.notifier),
       // surveyRepository: surveyRepository,
       // userSurveyAnswerRepository: userSurveyAnswerRepository,
