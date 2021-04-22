@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class LobbyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return SingleChildScrollView(
+        child: Column(
       // mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         // TODO: Add the logo here.
@@ -58,6 +59,6 @@ class LobbyScreen extends StatelessWidget {
           ),
         )
       ],
-    );
+    ));
   }
 }

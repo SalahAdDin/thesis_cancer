@@ -1,4 +1,7 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class SideMenuHeader extends StatefulWidget {
   SideMenuHeader({Key? key}) : super(key: key);
@@ -31,10 +34,20 @@ class _SideMenuHeaderState extends State<SideMenuHeader> {
                     Text('Dashboard')
                   ],
                 ),
-                IconButton(
-                    padding: EdgeInsets.all(0),
-                    icon: Icon(Icons.menu),
-                    onPressed: () {}),
+                Row(
+                  children: <Widget>[
+                    Transform.rotate(
+                        angle: 30 * math.pi / 180,
+                        child: IconButton(
+                            padding: EdgeInsets.all(0),
+                            icon: Icon(Icons.push_pin_outlined),
+                            onPressed: () {})),
+                    IconButton(
+                        padding: EdgeInsets.all(0),
+                        icon: Icon(MdiIcons.backburger),
+                        onPressed: () => Navigator.pop(context)),
+                  ],
+                )
               ],
             )));
   }
