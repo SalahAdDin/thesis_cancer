@@ -103,6 +103,30 @@ class QuestionWidget extends HookWidget {
     final surveyNotifier = useProvider(surveyNotifierProvider.notifier);
     final questionEntity = useProvider(questionEntityProvider);
     final _question = questionEntity.state;
+    if (_question == null)
+      return Container(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 30.0, right: 8.0),
+              child: Text(
+                'Bu anketinin soruları hala yok!',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1!
+                    .copyWith(fontSize: 25),
+              ),
+            ),
+          ],
+        ),
+      );
+    /* TODO: navigate to the error screen.
+      return pushToPage(
+          context,
+          ErrorScreen(
+              onPressed: () {},
+              message: 'Bu anketinin soruları hala yok!',
+              actionLabel: 'Dönüş'));*/
     return Container(
       child: Column(
         children: <Widget>[

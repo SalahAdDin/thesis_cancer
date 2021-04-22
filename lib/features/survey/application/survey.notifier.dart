@@ -24,7 +24,7 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   final Survey currentSurvey;
   final String currentUserId;
 
-  final StateController<Question> questionController;
+  final StateController<Question?> questionController;
 
   int currentQuestionIndex = 0;
   Map<String, String> answers = {};
@@ -81,8 +81,7 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   * - even getting from datastore, how can we know the survey is not outdated?
   * TODO: how to check the iteration number?
   *  */
-  void init() {
-    // questionController.state = this.currentSurvey.questions![0];
-    print(currentSurvey.questions);
+  Future<void> init() async {
+    questionController.state = this.currentSurvey.questions![0];
   }
 }

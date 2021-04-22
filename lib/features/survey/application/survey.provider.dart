@@ -43,9 +43,8 @@ List<Question> questions = [
       surveyID: mockSurvey.id)
 ];
 
-// TODO: pass as null and handle it on widget by rendering a container with text as Elian's example
-final questionEntityProvider =
-    StateProvider.autoDispose<Question>((_) => Question.empty);
+final StateProvider<Question?> questionEntityProvider =
+    StateProvider<Question?>((_) => null, name: "Question Entity Provider");
 
 final StateProvider<Survey> surveyEntityProvider =
     StateProvider<Survey>((_) => mockSurvey.copyWith(questions: questions));

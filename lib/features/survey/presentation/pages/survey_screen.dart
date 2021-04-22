@@ -87,7 +87,7 @@ class SurveyWidget extends HookWidget {
                       onTap: (position) =>
                           currentSurveyNotifier.isAnsweredQuestion(
                                   questionId: currentSurveyNotifier
-                                      .questionController.state.id)
+                                      .questionController.state!.id)
                               ? currentSurveyNotifier.goTo(position.toInt())
                               : null
                       // print("Current index: $currentQuestion");
@@ -123,7 +123,7 @@ class SurveyWidget extends HookWidget {
                           onPressed: () =>
                               currentSurveyNotifier.isAnsweredQuestion(
                                       questionId: currentSurveyNotifier
-                                          .questionController.state.id)
+                                          .questionController.state!.id)
                                   ? currentSurveyNotifier.nextQuestion()
                                   : null,
                         )
