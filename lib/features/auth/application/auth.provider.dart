@@ -17,4 +17,4 @@ final authNotifierProvider =
       authRepository: authRepository,
       dataStore: dataStore,
       userController: ref.watch(userEntityProvider.notifier));
-});
+}, name: "Authentication Notifier Provider");

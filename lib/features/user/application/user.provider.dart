@@ -9,8 +9,7 @@ final userRepositoryProvider =
     Provider<UserRepository>((ref) => AmplifyGraphQLUserRepository());
 
 final StateProvider<User> userEntityProvider =
-    StateProvider<User>((ref) => User.empty);
-// final userEntityProvider = Provider<User>((ref) => User.empty);
+    StateProvider<User>((ref) => User.empty, name: "User Entity Provider");
 
 final homeScreenNotifierProvider =
     StateNotifierProvider<UserNotifier, UserState>((ref) {
@@ -18,4 +17,4 @@ final homeScreenNotifierProvider =
   return UserNotifier(
       userController: ref.watch(userEntityProvider.notifier),
       userRepository: userRepository);
-});
+}, name: "Home Screen Notifier Provider");

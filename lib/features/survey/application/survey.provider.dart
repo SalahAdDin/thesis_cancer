@@ -46,8 +46,9 @@ List<Question> questions = [
 final StateProvider<Question?> questionEntityProvider =
     StateProvider<Question?>((_) => null, name: "Question Entity Provider");
 
-final StateProvider<Survey> surveyEntityProvider =
-    StateProvider<Survey>((_) => mockSurvey.copyWith(questions: questions));
+final StateProvider<Survey> surveyEntityProvider = StateProvider<Survey>(
+    (_) => mockSurvey.copyWith(questions: questions),
+    name: "Survey Entity Provider");
 
 final surveyNotifierProvider =
     StateNotifierProvider.autoDispose<SurveyNotifier, SurveyState>((ref) {
@@ -63,5 +64,6 @@ final surveyNotifierProvider =
       questionController: ref.watch(questionEntityProvider.notifier),
       // surveyRepository: surveyRepository,
       // userSurveyAnswerRepository: userSurveyAnswerRepository,
-      dataStore: dataStore);
-});
+      dataStore: dataStore)
+    ..init();
+}, name: "Survey Notifier Provider");

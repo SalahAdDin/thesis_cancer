@@ -10,8 +10,8 @@ final darkThemeProvider = Provider<bool>((ref) => true);
 final navigator = Provider((_) => GlobalKey<NavigatorState>());
 
 final packageInfoProvider = FutureProvider<PackageInfo>(
-  (_) async => await PackageInfo.fromPlatform(),
-);
+    (_) async => await PackageInfo.fromPlatform(),
+    name: "Package Info Provider");
 
 final dataStoreRepositoryProvider =
     Provider<DataStoreRepository>((ref) => throw UnimplementedError());
@@ -20,7 +20,7 @@ final splashScreenProvider =
     StateNotifierProvider<SplashScreenNotifier, SplashScreenState>((ref) {
   final dataStore = ref.watch(dataStoreRepositoryProvider);
   return SplashScreenNotifier(dataStore: dataStore);
-});
+}, name: 'Splash Screen Provider');
 
 // final authRepositoryProvider = Provider<>((ref) {
 //     return ;

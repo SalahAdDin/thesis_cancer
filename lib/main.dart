@@ -10,6 +10,7 @@ import 'package:thesis_cancer/core/infrastructure/datastore.repository.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
 
 import 'amplifyconfiguration.dart';
+import 'core/application/provider.logger.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +34,7 @@ Future<void> main() async {
     print(e);
   }
   runApp(ProviderScope(
+      observers: [Logger()],
       overrides: [dataStoreRepositoryProvider.overrideWithValue(dataStore)],
       child: CancerApp()));
 }
