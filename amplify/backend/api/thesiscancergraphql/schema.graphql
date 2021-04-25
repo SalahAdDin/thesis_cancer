@@ -28,6 +28,7 @@ enum UserRole {
     PILOT
     TEST
     CONTROL
+    GUEST
 }
 
 type User

@@ -14,5 +14,9 @@
     {
         "groupName": "Pilot",
         "precedence": 4
+    },
+    {
+        "groupName": "Guest",
+        "precedence": 5
     }
 ]

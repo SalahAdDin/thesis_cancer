@@ -77,4 +77,5 @@ const _$UserRoleEnumMap = {
   UserRole.PILOT: 'PILOT',
   UserRole.TEST: 'TEST',
   UserRole.CONTROL: 'CONTROL',
+  UserRole.GUEST: 'GUEST',
 };

@@ -27,5 +27,5 @@ abstract class User with _$User {
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   static const empty =
-      User(id: '', email: '', displayName: '', role: UserRole.PILOT);
+      User(id: '', email: '', displayName: '', role: UserRole.GUEST);
 }

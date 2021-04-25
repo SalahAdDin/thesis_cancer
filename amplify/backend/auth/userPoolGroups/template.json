@@ -257,6 +257,60 @@
         },
      
     
+        "GuestGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "Guest",
+              "Precedence" : 5,
+              
+              "RoleArn" : {
+                "Fn::GetAtt": [
+                    "GuestGroupRole",
+                    "Arn"
+                ]
+              },
+              
+              "UserPoolId" : {
+                "Ref": "auththesiscancer7a6cf6e7UserPoolId"
+              }
+            }
+        },
+        
+        "GuestGroupRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "RoleName":{
+                    "Fn::Join": [
+                        "",
+                        [
+                          {
+                            "Ref": "auththesiscancer7a6cf6e7UserPoolId"
+                          },
+                          "-GuestGroupRole"
+                        ]
+                    ]
+                },
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Sid": "",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Federated": "cognito-identity.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRoleWithWebIdentity",
+                            "Condition": {
+                              "StringEquals": {"cognito-identity.amazonaws.com:aud": {"Ref":"auththesiscancer7a6cf6e7IdentityPoolId"}},
+                              "ForAnyValue:StringLike": {"cognito-identity.amazonaws.com:amr": "authenticated"}
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+     
+    
     
         "LambdaExecutionRole": {
             "Type": "AWS::IAM::Role",
@@ -494,6 +548,17 @@
             "Value": {
                 "Fn::GetAtt": [
                     "PilotGroupRole",
+                    "Arn"
+                ]
+            }
+        
+        },
+        
+      
+        "GuestGroupRole": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "GuestGroupRole",
                     "Arn"
                 ]
             }

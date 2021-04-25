@@ -50,7 +50,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         role: userSessionRole != null
             ? EnumToString.fromString(
                 UserRole.values, userSessionRole.toUpperCase())!
-            : UserRole.PILOT,
+            : UserRole.GUEST,
         isConfirmed: userAttributes['email_verified'] == 'true' ||
                 userAttributes['phone_number_verified'] == 'true'
             ? true
@@ -129,7 +129,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
           id: uuid.v4(),
           email: username,
           displayName: '',
-          role: UserRole.PILOT,
+          role: UserRole.GUEST,
           isConfirmed: false);
       this.userController.state = newProfile;
       state = AuthState.loggedIn(newProfile);
