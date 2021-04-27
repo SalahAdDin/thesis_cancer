@@ -138,6 +138,7 @@ class __$LoadingCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Loading implements _Loading {
   const _$_Loading();
 
@@ -264,6 +265,7 @@ class __$SignedUpCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_SignedUp implements _SignedUp {
   const _$_SignedUp(this.signedUpUser);
 
@@ -389,6 +391,7 @@ class __$RequestedResetPasswordCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_RequestedResetPassword implements _RequestedResetPassword {
   const _$_RequestedResetPassword();
 
@@ -515,6 +518,7 @@ class __$LoggedInCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_LoggedIn implements _LoggedIn {
   const _$_LoggedIn(this.loggedInUser);
 
@@ -638,6 +642,7 @@ class __$LoggedOutCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_LoggedOut implements _LoggedOut {
   const _$_LoggedOut();
 
@@ -755,6 +760,7 @@ class __$ErrorCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Error implements _Error {
   const _$_Error(this.error);
 
@@ -878,6 +884,7 @@ class __$RequiresConfirmSignInCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_RequiresConfirmSignIn implements _RequiresConfirmSignIn {
   const _$_RequiresConfirmSignIn();
 

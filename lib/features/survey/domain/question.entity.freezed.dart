@@ -165,9 +165,8 @@ class __$QuestionCopyWithImpl<$Res> extends _$QuestionCopyWithImpl<$Res>
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_Question implements _Question {
   const _$_Question(
       {required this.id,

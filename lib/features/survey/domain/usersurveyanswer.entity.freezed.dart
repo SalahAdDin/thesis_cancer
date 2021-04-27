@@ -171,9 +171,8 @@ class __$UserSurveyAnswerCopyWithImpl<$Res>
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_UserSurveyAnswer implements _UserSurveyAnswer {
   const _$_UserSurveyAnswer(
       {required this.id,

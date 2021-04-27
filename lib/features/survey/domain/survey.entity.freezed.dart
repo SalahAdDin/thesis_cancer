@@ -143,9 +143,8 @@ class __$SurveyCopyWithImpl<$Res> extends _$SurveyCopyWithImpl<$Res>
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_Survey implements _Survey {
   const _$_Survey(
       {required this.id, required this.title, this.intro, this.questions});

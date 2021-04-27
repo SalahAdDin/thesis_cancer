@@ -109,6 +109,7 @@ class __$LoadingCopyWithImpl<$Res> extends _$SurveyStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Loading implements _Loading {
   const _$_Loading();
 
@@ -199,6 +200,7 @@ class __$DataCopyWithImpl<$Res> extends _$SurveyStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Data implements _Data {
   const _$_Data();
 
@@ -290,6 +292,7 @@ class __$CompletedCopyWithImpl<$Res> extends _$SurveyStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Completed implements _Completed {
   const _$_Completed();
 
@@ -393,6 +396,7 @@ class __$ErrorCopyWithImpl<$Res> extends _$SurveyStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Error implements _Error {
   const _$_Error(this.error);
 
