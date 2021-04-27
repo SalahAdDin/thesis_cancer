@@ -16,5 +16,6 @@ final homeScreenNotifierProvider =
   final userRepository = ref.watch(userRepositoryProvider);
   return UserNotifier(
       userController: ref.watch(userEntityProvider.notifier),
-      userRepository: userRepository);
+      userRepository: userRepository)
+    ..deliverUserScreen();
 }, name: "Home Screen Notifier Provider");

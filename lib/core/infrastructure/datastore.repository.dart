@@ -56,13 +56,6 @@ class SembastDataStore implements DataStoreRepository {
   }
 
   @override
-  Stream<User> userProfileData() {
-    final record = store.record(StorePath.profile);
-    return record.onSnapshot(database).map((snapshot) =>
-        snapshot?.value != null ? User.fromJson(snapshot?.value) : User.empty);
-  }
-
-  @override
   Future<void> removeUserProfile() async {
     final record = store.record(StorePath.profile);
     await record.delete(database);

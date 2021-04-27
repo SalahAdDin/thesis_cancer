@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'splash.state.dart';
+part of 'launcher.state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,8 +13,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$SplashScreenStateTearOff {
-  const _$SplashScreenStateTearOff();
+class _$LauncherStateTearOff {
+  const _$LauncherStateTearOff();
 
   _Loading loading() {
     return const _Loading();
@@ -32,10 +32,10 @@ class _$SplashScreenStateTearOff {
 }
 
 /// @nodoc
-const $SplashScreenState = _$SplashScreenStateTearOff();
+const $LauncherState = _$LauncherStateTearOff();
 
 /// @nodoc
-mixin _$SplashScreenState {
+mixin _$LauncherState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
@@ -69,20 +69,20 @@ mixin _$SplashScreenState {
 }
 
 /// @nodoc
-abstract class $SplashScreenStateCopyWith<$Res> {
-  factory $SplashScreenStateCopyWith(
-          SplashScreenState value, $Res Function(SplashScreenState) then) =
-      _$SplashScreenStateCopyWithImpl<$Res>;
+abstract class $LauncherStateCopyWith<$Res> {
+  factory $LauncherStateCopyWith(
+          LauncherState value, $Res Function(LauncherState) then) =
+      _$LauncherStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SplashScreenStateCopyWithImpl<$Res>
-    implements $SplashScreenStateCopyWith<$Res> {
-  _$SplashScreenStateCopyWithImpl(this._value, this._then);
+class _$LauncherStateCopyWithImpl<$Res>
+    implements $LauncherStateCopyWith<$Res> {
+  _$LauncherStateCopyWithImpl(this._value, this._then);
 
-  final SplashScreenState _value;
+  final LauncherState _value;
   // ignore: unused_field
-  final $Res Function(SplashScreenState) _then;
+  final $Res Function(LauncherState) _then;
 }
 
 /// @nodoc
@@ -92,7 +92,7 @@ abstract class _$LoadingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res> extends _$SplashScreenStateCopyWithImpl<$Res>
+class __$LoadingCopyWithImpl<$Res> extends _$LauncherStateCopyWithImpl<$Res>
     implements _$LoadingCopyWith<$Res> {
   __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
       : super(_value, (v) => _then(v as _Loading));
@@ -102,18 +102,13 @@ class __$LoadingCopyWithImpl<$Res> extends _$SplashScreenStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$_Loading with DiagnosticableTreeMixin implements _Loading {
+
+class _$_Loading implements _Loading {
   const _$_Loading();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SplashScreenState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'SplashScreenState.loading'));
+  String toString() {
+    return 'LauncherState.loading()';
   }
 
   @override
@@ -173,7 +168,7 @@ class _$_Loading with DiagnosticableTreeMixin implements _Loading {
   }
 }
 
-abstract class _Loading implements SplashScreenState {
+abstract class _Loading implements LauncherState {
   const factory _Loading() = _$_Loading;
 }
 
@@ -186,7 +181,7 @@ abstract class _$NeedsProfileCopyWith<$Res> {
 
 /// @nodoc
 class __$NeedsProfileCopyWithImpl<$Res>
-    extends _$SplashScreenStateCopyWithImpl<$Res>
+    extends _$LauncherStateCopyWithImpl<$Res>
     implements _$NeedsProfileCopyWith<$Res> {
   __$NeedsProfileCopyWithImpl(
       _NeedsProfile _value, $Res Function(_NeedsProfile) _then)
@@ -197,19 +192,13 @@ class __$NeedsProfileCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$_NeedsProfile with DiagnosticableTreeMixin implements _NeedsProfile {
+
+class _$_NeedsProfile implements _NeedsProfile {
   const _$_NeedsProfile();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SplashScreenState.needsProfile()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'SplashScreenState.needsProfile'));
+  String toString() {
+    return 'LauncherState.needsProfile()';
   }
 
   @override
@@ -269,7 +258,7 @@ class _$_NeedsProfile with DiagnosticableTreeMixin implements _NeedsProfile {
   }
 }
 
-abstract class _NeedsProfile implements SplashScreenState {
+abstract class _NeedsProfile implements LauncherState {
   const factory _NeedsProfile() = _$_NeedsProfile;
 }
 
@@ -285,7 +274,7 @@ abstract class _$ProfileLoadedCopyWith<$Res> {
 
 /// @nodoc
 class __$ProfileLoadedCopyWithImpl<$Res>
-    extends _$SplashScreenStateCopyWithImpl<$Res>
+    extends _$LauncherStateCopyWithImpl<$Res>
     implements _$ProfileLoadedCopyWith<$Res> {
   __$ProfileLoadedCopyWithImpl(
       _ProfileLoaded _value, $Res Function(_ProfileLoaded) _then)
@@ -315,23 +304,16 @@ class __$ProfileLoadedCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$_ProfileLoaded with DiagnosticableTreeMixin implements _ProfileLoaded {
+
+class _$_ProfileLoaded implements _ProfileLoaded {
   const _$_ProfileLoaded(this.user);
 
   @override
   final User user;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SplashScreenState.profileLoaded(user: $user)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'SplashScreenState.profileLoaded'))
-      ..add(DiagnosticsProperty('user', user));
+  String toString() {
+    return 'LauncherState.profileLoaded(user: $user)';
   }
 
   @override
@@ -400,7 +382,7 @@ class _$_ProfileLoaded with DiagnosticableTreeMixin implements _ProfileLoaded {
   }
 }
 
-abstract class _ProfileLoaded implements SplashScreenState {
+abstract class _ProfileLoaded implements LauncherState {
   const factory _ProfileLoaded(User user) = _$_ProfileLoaded;
 
   User get user => throw _privateConstructorUsedError;

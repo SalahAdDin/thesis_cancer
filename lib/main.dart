@@ -6,11 +6,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/application/provider.logger.dart';
 import 'package:thesis_cancer/core/infrastructure/datastore.repository.dart';
+import 'package:thesis_cancer/features/auth/presentation/pages/login.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
+import 'package:thesis_cancer/features/user/application/user.provider.dart';
 
 import 'amplifyconfiguration.dart';
-import 'core/application/provider.logger.dart';
+import 'features/home/presentation/pages/main_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,10 +47,19 @@ class CancerApp extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final bool darkTheme = useProvider(darkThemeProvider);
+    final launcherState = useProvider(launcherProvider);
+    final userState = useProvider(userEntityProvider);
+
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+
     return MaterialApp(
-        title: 'Thesis Cancer',
-        theme: darkTheme ? ThemeData.dark() : ThemeData.light(),
-        home: SplashScreen());
+      title: 'Thesis Cancer',
+      theme: darkTheme ? ThemeData.dark() : ThemeData.light(),
+      // home: SplashScreen()
+      builder: (context, child) => launcherState.when(
+          loading: () => SplashScreen(),
+          needsProfile: () => LoginScreen(),
+          profileLoaded: (profileData) => MainScreen()),
+    );
   }
 }

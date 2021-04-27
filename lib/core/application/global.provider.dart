@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:package_info/package_info.dart';
-import 'package:thesis_cancer/core/application/splash.notifier.dart';
-import 'package:thesis_cancer/core/application/splash.state.dart';
+import 'package:thesis_cancer/core/application/launcher/launcher.notifier.dart';
+import 'package:thesis_cancer/core/application/launcher/launcher.state.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
+import 'package:thesis_cancer/features/user/application/user.provider.dart';
 
 final darkThemeProvider = Provider<bool>((ref) => true);
 
@@ -16,11 +17,13 @@ final packageInfoProvider = FutureProvider<PackageInfo>(
 final dataStoreRepositoryProvider =
     Provider<DataStoreRepository>((ref) => throw UnimplementedError());
 
-final splashScreenProvider =
-    StateNotifierProvider<SplashScreenNotifier, SplashScreenState>((ref) {
+final launcherProvider =
+    StateNotifierProvider<LauncherNotifier, LauncherState>((ref) {
   final dataStore = ref.watch(dataStoreRepositoryProvider);
-  return SplashScreenNotifier(dataStore: dataStore);
-}, name: 'Splash Screen Provider');
+  return LauncherNotifier(
+      dataStore: dataStore,
+      userController: ref.watch(userEntityProvider.notifier));
+}, name: 'Launcher Provider');
 
 // final authRepositoryProvider = Provider<>((ref) {
 //     return ;

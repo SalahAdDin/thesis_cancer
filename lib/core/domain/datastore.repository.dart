@@ -8,8 +8,6 @@ abstract class DataStoreRepository {
 
   Future<void> removeUserProfile();
 
-  Stream<User> userProfileData();
-
   Future<User> getUserProfileData();
 
   Future<bool> doesExistUserProfileWithUserName(String username);
