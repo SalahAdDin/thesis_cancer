@@ -56,6 +56,7 @@ type User
     posts: [Post] @connection(keyName: "byUser", fields: ["id"])
     comments: [Comment] @connection(keyName: "byUser", fields: ["id"])
     likes: [Likes] @connection(keyName: "byUser", fields: ["id"])
+    surveyResults: [UserSurveyResult] @connection(keyName: "byUserResult", fields: ["id"])
 }
 
 type UploadFile
@@ -147,6 +148,7 @@ type Survey
     title: String!
     intro: String
     questions: [Question] @connection(keyName: "bySurvey", fields: ["id"])
+    userResults: [UserSurveyResult] @connection(keyName: "bySurveyResult", fields: ["id"])
 }
 
 type Question
@@ -165,6 +167,7 @@ type Question
     answer: String
     surveyID: ID!
     survey: Survey! @connection(fields: ["surveyID"])
+    userAnwers: [UserSurveyAnswer] @connection(keyName: "byQuestion", fields: ["id"])
 }
 
 type UserSurveyResult
@@ -175,7 +178,8 @@ type UserSurveyResult
         { allow: groups, groups: ["Admin"], operations: [read] }
     ]
 )
-@key(name: "bySurveyResult", fields: ["userID", "surveyID"])
+@key(name: "bySurveyResult", fields: ["surveyID"])
+@key(name: "byUserResult", fields: ["userID"])
 {
     id: ID!
     userID: ID!
@@ -195,10 +199,8 @@ type UserSurveyAnswer
         { allow: groups, groups: ["Admin"], operations: [read] }
     ]
 )
-@key(
-    name: "surveyAnswersByUserResult"
-    fields: ["userSurveyResultID", "questionID"]
-) {
+@key(name: "byUserSurveyResult", fields: ["userSurveyResultID"])
+@key(name: "byQuestion", fields: ["questionID"]) {
     id: ID!
     userSurveyResultID: ID!
     userSurveyResult: UserSurveyResult! @connection(fields: ["userSurveyResultID"])
