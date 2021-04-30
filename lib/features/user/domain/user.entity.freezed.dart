@@ -78,7 +78,8 @@ mixin _$User {
   bool? get hasSeenIntroductoryVideo => throw _privateConstructorUsedError;
   bool? get darkMode => throw _privateConstructorUsedError;
   String? get bio => throw _privateConstructorUsedError;
-  String? get photoID => throw _privateConstructorUsedError;
+  String? get photoID =>
+      throw _privateConstructorUsedError; // TODO: how to properly handle this?
   Map<dynamic, dynamic>? get gallery => throw _privateConstructorUsedError;
   Map<dynamic, dynamic>? get posts => throw _privateConstructorUsedError;
   Map<dynamic, dynamic>? get comments => throw _privateConstructorUsedError;
@@ -377,7 +378,7 @@ class _$_User implements _User {
   final String? bio;
   @override
   final String? photoID;
-  @override
+  @override // TODO: how to properly handle this?
   final Map<dynamic, dynamic>? gallery;
   @override
   final Map<dynamic, dynamic>? posts;
@@ -517,7 +518,7 @@ abstract class _User implements User {
   String? get bio => throw _privateConstructorUsedError;
   @override
   String? get photoID => throw _privateConstructorUsedError;
-  @override
+  @override // TODO: how to properly handle this?
   Map<dynamic, dynamic>? get gallery => throw _privateConstructorUsedError;
   @override
   Map<dynamic, dynamic>? get posts => throw _privateConstructorUsedError;

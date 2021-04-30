@@ -3,7 +3,7 @@ import 'package:thesis_cancer/features/user/application/user.notifier.dart';
 import 'package:thesis_cancer/features/user/application/user.state.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.repository.dart';
-import 'package:thesis_cancer/features/user/infrastructure/user.api.repository.dart';
+import 'package:thesis_cancer/features/user/infrastructure/user.repository.dart';
 
 final userRepositoryProvider =
     Provider<UserRepository>((ref) => AmplifyGraphQLUserRepository());

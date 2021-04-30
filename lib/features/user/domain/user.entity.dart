@@ -19,7 +19,7 @@ abstract class User with _$User {
       bool? hasSeenIntroductoryVideo,
       bool? darkMode,
       String? bio,
-      String? photoID,
+      String? photoID, // TODO: how to properly handle this?
       Map? gallery,
       Map? posts,
       Map? comments,
