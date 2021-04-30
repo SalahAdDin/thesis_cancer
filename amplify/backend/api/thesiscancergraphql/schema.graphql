@@ -50,7 +50,7 @@ type User
     hasSeenIntroductoryVideo: Boolean
     darkMode: Boolean
     bio: String
-    photoID: ID!
+    photoID: ID
     photo: UploadFile @connection(fields: ["photoID"])
     gallery: [UploadFile] @connection(keyName: "byUser", fields: ["id"])
     posts: [Post] @connection(keyName: "byUser", fields: ["id"])

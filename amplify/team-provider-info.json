@@ -13,7 +13,30 @@
     },
     "categories": {
       "auth": {
-        "thesiscancer7a6cf6e7": {}
+        "thesiscancer7a6cf6e7": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "thesiscancer7a6cf6e7PostConfirmation": {
+          "GROUP": "",
+          "deploymentBucketName": "amplify-thesiscancer-dev-104158-deployment",
+          "s3Key": "amplify-builds/thesiscancer7a6cf6e7PostConfirmation-334c314d2b6f776c5642-build.zip"
+        },
+        "AdminQueries3ac8ef0e": {
+          "deploymentBucketName": "amplify-thesiscancer-dev-104158-deployment",
+          "s3Key": "amplify-builds/AdminQueries3ac8ef0e-44636164342f732f456a-build.zip"
+        },
+        "AdminQueries97985a68": {
+          "deploymentBucketName": "amplify-thesiscancer-dev-104158-deployment",
+          "s3Key": "amplify-builds/AdminQueries97985a68-4c4b553851646f2b4951-build.zip"
+        },
+        "thesiscancer7a6cf6e7CustomMessage": {
+          "REDIRECTURL": "https://com.cloudnesil.thesis_cancer.com/",
+          "EMAILSUBJECT": "E-posta ile hesap onayı.",
+          "EMAILMESSAGE": "TODO'ya hoş geldiniz, platformumuzdaki deneyimden keyif alacağınızı umuyoruz; uygulamaya girmek için aşağıdaki bağlantıya tıklayın:",
+          "deploymentBucketName": "amplify-thesiscancer-dev-104158-deployment",
+          "s3Key": "amplify-builds/thesiscancer7a6cf6e7CustomMessage-5a5574707669636e5338-build.zip"
+        }
       }
     }
   }

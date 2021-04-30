@@ -1,32 +1,45 @@
 {
     "identityPoolName": "thesiscancer7a6cf6e7_identitypool_7a6cf6e7",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "thesis7a6cf6e7",
     "userPoolName": "thesiscancer7a6cf6e7_userpool_7a6cf6e7",
     "autoVerifiedAttributes": [
-        "email"
+        "phone_number"
     ],
-    "mfaConfiguration": "OFF",
+    "mfaConfiguration": "OPTIONAL",
     "mfaTypes": [
         "SMS Text Message"
     ],
-    "smsAuthenticationMessage": "Your authentication code is {####}",
-    "smsVerificationMessage": "Your verification code is {####}",
+    "smsAuthenticationMessage": "Doğrulama kodunuz {####}.",
+    "smsVerificationMessage": "Doğrulama kodunuz {####}.",
     "emailVerificationSubject": "Your verification code",
     "emailVerificationMessage": "Your verification code is {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
-    "passwordPolicyCharacters": [],
+    "passwordPolicyCharacters": [
+        "Requires Lowercase",
+        "Requires Uppercase",
+        "Requires Numbers"
+    ],
     "requiredAttributes": [
         "email"
     ],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
+        "address",
+        "birthdate",
+        "phone_number",
+        "preferred_username",
         "email"
     ],
     "userpoolClientReadAttributes": [
-        "email"
+        "address",
+        "email",
+        "phone_number",
+        "updated_at",
+        "email_verified",
+        "phone_number_verified"
     ],
     "userpoolClientLambdaRole": "thesis7a6cf6e7_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
@@ -45,7 +58,7 @@
             "Arn"
         ]
     },
-    "useDefault": "defaultSocial",
+    "useDefault": "manual",
     "hostedUI": true,
     "usernameAttributes": [
         "email, phone_number"
@@ -53,9 +66,36 @@
     "hostedUIDomainName": "cloudnesilthesiscancer",
     "authProvidersUserPool": [],
     "hostedUIProviderMeta": "[]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.cancer.cloudnesil.com/signin/\"],\"LogoutURLs\":[\"https://www.cancer.cloudnesil.com/\"]}",
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+        "Admin",
+        "Control",
+        "Test",
+        "Pilot",
+        "Guest"
+    ],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "dependsOn": []
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "thesiscancer7a6cf6e7CustomMessage",
+            "triggerProvider": "Cognito",
+            "attributes": [
+                "Arn",
+                "Name"
+            ]
+        }
+    ],
+    "thirdPartyAuth": false,
+    "userPoolGroups": true,
+    "adminQueries": true,
+    "triggers": "{\n  \"CustomMessage\": [\n    \"verification-link\"\n  ]\n}",
+    "adminQueryGroup": "Admin",
+    "verificationBucketName": "thesiscancer7a6cf6e7verificationbucket",
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "permissions": [],
+    "authProviders": [],
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.cancer.cloudnesil.com/signin/\"],\"LogoutURLs\":[\"https://wwww.cancer.cloudnesil.com/signout/\"]}"
 }

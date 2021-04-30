@@ -1,0 +1,26 @@
+{
+  "trigger": true,
+  "modules": [
+    "verification-link"
+  ],
+  "parentResource": "thesiscancer7a6cf6e7",
+  "functionName": "thesiscancer7a6cf6e7CustomMessage",
+  "resourceName": "thesiscancer7a6cf6e7CustomMessage",
+  "parentStack": "auth",
+  "triggerEnvs": [
+    {
+      "key": "RESOURCENAME",
+      "value": "resourceName"
+    }
+  ],
+  "triggerDir": "/snapshot/node_modules/amplify-category-auth/provider-utils/awscloudformation/triggers/CustomMessage",
+  "triggerTemplate": "CustomMessage.json.ejs",
+  "triggerEventPath": "CustomMessage.event.json",
+  "roleName": "thesiscancer7a6cf6e7CustomMessage",
+  "skipEdit": true,
+  "REDIRECTURL": "https://com.cloudnesil.thesis_cancer.com/",
+  "EMAILSUBJECT": "E-posta ile hesap onayı.",
+  "EMAILMESSAGE": "TODO'ya hoş geldiniz, platformumuzdaki deneyimden keyif alacağınızı umuyoruz; uygulamaya girmek için aşağıdaki bağlantıya tıklayın:",
+  "RESOURCENAME": "resourceName",
+  "enableCors": false
+}
