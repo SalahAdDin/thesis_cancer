@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/features/survey/application/survey.notifier.dart';
 import 'package:thesis_cancer/features/survey/application/survey.provider.dart';
-import 'package:thesis_cancer/features/survey/domain/question.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
 
 class QuestionWidget extends HookWidget {
   final _shortAnswerValidator = MultiValidator([

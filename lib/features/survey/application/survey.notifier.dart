@@ -1,9 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/features/survey/application/survey.state.dart';
-import 'package:thesis_cancer/features/survey/domain/question.entity.dart';
-import 'package:thesis_cancer/features/survey/domain/survey.entity.dart';
-import 'package:thesis_cancer/features/survey/domain/usersurveyanswer.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:uuid/uuid.dart';
 
 class SurveyNotifier extends StateNotifier<SurveyState> {

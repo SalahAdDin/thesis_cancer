@@ -1,5 +1,5 @@
-import 'package:thesis_cancer/features/survey/domain/survey.entity.dart';
-import 'package:thesis_cancer/features/survey/domain/usersurveyanswer.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 abstract class DataStoreRepository {

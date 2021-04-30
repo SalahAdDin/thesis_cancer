@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:thesis_cancer/features/survey/domain/question.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
 
 part 'survey.entity.freezed.dart';
 part 'survey.entity.g.dart';

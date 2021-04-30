@@ -6,7 +6,7 @@ import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 import 'package:thesis_cancer/features/survey/application/survey.provider.dart';
-import 'package:thesis_cancer/features/survey/domain/survey.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/survey/presentation/widgets/completed_survey.dart';
 import 'package:thesis_cancer/features/survey/presentation/widgets/question_widget.dart';
 

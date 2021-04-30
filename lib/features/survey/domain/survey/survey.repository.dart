@@ -1,4 +1,4 @@
-import 'package:thesis_cancer/features/survey/domain/survey.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 
 abstract class SurveyRepository {
   Future<List<Survey>> findAll();

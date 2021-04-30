@@ -4,8 +4,8 @@ import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/features/survey/application/survey.notifier.dart';
 import 'package:thesis_cancer/features/survey/application/survey.state.dart';
-import 'package:thesis_cancer/features/survey/domain/question.entity.dart';
-import 'package:thesis_cancer/features/survey/domain/survey.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:uuid/uuid.dart';
@@ -50,6 +50,7 @@ final StateProvider<Survey> surveyEntityProvider = StateProvider<Survey>(
     (_) => mockSurvey.copyWith(questions: questions),
     name: "Survey Entity Provider");
 
+// TODO: removing autoDispose could solve the warning console ?
 final surveyNotifierProvider =
     StateNotifierProvider.autoDispose<SurveyNotifier, SurveyState>((ref) {
   // TODO: It should be a general userProvider and not just related to MainScreen
