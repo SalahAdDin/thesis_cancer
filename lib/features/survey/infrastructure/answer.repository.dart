@@ -22,8 +22,8 @@ class AmplifyGraphQLAnswerRepository implements UserSurveyAnswerRepository {
               variables: {
             'answer': userSurveyAnswer.answer,
             'id': userSurveyAnswer.id,
-            'questionID': userSurveyAnswer.questionId,
-            'userSurveyResultID': userSurveyAnswer.userSurveyResultId
+            'questionID': userSurveyAnswer.questionID,
+            'userSurveyResultID': userSurveyAnswer.userSurveyResultID
           }));
       GraphQLResponse response = await operation.response;
       // TODO: Check the data and return the status code, or check both objects to be equal

@@ -7,8 +7,8 @@ part 'answer.entity.g.dart';
 class UserSurveyAnswer with _$UserSurveyAnswer {
   const factory UserSurveyAnswer(
       {required String id,
-      required String userSurveyResultId,
-      required String questionId,
+      required String userSurveyResultID,
+      required String questionID,
       required String answer}) = _UserSurveyAnswer;
 
   factory UserSurveyAnswer.fromJson(Map<String, dynamic> json) =>

@@ -22,8 +22,8 @@ class AmplifyGraphQLResultRepository implements UserSurveyResultRepository {
               document: graphQLDocumentCreateUserSurveyResult,
               variables: {
             'id': userSurveyResult.id,
-            'userID': userSurveyResult.userId,
-            'surveyID': userSurveyResult.surveyId,
+            'userID': userSurveyResult.userID,
+            'surveyID': userSurveyResult.surveyID,
             'iteration': userSurveyResult.iteration
           }));
       GraphQLResponse response = await operation.response;

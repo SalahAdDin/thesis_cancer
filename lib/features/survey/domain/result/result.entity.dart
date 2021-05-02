@@ -8,8 +8,8 @@ part 'result.entity.g.dart';
 class UserSurveyResult with _$UserSurveyResult {
   const factory UserSurveyResult(
       {required String id,
-      required String userId,
-      required String surveyId,
+      required String userID,
+      required String surveyID,
       required List<UserSurveyAnswer>? answers,
       required int iteration}) = _UserSurveyResult;
 

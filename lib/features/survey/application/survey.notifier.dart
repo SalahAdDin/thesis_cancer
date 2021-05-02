@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/features/survey/application/survey.state.dart';
-import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/result/result.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:uuid/uuid.dart';
 
@@ -31,11 +31,11 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
 
   Future<void> completeSurvey() async {
     try {
-      UserSurveyAnswer userSurveyAnswer = UserSurveyAnswer(
+      UserSurveyResult userSurveyAnswer = UserSurveyResult(
           id: uuid.v4(),
-          userId: this.currentUserId,
-          surveyId: this.currentSurvey.id,
-          answers: answers,
+          userID: this.currentUserId,
+          surveyID: this.currentSurvey.id,
+          answers: [],
           iteration: 0);
       // TODO: sent to GraphQL API.
       // TODO: persists answer on locale.
