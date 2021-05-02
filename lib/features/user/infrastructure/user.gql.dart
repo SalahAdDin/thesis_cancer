@@ -14,24 +14,54 @@ String graphQLFragmentBody = '''fragment UserFields on User {
   darkMode
   bio
   gallery
-  posts
-  comments
-  likes
+  photo{
+    url
+    description
+  }
 }
 ''';
 
-/*
-*
-        photo{
-          url
+String graphQLFragmentPost = '''fragment PostFields on User {
+  posts {
+    items {
+      id
+      media(limit: 1) {
+        items {
           description
+          id
+          url
         }
-        * */
+      }
+    }
+  }
+}
+''';
+
+String graphQLFragmentSurveyResult = '''fragment SurveyFields on User {
+  surveyResults {
+    items {
+      iteration
+      createdAt
+      answers {
+        items {
+          answer
+          questionID
+        }
+      }
+    }
+  }
+}
+''';
+
 String graphQLDocumentGetUser = '''
   $graphQLFragmentBody
+  $graphQLFragmentPost
+  $graphQLFragmentSurveyResult
   query GetUser(\$id: ID!) {
     getUser(id: \$id) {
       ...UserFields
+      ...PostFields
+      ...SurveyFields
     }
   }''';
 
@@ -56,7 +86,7 @@ query ListUsers {
 
 String graphQLDocumentCreateUser = '''
   $graphQLFragmentBody
-  mutation CreateUserInput(
+  mutation CreateUser(
     \$id: ID, 
     \$email: String!, 
     \$displayName: String!, 
@@ -88,8 +118,8 @@ String graphQLDocumentCreateUser = '''
 ''';
 
 String graphQLDocumentDeleteUser = '''
-mutation DeleteUserInput(\$id: ID!){
-  deleteUser(id: \$id){
+mutation DeleteUser(\$id: ID!){
+  deleteUser(input: {id: \$id}){
     id
   }
 }
@@ -97,7 +127,7 @@ mutation DeleteUserInput(\$id: ID!){
 
 String graphQLDocumentUpdateUser = '''
   $graphQLFragmentBody
-  mutation UpdateUserInput(
+  mutation UpdateUser(
     \$id: ID!, 
     \$email: String, 
     \$displayName: String, 
@@ -129,8 +159,8 @@ String graphQLDocumentUpdateUser = '''
 ''';
 
 String graphQLDocumentOnCreateUser = '''
-subscription OnCreateUser(\$id: ID!) {
-  createdUser(id: \$id) {
+subscription OnCreateUser {
+  onCreateUser {
     id
     email
   }
