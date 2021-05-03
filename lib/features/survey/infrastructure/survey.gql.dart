@@ -84,3 +84,12 @@ String graphQLDocumentUpdateSurvey = '''
     }
   }
 ''';
+
+String graphQLDocumentOnCreateSurvey = '''
+subscription OnCreateSurvey {
+  onCreateSurvey {
+    id
+    title
+  }
+}
+''';
