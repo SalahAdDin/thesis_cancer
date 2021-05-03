@@ -23,11 +23,13 @@ class _$SurveyTearOff {
   _Survey call(
       {required String id,
       required String title,
+      DateTime? createdAt,
       String? intro,
       List<Question>? questions}) {
     return _Survey(
       id: id,
       title: title,
+      createdAt: createdAt,
       intro: intro,
       questions: questions,
     );
@@ -45,6 +47,7 @@ const $Survey = _$SurveyTearOff();
 mixin _$Survey {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   String? get intro => throw _privateConstructorUsedError;
   List<Question>? get questions => throw _privateConstructorUsedError;
 
@@ -58,7 +61,11 @@ abstract class $SurveyCopyWith<$Res> {
   factory $SurveyCopyWith(Survey value, $Res Function(Survey) then) =
       _$SurveyCopyWithImpl<$Res>;
   $Res call(
-      {String id, String title, String? intro, List<Question>? questions});
+      {String id,
+      String title,
+      DateTime? createdAt,
+      String? intro,
+      List<Question>? questions});
 }
 
 /// @nodoc
@@ -73,6 +80,7 @@ class _$SurveyCopyWithImpl<$Res> implements $SurveyCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? title = freezed,
+    Object? createdAt = freezed,
     Object? intro = freezed,
     Object? questions = freezed,
   }) {
@@ -85,6 +93,10 @@ class _$SurveyCopyWithImpl<$Res> implements $SurveyCopyWith<$Res> {
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       intro: intro == freezed
           ? _value.intro
           : intro // ignore: cast_nullable_to_non_nullable
@@ -103,7 +115,11 @@ abstract class _$SurveyCopyWith<$Res> implements $SurveyCopyWith<$Res> {
       __$SurveyCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id, String title, String? intro, List<Question>? questions});
+      {String id,
+      String title,
+      DateTime? createdAt,
+      String? intro,
+      List<Question>? questions});
 }
 
 /// @nodoc
@@ -119,6 +135,7 @@ class __$SurveyCopyWithImpl<$Res> extends _$SurveyCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? title = freezed,
+    Object? createdAt = freezed,
     Object? intro = freezed,
     Object? questions = freezed,
   }) {
@@ -131,6 +148,10 @@ class __$SurveyCopyWithImpl<$Res> extends _$SurveyCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       intro: intro == freezed
           ? _value.intro
           : intro // ignore: cast_nullable_to_non_nullable
@@ -147,7 +168,11 @@ class __$SurveyCopyWithImpl<$Res> extends _$SurveyCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Survey implements _Survey {
   const _$_Survey(
-      {required this.id, required this.title, this.intro, this.questions});
+      {required this.id,
+      required this.title,
+      this.createdAt,
+      this.intro,
+      this.questions});
 
   factory _$_Survey.fromJson(Map<String, dynamic> json) =>
       _$_$_SurveyFromJson(json);
@@ -157,13 +182,15 @@ class _$_Survey implements _Survey {
   @override
   final String title;
   @override
+  final DateTime? createdAt;
+  @override
   final String? intro;
   @override
   final List<Question>? questions;
 
   @override
   String toString() {
-    return 'Survey(id: $id, title: $title, intro: $intro, questions: $questions)';
+    return 'Survey(id: $id, title: $title, createdAt: $createdAt, intro: $intro, questions: $questions)';
   }
 
   @override
@@ -174,6 +201,9 @@ class _$_Survey implements _Survey {
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.title, title) ||
                 const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.createdAt, createdAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdAt, createdAt)) &&
             (identical(other.intro, intro) ||
                 const DeepCollectionEquality().equals(other.intro, intro)) &&
             (identical(other.questions, questions) ||
@@ -186,6 +216,7 @@ class _$_Survey implements _Survey {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(title) ^
+      const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(intro) ^
       const DeepCollectionEquality().hash(questions);
 
@@ -204,6 +235,7 @@ abstract class _Survey implements Survey {
   const factory _Survey(
       {required String id,
       required String title,
+      DateTime? createdAt,
       String? intro,
       List<Question>? questions}) = _$_Survey;
 
@@ -213,6 +245,8 @@ abstract class _Survey implements Survey {
   String get id => throw _privateConstructorUsedError;
   @override
   String get title => throw _privateConstructorUsedError;
+  @override
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @override
   String? get intro => throw _privateConstructorUsedError;
   @override

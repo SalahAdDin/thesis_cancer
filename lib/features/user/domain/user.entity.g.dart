@@ -12,6 +12,9 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
     email: json['email'] as String,
     displayName: json['displayName'] as String,
     role: _$enumDecode(_$UserRoleEnumMap, json['role']),
+    createdAt: json['createdAt'] == null
+        ? null
+        : DateTime.parse(json['createdAt'] as String),
     phoneNumber: json['phoneNumber'] as String?,
     isConfirmed: json['isConfirmed'] as bool?,
     isLoggedIn: json['isLoggedIn'] as bool?,
@@ -32,6 +35,7 @@ Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
       'email': instance.email,
       'displayName': instance.displayName,
       'role': _$UserRoleEnumMap[instance.role],
+      'createdAt': instance.createdAt?.toIso8601String(),
       'phoneNumber': instance.phoneNumber,
       'isConfirmed': instance.isConfirmed,
       'isLoggedIn': instance.isLoggedIn,

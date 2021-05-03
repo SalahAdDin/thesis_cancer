@@ -25,6 +25,7 @@ class _$UserTearOff {
       required String email,
       required String displayName,
       required UserRole role,
+      DateTime? createdAt,
       String? phoneNumber,
       bool? isConfirmed,
       bool? isLoggedIn,
@@ -42,6 +43,7 @@ class _$UserTearOff {
       email: email,
       displayName: displayName,
       role: role,
+      createdAt: createdAt,
       phoneNumber: phoneNumber,
       isConfirmed: isConfirmed,
       isLoggedIn: isLoggedIn,
@@ -71,6 +73,7 @@ mixin _$User {
   String get email => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   UserRole get role => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
   bool? get isConfirmed => throw _privateConstructorUsedError;
   bool? get isLoggedIn => throw _privateConstructorUsedError;
@@ -99,6 +102,7 @@ abstract class $UserCopyWith<$Res> {
       String email,
       String displayName,
       UserRole role,
+      DateTime? createdAt,
       String? phoneNumber,
       bool? isConfirmed,
       bool? isLoggedIn,
@@ -127,6 +131,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? email = freezed,
     Object? displayName = freezed,
     Object? role = freezed,
+    Object? createdAt = freezed,
     Object? phoneNumber = freezed,
     Object? isConfirmed = freezed,
     Object? isLoggedIn = freezed,
@@ -157,6 +162,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       phoneNumber: phoneNumber == freezed
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -219,6 +228,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String email,
       String displayName,
       UserRole role,
+      DateTime? createdAt,
       String? phoneNumber,
       bool? isConfirmed,
       bool? isLoggedIn,
@@ -248,6 +258,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? email = freezed,
     Object? displayName = freezed,
     Object? role = freezed,
+    Object? createdAt = freezed,
     Object? phoneNumber = freezed,
     Object? isConfirmed = freezed,
     Object? isLoggedIn = freezed,
@@ -278,6 +289,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       phoneNumber: phoneNumber == freezed
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -338,6 +353,7 @@ class _$_User implements _User {
       required this.email,
       required this.displayName,
       required this.role,
+      this.createdAt,
       this.phoneNumber,
       this.isConfirmed,
       this.isLoggedIn,
@@ -362,6 +378,8 @@ class _$_User implements _User {
   final String displayName;
   @override
   final UserRole role;
+  @override
+  final DateTime? createdAt;
   @override
   final String? phoneNumber;
   @override
@@ -389,7 +407,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, displayName: $displayName, role: $role, phoneNumber: $phoneNumber, isConfirmed: $isConfirmed, isLoggedIn: $isLoggedIn, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, darkMode: $darkMode, bio: $bio, photoID: $photoID, gallery: $gallery, posts: $posts, comments: $comments, likes: $likes)';
+    return 'User(id: $id, email: $email, displayName: $displayName, role: $role, createdAt: $createdAt, phoneNumber: $phoneNumber, isConfirmed: $isConfirmed, isLoggedIn: $isLoggedIn, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, darkMode: $darkMode, bio: $bio, photoID: $photoID, gallery: $gallery, posts: $posts, comments: $comments, likes: $likes)';
   }
 
   @override
@@ -405,6 +423,9 @@ class _$_User implements _User {
                     .equals(other.displayName, displayName)) &&
             (identical(other.role, role) ||
                 const DeepCollectionEquality().equals(other.role, role)) &&
+            (identical(other.createdAt, createdAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdAt, createdAt)) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 const DeepCollectionEquality()
                     .equals(other.phoneNumber, phoneNumber)) &&
@@ -449,6 +470,7 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(displayName) ^
       const DeepCollectionEquality().hash(role) ^
+      const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(phoneNumber) ^
       const DeepCollectionEquality().hash(isConfirmed) ^
       const DeepCollectionEquality().hash(isLoggedIn) ^
@@ -479,6 +501,7 @@ abstract class _User implements User {
       required String email,
       required String displayName,
       required UserRole role,
+      DateTime? createdAt,
       String? phoneNumber,
       bool? isConfirmed,
       bool? isLoggedIn,
@@ -502,6 +525,8 @@ abstract class _User implements User {
   String get displayName => throw _privateConstructorUsedError;
   @override
   UserRole get role => throw _privateConstructorUsedError;
+  @override
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @override
   String? get phoneNumber => throw _privateConstructorUsedError;
   @override

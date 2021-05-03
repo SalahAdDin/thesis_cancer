@@ -15,6 +15,9 @@ _$_UserSurveyResult _$_$_UserSurveyResultFromJson(Map<String, dynamic> json) {
         ?.map((e) => UserSurveyAnswer.fromJson(e as Map<String, dynamic>))
         .toList(),
     iteration: json['iteration'] as int,
+    createdAt: json['createdAt'] == null
+        ? null
+        : DateTime.parse(json['createdAt'] as String),
   );
 }
 
@@ -26,4 +29,5 @@ Map<String, dynamic> _$_$_UserSurveyResultToJson(
       'surveyID': instance.surveyID,
       'answers': instance.answers,
       'iteration': instance.iteration,
+      'createdAt': instance.createdAt?.toIso8601String(),
     };

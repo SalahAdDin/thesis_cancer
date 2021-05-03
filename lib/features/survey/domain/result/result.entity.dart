@@ -6,12 +6,14 @@ part 'result.entity.g.dart';
 
 @freezed
 class UserSurveyResult with _$UserSurveyResult {
-  const factory UserSurveyResult(
-      {required String id,
-      required String userID,
-      required String surveyID,
-      required List<UserSurveyAnswer>? answers,
-      required int iteration}) = _UserSurveyResult;
+  const factory UserSurveyResult({
+    required String id,
+    required String userID,
+    required String surveyID,
+    required List<UserSurveyAnswer>? answers,
+    required int iteration,
+    DateTime? createdAt,
+  }) = _UserSurveyResult;
 
   factory UserSurveyResult.fromJson(Map<String, dynamic> json) =>
       _$UserSurveyResultFromJson(json);

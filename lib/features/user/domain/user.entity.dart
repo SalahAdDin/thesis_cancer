@@ -12,6 +12,7 @@ abstract class User with _$User {
       required String email,
       required String displayName,
       required UserRole role,
+      DateTime? createdAt,
       String? phoneNumber,
       bool? isConfirmed,
       bool? isLoggedIn,

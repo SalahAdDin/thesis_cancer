@@ -25,13 +25,15 @@ class _$UserSurveyResultTearOff {
       required String userID,
       required String surveyID,
       required List<UserSurveyAnswer>? answers,
-      required int iteration}) {
+      required int iteration,
+      DateTime? createdAt}) {
     return _UserSurveyResult(
       id: id,
       userID: userID,
       surveyID: surveyID,
       answers: answers,
       iteration: iteration,
+      createdAt: createdAt,
     );
   }
 
@@ -50,6 +52,7 @@ mixin _$UserSurveyResult {
   String get surveyID => throw _privateConstructorUsedError;
   List<UserSurveyAnswer>? get answers => throw _privateConstructorUsedError;
   int get iteration => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -67,7 +70,8 @@ abstract class $UserSurveyResultCopyWith<$Res> {
       String userID,
       String surveyID,
       List<UserSurveyAnswer>? answers,
-      int iteration});
+      int iteration,
+      DateTime? createdAt});
 }
 
 /// @nodoc
@@ -86,6 +90,7 @@ class _$UserSurveyResultCopyWithImpl<$Res>
     Object? surveyID = freezed,
     Object? answers = freezed,
     Object? iteration = freezed,
+    Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -108,6 +113,10 @@ class _$UserSurveyResultCopyWithImpl<$Res>
           ? _value.iteration
           : iteration // ignore: cast_nullable_to_non_nullable
               as int,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -124,7 +133,8 @@ abstract class _$UserSurveyResultCopyWith<$Res>
       String userID,
       String surveyID,
       List<UserSurveyAnswer>? answers,
-      int iteration});
+      int iteration,
+      DateTime? createdAt});
 }
 
 /// @nodoc
@@ -145,6 +155,7 @@ class __$UserSurveyResultCopyWithImpl<$Res>
     Object? surveyID = freezed,
     Object? answers = freezed,
     Object? iteration = freezed,
+    Object? createdAt = freezed,
   }) {
     return _then(_UserSurveyResult(
       id: id == freezed
@@ -167,6 +178,10 @@ class __$UserSurveyResultCopyWithImpl<$Res>
           ? _value.iteration
           : iteration // ignore: cast_nullable_to_non_nullable
               as int,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -179,7 +194,8 @@ class _$_UserSurveyResult implements _UserSurveyResult {
       required this.userID,
       required this.surveyID,
       required this.answers,
-      required this.iteration});
+      required this.iteration,
+      this.createdAt});
 
   factory _$_UserSurveyResult.fromJson(Map<String, dynamic> json) =>
       _$_$_UserSurveyResultFromJson(json);
@@ -194,10 +210,12 @@ class _$_UserSurveyResult implements _UserSurveyResult {
   final List<UserSurveyAnswer>? answers;
   @override
   final int iteration;
+  @override
+  final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'UserSurveyResult(id: $id, userID: $userID, surveyID: $surveyID, answers: $answers, iteration: $iteration)';
+    return 'UserSurveyResult(id: $id, userID: $userID, surveyID: $surveyID, answers: $answers, iteration: $iteration, createdAt: $createdAt)';
   }
 
   @override
@@ -216,7 +234,10 @@ class _$_UserSurveyResult implements _UserSurveyResult {
                     .equals(other.answers, answers)) &&
             (identical(other.iteration, iteration) ||
                 const DeepCollectionEquality()
-                    .equals(other.iteration, iteration)));
+                    .equals(other.iteration, iteration)) &&
+            (identical(other.createdAt, createdAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdAt, createdAt)));
   }
 
   @override
@@ -226,7 +247,8 @@ class _$_UserSurveyResult implements _UserSurveyResult {
       const DeepCollectionEquality().hash(userID) ^
       const DeepCollectionEquality().hash(surveyID) ^
       const DeepCollectionEquality().hash(answers) ^
-      const DeepCollectionEquality().hash(iteration);
+      const DeepCollectionEquality().hash(iteration) ^
+      const DeepCollectionEquality().hash(createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -245,7 +267,8 @@ abstract class _UserSurveyResult implements UserSurveyResult {
       required String userID,
       required String surveyID,
       required List<UserSurveyAnswer>? answers,
-      required int iteration}) = _$_UserSurveyResult;
+      required int iteration,
+      DateTime? createdAt}) = _$_UserSurveyResult;
 
   factory _UserSurveyResult.fromJson(Map<String, dynamic> json) =
       _$_UserSurveyResult.fromJson;
@@ -260,6 +283,8 @@ abstract class _UserSurveyResult implements UserSurveyResult {
   List<UserSurveyAnswer>? get answers => throw _privateConstructorUsedError;
   @override
   int get iteration => throw _privateConstructorUsedError;
+  @override
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UserSurveyResultCopyWith<_UserSurveyResult> get copyWith =>

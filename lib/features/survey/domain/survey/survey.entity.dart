@@ -9,6 +9,7 @@ class Survey with _$Survey {
   const factory Survey(
       {required String id,
       required String title,
+      DateTime? createdAt,
       String? intro,
       List<Question>? questions}) = _Survey;
 
