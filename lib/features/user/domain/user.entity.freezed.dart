@@ -34,10 +34,10 @@ class _$UserTearOff {
       bool? darkMode,
       String? bio,
       String? photoID,
-      Map<dynamic, dynamic>? gallery,
-      Map<dynamic, dynamic>? posts,
-      Map<dynamic, dynamic>? comments,
-      Map<dynamic, dynamic>? likes}) {
+      List<UserSurveyResult>? surveyResults,
+      List<Post>? posts,
+      List<Comment>? comments,
+      List<Like>? likes}) {
     return _User(
       id: id,
       email: email,
@@ -52,7 +52,7 @@ class _$UserTearOff {
       darkMode: darkMode,
       bio: bio,
       photoID: photoID,
-      gallery: gallery,
+      surveyResults: surveyResults,
       posts: posts,
       comments: comments,
       likes: likes,
@@ -83,10 +83,11 @@ mixin _$User {
   String? get bio => throw _privateConstructorUsedError;
   String? get photoID =>
       throw _privateConstructorUsedError; // TODO: how to properly handle this?
-  Map<dynamic, dynamic>? get gallery => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get posts => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get comments => throw _privateConstructorUsedError;
-  Map<dynamic, dynamic>? get likes => throw _privateConstructorUsedError;
+  List<UserSurveyResult>? get surveyResults =>
+      throw _privateConstructorUsedError;
+  List<Post>? get posts => throw _privateConstructorUsedError;
+  List<Comment>? get comments => throw _privateConstructorUsedError;
+  List<Like>? get likes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -111,10 +112,10 @@ abstract class $UserCopyWith<$Res> {
       bool? darkMode,
       String? bio,
       String? photoID,
-      Map<dynamic, dynamic>? gallery,
-      Map<dynamic, dynamic>? posts,
-      Map<dynamic, dynamic>? comments,
-      Map<dynamic, dynamic>? likes});
+      List<UserSurveyResult>? surveyResults,
+      List<Post>? posts,
+      List<Comment>? comments,
+      List<Like>? likes});
 }
 
 /// @nodoc
@@ -140,7 +141,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? darkMode = freezed,
     Object? bio = freezed,
     Object? photoID = freezed,
-    Object? gallery = freezed,
+    Object? surveyResults = freezed,
     Object? posts = freezed,
     Object? comments = freezed,
     Object? likes = freezed,
@@ -198,22 +199,22 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.photoID
           : photoID // ignore: cast_nullable_to_non_nullable
               as String?,
-      gallery: gallery == freezed
-          ? _value.gallery
-          : gallery // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+      surveyResults: surveyResults == freezed
+          ? _value.surveyResults
+          : surveyResults // ignore: cast_nullable_to_non_nullable
+              as List<UserSurveyResult>?,
       posts: posts == freezed
           ? _value.posts
           : posts // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<Post>?,
       comments: comments == freezed
           ? _value.comments
           : comments // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<Comment>?,
       likes: likes == freezed
           ? _value.likes
           : likes // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<Like>?,
     ));
   }
 }
@@ -237,10 +238,10 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       bool? darkMode,
       String? bio,
       String? photoID,
-      Map<dynamic, dynamic>? gallery,
-      Map<dynamic, dynamic>? posts,
-      Map<dynamic, dynamic>? comments,
-      Map<dynamic, dynamic>? likes});
+      List<UserSurveyResult>? surveyResults,
+      List<Post>? posts,
+      List<Comment>? comments,
+      List<Like>? likes});
 }
 
 /// @nodoc
@@ -267,7 +268,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? darkMode = freezed,
     Object? bio = freezed,
     Object? photoID = freezed,
-    Object? gallery = freezed,
+    Object? surveyResults = freezed,
     Object? posts = freezed,
     Object? comments = freezed,
     Object? likes = freezed,
@@ -325,22 +326,22 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.photoID
           : photoID // ignore: cast_nullable_to_non_nullable
               as String?,
-      gallery: gallery == freezed
-          ? _value.gallery
-          : gallery // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+      surveyResults: surveyResults == freezed
+          ? _value.surveyResults
+          : surveyResults // ignore: cast_nullable_to_non_nullable
+              as List<UserSurveyResult>?,
       posts: posts == freezed
           ? _value.posts
           : posts // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<Post>?,
       comments: comments == freezed
           ? _value.comments
           : comments // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<Comment>?,
       likes: likes == freezed
           ? _value.likes
           : likes // ignore: cast_nullable_to_non_nullable
-              as Map<dynamic, dynamic>?,
+              as List<Like>?,
     ));
   }
 }
@@ -362,7 +363,7 @@ class _$_User implements _User {
       this.darkMode,
       this.bio,
       this.photoID,
-      this.gallery,
+      this.surveyResults,
       this.posts,
       this.comments,
       this.likes});
@@ -397,17 +398,17 @@ class _$_User implements _User {
   @override
   final String? photoID;
   @override // TODO: how to properly handle this?
-  final Map<dynamic, dynamic>? gallery;
+  final List<UserSurveyResult>? surveyResults;
   @override
-  final Map<dynamic, dynamic>? posts;
+  final List<Post>? posts;
   @override
-  final Map<dynamic, dynamic>? comments;
+  final List<Comment>? comments;
   @override
-  final Map<dynamic, dynamic>? likes;
+  final List<Like>? likes;
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, displayName: $displayName, role: $role, createdAt: $createdAt, phoneNumber: $phoneNumber, isConfirmed: $isConfirmed, isLoggedIn: $isLoggedIn, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, darkMode: $darkMode, bio: $bio, photoID: $photoID, gallery: $gallery, posts: $posts, comments: $comments, likes: $likes)';
+    return 'User(id: $id, email: $email, displayName: $displayName, role: $role, createdAt: $createdAt, phoneNumber: $phoneNumber, isConfirmed: $isConfirmed, isLoggedIn: $isLoggedIn, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, darkMode: $darkMode, bio: $bio, photoID: $photoID, surveyResults: $surveyResults, posts: $posts, comments: $comments, likes: $likes)';
   }
 
   @override
@@ -451,9 +452,9 @@ class _$_User implements _User {
             (identical(other.photoID, photoID) ||
                 const DeepCollectionEquality()
                     .equals(other.photoID, photoID)) &&
-            (identical(other.gallery, gallery) ||
+            (identical(other.surveyResults, surveyResults) ||
                 const DeepCollectionEquality()
-                    .equals(other.gallery, gallery)) &&
+                    .equals(other.surveyResults, surveyResults)) &&
             (identical(other.posts, posts) ||
                 const DeepCollectionEquality().equals(other.posts, posts)) &&
             (identical(other.comments, comments) ||
@@ -479,7 +480,7 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(darkMode) ^
       const DeepCollectionEquality().hash(bio) ^
       const DeepCollectionEquality().hash(photoID) ^
-      const DeepCollectionEquality().hash(gallery) ^
+      const DeepCollectionEquality().hash(surveyResults) ^
       const DeepCollectionEquality().hash(posts) ^
       const DeepCollectionEquality().hash(comments) ^
       const DeepCollectionEquality().hash(likes);
@@ -510,10 +511,10 @@ abstract class _User implements User {
       bool? darkMode,
       String? bio,
       String? photoID,
-      Map<dynamic, dynamic>? gallery,
-      Map<dynamic, dynamic>? posts,
-      Map<dynamic, dynamic>? comments,
-      Map<dynamic, dynamic>? likes}) = _$_User;
+      List<UserSurveyResult>? surveyResults,
+      List<Post>? posts,
+      List<Comment>? comments,
+      List<Like>? likes}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -544,13 +545,14 @@ abstract class _User implements User {
   @override
   String? get photoID => throw _privateConstructorUsedError;
   @override // TODO: how to properly handle this?
-  Map<dynamic, dynamic>? get gallery => throw _privateConstructorUsedError;
+  List<UserSurveyResult>? get surveyResults =>
+      throw _privateConstructorUsedError;
   @override
-  Map<dynamic, dynamic>? get posts => throw _privateConstructorUsedError;
+  List<Post>? get posts => throw _privateConstructorUsedError;
   @override
-  Map<dynamic, dynamic>? get comments => throw _privateConstructorUsedError;
+  List<Comment>? get comments => throw _privateConstructorUsedError;
   @override
-  Map<dynamic, dynamic>? get likes => throw _privateConstructorUsedError;
+  List<Like>? get likes => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;

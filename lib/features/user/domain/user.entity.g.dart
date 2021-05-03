@@ -23,10 +23,18 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
     darkMode: json['darkMode'] as bool?,
     bio: json['bio'] as String?,
     photoID: json['photoID'] as String?,
-    gallery: json['gallery'] as Map<String, dynamic>?,
-    posts: json['posts'] as Map<String, dynamic>?,
-    comments: json['comments'] as Map<String, dynamic>?,
-    likes: json['likes'] as Map<String, dynamic>?,
+    surveyResults: (json['surveyResults'] as List<dynamic>?)
+        ?.map((e) => UserSurveyResult.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    posts: (json['posts'] as List<dynamic>?)
+        ?.map((e) => Post.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    comments: (json['comments'] as List<dynamic>?)
+        ?.map((e) => Comment.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    likes: (json['likes'] as List<dynamic>?)
+        ?.map((e) => Like.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
@@ -44,7 +52,7 @@ Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
       'darkMode': instance.darkMode,
       'bio': instance.bio,
       'photoID': instance.photoID,
-      'gallery': instance.gallery,
+      'surveyResults': instance.surveyResults,
       'posts': instance.posts,
       'comments': instance.comments,
       'likes': instance.likes,
