@@ -11,8 +11,8 @@ _$_Question _$_$_QuestionFromJson(Map<String, dynamic> json) {
     id: json['id'] as String,
     statement: json['statement'] as String,
     type: _$enumDecode(_$QuestionTypeEnumMap, json['type']),
-    answer: json['answer'] as String?,
     surveyID: json['surveyID'] as String,
+    answer: json['answer'] as String?,
   );
 }
 
@@ -21,8 +21,8 @@ Map<String, dynamic> _$_$_QuestionToJson(_$_Question instance) =>
       'id': instance.id,
       'statement': instance.statement,
       'type': _$QuestionTypeEnumMap[instance.type],
-      'answer': instance.answer,
       'surveyID': instance.surveyID,
+      'answer': instance.answer,
     };
 
 K _$enumDecode<K, V>(

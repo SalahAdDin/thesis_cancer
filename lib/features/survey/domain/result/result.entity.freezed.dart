@@ -24,7 +24,7 @@ class _$UserSurveyResultTearOff {
       {required String id,
       required String userID,
       required String surveyID,
-      required List<UserSurveyAnswer>? answers,
+      required List<UserSurveyAnswer> answers,
       required int iteration,
       DateTime? createdAt}) {
     return _UserSurveyResult(
@@ -50,7 +50,7 @@ mixin _$UserSurveyResult {
   String get id => throw _privateConstructorUsedError;
   String get userID => throw _privateConstructorUsedError;
   String get surveyID => throw _privateConstructorUsedError;
-  List<UserSurveyAnswer>? get answers => throw _privateConstructorUsedError;
+  List<UserSurveyAnswer> get answers => throw _privateConstructorUsedError;
   int get iteration => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
@@ -69,7 +69,7 @@ abstract class $UserSurveyResultCopyWith<$Res> {
       {String id,
       String userID,
       String surveyID,
-      List<UserSurveyAnswer>? answers,
+      List<UserSurveyAnswer> answers,
       int iteration,
       DateTime? createdAt});
 }
@@ -108,7 +108,7 @@ class _$UserSurveyResultCopyWithImpl<$Res>
       answers: answers == freezed
           ? _value.answers
           : answers // ignore: cast_nullable_to_non_nullable
-              as List<UserSurveyAnswer>?,
+              as List<UserSurveyAnswer>,
       iteration: iteration == freezed
           ? _value.iteration
           : iteration // ignore: cast_nullable_to_non_nullable
@@ -132,7 +132,7 @@ abstract class _$UserSurveyResultCopyWith<$Res>
       {String id,
       String userID,
       String surveyID,
-      List<UserSurveyAnswer>? answers,
+      List<UserSurveyAnswer> answers,
       int iteration,
       DateTime? createdAt});
 }
@@ -173,7 +173,7 @@ class __$UserSurveyResultCopyWithImpl<$Res>
       answers: answers == freezed
           ? _value.answers
           : answers // ignore: cast_nullable_to_non_nullable
-              as List<UserSurveyAnswer>?,
+              as List<UserSurveyAnswer>,
       iteration: iteration == freezed
           ? _value.iteration
           : iteration // ignore: cast_nullable_to_non_nullable
@@ -207,7 +207,7 @@ class _$_UserSurveyResult implements _UserSurveyResult {
   @override
   final String surveyID;
   @override
-  final List<UserSurveyAnswer>? answers;
+  final List<UserSurveyAnswer> answers;
   @override
   final int iteration;
   @override
@@ -266,7 +266,7 @@ abstract class _UserSurveyResult implements UserSurveyResult {
       {required String id,
       required String userID,
       required String surveyID,
-      required List<UserSurveyAnswer>? answers,
+      required List<UserSurveyAnswer> answers,
       required int iteration,
       DateTime? createdAt}) = _$_UserSurveyResult;
 
@@ -280,7 +280,7 @@ abstract class _UserSurveyResult implements UserSurveyResult {
   @override
   String get surveyID => throw _privateConstructorUsedError;
   @override
-  List<UserSurveyAnswer>? get answers => throw _privateConstructorUsedError;
+  List<UserSurveyAnswer> get answers => throw _privateConstructorUsedError;
   @override
   int get iteration => throw _privateConstructorUsedError;
   @override

@@ -52,6 +52,12 @@ class AmplifyGraphQLSurveyRepository implements SurveyRepository {
     }
   }
 
+  /*
+  * Builds a new survey from the GraphQL response.
+  *
+  * As the response comes with an additional level(by the 'items' key),
+  * it is needed to flatten it to a new variable (to keep the result immutability).
+  * */
   @override
   Future<Survey> findById(String id) async {
     try {
@@ -60,11 +66,10 @@ class AmplifyGraphQLSurveyRepository implements SurveyRepository {
               document: graphQLDocumentGetSurvey, variables: {'id': id}));
       GraphQLResponse response = await operation.response;
       final Map<String, dynamic> data = json.decode(response.data);
-      // TODO: Pop ['questions']['items']
-      //  from this and return to make Questions.fromJson available
       final Map<String, dynamic> result = data['getSurvey'];
-      print("Data: $data");
-      return Survey.fromJson(result);
+      Map<String, dynamic> flattenResult = result;
+      flattenResult['questions'] = result['questions']['items'];
+      return Survey.fromJson(flattenResult);
     } on ApiException catch (error) {
       throw ApiException(error.message);
     }

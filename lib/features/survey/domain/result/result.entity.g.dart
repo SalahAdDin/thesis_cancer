@@ -11,8 +11,8 @@ _$_UserSurveyResult _$_$_UserSurveyResultFromJson(Map<String, dynamic> json) {
     id: json['id'] as String,
     userID: json['userID'] as String,
     surveyID: json['surveyID'] as String,
-    answers: (json['answers'] as List<dynamic>?)
-        ?.map((e) => UserSurveyAnswer.fromJson(e as Map<String, dynamic>))
+    answers: (json['answers'] as List<dynamic>)
+        .map((e) => UserSurveyAnswer.fromJson(e as Map<String, dynamic>))
         .toList(),
     iteration: json['iteration'] as int,
     createdAt: json['createdAt'] == null

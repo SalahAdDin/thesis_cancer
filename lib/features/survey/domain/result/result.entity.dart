@@ -10,7 +10,7 @@ class UserSurveyResult with _$UserSurveyResult {
     required String id,
     required String userID,
     required String surveyID,
-    required List<UserSurveyAnswer>? answers,
+    required List<UserSurveyAnswer> answers,
     required int iteration,
     DateTime? createdAt,
   }) = _UserSurveyResult;

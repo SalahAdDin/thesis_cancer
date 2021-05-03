@@ -10,8 +10,8 @@ class Question with _$Question {
     required String id,
     required String statement,
     required QuestionType type,
-    String? answer,
     required String surveyID,
+    String? answer,
   }) = _Question;
 
   factory Question.fromJson(Map<String, dynamic> json) =>

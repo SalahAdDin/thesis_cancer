@@ -65,7 +65,7 @@ query ListFilteredResults{
 ''';
 
 String graphQLDocumentCreateUserSurveyResult = '''
-  $graphQLFragmentFullBody
+  $graphQLFragmentListBody
   mutation CreateUserSurveyResult(
     \$id: ID,
     \$userID: ID!,
