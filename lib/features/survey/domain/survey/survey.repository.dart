@@ -7,7 +7,7 @@ abstract class SurveyRepository {
 
   Future<Survey> createSurvey(Survey survey);
 
-  Future<void> removeSurvey(Survey survey);
+  Future<void> removeSurvey(String surveyId);
 
   Future<Survey> updateSurvey(Survey survey);
 }

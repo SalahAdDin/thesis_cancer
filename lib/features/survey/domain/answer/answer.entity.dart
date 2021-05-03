@@ -13,5 +13,6 @@ class UserSurveyAnswer with _$UserSurveyAnswer {
 
   factory UserSurveyAnswer.fromJson(Map<String, dynamic> json) =>
       _$UserSurveyAnswerFromJson(json);
-// static const empty = UserSurveyAnswer(id: id, userId: userId, surveyId: surveyId, answers: answers, iteration: iteration)
+  static const empty = UserSurveyAnswer(
+      answer: '', id: '', questionID: '', userSurveyResultID: '');
 }

@@ -9,7 +9,7 @@ abstract class QuestionRepository {
 
   Future<Question> createQuestion(Question question);
 
-  Future<void> removeQuestion(Question question);
+  Future<void> removeQuestion(String questionId);
 
   Future<Question> updateQuestion(Question question);
 }

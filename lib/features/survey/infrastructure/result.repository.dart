@@ -64,6 +64,8 @@ class AmplifyGraphQLResultRepository implements UserSurveyResultRepository {
               variables: {'id': id}));
       GraphQLResponse response = await operation.response;
       final Map<String, dynamic> data = json.decode(response.data);
+      // TODO: Pop ['answers']['items']
+      //  from this and return to make Answers.fromJson available
       final Map<String, dynamic> result = data['getUserSurveyResult'];
       /* TODO: parse data
       * Posts.fromJson (just for showing)
@@ -82,7 +84,7 @@ class AmplifyGraphQLResultRepository implements UserSurveyResultRepository {
     try {
       GraphQLOperation operation = _apiCategory.query(
           request: GraphQLRequest(
-              document: graphQLDocumentGetUserSurveyResult,
+              document: graphQLDocumentListFilteredResults,
               variables: {
             'filter': graphQLFilterResultBySurveyAndUser(surveyId, userId)
           }));
@@ -104,7 +106,7 @@ class AmplifyGraphQLResultRepository implements UserSurveyResultRepository {
     try {
       GraphQLOperation operation = _apiCategory.query(
           request: GraphQLRequest(
-              document: graphQLDocumentGetUserSurveyResult,
+              document: graphQLDocumentListFilteredResults,
               variables: {'filter': graphQLFilterResultBySurvey(id)}));
       GraphQLResponse response = await operation.response;
       final Map<String, dynamic> data = json.decode(response.data);
@@ -124,7 +126,7 @@ class AmplifyGraphQLResultRepository implements UserSurveyResultRepository {
     try {
       GraphQLOperation operation = _apiCategory.query(
           request: GraphQLRequest(
-              document: graphQLDocumentGetUserSurveyResult,
+              document: graphQLDocumentListFilteredResults,
               variables: {'filter': graphQLFilterResultByUser(id)}));
       GraphQLResponse response = await operation.response;
       final Map<String, dynamic> data = json.decode(response.data);

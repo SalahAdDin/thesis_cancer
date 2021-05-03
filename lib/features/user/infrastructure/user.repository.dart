@@ -90,8 +90,6 @@ class AmplifyGraphQLUserRepository implements UserRepository {
       GraphQLResponse response = await operation.response;
       final Map<String, dynamic> data = json.decode(response.data);
       final Map<String, dynamic> result = data['deleteUser'];
-      // TODO: parse data
-      // TODO: verify result.id vs userId
       print("Data: $result");
       if (userId == result['id'])
         return;
