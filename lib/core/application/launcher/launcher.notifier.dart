@@ -28,7 +28,7 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
       state = LauncherState.needsProfile();
     else {
       userController.state = profileData;
-      state = LauncherState.profileLoaded(profileData);
+      state = LauncherState.profileLoaded();
     }
   }
 }

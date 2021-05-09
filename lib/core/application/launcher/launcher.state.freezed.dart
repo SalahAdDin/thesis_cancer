@@ -24,10 +24,8 @@ class _$LauncherStateTearOff {
     return const _NeedsProfile();
   }
 
-  _ProfileLoaded profileLoaded(User user) {
-    return _ProfileLoaded(
-      user,
-    );
+  _ProfileLoaded profileLoaded() {
+    return const _ProfileLoaded();
   }
 }
 
@@ -40,14 +38,14 @@ mixin _$LauncherState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() needsProfile,
-    required TResult Function(User user) profileLoaded,
+    required TResult Function() profileLoaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? needsProfile,
-    TResult Function(User user)? profileLoaded,
+    TResult Function()? profileLoaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -124,7 +122,7 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() needsProfile,
-    required TResult Function(User user) profileLoaded,
+    required TResult Function() profileLoaded,
   }) {
     return loading();
   }
@@ -134,7 +132,7 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? needsProfile,
-    TResult Function(User user)? profileLoaded,
+    TResult Function()? profileLoaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -214,7 +212,7 @@ class _$_NeedsProfile implements _NeedsProfile {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() needsProfile,
-    required TResult Function(User user) profileLoaded,
+    required TResult Function() profileLoaded,
   }) {
     return needsProfile();
   }
@@ -224,7 +222,7 @@ class _$_NeedsProfile implements _NeedsProfile {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? needsProfile,
-    TResult Function(User user)? profileLoaded,
+    TResult Function()? profileLoaded,
     required TResult orElse(),
   }) {
     if (needsProfile != null) {
@@ -267,9 +265,6 @@ abstract class _$ProfileLoadedCopyWith<$Res> {
   factory _$ProfileLoadedCopyWith(
           _ProfileLoaded value, $Res Function(_ProfileLoaded) then) =
       __$ProfileLoadedCopyWithImpl<$Res>;
-  $Res call({User user});
-
-  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -282,65 +277,34 @@ class __$ProfileLoadedCopyWithImpl<$Res>
 
   @override
   _ProfileLoaded get _value => super._value as _ProfileLoaded;
-
-  @override
-  $Res call({
-    Object? user = freezed,
-  }) {
-    return _then(_ProfileLoaded(
-      user == freezed
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
-    ));
-  }
-
-  @override
-  $UserCopyWith<$Res> get user {
-    return $UserCopyWith<$Res>(_value.user, (value) {
-      return _then(_value.copyWith(user: value));
-    });
-  }
 }
 
 /// @nodoc
 
 class _$_ProfileLoaded implements _ProfileLoaded {
-  const _$_ProfileLoaded(this.user);
-
-  @override
-  final User user;
+  const _$_ProfileLoaded();
 
   @override
   String toString() {
-    return 'LauncherState.profileLoaded(user: $user)';
+    return 'LauncherState.profileLoaded()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _ProfileLoaded &&
-            (identical(other.user, user) ||
-                const DeepCollectionEquality().equals(other.user, user)));
+    return identical(this, other) || (other is _ProfileLoaded);
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(user);
-
-  @JsonKey(ignore: true)
-  @override
-  _$ProfileLoadedCopyWith<_ProfileLoaded> get copyWith =>
-      __$ProfileLoadedCopyWithImpl<_ProfileLoaded>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function() needsProfile,
-    required TResult Function(User user) profileLoaded,
+    required TResult Function() profileLoaded,
   }) {
-    return profileLoaded(user);
+    return profileLoaded();
   }
 
   @override
@@ -348,11 +312,11 @@ class _$_ProfileLoaded implements _ProfileLoaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function()? needsProfile,
-    TResult Function(User user)? profileLoaded,
+    TResult Function()? profileLoaded,
     required TResult orElse(),
   }) {
     if (profileLoaded != null) {
-      return profileLoaded(user);
+      return profileLoaded();
     }
     return orElse();
   }
@@ -383,10 +347,5 @@ class _$_ProfileLoaded implements _ProfileLoaded {
 }
 
 abstract class _ProfileLoaded implements LauncherState {
-  const factory _ProfileLoaded(User user) = _$_ProfileLoaded;
-
-  User get user => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  _$ProfileLoadedCopyWith<_ProfileLoaded> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory _ProfileLoaded() = _$_ProfileLoaded;
 }
