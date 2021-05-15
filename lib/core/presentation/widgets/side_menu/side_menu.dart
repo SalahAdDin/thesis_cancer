@@ -28,23 +28,7 @@ class SideMenu extends HookWidget {
                     visible: sessionUser.role == UserRole.ADMIN,
                     child: ExpansionTile(
                       title: Text("Administration"),
-                      children: <Widget>[
-                        ListTile(
-                          leading: Icon(
-                            MdiIcons.accountGroupOutline,
-                            // size: 40,
-                          ),
-                          title: Text('Users'),
-                          onTap: () {},
-                        ),
-                        ListTile(
-                          leading: Icon(MdiIcons.poll),
-                          title: Text('Surveys'),
-                          onTap: () {},
-                        ),
-                        ListTile(
-                            leading: Icon(MdiIcons.cogs), title: Text('Setup')),
-                      ],
+                      children: <Widget>[],
                     ),
                   ),
                   ExpansionTile(
