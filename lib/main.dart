@@ -9,7 +9,7 @@ import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/provider.logger.dart';
 import 'package:thesis_cancer/core/application/routes/router.gr.dart';
 import 'package:thesis_cancer/core/infrastructure/datastore.repository.dart';
-import 'package:thesis_cancer/features/auth/presentation/pages/login.dart';
+import 'package:thesis_cancer/features/auth/presentation/pages/login_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
 
@@ -60,7 +60,7 @@ class CancerApp extends HookWidget {
       // home: SplashScreen()
       builder: (context, router) => launcherState.when(
           loading: () => SplashScreen(),
-          needsProfile: () => LoginPage(),
+          needsProfile: () => LoginScreen(),
           profileLoaded: () => MainScreen()),
     );
   }
