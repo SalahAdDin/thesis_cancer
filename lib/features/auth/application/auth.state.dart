@@ -4,7 +4,7 @@ import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 part 'auth.state.freezed.dart';
 
 @freezed
-abstract class AuthState with _$AuthState {
+class AuthState with _$AuthState {
   const factory AuthState.loading() = _Loading;
 
   const factory AuthState.signedUp(User signedUpUser) = _SignedUp;

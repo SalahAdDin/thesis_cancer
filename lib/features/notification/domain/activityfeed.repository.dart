@@ -1,4 +1,4 @@
-import 'package:thesis_cancer/features/user/domain/activityfeed.entity.dart';
+import 'package:thesis_cancer/features/notification/domain/activityfeed.entity.dart';
 
 abstract class ActivityFeedRepository {
   Future<List<ActivityFeed>> findAll();
