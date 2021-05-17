@@ -21,17 +21,17 @@ class _$UploadFileTearOff {
   const _$UploadFileTearOff();
 
   _UploadFile call(
-      {required String id,
+      {required String alternativeText,
+      required String caption,
       required String url,
-      String? description,
-      String? postID,
-      String? userID}) {
+      required int width,
+      required int height}) {
     return _UploadFile(
-      id: id,
+      alternativeText: alternativeText,
+      caption: caption,
       url: url,
-      description: description,
-      postID: postID,
-      userID: userID,
+      width: width,
+      height: height,
     );
   }
 
@@ -45,11 +45,11 @@ const $UploadFile = _$UploadFileTearOff();
 
 /// @nodoc
 mixin _$UploadFile {
-  String get id => throw _privateConstructorUsedError;
+  String get alternativeText => throw _privateConstructorUsedError;
+  String get caption => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-  String? get postID => throw _privateConstructorUsedError;
-  String? get userID => throw _privateConstructorUsedError;
+  int get width => throw _privateConstructorUsedError;
+  int get height => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -63,11 +63,11 @@ abstract class $UploadFileCopyWith<$Res> {
           UploadFile value, $Res Function(UploadFile) then) =
       _$UploadFileCopyWithImpl<$Res>;
   $Res call(
-      {String id,
+      {String alternativeText,
+      String caption,
       String url,
-      String? description,
-      String? postID,
-      String? userID});
+      int width,
+      int height});
 }
 
 /// @nodoc
@@ -80,33 +80,33 @@ class _$UploadFileCopyWithImpl<$Res> implements $UploadFileCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? alternativeText = freezed,
+    Object? caption = freezed,
     Object? url = freezed,
-    Object? description = freezed,
-    Object? postID = freezed,
-    Object? userID = freezed,
+    Object? width = freezed,
+    Object? height = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      alternativeText: alternativeText == freezed
+          ? _value.alternativeText
+          : alternativeText // ignore: cast_nullable_to_non_nullable
+              as String,
+      caption: caption == freezed
+          ? _value.caption
+          : caption // ignore: cast_nullable_to_non_nullable
               as String,
       url: url == freezed
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      postID: postID == freezed
-          ? _value.postID
-          : postID // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userID: userID == freezed
-          ? _value.userID
-          : userID // ignore: cast_nullable_to_non_nullable
-              as String?,
+      width: width == freezed
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as int,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -118,11 +118,11 @@ abstract class _$UploadFileCopyWith<$Res> implements $UploadFileCopyWith<$Res> {
       __$UploadFileCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
+      {String alternativeText,
+      String caption,
       String url,
-      String? description,
-      String? postID,
-      String? userID});
+      int width,
+      int height});
 }
 
 /// @nodoc
@@ -137,33 +137,33 @@ class __$UploadFileCopyWithImpl<$Res> extends _$UploadFileCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? alternativeText = freezed,
+    Object? caption = freezed,
     Object? url = freezed,
-    Object? description = freezed,
-    Object? postID = freezed,
-    Object? userID = freezed,
+    Object? width = freezed,
+    Object? height = freezed,
   }) {
     return _then(_UploadFile(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      alternativeText: alternativeText == freezed
+          ? _value.alternativeText
+          : alternativeText // ignore: cast_nullable_to_non_nullable
+              as String,
+      caption: caption == freezed
+          ? _value.caption
+          : caption // ignore: cast_nullable_to_non_nullable
               as String,
       url: url == freezed
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      postID: postID == freezed
-          ? _value.postID
-          : postID // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userID: userID == freezed
-          ? _value.userID
-          : userID // ignore: cast_nullable_to_non_nullable
-              as String?,
+      width: width == freezed
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as int,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -172,56 +172,57 @@ class __$UploadFileCopyWithImpl<$Res> extends _$UploadFileCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_UploadFile implements _UploadFile {
   const _$_UploadFile(
-      {required this.id,
+      {required this.alternativeText,
+      required this.caption,
       required this.url,
-      this.description,
-      this.postID,
-      this.userID});
+      required this.width,
+      required this.height});
 
   factory _$_UploadFile.fromJson(Map<String, dynamic> json) =>
       _$_$_UploadFileFromJson(json);
 
   @override
-  final String id;
+  final String alternativeText;
+  @override
+  final String caption;
   @override
   final String url;
   @override
-  final String? description;
+  final int width;
   @override
-  final String? postID;
-  @override
-  final String? userID;
+  final int height;
 
   @override
   String toString() {
-    return 'UploadFile(id: $id, url: $url, description: $description, postID: $postID, userID: $userID)';
+    return 'UploadFile(alternativeText: $alternativeText, caption: $caption, url: $url, width: $width, height: $height)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _UploadFile &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.alternativeText, alternativeText) ||
+                const DeepCollectionEquality()
+                    .equals(other.alternativeText, alternativeText)) &&
+            (identical(other.caption, caption) ||
+                const DeepCollectionEquality()
+                    .equals(other.caption, caption)) &&
             (identical(other.url, url) ||
                 const DeepCollectionEquality().equals(other.url, url)) &&
-            (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
-            (identical(other.postID, postID) ||
-                const DeepCollectionEquality().equals(other.postID, postID)) &&
-            (identical(other.userID, userID) ||
-                const DeepCollectionEquality().equals(other.userID, userID)));
+            (identical(other.width, width) ||
+                const DeepCollectionEquality().equals(other.width, width)) &&
+            (identical(other.height, height) ||
+                const DeepCollectionEquality().equals(other.height, height)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(alternativeText) ^
+      const DeepCollectionEquality().hash(caption) ^
       const DeepCollectionEquality().hash(url) ^
-      const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(postID) ^
-      const DeepCollectionEquality().hash(userID);
+      const DeepCollectionEquality().hash(width) ^
+      const DeepCollectionEquality().hash(height);
 
   @JsonKey(ignore: true)
   @override
@@ -236,25 +237,25 @@ class _$_UploadFile implements _UploadFile {
 
 abstract class _UploadFile implements UploadFile {
   const factory _UploadFile(
-      {required String id,
+      {required String alternativeText,
+      required String caption,
       required String url,
-      String? description,
-      String? postID,
-      String? userID}) = _$_UploadFile;
+      required int width,
+      required int height}) = _$_UploadFile;
 
   factory _UploadFile.fromJson(Map<String, dynamic> json) =
       _$_UploadFile.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get alternativeText => throw _privateConstructorUsedError;
+  @override
+  String get caption => throw _privateConstructorUsedError;
   @override
   String get url => throw _privateConstructorUsedError;
   @override
-  String? get description => throw _privateConstructorUsedError;
+  int get width => throw _privateConstructorUsedError;
   @override
-  String? get postID => throw _privateConstructorUsedError;
-  @override
-  String? get userID => throw _privateConstructorUsedError;
+  int get height => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UploadFileCopyWith<_UploadFile> get copyWith =>

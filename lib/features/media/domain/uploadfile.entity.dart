@@ -5,16 +5,20 @@ part 'uploadfile.entity.g.dart';
 
 @freezed
 class UploadFile with _$UploadFile {
-  const factory UploadFile({
-    required String id,
-    required String url,
-    String? description,
-    String? postID,
-    String? userID,
-  }) = _UploadFile;
+  const factory UploadFile(
+      {required String alternativeText,
+      required String caption,
+      required String url,
+      required int width,
+      required int height}) = _UploadFile;
 
   factory UploadFile.fromJson(Map<String, dynamic> json) =>
       _$UploadFileFromJson(json);
 
-  static const empty = UploadFile(id: '', url: '');
+  static const empty = UploadFile(
+      alternativeText: 'Dummy alternative text.',
+      caption: 'Dummy caption.',
+      url: '',
+      width: 150,
+      height: 150);
 }
