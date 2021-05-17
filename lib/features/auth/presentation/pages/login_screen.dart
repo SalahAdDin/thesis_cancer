@@ -16,7 +16,7 @@ import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dar
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
 
-class LoginPage extends HookWidget {
+class LoginScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final AuthState authScreenState = useProvider(authNotifierProvider);

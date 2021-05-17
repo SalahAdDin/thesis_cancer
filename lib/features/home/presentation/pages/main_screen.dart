@@ -5,7 +5,6 @@ import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
 import 'package:thesis_cancer/core/presentation/widgets/side_menu/side_menu.dart';
-import 'package:thesis_cancer/features/dashboard/presentation/pages/dash_board_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/introductory_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
@@ -14,13 +13,12 @@ import 'package:thesis_cancer/features/user/application/user.provider.dart';
 class MainScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) =>
-        context.read(homeScreenNotifierProvider.notifier).deliverUserScreen());
     final currentUserState = useProvider(homeScreenNotifierProvider);
     return currentUserState.when(
         loading: () => Center(child: CircularProgressIndicator()),
         // TODO: Handle the main layout builder to navigate to isAdmin: () => DashBoardScreen(),
         isAdmin: () => MainLayout(),
+        // TODO: how to wrap this one in a scaffold widget?
         unConfirmed: () => Scaffold(
               body: LobbyScreen(),
             ),
@@ -55,15 +53,13 @@ class MainLayout extends HookWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: Header(
-        displayedUserName: 'Luis Alaguna',
-      ),
-      drawer: ConstrainedBox(
+      appBar: Header(),
+      endDrawer: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: 300),
         child: SideMenu(),
       ),
       body: SafeArea(
-        child: DashBoardScreen(),
+        child: Container(),
       ),
     );
   }

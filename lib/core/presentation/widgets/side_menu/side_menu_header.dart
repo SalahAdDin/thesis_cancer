@@ -1,16 +1,12 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:thesis_cancer/core/application/responsive.dart';
 
-class SideMenuHeader extends StatefulWidget {
-  SideMenuHeader({Key? key}) : super(key: key);
+class SideMenuHeader extends StatelessWidget {
+  SideMenuHeader({Key? key, required this.displayedUserName}) : super(key: key);
 
-  @override
-  _SideMenuHeaderState createState() => _SideMenuHeaderState();
-}
+  final String displayedUserName;
 
-class _SideMenuHeaderState extends State<SideMenuHeader> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -27,21 +23,32 @@ class _SideMenuHeaderState extends State<SideMenuHeader> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                GestureDetector(
+                    onTap: () {},
+                    child: Row(
+                      children: <Widget>[
+                        CircleAvatar(
+                          radius: isMobile(context) ? 15 : 20,
+                          child: Icon(Icons.account_circle_outlined),
+                          // TODO: backgroundImage: Image.network(src),
+                        ),
+                        Visibility(
+                          visible: !isMobile(context),
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(width: 10),
+                              Text(
+                                this.displayedUserName,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(width: 20)
+                            ],
+                          ),
+                        ),
+                      ],
+                    )),
                 Row(
                   children: <Widget>[
-                    Icon(Icons.speed),
-                    SizedBox(width: 30),
-                    Text('Dashboard')
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Transform.rotate(
-                        angle: 30 * math.pi / 180,
-                        child: IconButton(
-                            padding: EdgeInsets.all(0),
-                            icon: Icon(Icons.push_pin_outlined),
-                            onPressed: () {})),
                     IconButton(
                         padding: EdgeInsets.all(0),
                         icon: Icon(MdiIcons.backburger),
