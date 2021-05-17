@@ -3,6 +3,7 @@ import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/features/content/domain/comment/comment.entity.dart';
 import 'package:thesis_cancer/features/content/domain/likes/likes.entity.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
+import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/result/result.entity.dart';
 
 part 'user.entity.freezed.dart';
@@ -16,15 +17,14 @@ class User with _$User {
       required String email,
       required String displayName,
       required UserRole role,
-      DateTime? createdAt,
       String? phoneNumber,
-      bool? isConfirmed,
+      bool? confirmed,
       bool? isLoggedIn,
       bool? hasSeenTutorial,
       bool? hasSeenIntroductoryVideo,
       bool? darkMode,
       String? bio,
-      String? photoID, // TODO: how to properly handle this?
+      UploadFile? profilePhoto, // TODO: how to properly handle this?
       List<UserSurveyResult>? surveyResults,
       List<Post>? posts,
       List<Comment>? comments,

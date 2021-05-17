@@ -12,17 +12,16 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
     email: json['email'] as String,
     displayName: json['displayName'] as String,
     role: _$enumDecode(_$UserRoleEnumMap, json['role']),
-    createdAt: json['createdAt'] == null
-        ? null
-        : DateTime.parse(json['createdAt'] as String),
     phoneNumber: json['phoneNumber'] as String?,
-    isConfirmed: json['isConfirmed'] as bool?,
+    confirmed: json['confirmed'] as bool?,
     isLoggedIn: json['isLoggedIn'] as bool?,
     hasSeenTutorial: json['hasSeenTutorial'] as bool?,
     hasSeenIntroductoryVideo: json['hasSeenIntroductoryVideo'] as bool?,
     darkMode: json['darkMode'] as bool?,
     bio: json['bio'] as String?,
-    photoID: json['photoID'] as String?,
+    profilePhoto: json['profilePhoto'] == null
+        ? null
+        : UploadFile.fromJson(json['profilePhoto'] as Map<String, dynamic>),
     surveyResults: (json['surveyResults'] as List<dynamic>?)
         ?.map((e) => UserSurveyResult.fromJson(e as Map<String, dynamic>))
         .toList(),
@@ -43,15 +42,14 @@ Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
       'email': instance.email,
       'displayName': instance.displayName,
       'role': _$UserRoleEnumMap[instance.role],
-      'createdAt': instance.createdAt?.toIso8601String(),
       'phoneNumber': instance.phoneNumber,
-      'isConfirmed': instance.isConfirmed,
+      'confirmed': instance.confirmed,
       'isLoggedIn': instance.isLoggedIn,
       'hasSeenTutorial': instance.hasSeenTutorial,
       'hasSeenIntroductoryVideo': instance.hasSeenIntroductoryVideo,
       'darkMode': instance.darkMode,
       'bio': instance.bio,
-      'photoID': instance.photoID,
+      'profilePhoto': instance.profilePhoto,
       'surveyResults': instance.surveyResults,
       'posts': instance.posts,
       'comments': instance.comments,

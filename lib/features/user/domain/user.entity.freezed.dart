@@ -25,15 +25,14 @@ class _$UserTearOff {
       required String email,
       required String displayName,
       required UserRole role,
-      DateTime? createdAt,
       String? phoneNumber,
-      bool? isConfirmed,
+      bool? confirmed,
       bool? isLoggedIn,
       bool? hasSeenTutorial,
       bool? hasSeenIntroductoryVideo,
       bool? darkMode,
       String? bio,
-      String? photoID,
+      UploadFile? profilePhoto,
       List<UserSurveyResult>? surveyResults,
       List<Post>? posts,
       List<Comment>? comments,
@@ -43,15 +42,14 @@ class _$UserTearOff {
       email: email,
       displayName: displayName,
       role: role,
-      createdAt: createdAt,
       phoneNumber: phoneNumber,
-      isConfirmed: isConfirmed,
+      confirmed: confirmed,
       isLoggedIn: isLoggedIn,
       hasSeenTutorial: hasSeenTutorial,
       hasSeenIntroductoryVideo: hasSeenIntroductoryVideo,
       darkMode: darkMode,
       bio: bio,
-      photoID: photoID,
+      profilePhoto: profilePhoto,
       surveyResults: surveyResults,
       posts: posts,
       comments: comments,
@@ -73,15 +71,14 @@ mixin _$User {
   String get email => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   UserRole get role => throw _privateConstructorUsedError;
-  DateTime? get createdAt => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
-  bool? get isConfirmed => throw _privateConstructorUsedError;
+  bool? get confirmed => throw _privateConstructorUsedError;
   bool? get isLoggedIn => throw _privateConstructorUsedError;
   bool? get hasSeenTutorial => throw _privateConstructorUsedError;
   bool? get hasSeenIntroductoryVideo => throw _privateConstructorUsedError;
   bool? get darkMode => throw _privateConstructorUsedError;
   String? get bio => throw _privateConstructorUsedError;
-  String? get photoID =>
+  UploadFile? get profilePhoto =>
       throw _privateConstructorUsedError; // TODO: how to properly handle this?
   List<UserSurveyResult>? get surveyResults =>
       throw _privateConstructorUsedError;
@@ -103,19 +100,20 @@ abstract class $UserCopyWith<$Res> {
       String email,
       String displayName,
       UserRole role,
-      DateTime? createdAt,
       String? phoneNumber,
-      bool? isConfirmed,
+      bool? confirmed,
       bool? isLoggedIn,
       bool? hasSeenTutorial,
       bool? hasSeenIntroductoryVideo,
       bool? darkMode,
       String? bio,
-      String? photoID,
+      UploadFile? profilePhoto,
       List<UserSurveyResult>? surveyResults,
       List<Post>? posts,
       List<Comment>? comments,
       List<Like>? likes});
+
+  $UploadFileCopyWith<$Res>? get profilePhoto;
 }
 
 /// @nodoc
@@ -132,15 +130,14 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? email = freezed,
     Object? displayName = freezed,
     Object? role = freezed,
-    Object? createdAt = freezed,
     Object? phoneNumber = freezed,
-    Object? isConfirmed = freezed,
+    Object? confirmed = freezed,
     Object? isLoggedIn = freezed,
     Object? hasSeenTutorial = freezed,
     Object? hasSeenIntroductoryVideo = freezed,
     Object? darkMode = freezed,
     Object? bio = freezed,
-    Object? photoID = freezed,
+    Object? profilePhoto = freezed,
     Object? surveyResults = freezed,
     Object? posts = freezed,
     Object? comments = freezed,
@@ -163,17 +160,13 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
-      createdAt: createdAt == freezed
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       phoneNumber: phoneNumber == freezed
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      isConfirmed: isConfirmed == freezed
-          ? _value.isConfirmed
-          : isConfirmed // ignore: cast_nullable_to_non_nullable
+      confirmed: confirmed == freezed
+          ? _value.confirmed
+          : confirmed // ignore: cast_nullable_to_non_nullable
               as bool?,
       isLoggedIn: isLoggedIn == freezed
           ? _value.isLoggedIn
@@ -195,10 +188,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
-      photoID: photoID == freezed
-          ? _value.photoID
-          : photoID // ignore: cast_nullable_to_non_nullable
-              as String?,
+      profilePhoto: profilePhoto == freezed
+          ? _value.profilePhoto
+          : profilePhoto // ignore: cast_nullable_to_non_nullable
+              as UploadFile?,
       surveyResults: surveyResults == freezed
           ? _value.surveyResults
           : surveyResults // ignore: cast_nullable_to_non_nullable
@@ -217,6 +210,17 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
               as List<Like>?,
     ));
   }
+
+  @override
+  $UploadFileCopyWith<$Res>? get profilePhoto {
+    if (_value.profilePhoto == null) {
+      return null;
+    }
+
+    return $UploadFileCopyWith<$Res>(_value.profilePhoto!, (value) {
+      return _then(_value.copyWith(profilePhoto: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -229,19 +233,21 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String email,
       String displayName,
       UserRole role,
-      DateTime? createdAt,
       String? phoneNumber,
-      bool? isConfirmed,
+      bool? confirmed,
       bool? isLoggedIn,
       bool? hasSeenTutorial,
       bool? hasSeenIntroductoryVideo,
       bool? darkMode,
       String? bio,
-      String? photoID,
+      UploadFile? profilePhoto,
       List<UserSurveyResult>? surveyResults,
       List<Post>? posts,
       List<Comment>? comments,
       List<Like>? likes});
+
+  @override
+  $UploadFileCopyWith<$Res>? get profilePhoto;
 }
 
 /// @nodoc
@@ -259,15 +265,14 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? email = freezed,
     Object? displayName = freezed,
     Object? role = freezed,
-    Object? createdAt = freezed,
     Object? phoneNumber = freezed,
-    Object? isConfirmed = freezed,
+    Object? confirmed = freezed,
     Object? isLoggedIn = freezed,
     Object? hasSeenTutorial = freezed,
     Object? hasSeenIntroductoryVideo = freezed,
     Object? darkMode = freezed,
     Object? bio = freezed,
-    Object? photoID = freezed,
+    Object? profilePhoto = freezed,
     Object? surveyResults = freezed,
     Object? posts = freezed,
     Object? comments = freezed,
@@ -290,17 +295,13 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
-      createdAt: createdAt == freezed
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       phoneNumber: phoneNumber == freezed
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      isConfirmed: isConfirmed == freezed
-          ? _value.isConfirmed
-          : isConfirmed // ignore: cast_nullable_to_non_nullable
+      confirmed: confirmed == freezed
+          ? _value.confirmed
+          : confirmed // ignore: cast_nullable_to_non_nullable
               as bool?,
       isLoggedIn: isLoggedIn == freezed
           ? _value.isLoggedIn
@@ -322,10 +323,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
-      photoID: photoID == freezed
-          ? _value.photoID
-          : photoID // ignore: cast_nullable_to_non_nullable
-              as String?,
+      profilePhoto: profilePhoto == freezed
+          ? _value.profilePhoto
+          : profilePhoto // ignore: cast_nullable_to_non_nullable
+              as UploadFile?,
       surveyResults: surveyResults == freezed
           ? _value.surveyResults
           : surveyResults // ignore: cast_nullable_to_non_nullable
@@ -354,15 +355,14 @@ class _$_User implements _User {
       required this.email,
       required this.displayName,
       required this.role,
-      this.createdAt,
       this.phoneNumber,
-      this.isConfirmed,
+      this.confirmed,
       this.isLoggedIn,
       this.hasSeenTutorial,
       this.hasSeenIntroductoryVideo,
       this.darkMode,
       this.bio,
-      this.photoID,
+      this.profilePhoto,
       this.surveyResults,
       this.posts,
       this.comments,
@@ -380,11 +380,9 @@ class _$_User implements _User {
   @override
   final UserRole role;
   @override
-  final DateTime? createdAt;
-  @override
   final String? phoneNumber;
   @override
-  final bool? isConfirmed;
+  final bool? confirmed;
   @override
   final bool? isLoggedIn;
   @override
@@ -396,7 +394,7 @@ class _$_User implements _User {
   @override
   final String? bio;
   @override
-  final String? photoID;
+  final UploadFile? profilePhoto;
   @override // TODO: how to properly handle this?
   final List<UserSurveyResult>? surveyResults;
   @override
@@ -408,7 +406,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, displayName: $displayName, role: $role, createdAt: $createdAt, phoneNumber: $phoneNumber, isConfirmed: $isConfirmed, isLoggedIn: $isLoggedIn, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, darkMode: $darkMode, bio: $bio, photoID: $photoID, surveyResults: $surveyResults, posts: $posts, comments: $comments, likes: $likes)';
+    return 'User(id: $id, email: $email, displayName: $displayName, role: $role, phoneNumber: $phoneNumber, confirmed: $confirmed, isLoggedIn: $isLoggedIn, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, darkMode: $darkMode, bio: $bio, profilePhoto: $profilePhoto, surveyResults: $surveyResults, posts: $posts, comments: $comments, likes: $likes)';
   }
 
   @override
@@ -424,15 +422,12 @@ class _$_User implements _User {
                     .equals(other.displayName, displayName)) &&
             (identical(other.role, role) ||
                 const DeepCollectionEquality().equals(other.role, role)) &&
-            (identical(other.createdAt, createdAt) ||
-                const DeepCollectionEquality()
-                    .equals(other.createdAt, createdAt)) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 const DeepCollectionEquality()
                     .equals(other.phoneNumber, phoneNumber)) &&
-            (identical(other.isConfirmed, isConfirmed) ||
+            (identical(other.confirmed, confirmed) ||
                 const DeepCollectionEquality()
-                    .equals(other.isConfirmed, isConfirmed)) &&
+                    .equals(other.confirmed, confirmed)) &&
             (identical(other.isLoggedIn, isLoggedIn) ||
                 const DeepCollectionEquality()
                     .equals(other.isLoggedIn, isLoggedIn)) &&
@@ -449,9 +444,9 @@ class _$_User implements _User {
                     .equals(other.darkMode, darkMode)) &&
             (identical(other.bio, bio) ||
                 const DeepCollectionEquality().equals(other.bio, bio)) &&
-            (identical(other.photoID, photoID) ||
+            (identical(other.profilePhoto, profilePhoto) ||
                 const DeepCollectionEquality()
-                    .equals(other.photoID, photoID)) &&
+                    .equals(other.profilePhoto, profilePhoto)) &&
             (identical(other.surveyResults, surveyResults) ||
                 const DeepCollectionEquality()
                     .equals(other.surveyResults, surveyResults)) &&
@@ -471,15 +466,14 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(displayName) ^
       const DeepCollectionEquality().hash(role) ^
-      const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(phoneNumber) ^
-      const DeepCollectionEquality().hash(isConfirmed) ^
+      const DeepCollectionEquality().hash(confirmed) ^
       const DeepCollectionEquality().hash(isLoggedIn) ^
       const DeepCollectionEquality().hash(hasSeenTutorial) ^
       const DeepCollectionEquality().hash(hasSeenIntroductoryVideo) ^
       const DeepCollectionEquality().hash(darkMode) ^
       const DeepCollectionEquality().hash(bio) ^
-      const DeepCollectionEquality().hash(photoID) ^
+      const DeepCollectionEquality().hash(profilePhoto) ^
       const DeepCollectionEquality().hash(surveyResults) ^
       const DeepCollectionEquality().hash(posts) ^
       const DeepCollectionEquality().hash(comments) ^
@@ -502,15 +496,14 @@ abstract class _User implements User {
       required String email,
       required String displayName,
       required UserRole role,
-      DateTime? createdAt,
       String? phoneNumber,
-      bool? isConfirmed,
+      bool? confirmed,
       bool? isLoggedIn,
       bool? hasSeenTutorial,
       bool? hasSeenIntroductoryVideo,
       bool? darkMode,
       String? bio,
-      String? photoID,
+      UploadFile? profilePhoto,
       List<UserSurveyResult>? surveyResults,
       List<Post>? posts,
       List<Comment>? comments,
@@ -527,11 +520,9 @@ abstract class _User implements User {
   @override
   UserRole get role => throw _privateConstructorUsedError;
   @override
-  DateTime? get createdAt => throw _privateConstructorUsedError;
-  @override
   String? get phoneNumber => throw _privateConstructorUsedError;
   @override
-  bool? get isConfirmed => throw _privateConstructorUsedError;
+  bool? get confirmed => throw _privateConstructorUsedError;
   @override
   bool? get isLoggedIn => throw _privateConstructorUsedError;
   @override
@@ -543,7 +534,7 @@ abstract class _User implements User {
   @override
   String? get bio => throw _privateConstructorUsedError;
   @override
-  String? get photoID => throw _privateConstructorUsedError;
+  UploadFile? get profilePhoto => throw _privateConstructorUsedError;
   @override // TODO: how to properly handle this?
   List<UserSurveyResult>? get surveyResults =>
       throw _privateConstructorUsedError;

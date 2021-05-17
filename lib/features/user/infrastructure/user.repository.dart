@@ -113,12 +113,12 @@ class AmplifyGraphQLUserRepository implements UserRepository {
             'displayName': user.displayName,
             'role': user.role,
             'phoneNumber': user.phoneNumber,
-            'isConfirmed': user.isConfirmed,
+            'confirmed': user.confirmed,
             'hasSeenTutorial': user.hasSeenTutorial,
             'hasSeenIntroductoryVideo': user.hasSeenIntroductoryVideo,
             'darkMode': user.darkMode,
             'bio': user.bio,
-            'photoID': user.photoID
+            'profilePhoto': user.profilePhoto
           }));
       GraphQLResponse response = await operation.response;
       final Map<String, dynamic> data = json.decode(response.data);
