@@ -15,8 +15,10 @@ class User with _$User {
   const factory User(
       {required String id,
       required String email,
-      required String displayName,
+      required String username,
       required UserRole role,
+      String? firstName,
+      String? lastName,
       String? phoneNumber,
       bool? confirmed,
       bool? isLoggedIn,
@@ -31,6 +33,11 @@ class User with _$User {
       List<Like>? likes}) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-  static const empty =
-      User(id: '', email: '', displayName: '', role: UserRole.GUEST);
+  static const empty = User(
+      id: '',
+      email: 'name@dummy.com',
+      username: 'DummyName',
+      firstName: 'Dummy',
+      lastName: 'Dum',
+      role: UserRole.GUEST);
 }

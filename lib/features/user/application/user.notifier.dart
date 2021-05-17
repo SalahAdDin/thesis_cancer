@@ -22,7 +22,7 @@ class UserNotifier extends StateNotifier<UserState> {
   }
 
   UserStatus assignUserStatus(User targetUser) {
-    if (targetUser.isConfirmed == true) {
+    if (targetUser.confirmed == true) {
       if (targetUser.role == UserRole.ADMIN)
         return UserStatus.ADMIN;
       else if (targetUser.hasSeenIntroductoryVideo ==

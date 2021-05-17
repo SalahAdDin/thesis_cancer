@@ -23,8 +23,9 @@ class SideMenu extends HookWidget {
           child: Column(
             children: <Widget>[
               SideMenuHeader(
-                displayedUserName: sessionUser.displayName,
-              ),
+                  displayedUserName: sessionUser.username,
+                  displayedName:
+                      "${sessionUser.firstName} ${sessionUser.lastName}"),
               Expanded(
                   child: ListView(
                 padding: EdgeInsets.zero,

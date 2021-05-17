@@ -64,7 +64,7 @@ class AmplifyGraphQLUserRepository implements UserRepository {
               variables: {
             'id': user.id,
             'email': user.email,
-            'displayName': user.displayName,
+            'username': user.username,
             'role': user.role
           }));
       GraphQLResponse response = await operation.response;
@@ -110,7 +110,7 @@ class AmplifyGraphQLUserRepository implements UserRepository {
               variables: {
             'id': user.id,
             'email': user.email,
-            'displayName': user.displayName,
+            'username': user.username,
             'role': user.role,
             'phoneNumber': user.phoneNumber,
             'confirmed': user.confirmed,

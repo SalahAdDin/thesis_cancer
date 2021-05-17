@@ -45,13 +45,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
     User newProfile = User(
         id: uuid.v4(),
         email: userAttributes['email']!,
-        displayName: '',
+        username: '',
         phoneNumber: userAttributes['phone_number']!,
         role: userSessionRole != null
             ? EnumToString.fromString(
                 UserRole.values, userSessionRole.toUpperCase())!
             : UserRole.GUEST,
-        isConfirmed: userAttributes['email_verified'] == 'true' ||
+        confirmed: userAttributes['email_verified'] == 'true' ||
                 userAttributes['phone_number_verified'] == 'true'
             ? true
             : false);
@@ -62,8 +62,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
     } else
       // TODO: at writing on dataStore, SplashScreen stream is triggered and its
       //  state change to Profile, which send us to the screen and break all.
-      // await dataStore.writeUserProfile(newProfile);
-      this.userController.state = newProfile;
+      await dataStore.writeUserProfile(newProfile);
+    this.userController.state = newProfile;
     state = AuthState.loggedIn(newProfile);
   }
 
@@ -91,15 +91,18 @@ class AuthNotifier extends StateNotifier<AuthState> {
           await authRepository.fetchUserAttributes();*/
       // TODO: should we trust on success or on next step?
       if (result.nextStep ==
-          EnumToString.convertToString(NextStep.CONFIRM_SIGN_UP_STEP))
-        state = AuthState.signedUp(User(
+          EnumToString.convertToString(NextStep.CONFIRM_SIGN_UP_STEP)) {
+        User newUser = User(
             id: uuid.v4(),
             // email: userAttributes['email']!,
             email: username,
-            displayName: username,
+            username: username,
             // phoneNumber: userAttributes['phone_number']!,
-            role: UserRole.PILOT,
-            isConfirmed: false));
+            role: UserRole.GUEST,
+            confirmed: false);
+        userController.state = newUser;
+        state = AuthState.signedUp(newUser);
+      }
     } on SignUpWithInvalidPasswordFailure catch (error) {
       // state = AuthState.error(error.toString());
       return error.toString();
@@ -128,9 +131,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
       User newProfile = User(
           id: uuid.v4(),
           email: username,
-          displayName: '',
+          username: '',
           role: UserRole.GUEST,
-          isConfirmed: false);
+          confirmed: false);
       this.userController.state = newProfile;
       state = AuthState.loggedIn(newProfile);
     } on LogInWithEmailAndPasswordFailure catch (error) {

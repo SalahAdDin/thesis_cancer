@@ -23,8 +23,10 @@ class _$UserTearOff {
   _User call(
       {required String id,
       required String email,
-      required String displayName,
+      required String username,
       required UserRole role,
+      String? firstName,
+      String? lastName,
       String? phoneNumber,
       bool? confirmed,
       bool? isLoggedIn,
@@ -40,8 +42,10 @@ class _$UserTearOff {
     return _User(
       id: id,
       email: email,
-      displayName: displayName,
+      username: username,
       role: role,
+      firstName: firstName,
+      lastName: lastName,
       phoneNumber: phoneNumber,
       confirmed: confirmed,
       isLoggedIn: isLoggedIn,
@@ -69,8 +73,10 @@ const $User = _$UserTearOff();
 mixin _$User {
   String get id => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
-  String get displayName => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
   UserRole get role => throw _privateConstructorUsedError;
+  String? get firstName => throw _privateConstructorUsedError;
+  String? get lastName => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
   bool? get confirmed => throw _privateConstructorUsedError;
   bool? get isLoggedIn => throw _privateConstructorUsedError;
@@ -98,8 +104,10 @@ abstract class $UserCopyWith<$Res> {
   $Res call(
       {String id,
       String email,
-      String displayName,
+      String username,
       UserRole role,
+      String? firstName,
+      String? lastName,
       String? phoneNumber,
       bool? confirmed,
       bool? isLoggedIn,
@@ -128,8 +136,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? email = freezed,
-    Object? displayName = freezed,
+    Object? username = freezed,
     Object? role = freezed,
+    Object? firstName = freezed,
+    Object? lastName = freezed,
     Object? phoneNumber = freezed,
     Object? confirmed = freezed,
     Object? isLoggedIn = freezed,
@@ -152,14 +162,22 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      displayName: displayName == freezed
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
+      username: username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String,
       role: role == freezed
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
+      firstName: firstName == freezed
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastName: lastName == freezed
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String?,
       phoneNumber: phoneNumber == freezed
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -231,8 +249,10 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   $Res call(
       {String id,
       String email,
-      String displayName,
+      String username,
       UserRole role,
+      String? firstName,
+      String? lastName,
       String? phoneNumber,
       bool? confirmed,
       bool? isLoggedIn,
@@ -263,8 +283,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? email = freezed,
-    Object? displayName = freezed,
+    Object? username = freezed,
     Object? role = freezed,
+    Object? firstName = freezed,
+    Object? lastName = freezed,
     Object? phoneNumber = freezed,
     Object? confirmed = freezed,
     Object? isLoggedIn = freezed,
@@ -287,14 +309,22 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      displayName: displayName == freezed
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
+      username: username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String,
       role: role == freezed
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
+      firstName: firstName == freezed
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastName: lastName == freezed
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String?,
       phoneNumber: phoneNumber == freezed
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -353,8 +383,10 @@ class _$_User implements _User {
   const _$_User(
       {required this.id,
       required this.email,
-      required this.displayName,
+      required this.username,
       required this.role,
+      this.firstName,
+      this.lastName,
       this.phoneNumber,
       this.confirmed,
       this.isLoggedIn,
@@ -376,9 +408,13 @@ class _$_User implements _User {
   @override
   final String email;
   @override
-  final String displayName;
+  final String username;
   @override
   final UserRole role;
+  @override
+  final String? firstName;
+  @override
+  final String? lastName;
   @override
   final String? phoneNumber;
   @override
@@ -406,7 +442,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, displayName: $displayName, role: $role, phoneNumber: $phoneNumber, confirmed: $confirmed, isLoggedIn: $isLoggedIn, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, darkMode: $darkMode, bio: $bio, profilePhoto: $profilePhoto, surveyResults: $surveyResults, posts: $posts, comments: $comments, likes: $likes)';
+    return 'User(id: $id, email: $email, username: $username, role: $role, firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, confirmed: $confirmed, isLoggedIn: $isLoggedIn, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, darkMode: $darkMode, bio: $bio, profilePhoto: $profilePhoto, surveyResults: $surveyResults, posts: $posts, comments: $comments, likes: $likes)';
   }
 
   @override
@@ -417,11 +453,17 @@ class _$_User implements _User {
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.email, email) ||
                 const DeepCollectionEquality().equals(other.email, email)) &&
-            (identical(other.displayName, displayName) ||
+            (identical(other.username, username) ||
                 const DeepCollectionEquality()
-                    .equals(other.displayName, displayName)) &&
+                    .equals(other.username, username)) &&
             (identical(other.role, role) ||
                 const DeepCollectionEquality().equals(other.role, role)) &&
+            (identical(other.firstName, firstName) ||
+                const DeepCollectionEquality()
+                    .equals(other.firstName, firstName)) &&
+            (identical(other.lastName, lastName) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastName, lastName)) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 const DeepCollectionEquality()
                     .equals(other.phoneNumber, phoneNumber)) &&
@@ -464,8 +506,10 @@ class _$_User implements _User {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(email) ^
-      const DeepCollectionEquality().hash(displayName) ^
+      const DeepCollectionEquality().hash(username) ^
       const DeepCollectionEquality().hash(role) ^
+      const DeepCollectionEquality().hash(firstName) ^
+      const DeepCollectionEquality().hash(lastName) ^
       const DeepCollectionEquality().hash(phoneNumber) ^
       const DeepCollectionEquality().hash(confirmed) ^
       const DeepCollectionEquality().hash(isLoggedIn) ^
@@ -494,8 +538,10 @@ abstract class _User implements User {
   const factory _User(
       {required String id,
       required String email,
-      required String displayName,
+      required String username,
       required UserRole role,
+      String? firstName,
+      String? lastName,
       String? phoneNumber,
       bool? confirmed,
       bool? isLoggedIn,
@@ -516,9 +562,13 @@ abstract class _User implements User {
   @override
   String get email => throw _privateConstructorUsedError;
   @override
-  String get displayName => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
   @override
   UserRole get role => throw _privateConstructorUsedError;
+  @override
+  String? get firstName => throw _privateConstructorUsedError;
+  @override
+  String? get lastName => throw _privateConstructorUsedError;
   @override
   String? get phoneNumber => throw _privateConstructorUsedError;
   @override

@@ -3,9 +3,12 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:thesis_cancer/core/application/responsive.dart';
 
 class SideMenuHeader extends StatelessWidget {
-  SideMenuHeader({Key? key, required this.displayedUserName}) : super(key: key);
+  SideMenuHeader(
+      {Key? key, required this.displayedUserName, required this.displayedName})
+      : super(key: key);
 
   final String displayedUserName;
+  final String displayedName;
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +37,16 @@ class SideMenuHeader extends StatelessWidget {
                         ),
                         Visibility(
                           visible: !isMobile(context),
-                          child: Row(
+                          child: Column(
                             children: <Widget>[
-                              SizedBox(width: 10),
+                              // SizedBox(width: 10),
                               Text(
-                                this.displayedUserName,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                this.displayedName,
+                                style: Theme.of(context).textTheme.headline4,
                               ),
-                              SizedBox(width: 20)
+                              Text(this.displayedUserName,
+                                  style: Theme.of(context).textTheme.subtitle1),
+                              // SizedBox(width: 20)
                             ],
                           ),
                         ),
