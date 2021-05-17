@@ -53,10 +53,8 @@ class MainLayout extends HookWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: Header(
-        displayedUserName: 'Luis Alaguna',
-      ),
-      drawer: ConstrainedBox(
+      appBar: Header(),
+      endDrawer: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: 300),
         child: SideMenu(),
       ),
