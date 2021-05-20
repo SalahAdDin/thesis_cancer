@@ -29,6 +29,7 @@ dependencies:
   amplify_auth_cognito: ^0.1.5
   amplify_flutter: ^0.1.5
   amplify_storage_s3: ^0.1.5
+  colorize: ^3.0.0
   # connectivity: ^3.0.3
   # device_info: ^2.0.0
   dots_indicator: ^2.0.0
