@@ -1,39 +1,19 @@
-import 'package:amplify_auth_plugin_interface/src/Exceptions/InvalidPasswordException.dart';
-import 'package:amplify_auth_plugin_interface/src/Exceptions/UserNotConfirmedException.dart';
-import 'package:amplify_flutter/amplify.dart';
-
 class SignUpFailure implements Exception {
-  SignUpFailure(AmplifyException error);
+  SignUpFailure(String string);
 }
 
-class SignUpWithInvalidPasswordFailure implements Exception {
-  SignUpWithInvalidPasswordFailure(InvalidPasswordException error);
-}
+class SignUpWithInvalidPasswordFailure implements Exception {}
 
-class ResetPasswordFailure implements Exception {
-  ResetPasswordFailure(AmplifyException error);
-}
+class ResetPasswordFailure implements Exception {}
 
-class LogInWithSocialProviderFailure implements Exception {
-  LogInWithSocialProviderFailure(AmplifyException error);
-}
+class LogInWithSocialProviderFailure implements Exception {}
 
-class LogInWithEmailAndPasswordFailure implements Exception {
-  LogInWithEmailAndPasswordFailure(AmplifyException error);
-}
+class LogInWithEmailAndPasswordFailure implements Exception {}
 
-class LogInUnconfirmedUserFailure implements Exception {
-  LogInUnconfirmedUserFailure(UserNotConfirmedException error);
-}
+class LogInUnconfirmedUserFailure implements Exception {}
 
-class FetchUserAttributesFailure implements Exception {
-  FetchUserAttributesFailure(AmplifyException error);
-}
+class FetchUserAttributesFailure implements Exception {}
 
-class GettingCurrentUserFailure implements Exception {
-  GettingCurrentUserFailure(AmplifyException error);
-}
+class GettingCurrentUserFailure implements Exception {}
 
-class ConfirmSignInFailure implements Exception {
-  ConfirmSignInFailure(AmplifyException error);
-}
+class ConfirmSignInFailure implements Exception {}

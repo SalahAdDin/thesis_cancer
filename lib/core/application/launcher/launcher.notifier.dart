@@ -24,7 +24,7 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
   void init() async {
     final User profileData = await dataStore.getUserProfileData();
     // This does mean a dummy user was created.
-    if (profileData.email == '')
+    if (profileData.email == 'name@dummy.com')
       state = LauncherState.needsProfile();
     else {
       userController.state = profileData;
