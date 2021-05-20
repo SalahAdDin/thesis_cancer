@@ -11,8 +11,8 @@ _$_UploadFile _$_$_UploadFileFromJson(Map<String, dynamic> json) {
     alternativeText: json['alternativeText'] as String,
     caption: json['caption'] as String,
     url: json['url'] as String,
-    width: json['width'] as int,
-    height: json['height'] as int,
+    width: json['width'] as int?,
+    height: json['height'] as int?,
   );
 }
 

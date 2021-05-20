@@ -10,7 +10,8 @@ final StateProvider<String> tokenProvider =
     StateProvider<String>((_) => '', name: "Token Provider");
 
 final authRepositoryProvider = Provider<AuthRepository>(
-    (ref) => GraphQLAuthRepository(client: ref.watch(graphQLClientProvider)));
+    (ref) => GraphQLAuthRepository(client: ref.watch(graphQLClientProvider)),
+    name: 'Auth Repository Provider');
 
 final authNotifierProvider =
     StateNotifierProvider<AuthNotifier, AuthState>((ref) {

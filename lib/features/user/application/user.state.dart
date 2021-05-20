@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user.state.freezed.dart';
 
 @freezed
-abstract class UserState with _$UserState {
+class UserState with _$UserState {
   const factory UserState.loading() = _Loading;
 
   const factory UserState.isAdmin() = _IsAdmin;
