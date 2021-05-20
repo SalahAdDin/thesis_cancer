@@ -9,8 +9,8 @@ class UploadFile with _$UploadFile {
       {required String alternativeText,
       required String caption,
       required String url,
-      required int width,
-      required int height}) = _UploadFile;
+      int? width,
+      int? height}) = _UploadFile;
 
   factory UploadFile.fromJson(Map<String, dynamic> json) =>
       _$UploadFileFromJson(json);

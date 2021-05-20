@@ -5,8 +5,9 @@ import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.repository.dart';
 import 'package:thesis_cancer/features/user/infrastructure/user.repository.dart';
 
-final userRepositoryProvider =
-    Provider<UserRepository>((ref) => AmplifyGraphQLUserRepository());
+final userRepositoryProvider = Provider<UserRepository>(
+    (ref) => AmplifyGraphQLUserRepository(),
+    name: 'User Repository Provider');
 
 final StateProvider<User> userEntityProvider =
     StateProvider<User>((ref) => User.empty, name: "User Entity Provider");

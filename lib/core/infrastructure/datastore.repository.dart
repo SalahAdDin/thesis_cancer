@@ -2,6 +2,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
+import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
@@ -10,6 +11,7 @@ class StorePath {
   static const profile = 'profile';
   static const loggedUserId = 'loggedUserId';
   static const surveys = 'surveys';
+  static const settings = 'settings';
 // static const surveyResults = 'results';
 }
 
@@ -29,6 +31,28 @@ class SembastDataStore implements DataStoreRepository {
 
   static Future<SembastDataStore> init(String databasePath) async =>
       SembastDataStore(await databaseFactory.openDatabase(databasePath));
+
+  @override
+  Future<Settings> getSettings() async {
+    final Map<String, dynamic> settingsJson =
+        await store.record(StorePath.settings).get(database);
+
+    return settingsJson != null
+        ? Settings.fromJson(settingsJson)
+        : Settings.empty;
+  }
+
+  @override
+  Future<void> removeSettings() async {
+    final record = store.record(StorePath.settings);
+    await record.delete(database);
+  }
+
+  @override
+  Future<void> writeSettings(Settings settings) async {
+    final recordName = StorePath.settings;
+    await store.record(recordName).put(database, settings.toJson());
+  }
 
   @override
   Future<void> writeUserProfile(User user) async {

@@ -24,8 +24,8 @@ class _$UploadFileTearOff {
       {required String alternativeText,
       required String caption,
       required String url,
-      required int width,
-      required int height}) {
+      int? width,
+      int? height}) {
     return _UploadFile(
       alternativeText: alternativeText,
       caption: caption,
@@ -48,8 +48,8 @@ mixin _$UploadFile {
   String get alternativeText => throw _privateConstructorUsedError;
   String get caption => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
-  int get width => throw _privateConstructorUsedError;
-  int get height => throw _privateConstructorUsedError;
+  int? get width => throw _privateConstructorUsedError;
+  int? get height => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -66,8 +66,8 @@ abstract class $UploadFileCopyWith<$Res> {
       {String alternativeText,
       String caption,
       String url,
-      int width,
-      int height});
+      int? width,
+      int? height});
 }
 
 /// @nodoc
@@ -102,11 +102,11 @@ class _$UploadFileCopyWithImpl<$Res> implements $UploadFileCopyWith<$Res> {
       width: width == freezed
           ? _value.width
           : width // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       height: height == freezed
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -121,8 +121,8 @@ abstract class _$UploadFileCopyWith<$Res> implements $UploadFileCopyWith<$Res> {
       {String alternativeText,
       String caption,
       String url,
-      int width,
-      int height});
+      int? width,
+      int? height});
 }
 
 /// @nodoc
@@ -159,11 +159,11 @@ class __$UploadFileCopyWithImpl<$Res> extends _$UploadFileCopyWithImpl<$Res>
       width: width == freezed
           ? _value.width
           : width // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       height: height == freezed
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -175,8 +175,8 @@ class _$_UploadFile implements _UploadFile {
       {required this.alternativeText,
       required this.caption,
       required this.url,
-      required this.width,
-      required this.height});
+      this.width,
+      this.height});
 
   factory _$_UploadFile.fromJson(Map<String, dynamic> json) =>
       _$_$_UploadFileFromJson(json);
@@ -188,9 +188,9 @@ class _$_UploadFile implements _UploadFile {
   @override
   final String url;
   @override
-  final int width;
+  final int? width;
   @override
-  final int height;
+  final int? height;
 
   @override
   String toString() {
@@ -240,8 +240,8 @@ abstract class _UploadFile implements UploadFile {
       {required String alternativeText,
       required String caption,
       required String url,
-      required int width,
-      required int height}) = _$_UploadFile;
+      int? width,
+      int? height}) = _$_UploadFile;
 
   factory _UploadFile.fromJson(Map<String, dynamic> json) =
       _$_UploadFile.fromJson;
@@ -253,9 +253,9 @@ abstract class _UploadFile implements UploadFile {
   @override
   String get url => throw _privateConstructorUsedError;
   @override
-  int get width => throw _privateConstructorUsedError;
+  int? get width => throw _privateConstructorUsedError;
   @override
-  int get height => throw _privateConstructorUsedError;
+  int? get height => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UploadFileCopyWith<_UploadFile> get copyWith =>

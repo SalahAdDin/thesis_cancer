@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/provider.logger.dart';
 import 'package:thesis_cancer/core/application/routes/router.gr.dart';
+import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/core/infrastructure/datastore.repository.dart';
 import 'package:thesis_cancer/features/auth/presentation/pages/login_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
@@ -47,7 +48,8 @@ class CancerApp extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final _appRouter = AppRouter();
-    final bool darkTheme = useProvider(darkThemeProvider);
+    final Settings? appSettings = useProvider(settingsProvider).data?.value;
+    final bool darkTheme = appSettings?.darkTheme ?? false;
     final launcherState = useProvider(launcherProvider);
 
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
