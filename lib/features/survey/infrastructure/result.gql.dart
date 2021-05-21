@@ -1,42 +1,27 @@
-String graphQLFragmentFullBody = '''fragment ResultFields on UserSurveyResult{
+String graphQLFragmentBody = '''fragment ResultFields on Result {
   id
-  createdAt
   iteration
-  surveyID
-  userID
   answers {
-    items {
-      answer
-      id
-      questionID
-      userSurveyResultID
-    }
+    id
+    answer
+    statement
   }
 }
 ''';
 
-String graphQLFragmentListBody = '''fragment ResultFields on UserSurveyResult{
-  id
-  createdAt
-  iteration
-  surveyID
-  userID
-}
-''';
-
-String graphQLDocumentGetUserSurveyResult = '''
-  $graphQLFragmentFullBody
-  query GetUserSurveyResult(\$id: ID!){
-    getUserSurveyResult(id: \$id){
+String graphQLDocumentGetResult = '''
+  $graphQLFragmentBody
+  query GetResult(\$id: ID!){
+    getResult(id: \$id){
       ...ResultFields
     }
   }
 ''';
 
-String graphQLDocumentListUserSurveyResults = '''
-$graphQLFragmentListBody
-query ListUserSurveyResults {
-  listUserSurveyResults {
+String graphQLDocumentListResults = '''
+$graphQLFragmentBody
+query ListResults {
+  listResults {
     items {
       ...ResultFields
     }
@@ -54,9 +39,9 @@ String graphQLFilterResultBySurveyAndUser(String surveyId, String userId) =>
     '{surveyID: {eq: "$surveyId"}, userID: {eq: "$userId"}}';
 
 String graphQLDocumentListFilteredResults = '''
-$graphQLFragmentListBody
+$graphQLFragmentBody
 query ListFilteredResults{
-  listUserSurveyResults(filter: \$filter) {
+  listResults(filter: \$filter) {
     items {
       ...ResultFields
     }
@@ -64,36 +49,38 @@ query ListFilteredResults{
 }
 ''';
 
-String graphQLDocumentCreateUserSurveyResult = '''
-  $graphQLFragmentListBody
-  mutation CreateUserSurveyResult(
-    \$id: ID,
-    \$userID: ID!,
-    \$surveyID: ID!,
+String graphQLDocumentCountResults = r'''
+query CountResults(\$surveyID: ID!, \$userID: ID!){
+  resultsCount(where: { survey: \$surveyID, user: \$userID })
+}
+''';
+
+String graphQLDocumentCreateResult = '''
+  $graphQLFragmentBody
+  mutation CreateResult(
     \$iteration: Int
+    \$answers: [ComponentItemsAnswerInput]
   ){
-    createUserSurveyResult(input: {
-      id: \$id, 
-      iteration: \$iteration, 
-      surveyID: \$surveyID, 
-      userID: \$userID
+    createResult(input: {
+      iteration: \$iteration,
+      answers: \$answers
     }) {
       ...ResultFields
     }
   }
 ''';
 
-String graphQLDocumentDeleteUserSurveyResult = '''
-mutation DeleteUserSurveyResult(\$id: ID!){
-  deleteUserSurveyResult(input: {id: \$id}) {
+String graphQLDocumentDeleteResult = '''
+mutation DeleteResult(\$id: ID!){
+  deleteResult(input: {id: \$id}) {
     id
   }
 }
 ''';
 
-String graphQLDocumentOnCreateUserSurveyResult = '''
-subscription OnCreateUserSurveyResult {
-  onCreateUserSurveyResult {
+String graphQLDocumentOnCreateResult = '''
+subscription OnCreateResult {
+  onCreateResult {
     id
     surveyID
     userID

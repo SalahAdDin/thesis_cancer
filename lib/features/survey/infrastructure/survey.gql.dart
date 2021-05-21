@@ -1,30 +1,19 @@
-String graphQLFragmentListBody = '''fragment SurveyFields on Survey {
-  createdAt
+String graphQLFragmentBody = '''fragment SurveyFields on Survey {
   id
-  intro
   title
-}
-''';
-
-String graphQLFragmentFullBody = '''fragment SurveyFields on Survey {
   createdAt
-  id
   intro
-  title
   questions {
-    items {
-      answer
-      id
-      statement
-      type
-      surveyID
-    }
+    id
+    statement
+    type
+    answer
   }
 }
 ''';
 
 String graphQLDocumentGetSurvey = '''
-  $graphQLFragmentFullBody
+  $graphQLFragmentBody
   query GetSurvey(\$id: ID!) {
     getSurvey(id: \$id) {
       ...SurveyFields
@@ -33,9 +22,9 @@ String graphQLDocumentGetSurvey = '''
 ''';
 
 String graphQLDocumentListSurveys = '''
-  $graphQLFragmentListBody
+  $graphQLFragmentBody
   query ListSurveys {
-    listSurveys {
+    surveys {
       items {
         ...SurveyFields
       }
@@ -44,7 +33,7 @@ String graphQLDocumentListSurveys = '''
 ''';
 
 String graphQLDocumentCreateSurvey = '''
-  $graphQLFragmentListBody
+  $graphQLFragmentBody
   mutation CreateSurvey(
     \$id: ID,
     \$title: String!,
@@ -69,7 +58,7 @@ String graphQLDocumentDeleteSurvey = '''
 ''';
 
 String graphQLDocumentUpdateSurvey = '''
-  $graphQLFragmentListBody
+  $graphQLFragmentBody
   mutation UpdateQuestion(
     \$id: ID!,
     \$title: String,

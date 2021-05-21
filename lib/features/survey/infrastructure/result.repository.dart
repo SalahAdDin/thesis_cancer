@@ -1,170 +1,57 @@
-import 'dart:convert';
-
-import 'package:amplify_api/amplify_api.dart';
-import 'package:amplify_flutter/amplify.dart';
-import 'package:amplify_flutter/categories/amplify_categories.dart';
+import 'package:colorize/colorize.dart';
+import 'package:graphql/client.dart';
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/survey/domain/result/result.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/result/result.repository.dart';
 import 'package:thesis_cancer/features/survey/infrastructure/result.gql.dart';
 
-class AmplifyGraphQLResultRepository implements UserSurveyResultRepository {
-  AmplifyGraphQLResultRepository({APICategory? apiCategory})
-      : _apiCategory = apiCategory ?? Amplify.API;
+class GraphQLResultRepository implements UserSurveyResultRepository {
+  GraphQLResultRepository({required this.client}) : super();
 
-  final APICategory _apiCategory;
+  final GraphQLClient client;
 
   @override
-  Future<UserSurveyResult> createUserSurveyResult(
-      UserSurveyResult userSurveyResult) async {
+  Future<int> countUserSurveyResults(String userId, String surveyId) async {
     try {
-      GraphQLOperation operation = _apiCategory.mutate(
-          request: GraphQLRequest<String>(
-              document: graphQLDocumentCreateUserSurveyResult,
-              variables: {
-            'id': userSurveyResult.id,
-            'userID': userSurveyResult.userID,
-            'surveyID': userSurveyResult.surveyID,
-            'iteration': userSurveyResult.iteration
-          }));
-      GraphQLResponse response = await operation.response;
-      final Map<String, dynamic> data = json.decode(response.data);
-      final Map<String, dynamic> result = data['createUserSurveyResult'];
-      // TODO: parse data
-      print("Data: $data");
-      return UserSurveyResult.fromJson(result);
-    } on ApiException catch (error) {
-      throw ApiException(error.message);
+      final QueryOptions options = QueryOptions(
+        document: gql(graphQLDocumentCountResults),
+        variables: {"surveyID": surveyId, "userID": userId},
+      );
+      final QueryResult response = await client.query(options);
+      if (response.hasException) {
+        print(Colorize(response.exception.toString()).red());
+        throw GraphQLFailure(response.exception.toString());
+      }
+      final int count = response.data?['resultsCount'];
+      print(Colorize(count.toString()).yellow());
+      return count;
+    } on Exception catch (error) {
+      throw GraphQLFailure(error.toString());
     }
   }
 
   @override
-  Future<List<UserSurveyResult>> findAll() async {
+  Future<void> createUserSurveyResult(UserSurveyResult userSurveyResult) async {
     try {
-      GraphQLOperation operation = _apiCategory.query(
-          request: GraphQLRequest<String>(
-              document: graphQLDocumentListUserSurveyResults));
-      GraphQLResponse response = await operation.response;
-      final Map<String, dynamic> data = json.decode(response.data);
-      final parsed = jsonDecode(data['listUserSurveyResults']['items'])
-          .cast<Map<String, dynamic>>();
-      List<UserSurveyResult> result = parsed
-          .map<UserSurveyResult>((json) => UserSurveyResult.fromJson(json));
-      return result;
-    } on ApiException catch (error) {
-      throw ApiException(error.message);
-    }
-  }
-
-  /*
-  * Builds a new user survey result from the GraphQL response.
-  *
-  * As the response comes with an additional level(by the 'items' key),
-  * it is needed to flatten it to a new variable (to keep the result immutability).
-  * */
-  @override
-  Future<UserSurveyResult> findById(String id) async {
-    try {
-      GraphQLOperation operation = _apiCategory.query(
-          request: GraphQLRequest<String>(
-              document: graphQLDocumentGetUserSurveyResult,
-              variables: {'id': id}));
-      GraphQLResponse response = await operation.response;
-      final Map<String, dynamic> data = json.decode(response.data);
-      final Map<String, dynamic> result = data['getUserSurveyResult'];
-      Map<String, dynamic> flattenResult = result;
-      flattenResult['answers'] = result['answers']['items'];
-      print("Data: $data");
-      return UserSurveyResult.fromJson(flattenResult);
-    } on ApiException catch (error) {
-      throw ApiException(error.message);
-    }
-  }
-
-  @override
-  Future<List<UserSurveyResult>> findBySurveyAndUserId(
-      String surveyId, String userId) async {
-    try {
-      GraphQLOperation operation = _apiCategory.query(
-          request: GraphQLRequest(
-              document: graphQLDocumentListFilteredResults,
-              variables: {
-            'filter': graphQLFilterResultBySurveyAndUser(surveyId, userId)
-          }));
-      GraphQLResponse response = await operation.response;
-      final Map<String, dynamic> data = json.decode(response.data);
-      final parsed = jsonDecode(data['listUserSurveyResults']['items'])
-          .cast<Map<String, dynamic>>();
-      List<UserSurveyResult> result = parsed
-          .map<UserSurveyResult>((json) => UserSurveyResult.fromJson(json))
-          .toList();
-      return result;
-    } on ApiException catch (error) {
-      throw ApiException(error.message);
-    }
-  }
-
-  @override
-  Future<List<UserSurveyResult>> findBySurveyId(String id) async {
-    try {
-      GraphQLOperation operation = _apiCategory.query(
-          request: GraphQLRequest(
-              document: graphQLDocumentListFilteredResults,
-              variables: {'filter': graphQLFilterResultBySurvey(id)}));
-      GraphQLResponse response = await operation.response;
-      final Map<String, dynamic> data = json.decode(response.data);
-      final parsed = jsonDecode(data['listUserSurveyResults']['items'])
-          .cast<Map<String, dynamic>>();
-      List<UserSurveyResult> result = parsed
-          .map<UserSurveyResult>((json) => UserSurveyResult.fromJson(json))
-          .toList();
-      return result;
-    } on ApiException catch (error) {
-      throw ApiException(error.message);
-    }
-  }
-
-  @override
-  Future<List<UserSurveyResult>> findByUserId(String id) async {
-    try {
-      GraphQLOperation operation = _apiCategory.query(
-          request: GraphQLRequest(
-              document: graphQLDocumentListFilteredResults,
-              variables: {'filter': graphQLFilterResultByUser(id)}));
-      GraphQLResponse response = await operation.response;
-      final Map<String, dynamic> data = json.decode(response.data);
-      final parsed = jsonDecode(data['listUserSurveyResults']['items'])
-          .cast<Map<String, dynamic>>();
-      List<UserSurveyResult> result = parsed
-          .map<UserSurveyResult>((json) => UserSurveyResult.fromJson(json))
-          .toList();
-      return result;
-    } on ApiException catch (error) {
-      throw ApiException(error.message);
-    }
-  }
-
-  @override
-  Future<void> removeUserSurveyResult(String userSurveyResultId) async {
-    try {
-      GraphQLOperation operation = _apiCategory.mutate(
-          request: GraphQLRequest<String>(
-              document: graphQLDocumentDeleteUserSurveyResult,
-              variables: {
-            'id': userSurveyResultId,
-          }));
-      GraphQLResponse response = await operation.response;
-      final Map<String, dynamic> data = json.decode(response.data);
-      final Map<String, dynamic> result = data['deleteUserSurveyResult'];
-      // TODO: parse data
-      // TODO: verify result.id vs userId
-      print("Data: $result");
-      if (userSurveyResultId == result['id'])
-        return;
-      else
-        throw ApiException(
-            'Error at deleting User Survey Result with id $userSurveyResultId on Backend.');
-    } on ApiException catch (error) {
-      throw ApiException(error.message);
+      final QueryOptions options = QueryOptions(
+        document: gql(graphQLDocumentCreateResult),
+        variables: {
+          "iteration": userSurveyResult.iteration,
+          "answers": userSurveyResult.answers,
+          "user": userSurveyResult.user,
+          "survey": userSurveyResult.survey
+        },
+      );
+      final QueryResult response = await client.query(options);
+      if (response.hasException) {
+        print(Colorize(response.exception.toString()).red());
+        throw GraphQLFailure(response.exception.toString());
+      }
+      // TODO: remove this after check
+      final Map<String, dynamic> data = response.data?['result'];
+      print(Colorize(data.toString()).yellow());
+    } on Exception catch (error) {
+      throw GraphQLFailure(error.toString());
     }
   }
 }

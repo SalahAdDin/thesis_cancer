@@ -21,16 +21,14 @@ class _$QuestionTearOff {
   const _$QuestionTearOff();
 
   _Question call(
-      {required String id,
+      {String? id,
       required String statement,
       required QuestionType type,
-      required String surveyID,
       String? answer}) {
     return _Question(
       id: id,
       statement: statement,
       type: type,
-      surveyID: surveyID,
       answer: answer,
     );
   }
@@ -45,10 +43,9 @@ const $Question = _$QuestionTearOff();
 
 /// @nodoc
 mixin _$Question {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String get statement => throw _privateConstructorUsedError;
   QuestionType get type => throw _privateConstructorUsedError;
-  String get surveyID => throw _privateConstructorUsedError;
   String? get answer => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -61,12 +58,7 @@ mixin _$Question {
 abstract class $QuestionCopyWith<$Res> {
   factory $QuestionCopyWith(Question value, $Res Function(Question) then) =
       _$QuestionCopyWithImpl<$Res>;
-  $Res call(
-      {String id,
-      String statement,
-      QuestionType type,
-      String surveyID,
-      String? answer});
+  $Res call({String? id, String statement, QuestionType type, String? answer});
 }
 
 /// @nodoc
@@ -82,14 +74,13 @@ class _$QuestionCopyWithImpl<$Res> implements $QuestionCopyWith<$Res> {
     Object? id = freezed,
     Object? statement = freezed,
     Object? type = freezed,
-    Object? surveyID = freezed,
     Object? answer = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       statement: statement == freezed
           ? _value.statement
           : statement // ignore: cast_nullable_to_non_nullable
@@ -98,10 +89,6 @@ class _$QuestionCopyWithImpl<$Res> implements $QuestionCopyWith<$Res> {
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as QuestionType,
-      surveyID: surveyID == freezed
-          ? _value.surveyID
-          : surveyID // ignore: cast_nullable_to_non_nullable
-              as String,
       answer: answer == freezed
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
@@ -115,12 +102,7 @@ abstract class _$QuestionCopyWith<$Res> implements $QuestionCopyWith<$Res> {
   factory _$QuestionCopyWith(_Question value, $Res Function(_Question) then) =
       __$QuestionCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {String id,
-      String statement,
-      QuestionType type,
-      String surveyID,
-      String? answer});
+  $Res call({String? id, String statement, QuestionType type, String? answer});
 }
 
 /// @nodoc
@@ -137,14 +119,13 @@ class __$QuestionCopyWithImpl<$Res> extends _$QuestionCopyWithImpl<$Res>
     Object? id = freezed,
     Object? statement = freezed,
     Object? type = freezed,
-    Object? surveyID = freezed,
     Object? answer = freezed,
   }) {
     return _then(_Question(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       statement: statement == freezed
           ? _value.statement
           : statement // ignore: cast_nullable_to_non_nullable
@@ -153,10 +134,6 @@ class __$QuestionCopyWithImpl<$Res> extends _$QuestionCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as QuestionType,
-      surveyID: surveyID == freezed
-          ? _value.surveyID
-          : surveyID // ignore: cast_nullable_to_non_nullable
-              as String,
       answer: answer == freezed
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
@@ -169,29 +146,23 @@ class __$QuestionCopyWithImpl<$Res> extends _$QuestionCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Question implements _Question {
   const _$_Question(
-      {required this.id,
-      required this.statement,
-      required this.type,
-      required this.surveyID,
-      this.answer});
+      {this.id, required this.statement, required this.type, this.answer});
 
   factory _$_Question.fromJson(Map<String, dynamic> json) =>
       _$_$_QuestionFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
   final String statement;
   @override
   final QuestionType type;
   @override
-  final String surveyID;
-  @override
   final String? answer;
 
   @override
   String toString() {
-    return 'Question(id: $id, statement: $statement, type: $type, surveyID: $surveyID, answer: $answer)';
+    return 'Question(id: $id, statement: $statement, type: $type, answer: $answer)';
   }
 
   @override
@@ -205,9 +176,6 @@ class _$_Question implements _Question {
                     .equals(other.statement, statement)) &&
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)) &&
-            (identical(other.surveyID, surveyID) ||
-                const DeepCollectionEquality()
-                    .equals(other.surveyID, surveyID)) &&
             (identical(other.answer, answer) ||
                 const DeepCollectionEquality().equals(other.answer, answer)));
   }
@@ -218,7 +186,6 @@ class _$_Question implements _Question {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(statement) ^
       const DeepCollectionEquality().hash(type) ^
-      const DeepCollectionEquality().hash(surveyID) ^
       const DeepCollectionEquality().hash(answer);
 
   @JsonKey(ignore: true)
@@ -234,22 +201,19 @@ class _$_Question implements _Question {
 
 abstract class _Question implements Question {
   const factory _Question(
-      {required String id,
+      {String? id,
       required String statement,
       required QuestionType type,
-      required String surveyID,
       String? answer}) = _$_Question;
 
   factory _Question.fromJson(Map<String, dynamic> json) = _$_Question.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   @override
   String get statement => throw _privateConstructorUsedError;
   @override
   QuestionType get type => throw _privateConstructorUsedError;
-  @override
-  String get surveyID => throw _privateConstructorUsedError;
   @override
   String? get answer => throw _privateConstructorUsedError;
   @override

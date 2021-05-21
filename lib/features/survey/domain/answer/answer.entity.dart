@@ -6,13 +6,11 @@ part 'answer.entity.g.dart';
 @freezed
 class UserSurveyAnswer with _$UserSurveyAnswer {
   const factory UserSurveyAnswer(
-      {required String id,
-      required String userSurveyResultID,
-      required String questionID,
+      {String? id,
+      required String statement,
       required String answer}) = _UserSurveyAnswer;
 
   factory UserSurveyAnswer.fromJson(Map<String, dynamic> json) =>
       _$UserSurveyAnswerFromJson(json);
-  static const empty = UserSurveyAnswer(
-      answer: '', id: '', questionID: '', userSurveyResultID: '');
+  static const empty = UserSurveyAnswer(id: '', statement: '', answer: '');
 }

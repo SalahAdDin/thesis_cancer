@@ -9,8 +9,8 @@ part of 'result.entity.dart';
 _$_UserSurveyResult _$_$_UserSurveyResultFromJson(Map<String, dynamic> json) {
   return _$_UserSurveyResult(
     id: json['id'] as String,
-    userID: json['userID'] as String,
-    surveyID: json['surveyID'] as String,
+    user: json['user'] as String,
+    survey: json['survey'] as String,
     answers: (json['answers'] as List<dynamic>)
         .map((e) => UserSurveyAnswer.fromJson(e as Map<String, dynamic>))
         .toList(),
@@ -25,8 +25,8 @@ Map<String, dynamic> _$_$_UserSurveyResultToJson(
         _$_UserSurveyResult instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'userID': instance.userID,
-      'surveyID': instance.surveyID,
+      'user': instance.user,
+      'survey': instance.survey,
       'answers': instance.answers,
       'iteration': instance.iteration,
       'createdAt': instance.createdAt?.toIso8601String(),

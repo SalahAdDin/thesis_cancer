@@ -21,14 +21,10 @@ class _$UserSurveyAnswerTearOff {
   const _$UserSurveyAnswerTearOff();
 
   _UserSurveyAnswer call(
-      {required String id,
-      required String userSurveyResultID,
-      required String questionID,
-      required String answer}) {
+      {String? id, required String statement, required String answer}) {
     return _UserSurveyAnswer(
       id: id,
-      userSurveyResultID: userSurveyResultID,
-      questionID: questionID,
+      statement: statement,
       answer: answer,
     );
   }
@@ -43,9 +39,8 @@ const $UserSurveyAnswer = _$UserSurveyAnswerTearOff();
 
 /// @nodoc
 mixin _$UserSurveyAnswer {
-  String get id => throw _privateConstructorUsedError;
-  String get userSurveyResultID => throw _privateConstructorUsedError;
-  String get questionID => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String get statement => throw _privateConstructorUsedError;
   String get answer => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -59,8 +54,7 @@ abstract class $UserSurveyAnswerCopyWith<$Res> {
   factory $UserSurveyAnswerCopyWith(
           UserSurveyAnswer value, $Res Function(UserSurveyAnswer) then) =
       _$UserSurveyAnswerCopyWithImpl<$Res>;
-  $Res call(
-      {String id, String userSurveyResultID, String questionID, String answer});
+  $Res call({String? id, String statement, String answer});
 }
 
 /// @nodoc
@@ -75,22 +69,17 @@ class _$UserSurveyAnswerCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userSurveyResultID = freezed,
-    Object? questionID = freezed,
+    Object? statement = freezed,
     Object? answer = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      userSurveyResultID: userSurveyResultID == freezed
-          ? _value.userSurveyResultID
-          : userSurveyResultID // ignore: cast_nullable_to_non_nullable
-              as String,
-      questionID: questionID == freezed
-          ? _value.questionID
-          : questionID // ignore: cast_nullable_to_non_nullable
+              as String?,
+      statement: statement == freezed
+          ? _value.statement
+          : statement // ignore: cast_nullable_to_non_nullable
               as String,
       answer: answer == freezed
           ? _value.answer
@@ -107,8 +96,7 @@ abstract class _$UserSurveyAnswerCopyWith<$Res>
           _UserSurveyAnswer value, $Res Function(_UserSurveyAnswer) then) =
       __$UserSurveyAnswerCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {String id, String userSurveyResultID, String questionID, String answer});
+  $Res call({String? id, String statement, String answer});
 }
 
 /// @nodoc
@@ -125,22 +113,17 @@ class __$UserSurveyAnswerCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userSurveyResultID = freezed,
-    Object? questionID = freezed,
+    Object? statement = freezed,
     Object? answer = freezed,
   }) {
     return _then(_UserSurveyAnswer(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      userSurveyResultID: userSurveyResultID == freezed
-          ? _value.userSurveyResultID
-          : userSurveyResultID // ignore: cast_nullable_to_non_nullable
-              as String,
-      questionID: questionID == freezed
-          ? _value.questionID
-          : questionID // ignore: cast_nullable_to_non_nullable
+              as String?,
+      statement: statement == freezed
+          ? _value.statement
+          : statement // ignore: cast_nullable_to_non_nullable
               as String,
       answer: answer == freezed
           ? _value.answer
@@ -154,26 +137,21 @@ class __$UserSurveyAnswerCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_UserSurveyAnswer implements _UserSurveyAnswer {
   const _$_UserSurveyAnswer(
-      {required this.id,
-      required this.userSurveyResultID,
-      required this.questionID,
-      required this.answer});
+      {this.id, required this.statement, required this.answer});
 
   factory _$_UserSurveyAnswer.fromJson(Map<String, dynamic> json) =>
       _$_$_UserSurveyAnswerFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
-  final String userSurveyResultID;
-  @override
-  final String questionID;
+  final String statement;
   @override
   final String answer;
 
   @override
   String toString() {
-    return 'UserSurveyAnswer(id: $id, userSurveyResultID: $userSurveyResultID, questionID: $questionID, answer: $answer)';
+    return 'UserSurveyAnswer(id: $id, statement: $statement, answer: $answer)';
   }
 
   @override
@@ -182,12 +160,9 @@ class _$_UserSurveyAnswer implements _UserSurveyAnswer {
         (other is _UserSurveyAnswer &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.userSurveyResultID, userSurveyResultID) ||
+            (identical(other.statement, statement) ||
                 const DeepCollectionEquality()
-                    .equals(other.userSurveyResultID, userSurveyResultID)) &&
-            (identical(other.questionID, questionID) ||
-                const DeepCollectionEquality()
-                    .equals(other.questionID, questionID)) &&
+                    .equals(other.statement, statement)) &&
             (identical(other.answer, answer) ||
                 const DeepCollectionEquality().equals(other.answer, answer)));
   }
@@ -196,8 +171,7 @@ class _$_UserSurveyAnswer implements _UserSurveyAnswer {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(userSurveyResultID) ^
-      const DeepCollectionEquality().hash(questionID) ^
+      const DeepCollectionEquality().hash(statement) ^
       const DeepCollectionEquality().hash(answer);
 
   @JsonKey(ignore: true)
@@ -213,20 +187,17 @@ class _$_UserSurveyAnswer implements _UserSurveyAnswer {
 
 abstract class _UserSurveyAnswer implements UserSurveyAnswer {
   const factory _UserSurveyAnswer(
-      {required String id,
-      required String userSurveyResultID,
-      required String questionID,
+      {String? id,
+      required String statement,
       required String answer}) = _$_UserSurveyAnswer;
 
   factory _UserSurveyAnswer.fromJson(Map<String, dynamic> json) =
       _$_UserSurveyAnswer.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   @override
-  String get userSurveyResultID => throw _privateConstructorUsedError;
-  @override
-  String get questionID => throw _privateConstructorUsedError;
+  String get statement => throw _privateConstructorUsedError;
   @override
   String get answer => throw _privateConstructorUsedError;
   @override
