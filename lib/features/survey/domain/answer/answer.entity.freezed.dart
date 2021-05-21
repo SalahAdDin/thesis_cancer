@@ -20,10 +20,8 @@ UserSurveyAnswer _$UserSurveyAnswerFromJson(Map<String, dynamic> json) {
 class _$UserSurveyAnswerTearOff {
   const _$UserSurveyAnswerTearOff();
 
-  _UserSurveyAnswer call(
-      {String? id, required String statement, required String answer}) {
+  _UserSurveyAnswer call({required String statement, required String answer}) {
     return _UserSurveyAnswer(
-      id: id,
       statement: statement,
       answer: answer,
     );
@@ -39,7 +37,7 @@ const $UserSurveyAnswer = _$UserSurveyAnswerTearOff();
 
 /// @nodoc
 mixin _$UserSurveyAnswer {
-  String? get id => throw _privateConstructorUsedError;
+// String? id,
   String get statement => throw _privateConstructorUsedError;
   String get answer => throw _privateConstructorUsedError;
 
@@ -54,7 +52,7 @@ abstract class $UserSurveyAnswerCopyWith<$Res> {
   factory $UserSurveyAnswerCopyWith(
           UserSurveyAnswer value, $Res Function(UserSurveyAnswer) then) =
       _$UserSurveyAnswerCopyWithImpl<$Res>;
-  $Res call({String? id, String statement, String answer});
+  $Res call({String statement, String answer});
 }
 
 /// @nodoc
@@ -68,15 +66,10 @@ class _$UserSurveyAnswerCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? statement = freezed,
     Object? answer = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
       statement: statement == freezed
           ? _value.statement
           : statement // ignore: cast_nullable_to_non_nullable
@@ -96,7 +89,7 @@ abstract class _$UserSurveyAnswerCopyWith<$Res>
           _UserSurveyAnswer value, $Res Function(_UserSurveyAnswer) then) =
       __$UserSurveyAnswerCopyWithImpl<$Res>;
   @override
-  $Res call({String? id, String statement, String answer});
+  $Res call({String statement, String answer});
 }
 
 /// @nodoc
@@ -112,15 +105,10 @@ class __$UserSurveyAnswerCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? statement = freezed,
     Object? answer = freezed,
   }) {
     return _then(_UserSurveyAnswer(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
       statement: statement == freezed
           ? _value.statement
           : statement // ignore: cast_nullable_to_non_nullable
@@ -136,30 +124,25 @@ class __$UserSurveyAnswerCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UserSurveyAnswer implements _UserSurveyAnswer {
-  const _$_UserSurveyAnswer(
-      {this.id, required this.statement, required this.answer});
+  const _$_UserSurveyAnswer({required this.statement, required this.answer});
 
   factory _$_UserSurveyAnswer.fromJson(Map<String, dynamic> json) =>
       _$_$_UserSurveyAnswerFromJson(json);
 
-  @override
-  final String? id;
-  @override
+  @override // String? id,
   final String statement;
   @override
   final String answer;
 
   @override
   String toString() {
-    return 'UserSurveyAnswer(id: $id, statement: $statement, answer: $answer)';
+    return 'UserSurveyAnswer(statement: $statement, answer: $answer)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _UserSurveyAnswer &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.statement, statement) ||
                 const DeepCollectionEquality()
                     .equals(other.statement, statement)) &&
@@ -170,7 +153,6 @@ class _$_UserSurveyAnswer implements _UserSurveyAnswer {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(statement) ^
       const DeepCollectionEquality().hash(answer);
 
@@ -187,16 +169,13 @@ class _$_UserSurveyAnswer implements _UserSurveyAnswer {
 
 abstract class _UserSurveyAnswer implements UserSurveyAnswer {
   const factory _UserSurveyAnswer(
-      {String? id,
-      required String statement,
+      {required String statement,
       required String answer}) = _$_UserSurveyAnswer;
 
   factory _UserSurveyAnswer.fromJson(Map<String, dynamic> json) =
       _$_UserSurveyAnswer.fromJson;
 
-  @override
-  String? get id => throw _privateConstructorUsedError;
-  @override
+  @override // String? id,
   String get statement => throw _privateConstructorUsedError;
   @override
   String get answer => throw _privateConstructorUsedError;

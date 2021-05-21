@@ -8,7 +8,6 @@ part of 'answer.entity.dart';
 
 _$_UserSurveyAnswer _$_$_UserSurveyAnswerFromJson(Map<String, dynamic> json) {
   return _$_UserSurveyAnswer(
-    id: json['id'] as String?,
     statement: json['statement'] as String,
     answer: json['answer'] as String,
   );
@@ -17,7 +16,6 @@ _$_UserSurveyAnswer _$_$_UserSurveyAnswerFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_UserSurveyAnswerToJson(
         _$_UserSurveyAnswer instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'statement': instance.statement,
       'answer': instance.answer,
     };

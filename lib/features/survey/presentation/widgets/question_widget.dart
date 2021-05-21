@@ -50,43 +50,55 @@ class QuestionWidget extends HookWidget {
         break;
       case QuestionType.SINGLE:
         final List<String> buttons = question.answer!.split(",");
-        final String selectedButton = surveyNotifier.answers[question.id] ?? '';
+        final String selectedButton =
+            surveyNotifier.answers[question.id]!.answer ?? '';
         answerWidget = GroupButton(
           spacing: 10,
           buttons: buttons,
           onSelected: (index, isSelected) => surveyNotifier.answerQuestion(
-              questionId: question.id, answer: buttons[index]),
+              questionId: question.id,
+              answer: buttons[index],
+              statement: question.statement),
           direction: Axis.vertical,
-          selectedButtons: [selectedButton],
+          selectedButtons: selectedButton != '' ? [selectedButton] : null,
         );
         break;
       case QuestionType.MULTIPLE:
         final List<String> buttons = question.answer!.split(",");
+        final String selectedButtons =
+            surveyNotifier.answers[question.id]!.answer ?? '';
         answerWidget = GroupButton(
           spacing: 10,
           buttons: buttons,
           onSelected: (index, isSelected) {
             List<String> currentAnswer =
-                surveyNotifier.answers[question.id]!.split(',');
+                surveyNotifier.answers[question.id]!.answer.split(',');
             currentAnswer.add(buttons[index]);
             surveyNotifier.answerQuestion(
-                questionId: question.id, answer: currentAnswer.toString());
+                questionId: question.id,
+                answer: currentAnswer.toString(),
+                statement: question.statement);
           },
           direction: Axis.vertical,
           isRadio: false,
+          selectedButtons:
+              selectedButtons != '' ? selectedButtons.split(",") : null,
         );
         break;
       case QuestionType.BOOL:
         final List<String> buttons = ['Yanlış', 'Doğru'];
         // TODO: Keep it as a question state(question answer), at least for local
-        final String selectedButton = surveyNotifier.answers[question.id] ?? '';
+        final String selectedButton =
+            surveyNotifier.answers[question.id]!.answer ?? '';
         print("Answers ${surveyNotifier.answers}, $selectedButton");
         answerWidget = GroupButton(
           spacing: 10,
           buttons: buttons,
-          selectedButtons: [selectedButton],
+          selectedButtons: selectedButton != '' ? [selectedButton] : null,
           onSelected: (index, isSelected) => surveyNotifier.answerQuestion(
-              questionId: question.id, answer: buttons[index]),
+              questionId: question.id,
+              answer: buttons[index],
+              statement: question.statement),
           direction: Axis.vertical,
         );
         break;
