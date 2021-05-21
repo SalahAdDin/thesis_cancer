@@ -16,7 +16,8 @@ class User with _$User {
       {required String id,
       required String email,
       required String username,
-      required UserRole role,
+      @Default(UserRole.GUEST) UserRole role,
+      String? token,
       String? firstName,
       String? lastName,
       String? phoneNumber,
@@ -38,6 +39,5 @@ class User with _$User {
       email: 'name@dummy.com',
       username: 'DummyName',
       firstName: 'Dummy',
-      lastName: 'Dum',
-      role: UserRole.GUEST);
+      lastName: 'Dum');
 }

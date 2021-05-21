@@ -11,7 +11,9 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
     id: json['id'] as String,
     email: json['email'] as String,
     username: json['username'] as String,
-    role: _$enumDecode(_$UserRoleEnumMap, json['role']),
+    role:
+        _$enumDecodeNullable(_$UserRoleEnumMap, json['role']) ?? UserRole.GUEST,
+    token: json['token'] as String?,
     firstName: json['firstName'] as String?,
     lastName: json['lastName'] as String?,
     phoneNumber: json['phoneNumber'] as String?,
@@ -44,6 +46,7 @@ Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
       'email': instance.email,
       'username': instance.username,
       'role': _$UserRoleEnumMap[instance.role],
+      'token': instance.token,
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'phoneNumber': instance.phoneNumber,
@@ -84,6 +87,17 @@ K _$enumDecode<K, V>(
       return MapEntry(unknownValue, enumValues.values.first);
     },
   ).key;
+}
+
+K? _$enumDecodeNullable<K, V>(
+  Map<K, V> enumValues,
+  dynamic source, {
+  K? unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$UserRoleEnumMap = {

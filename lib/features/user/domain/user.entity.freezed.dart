@@ -24,7 +24,8 @@ class _$UserTearOff {
       {required String id,
       required String email,
       required String username,
-      required UserRole role,
+      UserRole role = UserRole.GUEST,
+      String? token,
       String? firstName,
       String? lastName,
       String? phoneNumber,
@@ -44,6 +45,7 @@ class _$UserTearOff {
       email: email,
       username: username,
       role: role,
+      token: token,
       firstName: firstName,
       lastName: lastName,
       phoneNumber: phoneNumber,
@@ -75,6 +77,7 @@ mixin _$User {
   String get email => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   UserRole get role => throw _privateConstructorUsedError;
+  String? get token => throw _privateConstructorUsedError;
   String? get firstName => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
@@ -106,6 +109,7 @@ abstract class $UserCopyWith<$Res> {
       String email,
       String username,
       UserRole role,
+      String? token,
       String? firstName,
       String? lastName,
       String? phoneNumber,
@@ -138,6 +142,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? email = freezed,
     Object? username = freezed,
     Object? role = freezed,
+    Object? token = freezed,
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? phoneNumber = freezed,
@@ -170,6 +175,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
+      token: token == freezed
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
       firstName: firstName == freezed
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -251,6 +260,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String email,
       String username,
       UserRole role,
+      String? token,
       String? firstName,
       String? lastName,
       String? phoneNumber,
@@ -285,6 +295,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? email = freezed,
     Object? username = freezed,
     Object? role = freezed,
+    Object? token = freezed,
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? phoneNumber = freezed,
@@ -317,6 +328,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
+      token: token == freezed
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
       firstName: firstName == freezed
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -384,7 +399,8 @@ class _$_User implements _User {
       {required this.id,
       required this.email,
       required this.username,
-      required this.role,
+      this.role = UserRole.GUEST,
+      this.token,
       this.firstName,
       this.lastName,
       this.phoneNumber,
@@ -409,8 +425,11 @@ class _$_User implements _User {
   final String email;
   @override
   final String username;
+  @JsonKey(defaultValue: UserRole.GUEST)
   @override
   final UserRole role;
+  @override
+  final String? token;
   @override
   final String? firstName;
   @override
@@ -442,7 +461,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, username: $username, role: $role, firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, confirmed: $confirmed, isLoggedIn: $isLoggedIn, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, darkMode: $darkMode, bio: $bio, profilePhoto: $profilePhoto, surveyResults: $surveyResults, posts: $posts, comments: $comments, likes: $likes)';
+    return 'User(id: $id, email: $email, username: $username, role: $role, token: $token, firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, confirmed: $confirmed, isLoggedIn: $isLoggedIn, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, darkMode: $darkMode, bio: $bio, profilePhoto: $profilePhoto, surveyResults: $surveyResults, posts: $posts, comments: $comments, likes: $likes)';
   }
 
   @override
@@ -458,6 +477,8 @@ class _$_User implements _User {
                     .equals(other.username, username)) &&
             (identical(other.role, role) ||
                 const DeepCollectionEquality().equals(other.role, role)) &&
+            (identical(other.token, token) ||
+                const DeepCollectionEquality().equals(other.token, token)) &&
             (identical(other.firstName, firstName) ||
                 const DeepCollectionEquality()
                     .equals(other.firstName, firstName)) &&
@@ -508,6 +529,7 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(username) ^
       const DeepCollectionEquality().hash(role) ^
+      const DeepCollectionEquality().hash(token) ^
       const DeepCollectionEquality().hash(firstName) ^
       const DeepCollectionEquality().hash(lastName) ^
       const DeepCollectionEquality().hash(phoneNumber) ^
@@ -539,7 +561,8 @@ abstract class _User implements User {
       {required String id,
       required String email,
       required String username,
-      required UserRole role,
+      UserRole role,
+      String? token,
       String? firstName,
       String? lastName,
       String? phoneNumber,
@@ -565,6 +588,8 @@ abstract class _User implements User {
   String get username => throw _privateConstructorUsedError;
   @override
   UserRole get role => throw _privateConstructorUsedError;
+  @override
+  String? get token => throw _privateConstructorUsedError;
   @override
   String? get firstName => throw _privateConstructorUsedError;
   @override
