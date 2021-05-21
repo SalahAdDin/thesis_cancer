@@ -21,7 +21,7 @@ class _$QuestionTearOff {
   const _$QuestionTearOff();
 
   _Question call(
-      {String? id,
+      {required String id,
       required String statement,
       required QuestionType type,
       String? answer}) {
@@ -43,7 +43,7 @@ const $Question = _$QuestionTearOff();
 
 /// @nodoc
 mixin _$Question {
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get statement => throw _privateConstructorUsedError;
   QuestionType get type => throw _privateConstructorUsedError;
   String? get answer => throw _privateConstructorUsedError;
@@ -58,7 +58,7 @@ mixin _$Question {
 abstract class $QuestionCopyWith<$Res> {
   factory $QuestionCopyWith(Question value, $Res Function(Question) then) =
       _$QuestionCopyWithImpl<$Res>;
-  $Res call({String? id, String statement, QuestionType type, String? answer});
+  $Res call({String id, String statement, QuestionType type, String? answer});
 }
 
 /// @nodoc
@@ -80,7 +80,7 @@ class _$QuestionCopyWithImpl<$Res> implements $QuestionCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       statement: statement == freezed
           ? _value.statement
           : statement // ignore: cast_nullable_to_non_nullable
@@ -102,7 +102,7 @@ abstract class _$QuestionCopyWith<$Res> implements $QuestionCopyWith<$Res> {
   factory _$QuestionCopyWith(_Question value, $Res Function(_Question) then) =
       __$QuestionCopyWithImpl<$Res>;
   @override
-  $Res call({String? id, String statement, QuestionType type, String? answer});
+  $Res call({String id, String statement, QuestionType type, String? answer});
 }
 
 /// @nodoc
@@ -125,7 +125,7 @@ class __$QuestionCopyWithImpl<$Res> extends _$QuestionCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       statement: statement == freezed
           ? _value.statement
           : statement // ignore: cast_nullable_to_non_nullable
@@ -146,13 +146,16 @@ class __$QuestionCopyWithImpl<$Res> extends _$QuestionCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Question implements _Question {
   const _$_Question(
-      {this.id, required this.statement, required this.type, this.answer});
+      {required this.id,
+      required this.statement,
+      required this.type,
+      this.answer});
 
   factory _$_Question.fromJson(Map<String, dynamic> json) =>
       _$_$_QuestionFromJson(json);
 
   @override
-  final String? id;
+  final String id;
   @override
   final String statement;
   @override
@@ -201,7 +204,7 @@ class _$_Question implements _Question {
 
 abstract class _Question implements Question {
   const factory _Question(
-      {String? id,
+      {required String id,
       required String statement,
       required QuestionType type,
       String? answer}) = _$_Question;
@@ -209,7 +212,7 @@ abstract class _Question implements Question {
   factory _Question.fromJson(Map<String, dynamic> json) = _$_Question.fromJson;
 
   @override
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   @override
   String get statement => throw _privateConstructorUsedError;
   @override

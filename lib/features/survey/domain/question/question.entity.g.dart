@@ -8,7 +8,7 @@ part of 'question.entity.dart';
 
 _$_Question _$_$_QuestionFromJson(Map<String, dynamic> json) {
   return _$_Question(
-    id: json['id'] as String?,
+    id: json['id'] as String,
     statement: json['statement'] as String,
     type: _$enumDecode(_$QuestionTypeEnumMap, json['type']),
     answer: json['answer'] as String?,

@@ -7,7 +7,7 @@ part 'question.entity.g.dart';
 @freezed
 class Question with _$Question {
   const factory Question({
-    String? id,
+    required String id,
     required String statement,
     required QuestionType type,
     String? answer,
