@@ -46,7 +46,13 @@ class GraphQLAuthRepository implements AuthRepository {
       if (response.hasException) {
         throw SignUpFailure(response.exception.toString());
       }
-      final Map<String, dynamic> result = response.data?['register'];
+      final Map<String, dynamic> data = response.data?['register'];
+
+      // Keeping variable's immutability.
+      Map<String, dynamic> flattenResult = data['user'];
+      flattenResult['token'] = data['jwt'];
+      final Map<String, dynamic> result = flattenResult;
+
       return result;
     } on Exception catch (error) {
       throw SignUpFailure(error.toString());

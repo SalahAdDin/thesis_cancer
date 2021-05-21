@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
-import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
 import 'package:thesis_cancer/features/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
@@ -88,14 +87,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
           username: username.split("@")[0],
           email: username,
           password: password);
-      User newUser = User(
-          id: uuid.v4(),
-          email: result['user']['email']!,
-          username: result['user']['username'],
-          role: UserRole.GUEST,
-          confirmed: false);
-      userController.state = newUser;
-      state = AuthState.signedUp(newUser);
+      User newUser = User.fromJson(result);
+      userController.state = newUser.copyWith(confirmed: false);
+      state = AuthState.signedUp();
     } on SignUpFailure catch (error) {
       // state = AuthState.error(error.toString());
       return error.toString();

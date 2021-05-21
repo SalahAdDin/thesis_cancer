@@ -1,11 +1,12 @@
 const String graphQLFragmentBody =
     r'''fragment AuthFields on UsersPermissionsLoginPayload {
-    jwt
-    user {
-      username
-      email
-      confirmed
-    }
+  jwt
+  user {
+    id
+    username
+    email
+    confirmed
+  }
 }
 ''';
 
