@@ -21,14 +21,12 @@ class _$UserSurveyResultTearOff {
   const _$UserSurveyResultTearOff();
 
   _UserSurveyResult call(
-      {required String id,
-      required String user,
+      {required String user,
       required String survey,
       required List<UserSurveyAnswer> answers,
       required int iteration,
       DateTime? createdAt}) {
     return _UserSurveyResult(
-      id: id,
       user: user,
       survey: survey,
       answers: answers,
@@ -47,7 +45,7 @@ const $UserSurveyResult = _$UserSurveyResultTearOff();
 
 /// @nodoc
 mixin _$UserSurveyResult {
-  String get id => throw _privateConstructorUsedError;
+// required String id,
   String get user => throw _privateConstructorUsedError; // User ID
   String get survey => throw _privateConstructorUsedError; // Survey ID
   List<UserSurveyAnswer> get answers => throw _privateConstructorUsedError;
@@ -66,8 +64,7 @@ abstract class $UserSurveyResultCopyWith<$Res> {
           UserSurveyResult value, $Res Function(UserSurveyResult) then) =
       _$UserSurveyResultCopyWithImpl<$Res>;
   $Res call(
-      {String id,
-      String user,
+      {String user,
       String survey,
       List<UserSurveyAnswer> answers,
       int iteration,
@@ -85,7 +82,6 @@ class _$UserSurveyResultCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? user = freezed,
     Object? survey = freezed,
     Object? answers = freezed,
@@ -93,10 +89,6 @@ class _$UserSurveyResultCopyWithImpl<$Res>
     Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       user: user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -129,8 +121,7 @@ abstract class _$UserSurveyResultCopyWith<$Res>
       __$UserSurveyResultCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
-      String user,
+      {String user,
       String survey,
       List<UserSurveyAnswer> answers,
       int iteration,
@@ -150,7 +141,6 @@ class __$UserSurveyResultCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? user = freezed,
     Object? survey = freezed,
     Object? answers = freezed,
@@ -158,10 +148,6 @@ class __$UserSurveyResultCopyWithImpl<$Res>
     Object? createdAt = freezed,
   }) {
     return _then(_UserSurveyResult(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       user: user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -190,8 +176,7 @@ class __$UserSurveyResultCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_UserSurveyResult implements _UserSurveyResult {
   const _$_UserSurveyResult(
-      {required this.id,
-      required this.user,
+      {required this.user,
       required this.survey,
       required this.answers,
       required this.iteration,
@@ -200,9 +185,7 @@ class _$_UserSurveyResult implements _UserSurveyResult {
   factory _$_UserSurveyResult.fromJson(Map<String, dynamic> json) =>
       _$_$_UserSurveyResultFromJson(json);
 
-  @override
-  final String id;
-  @override
+  @override // required String id,
   final String user;
   @override // User ID
   final String survey;
@@ -215,15 +198,13 @@ class _$_UserSurveyResult implements _UserSurveyResult {
 
   @override
   String toString() {
-    return 'UserSurveyResult(id: $id, user: $user, survey: $survey, answers: $answers, iteration: $iteration, createdAt: $createdAt)';
+    return 'UserSurveyResult(user: $user, survey: $survey, answers: $answers, iteration: $iteration, createdAt: $createdAt)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _UserSurveyResult &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.user, user) ||
                 const DeepCollectionEquality().equals(other.user, user)) &&
             (identical(other.survey, survey) ||
@@ -242,7 +223,6 @@ class _$_UserSurveyResult implements _UserSurveyResult {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(user) ^
       const DeepCollectionEquality().hash(survey) ^
       const DeepCollectionEquality().hash(answers) ^
@@ -262,8 +242,7 @@ class _$_UserSurveyResult implements _UserSurveyResult {
 
 abstract class _UserSurveyResult implements UserSurveyResult {
   const factory _UserSurveyResult(
-      {required String id,
-      required String user,
+      {required String user,
       required String survey,
       required List<UserSurveyAnswer> answers,
       required int iteration,
@@ -272,9 +251,7 @@ abstract class _UserSurveyResult implements UserSurveyResult {
   factory _UserSurveyResult.fromJson(Map<String, dynamic> json) =
       _$_UserSurveyResult.fromJson;
 
-  @override
-  String get id => throw _privateConstructorUsedError;
-  @override
+  @override // required String id,
   String get user => throw _privateConstructorUsedError;
   @override // User ID
   String get survey => throw _privateConstructorUsedError;

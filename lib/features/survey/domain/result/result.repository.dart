@@ -16,7 +16,8 @@ abstract class UserSurveyResultRepository {
   Future<void> removeUserSurveyResult(String userSurveyResultId);
   */
 
-  Future<int> countUserSurveyResults(String userId, String surveyId);
+  Future<int> countUserSurveyResults(
+      {required String userId, required String surveyId});
 
   Future<dynamic> createUserSurveyResult(UserSurveyResult userSurveyResult);
 }

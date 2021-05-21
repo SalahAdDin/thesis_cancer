@@ -11,7 +11,8 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
   final GraphQLClient client;
 
   @override
-  Future<int> countUserSurveyResults(String userId, String surveyId) async {
+  Future<int> countUserSurveyResults(
+      {required String userId, required String surveyId}) async {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentCountResults),
@@ -35,12 +36,7 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentCreateResult),
-        variables: {
-          "iteration": userSurveyResult.iteration,
-          "answers": userSurveyResult.answers,
-          "user": userSurveyResult.user,
-          "survey": userSurveyResult.survey
-        },
+        variables: userSurveyResult.toJson(),
       );
       final QueryResult response = await client.query(options);
       if (response.hasException) {

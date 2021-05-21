@@ -31,15 +31,20 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
 
   Future<void> completeSurvey() async {
     try {
-      UserSurveyResult userSurveyAnswer = UserSurveyResult(
+      final int iteration = await resultRepository.countUserSurveyResults(
+          surveyId: this.surveyController.state.id, userId: this.currentUserId);
+
+      UserSurveyResult userSurveyResult = UserSurveyResult(
           id: uuid.v4(),
-          userID: this.currentUserId,
-          surveyID: this.currentSurvey.id,
-          answers: [],
-          iteration: 0);
-      // TODO: sent to GraphQL API.
-      // TODO: persists answer on locale.
-      print("User answer $userSurveyAnswer");
+          user: this.currentUserId,
+          survey: this.surveyController.state.id,
+          answers: answers.values.toList(),
+          iteration: iteration + 1);
+      // TODO: persists answer on locale/ cache.
+      print("User answer $userSurveyResult");
+
+      await resultRepository.createUserSurveyResult(userSurveyResult);
+
       state = SurveyState.completed();
     } on Exception catch (error) {
       state = SurveyState.error(error.toString());
@@ -66,8 +71,12 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
       this.answers[questionId] = answer;
 */
 
-  answerQuestion({required String questionId, required String answer}) {
-    this.answers[questionId] = answer;
+  answerQuestion(
+      {required String questionId,
+      required String answer,
+      required String statement}) {
+    this.answers[questionId] =
+        UserSurveyAnswer(answer: answer, statement: statement);
     print("Answers till now: ${this.answers}");
   }
 

@@ -7,7 +7,7 @@ part 'result.entity.g.dart';
 @freezed
 class UserSurveyResult with _$UserSurveyResult {
   const factory UserSurveyResult({
-    required String id,
+    // required String id,
     required String user, // User ID
     required String survey, // Survey ID
     required List<UserSurveyAnswer> answers,
