@@ -116,7 +116,6 @@ class AmplifyGraphQLUserRepository implements UserRepository {
             'confirmed': user.confirmed,
             'hasSeenTutorial': user.hasSeenTutorial,
             'hasSeenIntroductoryVideo': user.hasSeenIntroductoryVideo,
-            'darkMode': user.darkMode,
             'bio': user.bio,
             'profilePhoto': user.profilePhoto
           }));
