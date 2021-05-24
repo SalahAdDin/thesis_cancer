@@ -1,20 +1,19 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
+import 'package:thesis_cancer/core/application/routes/router.gr.dart';
 import 'package:thesis_cancer/core/domain/configuration.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/features/auth/application/auth.notifier.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
 import 'package:thesis_cancer/features/auth/presentation/widgets/confirm_password.dart';
-import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart';
-import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
-import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
-import 'package:thesis_cancer/features/user/application/user.provider.dart';
 
 class LoginScreen extends HookWidget {
   @override
@@ -49,23 +48,14 @@ class LoginScreen extends HookWidget {
       onRecoverPassword: (String name) =>
           authNotifier.recoverPassword(username: name),
       onSubmitAnimationCompleted: () => authScreenState.when(
-          loading: () => Center(child: CircularProgressIndicator()),
-          signedUp: (signedUpUser) => pushToPage(
-              context,
-              Scaffold(
-                body: SurveyScreen(
-                    onCompleteSurvey: () => pushAndReplaceToPage(
-                        context,
-                        Scaffold(
-                          body: LobbyScreen(),
-                        ))),
-              )),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          signedUp: () => context.router.root.replace(SurveyRoute(
+              onCompleteSurvey: () =>
+                  context.router.replace(const LobbyRoute()),
+              surveyID: registerSurveyID)),
           // TODO: create ChangePassword screen.
           requestedResetPassword: () => null,
-          loggedIn: (loggedInUser) {
-            userState.state = loggedInUser;
-            pushAndReplaceToPage(context, MainScreen());
-          },
+          loggedIn: () => context.router.root.replace(HomeRoute()),
           requiresConfirmSignIn: () => pushToPage(
               context,
               /* TODO: In theory, after confirming the new password,

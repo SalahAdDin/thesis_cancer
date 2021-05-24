@@ -1,6 +1,7 @@
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -10,9 +11,6 @@ import 'package:thesis_cancer/core/application/provider.logger.dart';
 import 'package:thesis_cancer/core/application/routes/router.gr.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/core/infrastructure/datastore.repository.dart';
-import 'package:thesis_cancer/features/auth/presentation/pages/login_screen.dart';
-import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
-import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
 
 import 'amplifyconfiguration.dart';
 
@@ -44,10 +42,11 @@ Future<void> main() async {
 }
 
 class CancerApp extends HookWidget {
+  final _appRouter = AppRouter();
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final _appRouter = AppRouter();
     final Settings? appSettings = useProvider(settingsProvider).data?.value;
     final bool darkTheme = appSettings?.darkTheme ?? false;
     final launcherState = useProvider(launcherProvider);
@@ -57,13 +56,18 @@ class CancerApp extends HookWidget {
     return MaterialApp.router(
       title: 'Thesis Cancer',
       theme: darkTheme ? ThemeData.dark() : ThemeData.light(),
-      routerDelegate: _appRouter.delegate(),
+      routerDelegate: AutoRouterDelegate.declarative(
+        _appRouter,
+        routes: (_) => [
+          launcherState.map(
+            loading: (_) => const SplashRoute(),
+            needsProfile: (_) => const LoginRoute(),
+            profileLoaded: (_) => HomeRoute(),
+          )
+        ],
+      ),
       routeInformationParser: _appRouter.defaultRouteParser(),
       // home: SplashScreen()
-      builder: (context, router) => launcherState.when(
-          loading: () => SplashScreen(),
-          needsProfile: () => LoginScreen(),
-          profileLoaded: () => MainScreen()),
     );
   }
 }
