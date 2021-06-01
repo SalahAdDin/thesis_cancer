@@ -6,10 +6,9 @@ import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/provider.logger.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/core/infrastructure/datastore.repository.dart';
+import 'package:thesis_cancer/features/auth/presentation/pages/login_screen.dart';
+import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
-
-import 'features/auth/presentation/pages/login_screen.dart';
-import 'features/home/presentation/pages/main_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
