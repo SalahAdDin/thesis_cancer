@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
@@ -68,7 +67,7 @@ class MainLayout extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    // final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: const Header(),
       endDrawer: ConstrainedBox(
@@ -90,12 +89,16 @@ class MainLayout extends HookWidget {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: tabType.state.index,
         items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.book_outlined), label: ''),
           BottomNavigationBarItem(
-              icon: Icon(MdiIcons.bookInformationVariant), label: ''),
-          BottomNavigationBarItem(icon: Icon(MdiIcons.meditation), label: ''),
-          BottomNavigationBarItem(icon: Icon(MdiIcons.flask), label: ''),
+              icon: Icon(Icons.self_improvement_outlined), label: ''),
           BottomNavigationBarItem(
-              icon: Icon(MdiIcons.tooltipTextOutline), label: ''),
+              icon: Icon(Icons.science_outlined), label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.question_answer_outlined,
+              ),
+              label: ''),
         ],
         onTap: (index) {
           tabType.state = ContentType.values[index];

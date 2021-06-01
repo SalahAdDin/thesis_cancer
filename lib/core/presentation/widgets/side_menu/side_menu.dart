@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/side_menu/side_menu_footer.dart';
 import 'package:thesis_cancer/core/presentation/widgets/side_menu/side_menu_header.dart';
@@ -41,7 +40,7 @@ class SideMenu extends HookWidget {
                     title: const Text('Content'),
                     children: <Widget>[
                       ListTile(
-                        leading: const Icon(MdiIcons.bookInformationVariant),
+                        leading: const Icon(Icons.book_outlined),
                         title: const Text('Bilgi'),
                         onTap: () {
                           tabType.state = ContentType.INFORMATION;
@@ -53,7 +52,7 @@ class SideMenu extends HookWidget {
                         },
                       ),
                       ListTile(
-                        leading: const Icon(MdiIcons.meditation),
+                        leading: const Icon(Icons.self_improvement_outlined),
                         title: const Text('Tedavi'),
                         onTap: () {
                           tabType.state = ContentType.TREATMENT;
@@ -65,7 +64,7 @@ class SideMenu extends HookWidget {
                         },
                       ),
                       ListTile(
-                        leading: const Icon(MdiIcons.flask),
+                        leading: const Icon(Icons.science_outlined),
                         title: const Text('Geliştirmeler'),
                         onTap: () {
                           tabType.state = ContentType.ACADEMY;
@@ -77,7 +76,9 @@ class SideMenu extends HookWidget {
                         },
                       ),
                       ListTile(
-                          leading: const Icon(MdiIcons.tooltipTextOutline),
+                          leading: const Icon(
+                            Icons.question_answer_outlined,
+                          ),
                           title: const Text('Hikayeler'),
                           onTap: () {
                             tabType.state = ContentType.SUCCESS_STORIES;

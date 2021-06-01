@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:thesis_cancer/core/application/responsive.dart';
 
 class SideMenuHeader extends StatelessWidget {
@@ -67,7 +66,9 @@ class SideMenuHeader extends StatelessWidget {
                   angle: 180 * pi / 180,
                   child: IconButton(
                     padding: const EdgeInsets.all(0),
-                    icon: const Icon(MdiIcons.backburger),
+                    icon: const Icon(
+                      Icons.menu_open_outlined,
+                    ),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ),

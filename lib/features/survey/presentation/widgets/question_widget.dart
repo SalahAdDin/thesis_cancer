@@ -71,7 +71,9 @@ class QuestionWidget extends HookWidget {
               answer: buttons[index],
               statement: question.statement),
           direction: Axis.vertical,
-          selectedButtons: selectedButton != '' ? [selectedButton] : null,
+          selectedButton: selectedButton != ''
+              ? buttons.indexOf(selectedButton).toInt()
+              : null,
         );
         break;
       case QuestionType.MULTIPLE:
@@ -100,8 +102,9 @@ class QuestionWidget extends HookWidget {
           },
           direction: Axis.vertical,
           isRadio: false,
-          selectedButtons:
-              selectedButtons != '' ? selectedButtons.split(",") : null,
+          selectedButtons: selectedButtons != ''
+              ? buttons.map((value) => buttons.indexOf(value).toInt()).toList()
+              : null,
         );
         break;
       case QuestionType.BOOL:
@@ -114,7 +117,9 @@ class QuestionWidget extends HookWidget {
         answerWidget = GroupButton(
           spacing: 10,
           buttons: buttons,
-          selectedButtons: selectedButton != '' ? [selectedButton] : null,
+          selectedButton: selectedButton != ''
+              ? buttons.indexOf(selectedButton).toInt()
+              : null,
           onSelected: (index, isSelected) => surveyNotifier.answerQuestion(
               questionId: question.id,
               answer: buttons[index],
