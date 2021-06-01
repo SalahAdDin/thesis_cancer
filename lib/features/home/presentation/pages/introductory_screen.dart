@@ -1,15 +1,40 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:introduction_screen/introduction_screen.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/core/presentation/widgets/video_item.dart';
+import 'package:video_player/video_player.dart';
 
-class IntroductoryScreen extends StatefulWidget {
-  IntroductoryScreen({Key? key}) : super(key: key);
+class IntroductoryScreen extends StatelessWidget {
+  const IntroductoryScreen({
+    Key? key,
+    required this.onDone,
+    required this.dataSource,
+  }) : super(key: key);
 
-  @override
-  _IntroductoryScreenState createState() => _IntroductoryScreenState();
-}
+  final String dataSource;
+  final OnPressedButton onDone;
 
-class _IntroductoryScreenState extends State<IntroductoryScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: IntroductionScreen(
+        pages: [
+          PageViewModel(
+            title: "",
+            image: VideoItem(
+              videoPlayerController: VideoPlayerController.network(dataSource),
+              autoplay: true,
+            ),
+            body: "",
+            decoration: const PageDecoration(fullScreen: true),
+          ),
+        ],
+        done: const Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
+        onDone: onDone,
+        showNextButton: false,
+      ),
+    );
   }
 }

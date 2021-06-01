@@ -1,39 +1,31 @@
-import 'package:amplify_auth_plugin_interface/src/Exceptions/InvalidPasswordException.dart';
-import 'package:amplify_auth_plugin_interface/src/Exceptions/UserNotConfirmedException.dart';
-import 'package:amplify_flutter/amplify.dart';
+// TODO: We need to pass the message itself, not the exception in string format
 
 class SignUpFailure implements Exception {
-  SignUpFailure(AmplifyException error);
+  SignUpFailure(String string);
 }
 
-class SignUpWithInvalidPasswordFailure implements Exception {
-  SignUpWithInvalidPasswordFailure(InvalidPasswordException error);
+class LogInFailure implements Exception {}
+
+class LogInFailureByBadRequest implements Exception {}
+
+class ForgotPasswordFailure implements Exception {
+  ForgotPasswordFailure(String string);
 }
 
 class ResetPasswordFailure implements Exception {
-  ResetPasswordFailure(AmplifyException error);
+  ResetPasswordFailure(String string);
 }
 
-class LogInWithSocialProviderFailure implements Exception {
-  LogInWithSocialProviderFailure(AmplifyException error);
-}
+class SignUpWithInvalidPasswordFailure implements Exception {}
 
-class LogInWithEmailAndPasswordFailure implements Exception {
-  LogInWithEmailAndPasswordFailure(AmplifyException error);
-}
+class LogInWithSocialProviderFailure implements Exception {}
 
-class LogInUnconfirmedUserFailure implements Exception {
-  LogInUnconfirmedUserFailure(UserNotConfirmedException error);
-}
+class LogInWithEmailAndPasswordFailure implements Exception {}
 
-class FetchUserAttributesFailure implements Exception {
-  FetchUserAttributesFailure(AmplifyException error);
-}
+class LogInUnconfirmedUserFailure implements Exception {}
 
-class GettingCurrentUserFailure implements Exception {
-  GettingCurrentUserFailure(AmplifyException error);
-}
+class FetchUserAttributesFailure implements Exception {}
 
-class ConfirmSignInFailure implements Exception {
-  ConfirmSignInFailure(AmplifyException error);
-}
+class GettingCurrentUserFailure implements Exception {}
+
+class ConfirmSignInFailure implements Exception {}

@@ -5,15 +5,15 @@ import 'package:thesis_cancer/core/domain/types.dart';
 
 class Button extends StatelessWidget {
   final String buttonLabel;
-  final onPressedButton onPressed;
+  final OnPressedButton onPressed;
   final bool isPrimary;
 
-  Button.primary({
+  const Button.primary({
     required this.buttonLabel,
     required this.onPressed,
   }) : isPrimary = true;
 
-  Button.accent({
+  const Button.accent({
     required this.buttonLabel,
     required this.onPressed,
   }) : isPrimary = false;
@@ -34,7 +34,7 @@ class Button extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 color: Theme.of(context).accentColor,
               )
-            : TextStyle(
+            : const TextStyle(
                 fontWeight: FontWeight.w700,
               ),
       ),

@@ -2,6 +2,7 @@
     package="com.cloudnesil.thesis_cancer">
    <application
         android:label="thesis_cancer"
+       android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -1,4 +1,5 @@
 abstract class AuthRepository {
+/*
   get appleProvider => null;
 
   get facebookProvider => null;
@@ -26,16 +27,31 @@ abstract class AuthRepository {
 
   Future<void> resendSignUpCode({required String username});
 
-  Future<bool> resetPassword({required String username});
+  // Future<bool> signInWithSocialWebUI({required provider});
 
-  Future<dynamic> signIn({required String username, required String password});
+  // Future<void> signOut();
 
-  Future<bool> signInWithSocialWebUI({required provider});
-
-  Future<void> signOut();
-
-  Future<dynamic> signUp({required String username, required String password});
-
-  Future<void> updatePassword(
+  // Future<void> updatePassword(
       {required String oldPassword, required String newPassword});
+*/
+
+  Future<dynamic> resetPassword({
+    required String password,
+    required String passwordConfirmation,
+    required String confirmationCode,
+  });
+
+  Future<dynamic> forgotPassword({required String email});
+
+  Future<dynamic> signIn({
+    required String identifier,
+    required String password,
+    String? provider,
+  });
+
+  Future<dynamic> signUp({
+    required String username,
+    required String email,
+    required String password,
+  });
 }

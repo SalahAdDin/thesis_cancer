@@ -20,20 +20,12 @@ class _$AuthStateTearOff {
     return const _Loading();
   }
 
-  _SignedUp signedUp(User signedUpUser) {
-    return _SignedUp(
-      signedUpUser,
-    );
+  _SignedUp signedUp() {
+    return const _SignedUp();
   }
 
-  _RequestedResetPassword requestedResetPassword() {
-    return const _RequestedResetPassword();
-  }
-
-  _LoggedIn loggedIn(User loggedInUser) {
-    return _LoggedIn(
-      loggedInUser,
-    );
+  _LoggedIn loggedIn() {
+    return const _LoggedIn();
   }
 
   _LoggedOut loggedOut() {
@@ -46,8 +38,8 @@ class _$AuthStateTearOff {
     );
   }
 
-  _RequiresConfirmSignIn requiresConfirmSignIn() {
-    return const _RequiresConfirmSignIn();
+  _ResetPassword resetPassword() {
+    return const _ResetPassword();
   }
 }
 
@@ -59,23 +51,21 @@ mixin _$AuthState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(User signedUpUser) signedUp,
-    required TResult Function() requestedResetPassword,
-    required TResult Function(User loggedInUser) loggedIn,
+    required TResult Function() signedUp,
+    required TResult Function() loggedIn,
     required TResult Function() loggedOut,
     required TResult Function(String error) error,
-    required TResult Function() requiresConfirmSignIn,
+    required TResult Function() resetPassword,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(User signedUpUser)? signedUp,
-    TResult Function()? requestedResetPassword,
-    TResult Function(User loggedInUser)? loggedIn,
+    TResult Function()? signedUp,
+    TResult Function()? loggedIn,
     TResult Function()? loggedOut,
     TResult Function(String error)? error,
-    TResult Function()? requiresConfirmSignIn,
+    TResult Function()? resetPassword,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -83,24 +73,20 @@ mixin _$AuthState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_SignedUp value) signedUp,
-    required TResult Function(_RequestedResetPassword value)
-        requestedResetPassword,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_Error value) error,
-    required TResult Function(_RequiresConfirmSignIn value)
-        requiresConfirmSignIn,
+    required TResult Function(_ResetPassword value) resetPassword,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_SignedUp value)? signedUp,
-    TResult Function(_RequestedResetPassword value)? requestedResetPassword,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_Error value)? error,
-    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
+    TResult Function(_ResetPassword value)? resetPassword,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -138,6 +124,7 @@ class __$LoadingCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Loading implements _Loading {
   const _$_Loading();
 
@@ -158,12 +145,11 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(User signedUpUser) signedUp,
-    required TResult Function() requestedResetPassword,
-    required TResult Function(User loggedInUser) loggedIn,
+    required TResult Function() signedUp,
+    required TResult Function() loggedIn,
     required TResult Function() loggedOut,
     required TResult Function(String error) error,
-    required TResult Function() requiresConfirmSignIn,
+    required TResult Function() resetPassword,
   }) {
     return loading();
   }
@@ -172,12 +158,11 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(User signedUpUser)? signedUp,
-    TResult Function()? requestedResetPassword,
-    TResult Function(User loggedInUser)? loggedIn,
+    TResult Function()? signedUp,
+    TResult Function()? loggedIn,
     TResult Function()? loggedOut,
     TResult Function(String error)? error,
-    TResult Function()? requiresConfirmSignIn,
+    TResult Function()? resetPassword,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -191,13 +176,10 @@ class _$_Loading implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_SignedUp value) signedUp,
-    required TResult Function(_RequestedResetPassword value)
-        requestedResetPassword,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_Error value) error,
-    required TResult Function(_RequiresConfirmSignIn value)
-        requiresConfirmSignIn,
+    required TResult Function(_ResetPassword value) resetPassword,
   }) {
     return loading(this);
   }
@@ -207,11 +189,10 @@ class _$_Loading implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_SignedUp value)? signedUp,
-    TResult Function(_RequestedResetPassword value)? requestedResetPassword,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_Error value)? error,
-    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
+    TResult Function(_ResetPassword value)? resetPassword,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -229,9 +210,6 @@ abstract class _Loading implements AuthState {
 abstract class _$SignedUpCopyWith<$Res> {
   factory _$SignedUpCopyWith(_SignedUp value, $Res Function(_SignedUp) then) =
       __$SignedUpCopyWithImpl<$Res>;
-  $Res call({User signedUpUser});
-
-  $UserCopyWith<$Res> get signedUpUser;
 }
 
 /// @nodoc
@@ -242,85 +220,52 @@ class __$SignedUpCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 
   @override
   _SignedUp get _value => super._value as _SignedUp;
-
-  @override
-  $Res call({
-    Object? signedUpUser = freezed,
-  }) {
-    return _then(_SignedUp(
-      signedUpUser == freezed
-          ? _value.signedUpUser
-          : signedUpUser // ignore: cast_nullable_to_non_nullable
-              as User,
-    ));
-  }
-
-  @override
-  $UserCopyWith<$Res> get signedUpUser {
-    return $UserCopyWith<$Res>(_value.signedUpUser, (value) {
-      return _then(_value.copyWith(signedUpUser: value));
-    });
-  }
 }
 
 /// @nodoc
-class _$_SignedUp implements _SignedUp {
-  const _$_SignedUp(this.signedUpUser);
 
-  @override
-  final User signedUpUser;
+class _$_SignedUp implements _SignedUp {
+  const _$_SignedUp();
 
   @override
   String toString() {
-    return 'AuthState.signedUp(signedUpUser: $signedUpUser)';
+    return 'AuthState.signedUp()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _SignedUp &&
-            (identical(other.signedUpUser, signedUpUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.signedUpUser, signedUpUser)));
+    return identical(this, other) || (other is _SignedUp);
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(signedUpUser);
-
-  @JsonKey(ignore: true)
-  @override
-  _$SignedUpCopyWith<_SignedUp> get copyWith =>
-      __$SignedUpCopyWithImpl<_SignedUp>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(User signedUpUser) signedUp,
-    required TResult Function() requestedResetPassword,
-    required TResult Function(User loggedInUser) loggedIn,
+    required TResult Function() signedUp,
+    required TResult Function() loggedIn,
     required TResult Function() loggedOut,
     required TResult Function(String error) error,
-    required TResult Function() requiresConfirmSignIn,
+    required TResult Function() resetPassword,
   }) {
-    return signedUp(signedUpUser);
+    return signedUp();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(User signedUpUser)? signedUp,
-    TResult Function()? requestedResetPassword,
-    TResult Function(User loggedInUser)? loggedIn,
+    TResult Function()? signedUp,
+    TResult Function()? loggedIn,
     TResult Function()? loggedOut,
     TResult Function(String error)? error,
-    TResult Function()? requiresConfirmSignIn,
+    TResult Function()? resetPassword,
     required TResult orElse(),
   }) {
     if (signedUp != null) {
-      return signedUp(signedUpUser);
+      return signedUp();
     }
     return orElse();
   }
@@ -330,13 +275,10 @@ class _$_SignedUp implements _SignedUp {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_SignedUp value) signedUp,
-    required TResult Function(_RequestedResetPassword value)
-        requestedResetPassword,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_Error value) error,
-    required TResult Function(_RequiresConfirmSignIn value)
-        requiresConfirmSignIn,
+    required TResult Function(_ResetPassword value) resetPassword,
   }) {
     return signedUp(this);
   }
@@ -346,11 +288,10 @@ class _$_SignedUp implements _SignedUp {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_SignedUp value)? signedUp,
-    TResult Function(_RequestedResetPassword value)? requestedResetPassword,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_Error value)? error,
-    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
+    TResult Function(_ResetPassword value)? resetPassword,
     required TResult orElse(),
   }) {
     if (signedUp != null) {
@@ -361,128 +302,13 @@ class _$_SignedUp implements _SignedUp {
 }
 
 abstract class _SignedUp implements AuthState {
-  const factory _SignedUp(User signedUpUser) = _$_SignedUp;
-
-  User get signedUpUser => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  _$SignedUpCopyWith<_SignedUp> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$RequestedResetPasswordCopyWith<$Res> {
-  factory _$RequestedResetPasswordCopyWith(_RequestedResetPassword value,
-          $Res Function(_RequestedResetPassword) then) =
-      __$RequestedResetPasswordCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$RequestedResetPasswordCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res>
-    implements _$RequestedResetPasswordCopyWith<$Res> {
-  __$RequestedResetPasswordCopyWithImpl(_RequestedResetPassword _value,
-      $Res Function(_RequestedResetPassword) _then)
-      : super(_value, (v) => _then(v as _RequestedResetPassword));
-
-  @override
-  _RequestedResetPassword get _value => super._value as _RequestedResetPassword;
-}
-
-/// @nodoc
-class _$_RequestedResetPassword implements _RequestedResetPassword {
-  const _$_RequestedResetPassword();
-
-  @override
-  String toString() {
-    return 'AuthState.requestedResetPassword()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _RequestedResetPassword);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function(User signedUpUser) signedUp,
-    required TResult Function() requestedResetPassword,
-    required TResult Function(User loggedInUser) loggedIn,
-    required TResult Function() loggedOut,
-    required TResult Function(String error) error,
-    required TResult Function() requiresConfirmSignIn,
-  }) {
-    return requestedResetPassword();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(User signedUpUser)? signedUp,
-    TResult Function()? requestedResetPassword,
-    TResult Function(User loggedInUser)? loggedIn,
-    TResult Function()? loggedOut,
-    TResult Function(String error)? error,
-    TResult Function()? requiresConfirmSignIn,
-    required TResult orElse(),
-  }) {
-    if (requestedResetPassword != null) {
-      return requestedResetPassword();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_SignedUp value) signedUp,
-    required TResult Function(_RequestedResetPassword value)
-        requestedResetPassword,
-    required TResult Function(_LoggedIn value) loggedIn,
-    required TResult Function(_LoggedOut value) loggedOut,
-    required TResult Function(_Error value) error,
-    required TResult Function(_RequiresConfirmSignIn value)
-        requiresConfirmSignIn,
-  }) {
-    return requestedResetPassword(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_SignedUp value)? signedUp,
-    TResult Function(_RequestedResetPassword value)? requestedResetPassword,
-    TResult Function(_LoggedIn value)? loggedIn,
-    TResult Function(_LoggedOut value)? loggedOut,
-    TResult Function(_Error value)? error,
-    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
-    required TResult orElse(),
-  }) {
-    if (requestedResetPassword != null) {
-      return requestedResetPassword(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _RequestedResetPassword implements AuthState {
-  const factory _RequestedResetPassword() = _$_RequestedResetPassword;
+  const factory _SignedUp() = _$_SignedUp;
 }
 
 /// @nodoc
 abstract class _$LoggedInCopyWith<$Res> {
   factory _$LoggedInCopyWith(_LoggedIn value, $Res Function(_LoggedIn) then) =
       __$LoggedInCopyWithImpl<$Res>;
-  $Res call({User loggedInUser});
-
-  $UserCopyWith<$Res> get loggedInUser;
 }
 
 /// @nodoc
@@ -493,85 +319,52 @@ class __$LoggedInCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 
   @override
   _LoggedIn get _value => super._value as _LoggedIn;
-
-  @override
-  $Res call({
-    Object? loggedInUser = freezed,
-  }) {
-    return _then(_LoggedIn(
-      loggedInUser == freezed
-          ? _value.loggedInUser
-          : loggedInUser // ignore: cast_nullable_to_non_nullable
-              as User,
-    ));
-  }
-
-  @override
-  $UserCopyWith<$Res> get loggedInUser {
-    return $UserCopyWith<$Res>(_value.loggedInUser, (value) {
-      return _then(_value.copyWith(loggedInUser: value));
-    });
-  }
 }
 
 /// @nodoc
-class _$_LoggedIn implements _LoggedIn {
-  const _$_LoggedIn(this.loggedInUser);
 
-  @override
-  final User loggedInUser;
+class _$_LoggedIn implements _LoggedIn {
+  const _$_LoggedIn();
 
   @override
   String toString() {
-    return 'AuthState.loggedIn(loggedInUser: $loggedInUser)';
+    return 'AuthState.loggedIn()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _LoggedIn &&
-            (identical(other.loggedInUser, loggedInUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.loggedInUser, loggedInUser)));
+    return identical(this, other) || (other is _LoggedIn);
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(loggedInUser);
-
-  @JsonKey(ignore: true)
-  @override
-  _$LoggedInCopyWith<_LoggedIn> get copyWith =>
-      __$LoggedInCopyWithImpl<_LoggedIn>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(User signedUpUser) signedUp,
-    required TResult Function() requestedResetPassword,
-    required TResult Function(User loggedInUser) loggedIn,
+    required TResult Function() signedUp,
+    required TResult Function() loggedIn,
     required TResult Function() loggedOut,
     required TResult Function(String error) error,
-    required TResult Function() requiresConfirmSignIn,
+    required TResult Function() resetPassword,
   }) {
-    return loggedIn(loggedInUser);
+    return loggedIn();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(User signedUpUser)? signedUp,
-    TResult Function()? requestedResetPassword,
-    TResult Function(User loggedInUser)? loggedIn,
+    TResult Function()? signedUp,
+    TResult Function()? loggedIn,
     TResult Function()? loggedOut,
     TResult Function(String error)? error,
-    TResult Function()? requiresConfirmSignIn,
+    TResult Function()? resetPassword,
     required TResult orElse(),
   }) {
     if (loggedIn != null) {
-      return loggedIn(loggedInUser);
+      return loggedIn();
     }
     return orElse();
   }
@@ -581,13 +374,10 @@ class _$_LoggedIn implements _LoggedIn {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_SignedUp value) signedUp,
-    required TResult Function(_RequestedResetPassword value)
-        requestedResetPassword,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_Error value) error,
-    required TResult Function(_RequiresConfirmSignIn value)
-        requiresConfirmSignIn,
+    required TResult Function(_ResetPassword value) resetPassword,
   }) {
     return loggedIn(this);
   }
@@ -597,11 +387,10 @@ class _$_LoggedIn implements _LoggedIn {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_SignedUp value)? signedUp,
-    TResult Function(_RequestedResetPassword value)? requestedResetPassword,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_Error value)? error,
-    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
+    TResult Function(_ResetPassword value)? resetPassword,
     required TResult orElse(),
   }) {
     if (loggedIn != null) {
@@ -612,12 +401,7 @@ class _$_LoggedIn implements _LoggedIn {
 }
 
 abstract class _LoggedIn implements AuthState {
-  const factory _LoggedIn(User loggedInUser) = _$_LoggedIn;
-
-  User get loggedInUser => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  _$LoggedInCopyWith<_LoggedIn> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory _LoggedIn() = _$_LoggedIn;
 }
 
 /// @nodoc
@@ -638,6 +422,7 @@ class __$LoggedOutCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_LoggedOut implements _LoggedOut {
   const _$_LoggedOut();
 
@@ -658,12 +443,11 @@ class _$_LoggedOut implements _LoggedOut {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(User signedUpUser) signedUp,
-    required TResult Function() requestedResetPassword,
-    required TResult Function(User loggedInUser) loggedIn,
+    required TResult Function() signedUp,
+    required TResult Function() loggedIn,
     required TResult Function() loggedOut,
     required TResult Function(String error) error,
-    required TResult Function() requiresConfirmSignIn,
+    required TResult Function() resetPassword,
   }) {
     return loggedOut();
   }
@@ -672,12 +456,11 @@ class _$_LoggedOut implements _LoggedOut {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(User signedUpUser)? signedUp,
-    TResult Function()? requestedResetPassword,
-    TResult Function(User loggedInUser)? loggedIn,
+    TResult Function()? signedUp,
+    TResult Function()? loggedIn,
     TResult Function()? loggedOut,
     TResult Function(String error)? error,
-    TResult Function()? requiresConfirmSignIn,
+    TResult Function()? resetPassword,
     required TResult orElse(),
   }) {
     if (loggedOut != null) {
@@ -691,13 +474,10 @@ class _$_LoggedOut implements _LoggedOut {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_SignedUp value) signedUp,
-    required TResult Function(_RequestedResetPassword value)
-        requestedResetPassword,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_Error value) error,
-    required TResult Function(_RequiresConfirmSignIn value)
-        requiresConfirmSignIn,
+    required TResult Function(_ResetPassword value) resetPassword,
   }) {
     return loggedOut(this);
   }
@@ -707,11 +487,10 @@ class _$_LoggedOut implements _LoggedOut {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_SignedUp value)? signedUp,
-    TResult Function(_RequestedResetPassword value)? requestedResetPassword,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_Error value)? error,
-    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
+    TResult Function(_ResetPassword value)? resetPassword,
     required TResult orElse(),
   }) {
     if (loggedOut != null) {
@@ -755,6 +534,7 @@ class __$ErrorCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Error implements _Error {
   const _$_Error(this.error);
 
@@ -787,12 +567,11 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(User signedUpUser) signedUp,
-    required TResult Function() requestedResetPassword,
-    required TResult Function(User loggedInUser) loggedIn,
+    required TResult Function() signedUp,
+    required TResult Function() loggedIn,
     required TResult Function() loggedOut,
     required TResult Function(String error) error,
-    required TResult Function() requiresConfirmSignIn,
+    required TResult Function() resetPassword,
   }) {
     return error(this.error);
   }
@@ -801,12 +580,11 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(User signedUpUser)? signedUp,
-    TResult Function()? requestedResetPassword,
-    TResult Function(User loggedInUser)? loggedIn,
+    TResult Function()? signedUp,
+    TResult Function()? loggedIn,
     TResult Function()? loggedOut,
     TResult Function(String error)? error,
-    TResult Function()? requiresConfirmSignIn,
+    TResult Function()? resetPassword,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -820,13 +598,10 @@ class _$_Error implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_SignedUp value) signedUp,
-    required TResult Function(_RequestedResetPassword value)
-        requestedResetPassword,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_Error value) error,
-    required TResult Function(_RequiresConfirmSignIn value)
-        requiresConfirmSignIn,
+    required TResult Function(_ResetPassword value) resetPassword,
   }) {
     return error(this);
   }
@@ -836,11 +611,10 @@ class _$_Error implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_SignedUp value)? signedUp,
-    TResult Function(_RequestedResetPassword value)? requestedResetPassword,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_Error value)? error,
-    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
+    TResult Function(_ResetPassword value)? resetPassword,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -859,36 +633,36 @@ abstract class _Error implements AuthState {
 }
 
 /// @nodoc
-abstract class _$RequiresConfirmSignInCopyWith<$Res> {
-  factory _$RequiresConfirmSignInCopyWith(_RequiresConfirmSignIn value,
-          $Res Function(_RequiresConfirmSignIn) then) =
-      __$RequiresConfirmSignInCopyWithImpl<$Res>;
+abstract class _$ResetPasswordCopyWith<$Res> {
+  factory _$ResetPasswordCopyWith(
+          _ResetPassword value, $Res Function(_ResetPassword) then) =
+      __$ResetPasswordCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$RequiresConfirmSignInCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res>
-    implements _$RequiresConfirmSignInCopyWith<$Res> {
-  __$RequiresConfirmSignInCopyWithImpl(_RequiresConfirmSignIn _value,
-      $Res Function(_RequiresConfirmSignIn) _then)
-      : super(_value, (v) => _then(v as _RequiresConfirmSignIn));
+class __$ResetPasswordCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
+    implements _$ResetPasswordCopyWith<$Res> {
+  __$ResetPasswordCopyWithImpl(
+      _ResetPassword _value, $Res Function(_ResetPassword) _then)
+      : super(_value, (v) => _then(v as _ResetPassword));
 
   @override
-  _RequiresConfirmSignIn get _value => super._value as _RequiresConfirmSignIn;
+  _ResetPassword get _value => super._value as _ResetPassword;
 }
 
 /// @nodoc
-class _$_RequiresConfirmSignIn implements _RequiresConfirmSignIn {
-  const _$_RequiresConfirmSignIn();
+
+class _$_ResetPassword implements _ResetPassword {
+  const _$_ResetPassword();
 
   @override
   String toString() {
-    return 'AuthState.requiresConfirmSignIn()';
+    return 'AuthState.resetPassword()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _RequiresConfirmSignIn);
+    return identical(this, other) || (other is _ResetPassword);
   }
 
   @override
@@ -898,30 +672,28 @@ class _$_RequiresConfirmSignIn implements _RequiresConfirmSignIn {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(User signedUpUser) signedUp,
-    required TResult Function() requestedResetPassword,
-    required TResult Function(User loggedInUser) loggedIn,
+    required TResult Function() signedUp,
+    required TResult Function() loggedIn,
     required TResult Function() loggedOut,
     required TResult Function(String error) error,
-    required TResult Function() requiresConfirmSignIn,
+    required TResult Function() resetPassword,
   }) {
-    return requiresConfirmSignIn();
+    return resetPassword();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(User signedUpUser)? signedUp,
-    TResult Function()? requestedResetPassword,
-    TResult Function(User loggedInUser)? loggedIn,
+    TResult Function()? signedUp,
+    TResult Function()? loggedIn,
     TResult Function()? loggedOut,
     TResult Function(String error)? error,
-    TResult Function()? requiresConfirmSignIn,
+    TResult Function()? resetPassword,
     required TResult orElse(),
   }) {
-    if (requiresConfirmSignIn != null) {
-      return requiresConfirmSignIn();
+    if (resetPassword != null) {
+      return resetPassword();
     }
     return orElse();
   }
@@ -931,15 +703,12 @@ class _$_RequiresConfirmSignIn implements _RequiresConfirmSignIn {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_SignedUp value) signedUp,
-    required TResult Function(_RequestedResetPassword value)
-        requestedResetPassword,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_Error value) error,
-    required TResult Function(_RequiresConfirmSignIn value)
-        requiresConfirmSignIn,
+    required TResult Function(_ResetPassword value) resetPassword,
   }) {
-    return requiresConfirmSignIn(this);
+    return resetPassword(this);
   }
 
   @override
@@ -947,20 +716,19 @@ class _$_RequiresConfirmSignIn implements _RequiresConfirmSignIn {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_SignedUp value)? signedUp,
-    TResult Function(_RequestedResetPassword value)? requestedResetPassword,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_Error value)? error,
-    TResult Function(_RequiresConfirmSignIn value)? requiresConfirmSignIn,
+    TResult Function(_ResetPassword value)? resetPassword,
     required TResult orElse(),
   }) {
-    if (requiresConfirmSignIn != null) {
-      return requiresConfirmSignIn(this);
+    if (resetPassword != null) {
+      return resetPassword(this);
     }
     return orElse();
   }
 }
 
-abstract class _RequiresConfirmSignIn implements AuthState {
-  const factory _RequiresConfirmSignIn() = _$_RequiresConfirmSignIn;
+abstract class _ResetPassword implements AuthState {
+  const factory _ResetPassword() = _$_ResetPassword;
 }

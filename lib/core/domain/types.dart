@@ -1,11 +1,9 @@
 enum ActivityType {
-  LIKE,
-  COMMENT,
-  FOLLOW,
+  NEW_COMMENT,
+  // FOLLOW,
+  NEW_LIKE,
   NEW_POST,
-  NEW_USER,
-  NEW_SURVEY_ANSWER,
-  NEW_SURVEY_AVAILABLE
+  NEW_SURVEY_SCHEDULED,
 }
 
 enum ContentType { INFORMATION, TREATMENT, ACADEMY, SUCCESS_STORIES }
@@ -14,10 +12,8 @@ enum QuestionType { BOOL, MULTIPLE, OPEN_SHORT, OPEN_LONG, SINGLE }
 
 enum ModuleTab { KNOWLEDGE, THERAPY, RESEARCH, STORIES }
 
-enum SplashState { NONE, EXISTING_USER, NEW_USER }
-
-enum UserRole { ADMIN, PILOT, TEST, CONTROL }
+enum UserRole { ADMIN, PILOT, TEST, CONTROL, GUEST }
 
 enum UserStatus { UNCONFIRMED, ADMIN, INTRODUCTION, TUTORIAL, FINAL }
 
-typedef onPressedButton = void Function();
+typedef OnPressedButton = void Function();
