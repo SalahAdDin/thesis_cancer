@@ -11,8 +11,10 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
   final GraphQLClient client;
 
   @override
-  Future<int> countUserSurveyResults(
-      {required String userId, required String surveyId}) async {
+  Future<int> countUserSurveyResults({
+    required String userId,
+    required String surveyId,
+  }) async {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentCountResults),
