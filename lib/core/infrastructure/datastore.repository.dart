@@ -34,9 +34,9 @@ class SembastDataStore implements DataStoreRepository {
 
   @override
   Future<Settings> getSettings() async {
-    final Map<String, dynamic> settingsJson = await store
+    final Map<String, dynamic>? settingsJson = await store
         .record(StorePath.settings)
-        .get(database) as Map<String, dynamic>;
+        .get(database) as Map<String, dynamic>?;
 
     return settingsJson != null
         ? Settings.fromJson(settingsJson)
@@ -74,9 +74,9 @@ class SembastDataStore implements DataStoreRepository {
 
   @override
   Future<User> getUserProfileData() async {
-    final Map<String, dynamic> profileJson = await store
+    final Map<String, dynamic>? profileJson = await store
         .record(StorePath.profile)
-        .get(database) as Map<String, dynamic>;
+        .get(database) as Map<String, dynamic>?;
 
     return profileJson != null ? User.fromJson(profileJson) : User.empty;
   }
