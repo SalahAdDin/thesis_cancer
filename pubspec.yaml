@@ -40,11 +40,11 @@ dependencies:
   form_field_validator: ^1.1.0
   freezed_annotation: ^0.14.2
   graphql: ^5.0.0-nullsafety.5
-  group_button: ^2.1.2
+  group_button: ^2.2.0
   hooks_riverpod: ^0.14.0+4
   introduction_screen: ^2.1.0
   # like_button: ^2.0.2
-  material_design_icons_flutter: ^5.0.5955-rc.1
+  # material_design_icons_flutter: ^5.0.5955-rc.1
   package_info: ^2.0.2
   path_provider: ^2.0.2
   # permission_handler: ^6.1.1
