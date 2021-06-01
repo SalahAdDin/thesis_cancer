@@ -53,8 +53,7 @@ const $Profile = _$ProfileTearOff();
 mixin _$Profile {
   String? get firstName => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
-  UploadFile? get profilePhoto =>
-      throw _privateConstructorUsedError; // TODO: how to properly handle this?
+  UploadFile? get profilePhoto => throw _privateConstructorUsedError;
   UserRole get role => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
   bool? get hasSeenTutorial => throw _privateConstructorUsedError;
@@ -249,7 +248,7 @@ class _$_Profile implements _Profile {
   @override
   final UploadFile? profilePhoto;
   @JsonKey(defaultValue: UserRole.GUEST)
-  @override // TODO: how to properly handle this?
+  @override
   final UserRole role;
   @override
   final String? phoneNumber;
@@ -337,7 +336,7 @@ abstract class _Profile implements Profile {
   String? get lastName => throw _privateConstructorUsedError;
   @override
   UploadFile? get profilePhoto => throw _privateConstructorUsedError;
-  @override // TODO: how to properly handle this?
+  @override
   UserRole get role => throw _privateConstructorUsedError;
   @override
   String? get phoneNumber => throw _privateConstructorUsedError;

@@ -9,6 +9,7 @@ class SurveySchedule with _$SurveySchedule {
     required int iterations,
     required int step,
     required String survey, // Survey ID
+    required String label,
   }) = _SurveySchedule;
 
   factory SurveySchedule.fromJson(Map<String, dynamic> json) =>

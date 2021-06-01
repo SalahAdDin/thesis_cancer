@@ -11,6 +11,7 @@ _$_SurveySchedule _$_$_SurveyScheduleFromJson(Map<String, dynamic> json) {
     iterations: json['iterations'] as int,
     step: json['step'] as int,
     survey: json['survey'] as String,
+    label: json['label'] as String,
   );
 }
 
@@ -19,4 +20,5 @@ Map<String, dynamic> _$_$_SurveyScheduleToJson(_$_SurveySchedule instance) =>
       'iterations': instance.iterations,
       'step': instance.step,
       'survey': instance.survey,
+      'label': instance.label,
     };
