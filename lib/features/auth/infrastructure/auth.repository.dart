@@ -1,217 +1,157 @@
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_flutter/amplify.dart';
-import 'package:amplify_flutter/categories/amplify_categories.dart';
-import 'package:jwt_decode/jwt_decode.dart';
+import 'package:colorize/colorize.dart';
+import 'package:graphql/client.dart';
 import 'package:thesis_cancer/features/auth/domain/auth.repository.dart';
-import 'package:thesis_cancer/features/auth/infrastructure/utils.dart';
+import 'package:thesis_cancer/features/auth/infrastructure/auth.gql.dart';
+import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
 
-import 'failure.dart';
+class GraphQLAuthRepository implements AuthRepository {
+  GraphQLAuthRepository({required this.client}) : super();
 
-class AmplifyAuthRepository implements AuthRepository {
-  AmplifyAuthRepository({AuthCategory? authCategory})
-      : _authCategory = authCategory ?? Amplify.Auth;
+  final GraphQLClient client;
 
-  final AuthCategory _authCategory;
+  Map<String, dynamic> flatAuthResponse({required Map<String, dynamic> data}) {
+    final Map<String, dynamic> flattenResult =
+        data['user'] as Map<String, dynamic>;
+    flattenResult['token'] = data['jwt'];
+    final Map<String, dynamic> result = flattenResult;
 
-  @override
-  Future<void> confirmPassword(
-      {required String username,
-      required String newPassword,
-      required String confirmationCode}) async {
-    try {
-      UpdatePasswordResult result = await _authCategory.confirmPassword(
-          username: username,
-          newPassword: newPassword,
-          confirmationCode: confirmationCode);
-      // TODO: review the result and work base on it.
-      print('Result: $result');
-    } on AmplifyException catch (error) {
-      // TODO: Catch error for analytics, not required for frontend.
-    }
+    return result;
   }
 
   @override
-  Future<AmplifyResult> confirmSignIn(
-      {required String confirmationCode}) async {
+  Future<bool> forgotPassword({required String email}) async {
     try {
-      SignInResult result = await _authCategory.confirmSignIn(
-          confirmationValue: confirmationCode);
-      return AmplifyResult(
-          isSuccess: result.isSignedIn, nextStep: result.nextStep.signInStep);
-    } on AmplifyException catch (error) {
-      // TODO: Catch error for analytics, not required for frontend.
-      throw ConfirmSignInFailure(error);
-    }
-  }
+      final QueryOptions options = QueryOptions(
+          document: gql(graphQLDocumentForgotPassword),
+          variables: {
+            "email": email,
+          });
+      final QueryResult response = await client.query(options);
 
-  @override
-  Future<bool> confirmSignUp(
-      {required String username, required String confirmationCode}) async {
-    try {
-      SignUpResult result = await _authCategory.confirmSignUp(
-          username: username, confirmationCode: confirmationCode);
-      return result.isSignUpComplete;
-    } on AmplifyException catch (error) {
-      // TODO: Catch error for analytics, not required for frontend.
-      return false;
-    }
-  }
+      if (response.hasException) {
+        print(Colorize(response.exception.toString()).red());
+        throw ForgotPasswordFailure(response.exception.toString());
+      }
+      final bool result = response.data?['forgotPassword']['ok'] as bool;
 
-  @override
-  Future<Map<String, dynamic>> fetchSession() async {
-    try {
-      CognitoAuthSession fetchedSession = await _authCategory.fetchAuthSession(
-              options: CognitoSessionOptions(getAWSCredentials: true))
-          as CognitoAuthSession;
-      String token = fetchedSession.userPoolTokens.idToken;
-      Map<String, dynamic> payload = Jwt.parseJwt(token);
-      List groups = payload['cognito:groups'];
-      Map<String, dynamic> result = {
-        'isSignedIn': fetchedSession.isSignedIn,
-        'roles': groups
-      };
       return result;
-    } on AmplifyException catch (error) {
-      // TODO: Catch error for analytics, not required for frontend.
-      throw AmplifyException(error.toString());
+    } on Exception catch (error) {
+      print(Colorize(error.toString()).red());
+      throw ForgotPasswordFailure(error.toString());
     }
   }
 
   @override
-  Future<Map<String, String>> fetchUserAttributes() async {
+  Future<Map<String, dynamic>> resetPassword({
+    required String password,
+    required String passwordConfirmation,
+    required String confirmationCode,
+  }) async {
     try {
-      // TODO: verify which attributes comes: confirmed and roles(groups) are required.
-      final fetchedUserAttributes = await _authCategory.fetchUserAttributes();
-      Map<String, String> result = Map.fromIterable(fetchedUserAttributes,
-          key: (element) => element.userAttributeKey,
-          value: (element) => element.value);
+      final QueryOptions options = QueryOptions(
+        document: gql(graphQLDocumentResetPassword),
+        variables: {
+          "password": password,
+          "passwordConfirmation": passwordConfirmation,
+          "code": confirmationCode
+        },
+      );
+      final QueryResult response = await client.query(options);
+
+      if (response.hasException) {
+        print(Colorize(response.exception.toString()).red());
+        throw ResetPasswordFailure(response.exception.toString());
+      }
+      final Map<String, dynamic> data =
+          response.data?['resetPassword'] as Map<String, dynamic>;
+
+      return flatAuthResponse(data: data);
+    } on Exception catch (error) {
+      print(Colorize(error.toString()).red());
+      throw ResetPasswordFailure(error.toString());
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> signIn({
+    required String identifier,
+    required String password,
+    String? provider,
+  }) async {
+    try {
+      final QueryOptions options = QueryOptions(
+          document: gql(graphQLDocumentLoginUser),
+          variables: {
+            "identifier": identifier,
+            "password": password,
+            "provider": provider
+          });
+      final QueryResult response = await client.query(options);
+
+      if (response.hasException) {
+        if (response.exception?.linkException is NetworkException) {
+          // handle network issues, maybe
+          // TODO: Following code does not work here.
+          /*} else {
+          final String message = response.exception!.graphqlErrors[0].message;
+          */ /*response.exception?.graphqlErrors[0].extensions?['exception']
+                  ['data']['message'][0]["messages"][0]['id'] as String;*/ /*
+
+          print(Colorize("Error from if:  $message").red());
+          if (message.contains("Bad Request")) {
+            throw LogInFailureByBadRequest();
+          }*/
+          throw LogInFailure();
+        } else {
+          final String message = response.exception!.graphqlErrors[0].message;
+          if (message.contains("Bad Request")) {
+            throw LogInFailureByBadRequest();
+          } else {
+            throw LogInFailure();
+          }
+        }
+      }
+      final Map<String, dynamic> data =
+          response.data?['login'] as Map<String, dynamic>;
+
+      return flatAuthResponse(data: data);
+    } on OperationException catch (error) {
+      final String message = error.graphqlErrors[0].message;
+      if (message.contains("Bad Request")) {
+        throw LogInFailureByBadRequest();
+      } else {
+        throw LogInFailure();
+      }
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> signUp({
+    required String username,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final QueryOptions options = QueryOptions(
+        document: gql(graphQLDocumentRegisterUser),
+        variables: {'username': username, 'email': email, 'password': password},
+      );
+      final QueryResult response = await client.query(options);
+      if (response.hasException) {
+        throw SignUpFailure(response.exception.toString());
+      }
+      final Map<String, dynamic> data =
+          response.data?['register'] as Map<String, dynamic>;
+
+      // Keeping variable's immutability.
+      final Map<String, dynamic> flattenResult =
+          data['user'] as Map<String, dynamic>;
+      flattenResult['token'] = data['jwt'];
+      final Map<String, dynamic> result = flattenResult;
+
       return result;
-    } on AmplifyException catch (error) {
-      throw FetchUserAttributesFailure(error);
+    } on Exception catch (error) {
+      throw SignUpFailure(error.toString());
     }
   }
-
-  @override
-  Future<Map<String, String>> getCurrentUser() async {
-    try {
-      AuthUser result = await _authCategory.getCurrentUser();
-      Map<String, String> currentUser = {
-        'userId': result.userId,
-        'username': result.username
-      };
-      return currentUser;
-    } on AmplifyException catch (error) {
-      // TODO: Catch error for analytics, not required for frontend.
-      throw GettingCurrentUserFailure(error);
-    }
-  }
-
-  @override
-  Future<bool> isSignedIn() async {
-    try {
-      AuthSession result = await _authCategory.fetchAuthSession();
-      return result.isSignedIn;
-    } on AmplifyException catch (error) {
-      // TODO: Catch error for analytics, not required for frontend.
-      return false;
-    }
-  }
-
-  @override
-  Future<void> resendSignUpCode({required String username}) async {
-    try {
-      await _authCategory.resendSignUpCode(username: username);
-    } on AmplifyException catch (error) {
-      // TODO: Catch error for analytics, not required for frontend.
-    }
-  }
-
-  @override
-  Future<bool> resetPassword({required String username}) async {
-    try {
-      ResetPasswordResult result =
-          await _authCategory.resetPassword(username: username);
-      return result.isPasswordReset;
-    } on AmplifyException catch (error) {
-      throw ResetPasswordFailure(error);
-    }
-  }
-
-  @override
-  Future<AmplifyResult> signIn(
-      {required String username, required String password}) async {
-    try {
-      SignInResult result =
-          await _authCategory.signIn(username: username, password: password);
-      return AmplifyResult(
-          isSuccess: result.isSignedIn, nextStep: result.nextStep.signInStep);
-    } on UserNotConfirmedException catch (error) {
-      throw LogInUnconfirmedUserFailure(error);
-    } on AmplifyException catch (error) {
-      // TODO: Catch error for analytics, not required for frontend.
-      throw LogInWithEmailAndPasswordFailure(error);
-    }
-  }
-
-  @override
-  Future<bool> signInWithSocialWebUI({required provider}) async {
-    try {
-      SignInResult result =
-          await _authCategory.signInWithWebUI(provider: provider);
-      return result.isSignedIn;
-    } on AmplifyException catch (error) {
-      // TODO: Catch error for analytics, not required for frontend.
-      throw LogInWithSocialProviderFailure(error);
-    }
-  }
-
-  @override
-  Future<void> signOut() async {
-    try {
-      // TODO: Review the result.
-      await _authCategory.signOut();
-    } on AmplifyException catch (error) {
-      // TODO: Catch error for analytics, not required for frontend.
-    }
-  }
-
-  @override
-  Future<AmplifyResult> signUp(
-      {required String username, required String password}) async {
-    try {
-      Map<String, String> userAttributes = {"email": username};
-      SignUpResult result = await _authCategory.signUp(
-          username: username,
-          password: password,
-          options: CognitoSignUpOptions(userAttributes: userAttributes));
-      return AmplifyResult(
-          isSuccess: result.isSignUpComplete,
-          nextStep: result.nextStep.signUpStep);
-    } on InvalidPasswordException catch (error) {
-      throw SignUpWithInvalidPasswordFailure(error);
-    } on AmplifyException catch (error) {
-      // TODO: Catch error for analytics, not required for frontend.
-      throw SignUpFailure(error);
-    }
-  }
-
-  @override
-  Future<void> updatePassword(
-      {required String oldPassword, required String newPassword}) async {
-    try {
-      await _authCategory.updatePassword(
-          newPassword: newPassword, oldPassword: oldPassword);
-    } on AmplifyException catch (error) {
-      // TODO: Catch error for analytics, not required for frontend.
-    }
-  }
-
-  @override
-  get appleProvider => AuthProvider.apple;
-
-  @override
-  get facebookProvider => AuthProvider.facebook;
-
-  @override
-  get googleProvider => AuthProvider.google;
 }

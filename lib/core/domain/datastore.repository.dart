@@ -1,14 +1,20 @@
-import 'package:thesis_cancer/features/survey/domain/survey.entity.dart';
-import 'package:thesis_cancer/features/survey/domain/usersurveyanswer.entity.dart';
+import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 abstract class DataStoreRepository {
+  // Settings
+  Future<void> writeSettings(Settings settings);
+
+  Future<void> removeSettings();
+
+  Future<Settings> getSettings();
+
   // User profile
   Future<void> writeUserProfile(User user);
 
   Future<void> removeUserProfile();
-
-  Stream<User> userProfileData();
 
   Future<User> getUserProfileData();
 

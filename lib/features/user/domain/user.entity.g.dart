@@ -10,71 +10,38 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
   return _$_User(
     id: json['id'] as String,
     email: json['email'] as String,
-    displayName: json['displayName'] as String,
-    role: _$enumDecode(_$UserRoleEnumMap, json['role']),
-    phoneNumber: json['phoneNumber'] as String?,
-    isConfirmed: json['isConfirmed'] as bool?,
+    username: json['username'] as String,
+    profile: json['profile'] == null
+        ? null
+        : Profile.fromJson(json['profile'] as Map<String, dynamic>),
+    token: json['token'] as String?,
+    confirmed: json['confirmed'] as bool?,
     isLoggedIn: json['isLoggedIn'] as bool?,
-    hasSeenTutorial: json['hasSeenTutorial'] as bool?,
-    hasSeenIntroductoryVideo: json['hasSeenIntroductoryVideo'] as bool?,
-    darkMode: json['darkMode'] as bool?,
-    bio: json['bio'] as String?,
-    photoID: json['photoID'] as String?,
-    gallery: json['gallery'] as Map<String, dynamic>?,
-    posts: json['posts'] as Map<String, dynamic>?,
-    comments: json['comments'] as Map<String, dynamic>?,
-    likes: json['likes'] as Map<String, dynamic>?,
+    surveyResults: (json['surveyResults'] as List<dynamic>?)
+        ?.map((e) => UserSurveyResult.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    posts: (json['posts'] as List<dynamic>?)
+        ?.map((e) => Post.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    comments: (json['comments'] as List<dynamic>?)
+        ?.map((e) => Comment.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    likes: (json['likes'] as List<dynamic>?)
+        ?.map((e) => Like.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
 Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
       'id': instance.id,
       'email': instance.email,
-      'displayName': instance.displayName,
-      'role': _$UserRoleEnumMap[instance.role],
-      'phoneNumber': instance.phoneNumber,
-      'isConfirmed': instance.isConfirmed,
+      'username': instance.username,
+      'profile': instance.profile?.toJson(),
+      'token': instance.token,
+      'confirmed': instance.confirmed,
       'isLoggedIn': instance.isLoggedIn,
-      'hasSeenTutorial': instance.hasSeenTutorial,
-      'hasSeenIntroductoryVideo': instance.hasSeenIntroductoryVideo,
-      'darkMode': instance.darkMode,
-      'bio': instance.bio,
-      'photoID': instance.photoID,
-      'gallery': instance.gallery,
-      'posts': instance.posts,
-      'comments': instance.comments,
-      'likes': instance.likes,
+      'surveyResults': instance.surveyResults?.map((e) => e.toJson()).toList(),
+      'posts': instance.posts?.map((e) => e.toJson()).toList(),
+      'comments': instance.comments?.map((e) => e.toJson()).toList(),
+      'likes': instance.likes?.map((e) => e.toJson()).toList(),
     };
-
-K _$enumDecode<K, V>(
-  Map<K, V> enumValues,
-  Object? source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError(
-      'A value must be provided. Supported values: '
-      '${enumValues.values.join(', ')}',
-    );
-  }
-
-  return enumValues.entries.singleWhere(
-    (e) => e.value == source,
-    orElse: () {
-      if (unknownValue == null) {
-        throw ArgumentError(
-          '`$source` is not one of the supported values: '
-          '${enumValues.values.join(', ')}',
-        );
-      }
-      return MapEntry(unknownValue, enumValues.values.first);
-    },
-  ).key;
-}
-
-const _$UserRoleEnumMap = {
-  UserRole.ADMIN: 'ADMIN',
-  UserRole.PILOT: 'PILOT',
-  UserRole.TEST: 'TEST',
-  UserRole.CONTROL: 'CONTROL',
-};

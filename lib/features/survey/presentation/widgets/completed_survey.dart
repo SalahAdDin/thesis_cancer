@@ -4,52 +4,55 @@ import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 
 class CompletedSurvey extends StatelessWidget {
-  final onPressedButton onPressed;
+  final OnPressedButton onPressed;
   final String actionLabel;
 
-  const CompletedSurvey(
-      {Key? key, required this.onPressed, required this.actionLabel})
-      : super(key: key);
+  const CompletedSurvey({
+    Key? key,
+    required this.onPressed,
+    required this.actionLabel,
+  }) : super(key: key);
 
-  // TODO: review here: column inside of column, why?
+  // TODO: Improve style
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Align(
-          alignment: Alignment.center,
-          child: Container(
-            constraints: BoxConstraints(maxWidth: 350),
-            decoration: const BoxDecoration(
-                color: Colors.transparent,
-                boxShadow: [BoxShadow(blurRadius: 4, offset: Offset(4, 8))],
-                borderRadius: const BorderRadius.all(Radius.circular(15.0))),
-            child: Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text('Teşekkür ederiz',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline1!
-                          .copyWith(fontSize: 40),
-                      textAlign: TextAlign.center),
-                  SizedBox(height: 15),
-                  Text(
-                    'Anketimize verdiğiniz yanıtları aldık, bu anketi doldurmak için ayırdığınız zaman için teşekkür ederiz.',
-                    style: Theme.of(context).textTheme.bodyText1,
-                    textAlign: TextAlign.center,
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Align(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 350),
+                decoration: const BoxDecoration(
+                    color: Colors.greenAccent,
+                    boxShadow: [BoxShadow(blurRadius: 4, offset: Offset(4, 8))],
+                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                child: Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: Column(
+                    children: <Widget>[
+                      Text('Teşekkür ederiz',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1!
+                              .copyWith(fontSize: 40),
+                          textAlign: TextAlign.center),
+                      const SizedBox(height: 15),
+                      Text(
+                        'Anketimize verdiğiniz yanıtları aldık, bu anketi doldururken ayırdığınız zaman için teşekkür ederiz.',
+                        style: Theme.of(context).textTheme.bodyText1,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 30),
+                      Button.primary(
+                          buttonLabel: actionLabel, onPressed: onPressed)
+                    ],
                   ),
-                  SizedBox(height: 30),
-                  Button.primary(buttonLabel: actionLabel, onPressed: onPressed)
-                ],
+                ),
               ),
-            ),
-          ),
-        )
-      ],
-    );
+            )
+          ],
+        ));
   }
 }

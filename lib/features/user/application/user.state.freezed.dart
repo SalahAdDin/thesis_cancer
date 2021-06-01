@@ -132,6 +132,7 @@ class __$LoadingCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Loading implements _Loading {
   const _$_Loading();
 
@@ -234,6 +235,7 @@ class __$IsAdminCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_IsAdmin implements _IsAdmin {
   const _$_IsAdmin();
 
@@ -338,6 +340,7 @@ class __$UnConfirmedCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_UnConfirmed implements _UnConfirmed {
   const _$_UnConfirmed();
 
@@ -443,6 +446,7 @@ class __$MustSeeIntroductionCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_MustSeeIntroduction implements _MustSeeIntroduction {
   const _$_MustSeeIntroduction();
 
@@ -547,6 +551,7 @@ class __$MustSeeTutorialCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_MustSeeTutorial implements _MustSeeTutorial {
   const _$_MustSeeTutorial();
 
@@ -650,6 +655,7 @@ class __$CompletedCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Completed implements _Completed {
   const _$_Completed();
 
@@ -765,6 +771,7 @@ class __$ErrorCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Error implements _Error {
   const _$_Error(this.error);
 

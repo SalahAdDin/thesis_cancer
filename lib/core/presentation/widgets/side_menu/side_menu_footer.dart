@@ -6,15 +6,15 @@ class SideMenuFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          border: Border(
-              top: BorderSide(width: 1, color: Theme.of(context).accentColor))),
+        border: Border(top: BorderSide(color: Theme.of(context).accentColor)),
+      ),
       width: double.infinity,
       child: Align(
-          alignment: Alignment.center,
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: AppInfo(),
-          )),
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          child: AppInfo(),
+        ),
+      ),
     );
   }
 }

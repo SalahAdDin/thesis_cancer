@@ -1,18 +1,22 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:thesis_cancer/features/user/application/user.notifier.dart';
-import 'package:thesis_cancer/features/user/application/user.state.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.repository.dart';
-import 'package:thesis_cancer/features/user/infrastructure/user.api.repository.dart';
+import 'package:thesis_cancer/features/user/infrastructure/profile.repository.dart';
+import 'package:thesis_cancer/features/user/infrastructure/user.repository.dart';
 
-final userRepositoryProvider =
-    Provider<UserRepository>((ref) => AmplifyGraphQLUserRepository());
+final profileRepositoryProvider = Provider<ProfileRepository>(
+  (ref) => GraphQLProfileRepository(client: ref.watch(graphQLClientProvider)),
+  name: 'Profile Repository Provider',
+);
 
-final userEntityProvider = Provider<User>((ref) => User.empty);
+final userRepositoryProvider = Provider<UserRepository>(
+  (ref) => GraphQLUserRepository(client: ref.watch(graphQLClientProvider)),
+  name: 'User Repository Provider',
+);
 
-final homeScreenNotifierProvider =
-    StateNotifierProvider<UserNotifier, UserState>((ref) {
-  final userEntity = ref.watch(userEntityProvider);
-  final userRepository = ref.watch(userRepositoryProvider);
-  return UserNotifier(currentUser: userEntity, userRepository: userRepository);
-});
+final StateProvider<User> userEntityProvider = StateProvider<User>(
+  (ref) => User.empty,
+  name: "User Entity Provider",
+);

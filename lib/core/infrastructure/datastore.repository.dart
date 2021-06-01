@@ -2,14 +2,16 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
-import 'package:thesis_cancer/features/survey/domain/survey.entity.dart';
-import 'package:thesis_cancer/features/survey/domain/usersurveyanswer.entity.dart';
+import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 class StorePath {
   static const profile = 'profile';
   static const loggedUserId = 'loggedUserId';
   static const surveys = 'surveys';
+  static const settings = 'settings';
 // static const surveyResults = 'results';
 }
 
@@ -31,8 +33,31 @@ class SembastDataStore implements DataStoreRepository {
       SembastDataStore(await databaseFactory.openDatabase(databasePath));
 
   @override
+  Future<Settings> getSettings() async {
+    final Map<String, dynamic> settingsJson = await store
+        .record(StorePath.settings)
+        .get(database) as Map<String, dynamic>;
+
+    return settingsJson != null
+        ? Settings.fromJson(settingsJson)
+        : Settings.empty;
+  }
+
+  @override
+  Future<void> removeSettings() async {
+    final record = store.record(StorePath.settings);
+    await record.delete(database);
+  }
+
+  @override
+  Future<void> writeSettings(Settings settings) async {
+    const recordName = StorePath.settings;
+    await store.record(recordName).put(database, settings.toJson());
+  }
+
+  @override
   Future<void> writeUserProfile(User user) async {
-    final recordName = StorePath.profile;
+    const recordName = StorePath.profile;
     /*final Map<String, dynamic> profileJson =
         await store.record(recordName).get(database);
     if (profileJson != null) {
@@ -49,17 +74,11 @@ class SembastDataStore implements DataStoreRepository {
 
   @override
   Future<User> getUserProfileData() async {
-    final Map<String, dynamic> profileJson =
-        await store.record(StorePath.profile).get(database);
+    final Map<String, dynamic> profileJson = await store
+        .record(StorePath.profile)
+        .get(database) as Map<String, dynamic>;
 
     return profileJson != null ? User.fromJson(profileJson) : User.empty;
-  }
-
-  @override
-  Stream<User> userProfileData() {
-    final record = store.record(StorePath.profile);
-    return record.onSnapshot(database).map((snapshot) =>
-        snapshot?.value != null ? User.fromJson(snapshot?.value) : User.empty);
   }
 
   @override

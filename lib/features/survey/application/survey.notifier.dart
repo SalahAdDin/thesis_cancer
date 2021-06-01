@@ -1,88 +1,106 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/survey/application/survey.state.dart';
-import 'package:thesis_cancer/features/survey/domain/question.entity.dart';
-import 'package:thesis_cancer/features/survey/domain/survey.entity.dart';
-import 'package:thesis_cancer/features/survey/domain/usersurveyanswer.entity.dart';
-import 'package:uuid/uuid.dart';
+import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/result/result.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/result/result.repository.dart';
+import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/survey/survey.repository.dart';
 
 class SurveyNotifier extends StateNotifier<SurveyState> {
-  SurveyNotifier(
-      {required this.currentSurvey,
-      required this.currentUserId,
-      required this.questionController,
-      // required this.surveyRepository,
-      // required this.userSurveyAnswerRepository,
-      required this.dataStore})
-      : super(const SurveyState.data());
+  SurveyNotifier({
+    required this.currentUserId,
+    required this.surveyID,
+    required this.surveyController,
+    required this.questionController,
+    required this.surveyRepository,
+    required this.resultRepository,
+    required this.dataStore,
+  }) : super(const SurveyState.loading());
 
-  Uuid uuid = Uuid();
-
-  // final SurveyRepository surveyRepository;
-  // final UserSurveyAnswerRepository userSurveyAnswerRepository;
+  final SurveyRepository surveyRepository;
+  final UserSurveyResultRepository resultRepository;
   final DataStoreRepository dataStore;
-  final Survey currentSurvey;
   final String currentUserId;
+  final String surveyID;
 
-  final StateController<Question> questionController;
+  final StateController<Survey> surveyController;
+  final StateController<Question?> questionController;
 
   int currentQuestionIndex = 0;
-  Map<String, String> answers = {};
+  Map<String, UserSurveyAnswer> answers = {};
+
+  Future<void> fetchSurvey() async {
+    try {
+      final Survey result = await surveyRepository.findById(surveyID);
+      surveyController.state = result;
+      state = const SurveyState.data();
+    } on GraphQLFailure catch (error) {
+      state = SurveyState.error(error.toString());
+    }
+  }
 
   Future<void> completeSurvey() async {
     try {
-      UserSurveyAnswer userSurveyAnswer = UserSurveyAnswer(
-          id: uuid.v4(),
-          userId: this.currentUserId,
-          surveyId: this.currentSurvey.id,
-          answers: answers,
-          iteration: 0);
-      // TODO: sent to GraphQL API.
-      // TODO: persists answer on locale.
-      print("User answer $userSurveyAnswer");
-      state = SurveyState.completed();
+      final int iteration = await resultRepository.countUserSurveyResults(
+          surveyId: surveyController.state.id, userId: currentUserId);
+
+      final UserSurveyResult userSurveyResult = UserSurveyResult(
+          user: currentUserId,
+          survey: surveyController.state.id,
+          answers: answers.values.toList(),
+          iteration: iteration + 1);
+      // TODO: persists answer on locale/ cache.
+
+      await resultRepository.createUserSurveyResult(userSurveyResult);
+
+      state = const SurveyState.completed();
     } on Exception catch (error) {
       state = SurveyState.error(error.toString());
     }
   }
 
-  goTo(int step) {
-    this.currentQuestionIndex = step;
+  void goTo(int step) {
+    currentQuestionIndex = step;
     questionController.state =
-        this.currentSurvey.questions![this.currentQuestionIndex];
-    state = SurveyState.data();
+        surveyController.state.questions![currentQuestionIndex];
+    state = const SurveyState.data();
   }
 
-  nextQuestion() =>
-      this.currentQuestionIndex + 1 != currentSurvey.questions?.length
-          ? goTo(this.currentQuestionIndex + 1)
+  dynamic nextQuestion() =>
+      currentQuestionIndex + 1 != surveyController.state.questions?.length
+          ? goTo(currentQuestionIndex + 1)
           : completeSurvey();
 
-  lastQuestion() {
-    if (this.currentQuestionIndex > 0) goTo(this.currentQuestionIndex - 1);
+  void lastQuestion() {
+    if (currentQuestionIndex > 0) goTo(currentQuestionIndex - 1);
   }
 
-  /*answerQuestion({required String questionId, required String answer}) =>
-      this.answers[questionId] = answer;
-*/
-
-  answerQuestion({required String questionId, required String answer}) {
-    this.answers[questionId] = answer;
-    print("Answers till now: ${this.answers}");
+  void answerQuestion({
+    required String questionId,
+    required String answer,
+    required String statement,
+  }) {
+    answers[questionId] =
+        UserSurveyAnswer(answer: answer, statement: statement);
+    print("Answers till now: $answers");
   }
 
   bool isAnsweredQuestion({required String questionId}) =>
-      this.answers[questionId] != null ? true : false;
+      answers[questionId] != null;
 
   /* Provisional
-  * TODO: how to handle this with get the survey by ID
+  * TODO
   *  - first from data store
   * - second fetching from API.
   * - even getting from datastore, how can we know the survey is not outdated?
-  * TODO: how to check the iteration number?
   *  */
-  void init() {
-    // questionController.state = this.currentSurvey.questions![0];
-    print(currentSurvey.questions);
+  Future<void> init() async {
+    await fetchSurvey();
+    if (surveyController.state != Survey.empty) {
+      questionController.state = surveyController.state.questions![0];
+    }
   }
 }

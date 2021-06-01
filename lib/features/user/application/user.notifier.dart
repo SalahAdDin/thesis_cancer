@@ -1,15 +1,24 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/features/user/application/user.state.dart';
+import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
+import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.repository.dart';
 
 class UserNotifier extends StateNotifier<UserState> {
-  UserNotifier({required this.currentUser, required this.userRepository})
-      : super(const UserState.loading());
+  UserNotifier({
+    required this.dataStore,
+    required this.userRepository,
+    required this.userController,
+    required this.profileRepository,
+  }) : super(const UserState.loading());
 
+  final DataStoreRepository dataStore;
   final UserRepository userRepository;
-  User currentUser;
+  final ProfileRepository profileRepository;
+  final StateController<User?> userController;
 
   // StreamSubscription? _subscription;
 
@@ -20,54 +29,79 @@ class UserNotifier extends StateNotifier<UserState> {
   }
 
   UserStatus assignUserStatus(User targetUser) {
-    if (targetUser.isConfirmed == true) {
+    if (targetUser.confirmed == true) {
+      /*
       if (targetUser.role == UserRole.ADMIN)
         return UserStatus.ADMIN;
-      else if (targetUser.hasSeenIntroductoryVideo ==
-          true) if (targetUser.hasSeenTutorial == true)
-        return UserStatus.FINAL;
       else
-        return UserStatus.TUTORIAL;
-      else
+      */
+      if (targetUser.profile?.hasSeenIntroductoryVideo == true) {
+        if (targetUser.profile?.hasSeenTutorial == true) {
+          return UserStatus.FINAL;
+        } else {
+          return UserStatus.TUTORIAL;
+        }
+      } else {
         return UserStatus.INTRODUCTION;
-    } else
+      }
+    } else {
       return UserStatus.UNCONFIRMED;
+    }
   }
 
   void deliverUserScreen() {
-    UserStatus userStatus = assignUserStatus(this.currentUser);
+    final UserStatus userStatus = assignUserStatus(userController.state!);
     switch (userStatus) {
       case UserStatus.UNCONFIRMED:
-        state = UserState.unConfirmed();
+        state = const UserState.unConfirmed();
         break;
       case UserStatus.ADMIN:
-        state = UserState.isAdmin();
+        state = const UserState.isAdmin();
         break;
       case UserStatus.INTRODUCTION:
-        state = UserState.mustSeeIntroduction();
+        state = const UserState.mustSeeIntroduction();
         break;
       case UserStatus.TUTORIAL:
-        state = UserState.mustSeeTutorial();
+        state = const UserState.mustSeeTutorial();
         break;
       case UserStatus.FINAL:
-        state = UserState.completed();
+        state = const UserState.completed();
         break;
     }
   }
 
-  void setCurrentUser(User sessionUser) {
-    this.currentUser = sessionUser;
-  }
-
-  Future<void> createNewProfile(User newProfile) async {
-    try {
-      await userRepository.createUser(newProfile);
-    } on Exception catch (error) {
-      state = UserState.error(error.toString());
+  void hasSeenIntroductoryVideo() {
+    final User? currentUser = userController.state;
+    final Profile? currentUserProfile = currentUser?.profile;
+    if (currentUser != null && currentUserProfile != null) {
+      final Profile updatedProfile =
+          currentUserProfile.copyWith(hasSeenIntroductoryVideo: true);
+      final User updatedUser = currentUser.copyWith(profile: updatedProfile);
+      userController.state = updatedUser;
+      state = const UserState.mustSeeTutorial();
     }
   }
+
+  // Future<Profile> getProfile(String userId) async {}
 
   Future<void> updateProfile(User currentProfile) async {}
 
   Future<void> deleteProfile(User currentProfile) async {}
+
+  Future<void> init() async {
+    final sessionUser = userController.state!;
+    if (sessionUser.confirmed == true) {
+      final Profile sessionUserProfile =
+          await profileRepository.findByUserId(sessionUser.id);
+
+      final sessionUserWithProfile =
+          sessionUser.copyWith(profile: sessionUserProfile);
+
+      await dataStore.writeUserProfile(sessionUserWithProfile);
+
+      userController.state = sessionUserWithProfile;
+    }
+
+    deliverUserScreen();
+  }
 }
