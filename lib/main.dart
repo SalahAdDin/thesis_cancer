@@ -33,14 +33,16 @@ class CancerApp extends HookWidget {
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
 
     return MaterialApp(
-        title: 'Thesis Cancer',
-        theme: darkTheme ? ThemeData.dark() : ThemeData.light(),
-        // navigatorKey: navigator,
-        home: Builder(
-          builder: (context) => launcherState.when(
-              loading: () => SplashScreen(),
-              needsProfile: () => LoginScreen(),
-              profileLoaded: () => MainScreen()),
-        ));
+      title: 'Thesis Cancer',
+      theme: darkTheme ? ThemeData.dark() : ThemeData.light(),
+      // navigatorKey: navigator,
+      home: Builder(
+        builder: (context) => launcherState.when(
+          loading: () => SplashScreen(),
+          needsProfile: () => LoginScreen(),
+          profileLoaded: () => MainScreen(),
+        ),
+      ),
+    );
   }
 }

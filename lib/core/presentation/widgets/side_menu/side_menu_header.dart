@@ -41,7 +41,9 @@ class SideMenuHeader extends StatelessWidget {
                       backgroundImage: userAvatarUrl != null
                           ? NetworkImage(userAvatarUrl!)
                           : null,
-                      child: const Icon(Icons.account_circle_outlined),
+                      child: userAvatarUrl != null
+                          ? null
+                          : const Icon(Icons.account_circle_outlined),
                     ),
                     Visibility(
                       visible: !isMobile(context),
