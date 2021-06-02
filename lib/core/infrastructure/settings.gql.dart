@@ -1,4 +1,4 @@
-const String graphQLDocumentGetSettings = r'''
+const String graphQLDocumentGetSettings = '''
 query Application{
   application{
     introductoryVideo{
@@ -12,6 +12,7 @@ query Application{
       id
     }
     surveySchedules{
+      label
       survey{
         id
       }

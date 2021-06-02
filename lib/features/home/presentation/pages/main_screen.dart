@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
+import 'package:thesis_cancer/core/domain/settings/schedules.entity.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
@@ -16,6 +17,7 @@ import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dar
 import 'package:thesis_cancer/features/home/presentation/pages/stories_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/therapy_screen.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
+import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
 
 class MainScreen extends HookWidget {
   @override
@@ -25,6 +27,8 @@ class MainScreen extends HookWidget {
     final UploadFile introductoryVideo =
         useProvider(settingsProvider).data?.value.introductoryVideo ??
             UploadFile.empty;
+    final List<SurveySchedule> scheduledSurveys =
+        useProvider(settingsProvider).data?.value.surveySchedules ?? [];
 
     return currentUserState.when(
       loading: () => const Center(child: CircularProgressIndicator()),
@@ -34,23 +38,21 @@ class MainScreen extends HookWidget {
       unConfirmed: () => LobbyScreen(),
       mustSeeIntroduction: () => IntroductoryScreen(
         dataSource: introductoryVideo.url,
-        onDone: () => homeNotifier.hasSeenIntroductoryVideo(),
+        onDone: () => pushToPage(
+          context,
+          SurveyScreen(
+            onCompleteSurvey: () {
+              popToBack(context, MainScreen());
+              homeNotifier.hasSeenIntroductoryVideo();
+            },
+            surveyID: scheduledSurveys
+                .firstWhere((element) => element.label == "control")
+                .survey,
+          ),
+        ),
       ),
       mustSeeTutorial: () => MainLayout(),
       completed: () => MainLayout(),
-      /*completed: () => HomeNavigationBuilder(
-              builder: (context, moduleTab) {
-                if (moduleTab == ModuleTab.KNOWLEDGE) {
-                  return KnowledgeScreen();
-                } else if (moduleTab == ModuleTab.THERAPY) {
-                  return TherapyScreen();
-                } else if (moduleTab == ModuleTab.RESEARCH) {
-                  return ResearchScreen();
-                } else {
-                  return StoriesScreen();
-                }
-              },
-            ),*/
       error: (error) => ErrorScreen(
         message: error,
         actionLabel: 'Home',

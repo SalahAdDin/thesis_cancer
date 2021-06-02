@@ -88,7 +88,6 @@ class QuestionWidget extends HookWidget {
                 surveyNotifier.answers[question.id]?.answer ?? '';
             final List<String> currentAnswer =
                 rawCurrentAnswer != '' ? rawCurrentAnswer.split(",") : [];
-            print(Colorize(isSelected.toString()).blue());
             // TODO: if currentAnswer left empty, remove the answer
             if (isSelected) {
               currentAnswer.add(buttons[index]);
