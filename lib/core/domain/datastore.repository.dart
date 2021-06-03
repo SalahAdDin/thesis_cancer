@@ -1,5 +1,8 @@
 import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/result/result.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
@@ -11,7 +14,7 @@ abstract class DataStoreRepository {
 
   Future<Settings> getSettings();
 
-  // User profile
+  // User
   Future<void> writeUserProfile(User user);
 
   Future<void> removeUserProfile();
@@ -22,13 +25,12 @@ abstract class DataStoreRepository {
 
   // Surveys
 
+  // TODO: this would require a cache provider for surveys.
   Future<List<Survey>> getSurveys();
 
   Future<void> removeSurveys();
 
   Stream<Survey> surveysData();
-
-  // Survey
 
   Future<void> writeSurvey(Survey survey);
 
@@ -40,22 +42,28 @@ abstract class DataStoreRepository {
 
   Future<bool> doesExistSurveyWithId(String id);
 
-  //Survey answers
+  // Survey Result
   Future<void> writeSurveyResult(UserSurveyAnswer surveyAnswer);
 
   Future<void> removeSurveyResult(String id);
 
-  Stream<List<UserSurveyAnswer>> userSurveyAnswersData();
-
-  Stream<List<UserSurveyAnswer>> userSurveyAnswersByUserData(String userId);
-
-  Stream<List<UserSurveyAnswer>> userSurveyAnswersBySurveyData(String surveyId);
-
-  Future<List<UserSurveyAnswer>> getSurveyAnswerBySurveyId(String id);
-
-  Future<List<UserSurveyAnswer>> getSurveyAnswerByUserId(String id);
+  Future<UserSurveyResult> getSurveyResult(String id);
 
   Future<bool> doesExistSurveyAnswerBySurveyId(String id);
 
   Future<bool> doesExistSurveyAnswerByUserId(String id);
+
+  // Posts
+  Future<void> writePost(Post post);
+
+  Future<void> writePosts({
+    required ContentType type,
+    required List<Post> posts,
+  });
+
+  Future<List<Post>> getPosts(ContentType type);
+
+  Future<void> removePost(Post post);
+
+  Future<void> removePosts();
 }

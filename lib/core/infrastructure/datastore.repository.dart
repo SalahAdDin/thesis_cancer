@@ -1,9 +1,13 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
+import 'package:thesis_cancer/features/survey/domain/result/result.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
@@ -12,7 +16,10 @@ class StorePath {
   static const loggedUserId = 'loggedUserId';
   static const surveys = 'surveys';
   static const settings = 'settings';
-// static const surveyResults = 'results';
+  static const posts = 'posts';
+  static const surveyResults = 'results';
+
+  static String postByContentType(String type) => 'posts/$type';
 }
 
 class SembastDataStore implements DataStoreRepository {
@@ -58,11 +65,6 @@ class SembastDataStore implements DataStoreRepository {
   @override
   Future<void> writeUserProfile(User user) async {
     const recordName = StorePath.profile;
-    /*final Map<String, dynamic> profileJson =
-        await store.record(recordName).get(database);
-    if (profileJson != null) {
-      final profileData = User.fromJson(profileJson);
-    } else*/
     await store.record(recordName).put(database, user.toJson());
   }
 
@@ -79,12 +81,6 @@ class SembastDataStore implements DataStoreRepository {
         .get(database) as Map<String, dynamic>?;
 
     return profileJson != null ? User.fromJson(profileJson) : User.empty;
-  }
-
-  @override
-  Future<void> removeUserProfile() async {
-    final record = store.record(StorePath.profile);
-    await record.delete(database);
   }
 
   @override
@@ -106,26 +102,50 @@ class SembastDataStore implements DataStoreRepository {
   }
 
   @override
+  Future<List<Post>> getPosts(ContentType type) async {
+    final recordName =
+        StorePath.postByContentType(EnumToString.convertToString(type));
+    final List<dynamic>? postsJson =
+        await store.record(recordName).get(database) as List<dynamic>?;
+
+    final List<Post> result = postsJson != null
+        ? postsJson
+            .map((element) => Post.fromJson(element as Map<String, dynamic>))
+            .toList()
+        : [];
+
+    return result;
+  }
+
+  @override
   Future<Survey> getSurvey(String id) {
     // TODO: implement getSurvey
     throw UnimplementedError();
   }
 
   @override
-  Future<List<UserSurveyAnswer>> getSurveyAnswerBySurveyId(String id) {
-    // TODO: implement getSurveyAnswerBySurveyId
+  Future<UserSurveyResult> getSurveyResult(String id) {
+    // TODO: implement getSurveyResult
     throw UnimplementedError();
   }
 
   @override
-  Future<List<UserSurveyAnswer>> getSurveyAnswerByUserId(String id) {
-    // TODO: implement getSurveyAnswerByUserId
-    throw UnimplementedError();
+  Future<List<Survey>> getSurveys() async {
+    final List<dynamic>? surveysJson =
+        await store.record(StorePath.surveys).get(database) as List<dynamic>?;
+
+    final List<Survey> result = surveysJson != null
+        ? surveysJson
+            .map((element) => Survey.fromJson(element as Map<String, dynamic>))
+            .toList()
+        : [];
+
+    return result;
   }
 
   @override
-  Future<List<Survey>> getSurveys() {
-    // TODO: implement getSurveys
+  Future<void> removePost(Post post) {
+    // TODO: implement removePost
     throw UnimplementedError();
   }
 
@@ -142,15 +162,43 @@ class SembastDataStore implements DataStoreRepository {
   }
 
   @override
-  Future<void> removeSurveys() {
-    // TODO: implement removeSurveys
+  Future<void> removeSurveys() async {
+    final record = store.record(StorePath.surveys);
+    await record.delete(database);
+  }
+
+  @override
+  Future<void> removeUserProfile() async {
+    final record = store.record(StorePath.profile);
+    await record.delete(database);
+  }
+
+  @override
+  Stream<Survey> surveyData(String id) {
+    // TODO: implement surveyData
     throw UnimplementedError();
   }
 
   @override
-  Stream<Survey> surveyData(String surveyId) {
-    // TODO: implement surveyData
+  Stream<Survey> surveysData() {
+    // TODO: implement surveysData
     throw UnimplementedError();
+  }
+
+  @override
+  Future<void> writePost(Post post) async {}
+
+  @override
+  Future<void> writePosts({
+    required ContentType type,
+    required List<Post> posts,
+  }) async {
+    final recordName =
+        StorePath.postByContentType(EnumToString.convertToString(type));
+    final String encodedPosts =
+        posts.map((element) => element.toJson()).toList().toString();
+
+    await store.record(recordName).put(database, encodedPosts);
   }
 
   @override
@@ -166,27 +214,8 @@ class SembastDataStore implements DataStoreRepository {
   }
 
   @override
-  Stream<Survey> surveysData() {
-    // TODO: implement surveysData
-    throw UnimplementedError();
-  }
-
-  @override
-  Stream<List<UserSurveyAnswer>> userSurveyAnswersData() {
-    // TODO: implement userSurveyAnswersData
-    throw UnimplementedError();
-  }
-
-  @override
-  Stream<List<UserSurveyAnswer>> userSurveyAnswersBySurveyData(
-      String surveyId) {
-    // TODO: implement userSurveyAnswersBySurveyData
-    throw UnimplementedError();
-  }
-
-  @override
-  Stream<List<UserSurveyAnswer>> userSurveyAnswersByUserData(String userId) {
-    // TODO: implement userSurveyAnswersByUserData
-    throw UnimplementedError();
+  Future<void> removePosts() async {
+    final record = store.record(StorePath.posts);
+    await record.delete(database);
   }
 }
