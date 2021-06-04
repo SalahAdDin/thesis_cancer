@@ -23,18 +23,20 @@ class _$PostTearOff {
   _Post call(
       {required String id,
       required ContentType type,
-      required String content,
-      required String userID,
-      required List<UploadFile> media,
+      required String description,
+      required List<UploadFile> gallery,
+      String? title,
+      DateTime? createdAt,
       List<Comment>? comments,
       List<Like>? likes,
       int likesCount = 0}) {
     return _Post(
       id: id,
       type: type,
-      content: content,
-      userID: userID,
-      media: media,
+      description: description,
+      gallery: gallery,
+      title: title,
+      createdAt: createdAt,
       comments: comments,
       likes: likes,
       likesCount: likesCount,
@@ -53,9 +55,11 @@ const $Post = _$PostTearOff();
 mixin _$Post {
   String get id => throw _privateConstructorUsedError;
   ContentType get type => throw _privateConstructorUsedError;
-  String get content => throw _privateConstructorUsedError;
-  String get userID => throw _privateConstructorUsedError;
-  List<UploadFile> get media => throw _privateConstructorUsedError;
+  String get description =>
+      throw _privateConstructorUsedError; // required String author,
+  List<UploadFile> get gallery => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   List<Comment>? get comments => throw _privateConstructorUsedError;
   List<Like>? get likes => throw _privateConstructorUsedError;
   int get likesCount => throw _privateConstructorUsedError;
@@ -72,9 +76,10 @@ abstract class $PostCopyWith<$Res> {
   $Res call(
       {String id,
       ContentType type,
-      String content,
-      String userID,
-      List<UploadFile> media,
+      String description,
+      List<UploadFile> gallery,
+      String? title,
+      DateTime? createdAt,
       List<Comment>? comments,
       List<Like>? likes,
       int likesCount});
@@ -92,9 +97,10 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? type = freezed,
-    Object? content = freezed,
-    Object? userID = freezed,
-    Object? media = freezed,
+    Object? description = freezed,
+    Object? gallery = freezed,
+    Object? title = freezed,
+    Object? createdAt = freezed,
     Object? comments = freezed,
     Object? likes = freezed,
     Object? likesCount = freezed,
@@ -108,18 +114,22 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as ContentType,
-      content: content == freezed
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
-      userID: userID == freezed
-          ? _value.userID
-          : userID // ignore: cast_nullable_to_non_nullable
-              as String,
-      media: media == freezed
-          ? _value.media
-          : media // ignore: cast_nullable_to_non_nullable
+      gallery: gallery == freezed
+          ? _value.gallery
+          : gallery // ignore: cast_nullable_to_non_nullable
               as List<UploadFile>,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       comments: comments == freezed
           ? _value.comments
           : comments // ignore: cast_nullable_to_non_nullable
@@ -144,9 +154,10 @@ abstract class _$PostCopyWith<$Res> implements $PostCopyWith<$Res> {
   $Res call(
       {String id,
       ContentType type,
-      String content,
-      String userID,
-      List<UploadFile> media,
+      String description,
+      List<UploadFile> gallery,
+      String? title,
+      DateTime? createdAt,
       List<Comment>? comments,
       List<Like>? likes,
       int likesCount});
@@ -165,9 +176,10 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? type = freezed,
-    Object? content = freezed,
-    Object? userID = freezed,
-    Object? media = freezed,
+    Object? description = freezed,
+    Object? gallery = freezed,
+    Object? title = freezed,
+    Object? createdAt = freezed,
     Object? comments = freezed,
     Object? likes = freezed,
     Object? likesCount = freezed,
@@ -181,18 +193,22 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as ContentType,
-      content: content == freezed
-          ? _value.content
-          : content // ignore: cast_nullable_to_non_nullable
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
-      userID: userID == freezed
-          ? _value.userID
-          : userID // ignore: cast_nullable_to_non_nullable
-              as String,
-      media: media == freezed
-          ? _value.media
-          : media // ignore: cast_nullable_to_non_nullable
+      gallery: gallery == freezed
+          ? _value.gallery
+          : gallery // ignore: cast_nullable_to_non_nullable
               as List<UploadFile>,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       comments: comments == freezed
           ? _value.comments
           : comments // ignore: cast_nullable_to_non_nullable
@@ -215,9 +231,10 @@ class _$_Post implements _Post {
   const _$_Post(
       {required this.id,
       required this.type,
-      required this.content,
-      required this.userID,
-      required this.media,
+      required this.description,
+      required this.gallery,
+      this.title,
+      this.createdAt,
       this.comments,
       this.likes,
       this.likesCount = 0});
@@ -230,11 +247,13 @@ class _$_Post implements _Post {
   @override
   final ContentType type;
   @override
-  final String content;
+  final String description;
+  @override // required String author,
+  final List<UploadFile> gallery;
   @override
-  final String userID;
+  final String? title;
   @override
-  final List<UploadFile> media;
+  final DateTime? createdAt;
   @override
   final List<Comment>? comments;
   @override
@@ -245,7 +264,7 @@ class _$_Post implements _Post {
 
   @override
   String toString() {
-    return 'Post(id: $id, type: $type, content: $content, userID: $userID, media: $media, comments: $comments, likes: $likes, likesCount: $likesCount)';
+    return 'Post(id: $id, type: $type, description: $description, gallery: $gallery, title: $title, createdAt: $createdAt, comments: $comments, likes: $likes, likesCount: $likesCount)';
   }
 
   @override
@@ -256,13 +275,17 @@ class _$_Post implements _Post {
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)) &&
-            (identical(other.content, content) ||
+            (identical(other.description, description) ||
                 const DeepCollectionEquality()
-                    .equals(other.content, content)) &&
-            (identical(other.userID, userID) ||
-                const DeepCollectionEquality().equals(other.userID, userID)) &&
-            (identical(other.media, media) ||
-                const DeepCollectionEquality().equals(other.media, media)) &&
+                    .equals(other.description, description)) &&
+            (identical(other.gallery, gallery) ||
+                const DeepCollectionEquality()
+                    .equals(other.gallery, gallery)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.createdAt, createdAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdAt, createdAt)) &&
             (identical(other.comments, comments) ||
                 const DeepCollectionEquality()
                     .equals(other.comments, comments)) &&
@@ -278,9 +301,10 @@ class _$_Post implements _Post {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(type) ^
-      const DeepCollectionEquality().hash(content) ^
-      const DeepCollectionEquality().hash(userID) ^
-      const DeepCollectionEquality().hash(media) ^
+      const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(gallery) ^
+      const DeepCollectionEquality().hash(title) ^
+      const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(comments) ^
       const DeepCollectionEquality().hash(likes) ^
       const DeepCollectionEquality().hash(likesCount);
@@ -300,9 +324,10 @@ abstract class _Post implements Post {
   const factory _Post(
       {required String id,
       required ContentType type,
-      required String content,
-      required String userID,
-      required List<UploadFile> media,
+      required String description,
+      required List<UploadFile> gallery,
+      String? title,
+      DateTime? createdAt,
       List<Comment>? comments,
       List<Like>? likes,
       int likesCount}) = _$_Post;
@@ -314,11 +339,13 @@ abstract class _Post implements Post {
   @override
   ContentType get type => throw _privateConstructorUsedError;
   @override
-  String get content => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  @override // required String author,
+  List<UploadFile> get gallery => throw _privateConstructorUsedError;
   @override
-  String get userID => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
   @override
-  List<UploadFile> get media => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @override
   List<Comment>? get comments => throw _privateConstructorUsedError;
   @override

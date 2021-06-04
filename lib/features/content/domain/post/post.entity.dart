@@ -12,9 +12,11 @@ class Post with _$Post {
   const factory Post({
     required String id,
     required ContentType type,
-    required String content,
-    required String userID,
-    required List<UploadFile> media,
+    required String description,
+    // required String author,
+    required List<UploadFile> gallery,
+    String? title,
+    DateTime? createdAt,
     List<Comment>? comments,
     List<Like>? likes,
     @Default(0) int likesCount,
@@ -24,9 +26,9 @@ class Post with _$Post {
   static const empty = Post(
     id: '',
     type: ContentType.ACADEMY,
-    content: '',
-    userID: '',
-    media: [],
+    description: '',
+    // author: '',
+    gallery: [],
     likesCount: 0,
   );
 }

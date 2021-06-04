@@ -34,10 +34,11 @@ query ListPosts{
 }
 ''';
 
+// start: 0, limit: 5, sort: "created_at:desc"
 const String graphQLDocumentListPostsByContentType = '''
 $graphQLFragmentBody
 query ListPostsByContentType(\$contentType: ContentType!) {
-  posts(where: { type: \$contentType }) {
+  posts(where: { type: \$contentType }, sort: "created_at:desc") {
     ...PostFields
   }
 }

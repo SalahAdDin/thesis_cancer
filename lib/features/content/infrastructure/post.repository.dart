@@ -1,4 +1,5 @@
 import 'package:colorize/colorize.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
@@ -64,7 +65,7 @@ class GraphQLPostRepository implements PostRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentListPostsByContentType),
-        variables: {"contentType": contentType},
+        variables: {"contentType": EnumToString.convertToString(contentType)},
       );
       final QueryResult response = await client.query(options);
       if (response.hasException) {

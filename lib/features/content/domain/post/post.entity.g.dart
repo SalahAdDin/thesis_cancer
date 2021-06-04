@@ -10,11 +10,14 @@ _$_Post _$_$_PostFromJson(Map<String, dynamic> json) {
   return _$_Post(
     id: json['id'] as String,
     type: _$enumDecode(_$ContentTypeEnumMap, json['type']),
-    content: json['content'] as String,
-    userID: json['userID'] as String,
-    media: (json['media'] as List<dynamic>)
+    description: json['description'] as String,
+    gallery: (json['gallery'] as List<dynamic>)
         .map((e) => UploadFile.fromJson(e as Map<String, dynamic>))
         .toList(),
+    title: json['title'] as String?,
+    createdAt: json['createdAt'] == null
+        ? null
+        : DateTime.parse(json['createdAt'] as String),
     comments: (json['comments'] as List<dynamic>?)
         ?.map((e) => Comment.fromJson(e as Map<String, dynamic>))
         .toList(),
@@ -28,9 +31,10 @@ _$_Post _$_$_PostFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_PostToJson(_$_Post instance) => <String, dynamic>{
       'id': instance.id,
       'type': _$ContentTypeEnumMap[instance.type],
-      'content': instance.content,
-      'userID': instance.userID,
-      'media': instance.media.map((e) => e.toJson()).toList(),
+      'description': instance.description,
+      'gallery': instance.gallery.map((e) => e.toJson()).toList(),
+      'title': instance.title,
+      'createdAt': instance.createdAt?.toIso8601String(),
       'comments': instance.comments?.map((e) => e.toJson()).toList(),
       'likes': instance.likes?.map((e) => e.toJson()).toList(),
       'likesCount': instance.likesCount,
