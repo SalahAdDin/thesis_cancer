@@ -1,5 +1,7 @@
 import 'package:colorize/colorize.dart';
 import 'package:graphql/client.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
@@ -7,9 +9,11 @@ import 'package:thesis_cancer/features/content/domain/post/post.repository.dart'
 import 'package:thesis_cancer/features/content/infrastructure/post.gql.dart';
 
 class GraphQLPostRepository implements PostRepository {
-  GraphQLPostRepository({required this.client}) : super();
+  GraphQLPostRepository({required this.reader}) : super();
 
-  final GraphQLClient client;
+  final Reader reader;
+
+  GraphQLClient get client => reader(graphQLAuthClientProvider);
 
   @override
   Future<void> createPost(Post post) async {
