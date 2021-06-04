@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:thesis_cancer/core/application/responsive.dart';
+import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
 
 class SideMenuHeader extends StatelessWidget {
   const SideMenuHeader({
@@ -36,15 +37,7 @@ class SideMenuHeader extends StatelessWidget {
                 onTap: () {},
                 child: Row(
                   children: <Widget>[
-                    CircleAvatar(
-                      radius: isMobile(context) ? 15 : 20,
-                      backgroundImage: userAvatarUrl != null
-                          ? NetworkImage(userAvatarUrl!)
-                          : null,
-                      child: userAvatarUrl != null
-                          ? null
-                          : const Icon(Icons.account_circle_outlined),
-                    ),
+                    UserAvatar(userAvatarUrl: userAvatarUrl),
                     Visibility(
                       visible: !isMobile(context),
                       child: Column(

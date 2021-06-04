@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/features/home/presentation/widgets/posts_list.dart';
 
-class StoriesScreen extends StatefulWidget {
-  StoriesScreen({Key? key}) : super(key: key);
-
-  @override
-  _StoriesScreenState createState() => _StoriesScreenState();
-}
-
-class _StoriesScreenState extends State<StoriesScreen> {
+class StoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return PostsList(type: ContentType.SUCCESS_STORIES);
   }
 }

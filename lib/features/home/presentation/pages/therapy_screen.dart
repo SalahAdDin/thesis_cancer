@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/features/home/presentation/widgets/posts_list.dart';
 
-class TherapyScreen extends StatefulWidget {
-  TherapyScreen({Key? key}) : super(key: key);
-
-  @override
-  _TherapyScreenState createState() => _TherapyScreenState();
-}
-
-class _TherapyScreenState extends State<TherapyScreen> {
+class TherapyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return PostsList(type: ContentType.TREATMENT);
   }
 }
