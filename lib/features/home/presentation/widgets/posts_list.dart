@@ -7,7 +7,7 @@ import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/features/content/application/post.provider.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
-import 'package:thesis_cancer/features/content/presentation/widgets/post.dart';
+import 'package:thesis_cancer/features/content/presentation/widgets/post_widget.dart';
 
 class PostsList extends HookWidget {
   PostsList({required this.type});
@@ -55,6 +55,7 @@ class PostsList extends HookWidget {
         ),
         controller: _refreshController,
         child: ListView.builder(
+          shrinkWrap: true,
           padding: const EdgeInsets.all(10),
           itemCount: postList.length,
           itemBuilder: (_, int index) => PostWidget(post: postList[index]),

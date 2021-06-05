@@ -13,6 +13,8 @@ class Header extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(pageTitle ?? AppLiterals.title),
+      centerTitle: true,
+      // leading: const Icon(Icons.camera_alt),
       // TODO: background color for light theme must be white.
       actions: <Widget>[
         IconButton(
