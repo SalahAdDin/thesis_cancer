@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:like_button/like_button.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
 
 class PostWidget extends StatelessWidget {
@@ -79,7 +82,38 @@ class PostWidget extends StatelessWidget {
             options: CarouselOptions(height: swiperHeight, aspectRatio: 4 / 3),
           ),*/
             ),
-        // LikeButton(),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  const LikeButton(),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Icon(
+                    Icons.maps_ugc_rounded,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Transform.rotate(
+                    angle: -45 * pi / 180,
+                    child: const Icon(
+                      Icons.send_rounded,
+                    ),
+                  ),
+                ],
+              ),
+              const Icon(
+                Icons.bookmark_border_rounded,
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
