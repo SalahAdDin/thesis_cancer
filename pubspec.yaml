@@ -53,6 +53,7 @@ dependencies:
   # permission_handler: ^6.1.1
   # pin_code_fields: ^7.0.0
   pull_to_refresh: ^2.0.0
+  readmore: ^2.1.0
   # responsive: ^0.2.8+3
   sembast: ^3.1.0+2
   uuid: ^3.0.4
