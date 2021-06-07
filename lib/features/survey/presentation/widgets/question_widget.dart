@@ -164,10 +164,12 @@ class QuestionWidget extends HookWidget {
             textAlign: TextAlign.left,
           ),
         ),
-        const SizedBox(height: 24),
-        _renderInput(
-          question: _question,
-          surveyNotifier: surveyNotifier,
+        Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: _renderInput(
+            question: _question,
+            surveyNotifier: surveyNotifier,
+          ),
         ),
       ],
     );

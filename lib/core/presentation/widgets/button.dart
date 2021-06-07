@@ -5,7 +5,7 @@ import 'package:thesis_cancer/core/domain/types.dart';
 
 class Button extends StatelessWidget {
   final String buttonLabel;
-  final OnPressedButton onPressed;
+  final OnPressedButton? onPressed;
   final bool isPrimary;
 
   const Button.primary({

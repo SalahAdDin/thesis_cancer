@@ -66,6 +66,9 @@ class SurveyWidget extends HookWidget {
     final Survey currentSurvey = useProvider(surveyEntityProvider).state;
     final currentSurveyNotifier =
         useProvider(surveyNotifierProvider(surveyID).notifier);
+    final bool disabledButton = currentSurveyNotifier.isAnsweredQuestion(
+        questionId: currentSurveyNotifier.questionController.state!.id);
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
@@ -91,35 +94,38 @@ class SurveyWidget extends HookWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      const SizedBox(height: 16),
-                      Center(
-                        child: DotsIndicator(
-                          dotsCount: currentSurvey.questions!.length,
-                          position: currentSurveyNotifier.currentQuestionIndex
-                              .toDouble(),
-                          decorator: DotsDecorator(
-                            size: const Size.square(15),
-                            activeSize: const Size(18, 18),
-                            activeColor: Theme.of(context).primaryColor,
-                            color: Theme.of(context).disabledColor,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: Center(
+                          child: DotsIndicator(
+                            dotsCount: currentSurvey.questions!.length,
+                            position: currentSurveyNotifier.currentQuestionIndex
+                                .toDouble(),
+                            decorator: DotsDecorator(
+                              size: const Size.square(15),
+                              activeSize: const Size(18, 18),
+                              activeColor: Theme.of(context).primaryColor,
+                              color: Theme.of(context).disabledColor,
+                            ),
+                            onTap: (position) => currentSurveyNotifier
+                                    .isAnsweredQuestion(
+                                        questionId: currentSurveyNotifier
+                                            .questionController.state!.id)
+                                ? currentSurveyNotifier.goTo(position.toInt())
+                                : null
+                            // print("Current index: $currentQuestion");
+                            ,
                           ),
-                          onTap: (position) =>
-                              currentSurveyNotifier.isAnsweredQuestion(
-                                      questionId: currentSurveyNotifier
-                                          .questionController.state!.id)
-                                  ? currentSurveyNotifier.goTo(position.toInt())
-                                  : null
-                          // print("Current index: $currentQuestion");
-                          ,
                         ),
                       ),
-                      const SizedBox(height: 24),
-                      QuestionWidget(
-                        surveyID: surveyID,
-                      ),
-                      const SizedBox(height: 20),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 20.0),
+                        padding: const EdgeInsets.symmetric(vertical: 30.0),
+                        child: QuestionWidget(
+                          surveyID: surveyID,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
@@ -136,12 +142,9 @@ class SurveyWidget extends HookWidget {
                             // TODO: Disabled effect is not working
                             Button.primary(
                               buttonLabel: 'Next',
-                              onPressed: () =>
-                                  currentSurveyNotifier.isAnsweredQuestion(
-                                          questionId: currentSurveyNotifier
-                                              .questionController.state!.id)
-                                      ? currentSurveyNotifier.nextQuestion()
-                                      : null,
+                              onPressed: disabledButton
+                                  ? () => currentSurveyNotifier.nextQuestion()
+                                  : null,
                             )
                           ],
                         ),
