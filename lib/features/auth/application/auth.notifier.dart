@@ -5,7 +5,6 @@ import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
 import 'package:thesis_cancer/features/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
-import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
@@ -31,42 +30,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
     // _subscription?.cancel();
     super.dispose();
   }
-
-  /*
-  Future<void> createUserProfile(User storedUser) async {
-    Map<String, String> userAttributes =
-        await authRepository.fetchUserAttributes();
-    */ /* TODO: Getting user from API by userId or username?
-        *   Must the userId from Cognito saved on backend?
-        * */ /*
-    // final backendStoredUser = apiRepository.getUserAccount(username: username);
-    Map<String, dynamic> userSession = await authRepository.fetchSession();
-    // TODO: what if userSession['roles'][0] does not exist?
-    String? userSessionRole = userSession['roles'][0];
-    User newProfile = User(
-        id: uuid.v4(),
-        email: userAttributes['email']!,
-        username: '',
-        phoneNumber: userAttributes['phone_number']!,
-        role: userSessionRole != null
-            ? EnumToString.fromString(
-                UserRole.values, userSessionRole.toUpperCase())!
-            : UserRole.GUEST,
-        confirmed: userAttributes['email_verified'] == 'true' ||
-                userAttributes['phone_number_verified'] == 'true'
-            ? true
-            : false);
-    // TODO: Ensure every new change on the user profile will be persisted on backend
-    // TODO: call to API
-    if (newProfile == storedUser) {
-//      state = AuthState.loggedIn(loggedInUser);
-    } else
-      // TODO: at writing on dataStore, SplashScreen stream is triggered and its
-      //  state change to Profile, which send us to the screen and break all.
-      await dataStore.writeUserProfile(newProfile);
-    this.userController.state = newProfile;
-    state = AuthState.loggedIn(newProfile);
-  }*/
 
   Future<String?> signOut() async {
     try {
