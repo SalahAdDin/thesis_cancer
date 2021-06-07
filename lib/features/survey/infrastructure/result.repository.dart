@@ -1,14 +1,18 @@
 import 'package:colorize/colorize.dart';
 import 'package:graphql/client.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/survey/domain/result/result.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/result/result.repository.dart';
 import 'package:thesis_cancer/features/survey/infrastructure/result.gql.dart';
 
 class GraphQLResultRepository implements UserSurveyResultRepository {
-  GraphQLResultRepository({required this.client}) : super();
+  GraphQLResultRepository({required this.reader}) : super();
 
-  final GraphQLClient client;
+  final Reader reader;
+
+  GraphQLClient get client => reader(graphQLClientProvider);
 
   @override
   Future<int> countUserSurveyResults({
@@ -49,6 +53,7 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
           response.data?['createResult']['result'] as Map<String, dynamic>;
       */
     } on Exception catch (error) {
+      print(Colorize(error.toString()).red());
       throw GraphQLFailure(error.toString());
     }
   }

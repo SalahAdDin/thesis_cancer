@@ -5,3 +5,5 @@ class GetSettingsFailure implements Exception {
 class GraphQLFailure implements Exception {
   GraphQLFailure(String string);
 }
+
+class UnauthorizedRequest implements Exception {}

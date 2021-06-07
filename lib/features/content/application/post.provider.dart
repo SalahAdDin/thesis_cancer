@@ -23,6 +23,9 @@ final postRepositoryProvider = Provider<PostRepository>(
 
 final postsNotifierProvider =
     StateNotifierProvider.family<PostNotifier, PostsState, ContentType>(
-  (ref, type) => PostNotifier(reader: ref.read, type: type)..init(),
+  (ref, type) => PostNotifier(
+    reader: ref.read,
+    type: type,
+  )..init(),
   name: "Posts List Notifier Provider",
 );

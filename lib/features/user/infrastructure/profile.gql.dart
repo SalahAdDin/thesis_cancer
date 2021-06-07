@@ -47,3 +47,12 @@ mutation UpdateProfile(\$id: ID!, \$data: editProfileInput) {
   }
 }
 ''';
+
+const String graphQLDocumentListProfiles = '''
+$graphQLFragmentBody
+query ListProfiles {
+  profiles{
+    ...ProfileFields
+  }
+}
+''';

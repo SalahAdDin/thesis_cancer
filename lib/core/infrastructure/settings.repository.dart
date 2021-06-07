@@ -1,12 +1,16 @@
 import 'package:graphql/client.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.repository.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/infrastructure/settings.gql.dart';
 
 class GraphQLSettingsRepository implements SettingsRepository {
-  GraphQLSettingsRepository({required this.client}) : super();
+  GraphQLSettingsRepository({required this.reader}) : super();
 
-  final GraphQLClient client;
+  final Reader reader;
+
+  GraphQLClient get client => reader(graphQLClientProvider);
 
   @override
   Future<Map<String, dynamic>> fetchSettings() async {

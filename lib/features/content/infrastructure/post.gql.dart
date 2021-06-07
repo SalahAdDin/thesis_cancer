@@ -6,12 +6,13 @@ fragment PostFields on Post {
   description
   title
   gallery {
+    url
     alternativeText
     caption
     width
     height
-    url
     previewUrl
+    mime
   }
 }
 ''';

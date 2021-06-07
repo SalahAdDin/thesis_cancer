@@ -1,13 +1,17 @@
 import 'package:colorize/colorize.dart';
 import 'package:graphql/client.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/features/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/auth.gql.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
 
 class GraphQLAuthRepository implements AuthRepository {
-  GraphQLAuthRepository({required this.client}) : super();
+  GraphQLAuthRepository({required this.reader}) : super();
 
-  final GraphQLClient client;
+  final Reader reader;
+
+  GraphQLClient get client => reader(graphQLClientProvider);
 
   Map<String, dynamic> flatAuthResponse({required Map<String, dynamic> data}) {
     final Map<String, dynamic> flattenResult =

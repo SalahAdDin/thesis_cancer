@@ -1,21 +1,30 @@
 import 'dart:async';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/launcher/launcher.state.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
+import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
+import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 class LauncherNotifier extends StateNotifier<LauncherState> {
   LauncherNotifier({
-    required this.dataStore,
-    required this.userController,
+    required this.reader,
   }) : super(const LauncherState.loading()) {
     init();
   }
 
-  final DataStoreRepository dataStore;
+  final Reader reader;
+
   StreamSubscription? _subscription;
-  final StateController<User?> userController;
+
+  DataStoreRepository get dataStore => reader(dataStoreRepositoryProvider);
+
+  StateController<User?> get userController =>
+      reader(userEntityProvider.notifier);
+
+  StateController<String> get tokenController => reader(tokenProvider.notifier);
 
   @override
   void dispose() {
@@ -30,6 +39,7 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
       state = const LauncherState.needsProfile();
     } else {
       userController.state = profileData;
+      tokenController.state = profileData.token!;
       state = const LauncherState.profileLoaded();
     }
   }

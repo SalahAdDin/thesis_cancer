@@ -25,13 +25,15 @@ class _$UploadFileTearOff {
       required String caption,
       required String url,
       int? width,
-      int? height}) {
+      int? height,
+      String? mime}) {
     return _UploadFile(
       alternativeText: alternativeText,
       caption: caption,
       url: url,
       width: width,
       height: height,
+      mime: mime,
     );
   }
 
@@ -50,6 +52,7 @@ mixin _$UploadFile {
   String get url => throw _privateConstructorUsedError;
   int? get width => throw _privateConstructorUsedError;
   int? get height => throw _privateConstructorUsedError;
+  String? get mime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -67,7 +70,8 @@ abstract class $UploadFileCopyWith<$Res> {
       String caption,
       String url,
       int? width,
-      int? height});
+      int? height,
+      String? mime});
 }
 
 /// @nodoc
@@ -85,6 +89,7 @@ class _$UploadFileCopyWithImpl<$Res> implements $UploadFileCopyWith<$Res> {
     Object? url = freezed,
     Object? width = freezed,
     Object? height = freezed,
+    Object? mime = freezed,
   }) {
     return _then(_value.copyWith(
       alternativeText: alternativeText == freezed
@@ -107,6 +112,10 @@ class _$UploadFileCopyWithImpl<$Res> implements $UploadFileCopyWith<$Res> {
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
               as int?,
+      mime: mime == freezed
+          ? _value.mime
+          : mime // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -122,7 +131,8 @@ abstract class _$UploadFileCopyWith<$Res> implements $UploadFileCopyWith<$Res> {
       String caption,
       String url,
       int? width,
-      int? height});
+      int? height,
+      String? mime});
 }
 
 /// @nodoc
@@ -142,6 +152,7 @@ class __$UploadFileCopyWithImpl<$Res> extends _$UploadFileCopyWithImpl<$Res>
     Object? url = freezed,
     Object? width = freezed,
     Object? height = freezed,
+    Object? mime = freezed,
   }) {
     return _then(_UploadFile(
       alternativeText: alternativeText == freezed
@@ -164,6 +175,10 @@ class __$UploadFileCopyWithImpl<$Res> extends _$UploadFileCopyWithImpl<$Res>
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
               as int?,
+      mime: mime == freezed
+          ? _value.mime
+          : mime // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -176,7 +191,8 @@ class _$_UploadFile implements _UploadFile {
       required this.caption,
       required this.url,
       this.width,
-      this.height});
+      this.height,
+      this.mime});
 
   factory _$_UploadFile.fromJson(Map<String, dynamic> json) =>
       _$_$_UploadFileFromJson(json);
@@ -191,10 +207,12 @@ class _$_UploadFile implements _UploadFile {
   final int? width;
   @override
   final int? height;
+  @override
+  final String? mime;
 
   @override
   String toString() {
-    return 'UploadFile(alternativeText: $alternativeText, caption: $caption, url: $url, width: $width, height: $height)';
+    return 'UploadFile(alternativeText: $alternativeText, caption: $caption, url: $url, width: $width, height: $height, mime: $mime)';
   }
 
   @override
@@ -212,7 +230,9 @@ class _$_UploadFile implements _UploadFile {
             (identical(other.width, width) ||
                 const DeepCollectionEquality().equals(other.width, width)) &&
             (identical(other.height, height) ||
-                const DeepCollectionEquality().equals(other.height, height)));
+                const DeepCollectionEquality().equals(other.height, height)) &&
+            (identical(other.mime, mime) ||
+                const DeepCollectionEquality().equals(other.mime, mime)));
   }
 
   @override
@@ -222,7 +242,8 @@ class _$_UploadFile implements _UploadFile {
       const DeepCollectionEquality().hash(caption) ^
       const DeepCollectionEquality().hash(url) ^
       const DeepCollectionEquality().hash(width) ^
-      const DeepCollectionEquality().hash(height);
+      const DeepCollectionEquality().hash(height) ^
+      const DeepCollectionEquality().hash(mime);
 
   @JsonKey(ignore: true)
   @override
@@ -241,7 +262,8 @@ abstract class _UploadFile implements UploadFile {
       required String caption,
       required String url,
       int? width,
-      int? height}) = _$_UploadFile;
+      int? height,
+      String? mime}) = _$_UploadFile;
 
   factory _UploadFile.fromJson(Map<String, dynamic> json) =
       _$_UploadFile.fromJson;
@@ -256,6 +278,8 @@ abstract class _UploadFile implements UploadFile {
   int? get width => throw _privateConstructorUsedError;
   @override
   int? get height => throw _privateConstructorUsedError;
+  @override
+  String? get mime => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UploadFileCopyWith<_UploadFile> get copyWith =>

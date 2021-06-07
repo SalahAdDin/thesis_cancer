@@ -1,6 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/application/user.state.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
@@ -9,16 +11,19 @@ import 'package:thesis_cancer/features/user/domain/user.repository.dart';
 
 class UserNotifier extends StateNotifier<UserState> {
   UserNotifier({
-    required this.dataStore,
-    required this.userRepository,
-    required this.userController,
-    required this.profileRepository,
+    required this.reader,
   }) : super(const UserState.loading());
 
-  final DataStoreRepository dataStore;
-  final UserRepository userRepository;
-  final ProfileRepository profileRepository;
-  final StateController<User?> userController;
+  final Reader reader;
+
+  DataStoreRepository get dataStore => reader(dataStoreRepositoryProvider);
+
+  UserRepository get userRepository => reader(userRepositoryProvider);
+
+  ProfileRepository get profileRepository => reader(profileRepositoryProvider);
+
+  StateController<User?> get userController =>
+      reader(userEntityProvider.notifier);
 
   // StreamSubscription? _subscription;
 

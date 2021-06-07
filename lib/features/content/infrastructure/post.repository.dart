@@ -14,7 +14,7 @@ class GraphQLPostRepository implements PostRepository {
 
   final Reader reader;
 
-  GraphQLClient get client => reader(graphQLAuthClientProvider);
+  GraphQLClient get client => reader(graphQLClientProvider);
 
   @override
   Future<void> createPost(Post post) async {

@@ -1,5 +1,8 @@
 import 'package:colorize/colorize.dart';
 import 'package:graphql/client.dart';
+import 'package:hooks_riverpod/all.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
@@ -7,9 +10,11 @@ import 'package:thesis_cancer/features/user/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/infrastructure/profile.gql.dart';
 
 class GraphQLProfileRepository implements ProfileRepository {
-  GraphQLProfileRepository({required this.client}) : super();
+  GraphQLProfileRepository({required this.reader}) : super();
 
-  final GraphQLClient client;
+  final Reader reader;
+
+  GraphQLClient get client => reader(graphQLClientProvider);
 
   @override
   Future<Profile> findById(String profileId) async {
@@ -56,6 +61,8 @@ class GraphQLProfileRepository implements ProfileRepository {
         */
       if (message.contains("User Not Found")) {
         throw UserNotFoundFailure();
+      } else if (message.contains("Forbidden")) {
+        throw UnauthorizedRequest();
       } else {
         throw ProfileFailure();
       }
