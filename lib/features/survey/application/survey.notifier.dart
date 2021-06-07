@@ -1,3 +1,5 @@
+import 'package:colorize/colorize.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
@@ -5,7 +7,6 @@ import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/survey/application/survey.provider.dart';
 import 'package:thesis_cancer/features/survey/application/survey.state.dart';
 import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
-import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/result/result.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/result/result.repository.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
@@ -21,6 +22,8 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   final Reader reader;
   final String surveyID;
 
+  PageController pageController = PageController();
+
   SurveyRepository get surveyRepository => reader(surveyRepositoryProvider);
 
   UserSurveyResultRepository get resultRepository =>
@@ -32,9 +35,6 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
 
   StateController<Survey> get surveyController =>
       reader(surveyEntityProvider.notifier);
-
-  StateController<Question?> get questionController =>
-      reader(questionEntityProvider.notifier);
 
   int currentQuestionIndex = 0;
   Map<String, UserSurveyAnswer> answers = {};
@@ -71,8 +71,11 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
 
   void goTo(int step) {
     currentQuestionIndex = step;
-    questionController.state =
-        surveyController.state.questions![currentQuestionIndex];
+    pageController.animateToPage(
+      currentQuestionIndex,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.ease,
+    );
     state = const SurveyState.data();
   }
 
@@ -92,7 +95,8 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   }) {
     answers[questionId] =
         UserSurveyAnswer(answer: answer, statement: statement);
-    print("Answers till now: $answers");
+    state = const SurveyState.data();
+    print(Colorize("Answers till now: $answers").blue());
   }
 
   bool isAnsweredQuestion({required String questionId}) =>
@@ -106,8 +110,5 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   *  */
   Future<void> init() async {
     await fetchSurvey();
-    if (surveyController.state != Survey.empty) {
-      questionController.state = surveyController.state.questions![0];
-    }
   }
 }
