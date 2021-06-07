@@ -36,6 +36,7 @@ class PostWidget extends StatelessWidget {
                     itemHeight: swiperHeight,
                     itemWidth: swiperWidth,
                     pagination: const SwiperPagination(),
+                    indicatorLayout: PageIndicatorLayout.SCALE,
                     /*pagination: SwiperPagination(
                     builder: SwiperCustomPagination(
                       builder:
