@@ -1,24 +1,24 @@
-import 'package:colorize/colorize.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:group_button/group_button.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
-import 'package:thesis_cancer/features/survey/application/survey.notifier.dart';
-import 'package:thesis_cancer/features/survey/application/survey.provider.dart';
+import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
 
-/*
-* TODO: Make this more generic.
-*  - Receive a question object(or not).
-*  - Receive an answer object.
-*  - Receive an onSelected(onAnswer) function.
-* */
-class QuestionWidget extends HookWidget {
-  QuestionWidget({required this.surveyID});
+typedef OnSelectedCallback = Function(String);
+
+class QuestionWidget extends StatelessWidget {
+  QuestionWidget({
+    required this.surveyID,
+    this.question,
+    this.onSelected,
+    this.userAnswer,
+  });
 
   final String surveyID;
+  final Question? question;
+  final UserSurveyAnswer? userAnswer;
+  final OnSelectedCallback? onSelected;
 
   final _shortAnswerValidator = MultiValidator([
     RequiredValidator(errorText: 'Bu soruya cevap vermelisiniz.'),
@@ -32,10 +32,7 @@ class QuestionWidget extends HookWidget {
     MaxLengthValidator(150, errorText: 'Bu cevap çok uzun.')
   ]);
 
-  // QuestionWidget({Key? key, required this.question}) : super(key: key);
-
-  Widget _renderInput(
-      {required Question question, required SurveyNotifier surveyNotifier}) {
+  Widget _renderInput({required Question question}) {
     Widget answerWidget;
     switch (question.type) {
       case QuestionType.OPEN_SHORT:
@@ -61,15 +58,12 @@ class QuestionWidget extends HookWidget {
         break;
       case QuestionType.SINGLE:
         final List<String> buttons = question.answer!.split(",");
-        final String selectedButton =
-            surveyNotifier.answers[question.id]?.answer ?? '';
+        final String selectedButton = userAnswer?.answer ?? '';
+
         answerWidget = GroupButton(
           spacing: 10,
           buttons: buttons,
-          onSelected: (index, isSelected) => surveyNotifier.answerQuestion(
-              questionId: question.id,
-              answer: buttons[index],
-              statement: question.statement),
+          onSelected: (index, isSelected) => onSelected!(buttons[index]),
           direction: Axis.vertical,
           selectedButton: selectedButton != ''
               ? buttons.indexOf(selectedButton).toInt()
@@ -78,14 +72,13 @@ class QuestionWidget extends HookWidget {
         break;
       case QuestionType.MULTIPLE:
         final List<String> buttons = question.answer!.split(",");
-        final String selectedButtons =
-            surveyNotifier.answers[question.id]?.answer ?? '';
+        final String selectedButtons = userAnswer?.answer ?? '';
+
         answerWidget = GroupButton(
           spacing: 10,
           buttons: buttons,
           onSelected: (index, isSelected) {
-            final String rawCurrentAnswer =
-                surveyNotifier.answers[question.id]?.answer ?? '';
+            final String rawCurrentAnswer = userAnswer?.answer ?? '';
             final List<String> currentAnswer =
                 rawCurrentAnswer != '' ? rawCurrentAnswer.split(",") : [];
             // TODO: if currentAnswer left empty, remove the answer
@@ -94,35 +87,29 @@ class QuestionWidget extends HookWidget {
             } else {
               currentAnswer.remove(buttons[index]);
             }
-            surveyNotifier.answerQuestion(
-                questionId: question.id,
-                answer: currentAnswer.join(","),
-                statement: question.statement);
+            onSelected!(currentAnswer.join(","));
           },
           direction: Axis.vertical,
           isRadio: false,
           selectedButtons: selectedButtons != ''
-              ? buttons.map((value) => buttons.indexOf(value).toInt()).toList()
+              ? selectedButtons
+                  .split(",")
+                  .map((value) => buttons.indexOf(value).toInt())
+                  .toList()
               : null,
         );
         break;
       case QuestionType.BOOL:
         final List<String> buttons = ['Yanlış', 'Doğru'];
-        // TODO: Keep it as a question state(question answer), at least for local
-        // TODO: This keeps always the same selected option in radio buttons, but not in checkbox
-        final String selectedButton =
-            surveyNotifier.answers[question.id]?.answer ?? '';
-        print("Answers: ${surveyNotifier.answers}, $selectedButton");
+        final String selectedButton = userAnswer?.answer ?? '';
+
         answerWidget = GroupButton(
           spacing: 10,
           buttons: buttons,
           selectedButton: selectedButton != ''
               ? buttons.indexOf(selectedButton).toInt()
               : null,
-          onSelected: (index, isSelected) => surveyNotifier.answerQuestion(
-              questionId: question.id,
-              answer: buttons[index],
-              statement: question.statement),
+          onSelected: (index, isSelected) => onSelected!(buttons[index]),
           direction: Axis.vertical,
         );
         break;
@@ -136,11 +123,7 @@ class QuestionWidget extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final surveyNotifier =
-        useProvider(surveyNotifierProvider(surveyID).notifier);
-    final questionEntity = useProvider(questionEntityProvider);
-    final _question = questionEntity.state;
-    if (_question == null) {
+    if (question == null) {
       return Column(
         children: <Widget>[
           Padding(
@@ -159,17 +142,14 @@ class QuestionWidget extends HookWidget {
         Padding(
           padding: const EdgeInsets.only(left: 30.0, right: 8.0),
           child: Text(
-            _question.statement,
+            question!.statement,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
             textAlign: TextAlign.left,
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 30),
-          child: _renderInput(
-            question: _question,
-            surveyNotifier: surveyNotifier,
-          ),
+          child: _renderInput(question: question!),
         ),
       ],
     );

@@ -66,10 +66,20 @@ class SurveyWidget extends HookWidget {
     final Survey currentSurvey = useProvider(surveyEntityProvider).state;
     final currentSurveyNotifier =
         useProvider(surveyNotifierProvider(surveyID).notifier);
-    final bool disabledButton = currentSurveyNotifier.isAnsweredQuestion(
-        questionId: currentSurveyNotifier.questionController.state!.id);
+
+    bool answeredQuestion(int index) =>
+        currentSurveyNotifier.isAnsweredQuestion(
+          questionId: currentSurvey.questions![index].id,
+        );
+
+    final double questionZoneHeight = MediaQuery.of(context).size.height * 0.40;
 
     return Scaffold(
+        appBar: AppBar(
+          title: Text(currentSurvey.title),
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+        ),
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: Column(
@@ -107,12 +117,11 @@ class SurveyWidget extends HookWidget {
                               activeColor: Theme.of(context).primaryColor,
                               color: Theme.of(context).disabledColor,
                             ),
-                            onTap: (position) => currentSurveyNotifier
-                                    .isAnsweredQuestion(
-                                        questionId: currentSurveyNotifier
-                                            .questionController.state!.id)
-                                ? currentSurveyNotifier.goTo(position.toInt())
-                                : null
+                            onTap: (position) =>
+                                answeredQuestion(position.toInt())
+                                    ? currentSurveyNotifier
+                                        .goTo(position.toInt())
+                                    : null
                             // print("Current index: $currentQuestion");
                             ,
                           ),
@@ -120,33 +129,61 @@ class SurveyWidget extends HookWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 30.0),
-                        child: QuestionWidget(
-                          surveyID: surveyID,
+                        child: SizedBox(
+                          height: questionZoneHeight,
+                          child: PageView(
+                            controller: currentSurveyNotifier.pageController,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: currentSurvey.questions
+                                    ?.map(
+                                      (question) => QuestionWidget(
+                                        question: question,
+                                        surveyID: surveyID,
+                                        userAnswer: currentSurveyNotifier
+                                            .answers[question.id],
+                                        onSelected: (String answer) =>
+                                            currentSurveyNotifier
+                                                .answerQuestion(
+                                          questionId: question.id,
+                                          answer: answer,
+                                          statement: question.statement,
+                                        ),
+                                      ),
+                                    )
+                                    .toList() ??
+                                [QuestionWidget(surveyID: surveyID)],
+                          ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Visibility(
-                              visible:
-                                  currentSurveyNotifier.currentQuestionIndex !=
-                                      0,
-                              child: Button.accent(
-                                buttonLabel: 'Back',
-                                onPressed: () =>
-                                    currentSurveyNotifier.lastQuestion(),
+                      // TODO: Hide when there is no questions on survey.
+                      Visibility(
+                        visible: currentSurvey.questions!.isNotEmpty,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Visibility(
+                                visible: currentSurveyNotifier
+                                        .currentQuestionIndex !=
+                                    0,
+                                child: Button.accent(
+                                  buttonLabel: 'Back',
+                                  onPressed: () =>
+                                      currentSurveyNotifier.lastQuestion(),
+                                ),
                               ),
-                            ),
-                            // TODO: Disabled effect is not working
-                            Button.primary(
-                              buttonLabel: 'Next',
-                              onPressed: disabledButton
-                                  ? () => currentSurveyNotifier.nextQuestion()
-                                  : null,
-                            )
-                          ],
+                              // TODO: Disabled effect is not working
+                              Button.primary(
+                                buttonLabel: 'Next',
+                                onPressed: answeredQuestion(
+                                        currentSurveyNotifier
+                                            .currentQuestionIndex)
+                                    ? () => currentSurveyNotifier.nextQuestion()
+                                    : null,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ],
