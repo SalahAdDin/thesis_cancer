@@ -13,6 +13,7 @@ _$_UploadFile _$_$_UploadFileFromJson(Map<String, dynamic> json) {
     url: json['url'] as String,
     width: json['width'] as int?,
     height: json['height'] as int?,
+    mime: json['mime'] as String?,
   );
 }
 
@@ -23,4 +24,5 @@ Map<String, dynamic> _$_$_UploadFileToJson(_$_UploadFile instance) =>
       'url': instance.url,
       'width': instance.width,
       'height': instance.height,
+      'mime': instance.mime,
     };

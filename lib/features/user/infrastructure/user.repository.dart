@@ -1,11 +1,15 @@
 import 'package:graphql/client.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.repository.dart';
 
 class GraphQLUserRepository implements UserRepository {
-  GraphQLUserRepository({required this.client}) : super();
+  GraphQLUserRepository({required this.reader}) : super();
 
-  final GraphQLClient client;
+  final Reader reader;
+
+  GraphQLClient get client => reader(graphQLClientProvider);
 
   @override
   Future<User> createUser(User user) {

@@ -1,14 +1,18 @@
 import 'package:colorize/colorize.dart';
 import 'package:graphql/client.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.repository.dart';
 import 'package:thesis_cancer/features/survey/infrastructure/survey.gql.dart';
 
 class GraphQLSurveyRepository implements SurveyRepository {
-  GraphQLSurveyRepository({required this.client}) : super();
+  GraphQLSurveyRepository({required this.reader}) : super();
 
-  final GraphQLClient client;
+  final Reader reader;
+
+  GraphQLClient get client => reader(graphQLClientProvider);
 
   @override
   Future<List<Survey>> findAll() async {

@@ -7,6 +7,8 @@ query Application{
       caption
       width
       height
+      previewUrl
+      mime
     }
     registeringSurvey{
       id

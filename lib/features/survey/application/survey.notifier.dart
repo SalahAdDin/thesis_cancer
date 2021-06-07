@@ -1,6 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
+import 'package:thesis_cancer/features/survey/application/survey.provider.dart';
 import 'package:thesis_cancer/features/survey/application/survey.state.dart';
 import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
@@ -8,26 +10,31 @@ import 'package:thesis_cancer/features/survey/domain/result/result.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/result/result.repository.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.repository.dart';
+import 'package:thesis_cancer/features/user/application/user.provider.dart';
 
 class SurveyNotifier extends StateNotifier<SurveyState> {
   SurveyNotifier({
-    required this.currentUserId,
+    required this.reader,
     required this.surveyID,
-    required this.surveyController,
-    required this.questionController,
-    required this.surveyRepository,
-    required this.resultRepository,
-    required this.dataStore,
   }) : super(const SurveyState.loading());
 
-  final SurveyRepository surveyRepository;
-  final UserSurveyResultRepository resultRepository;
-  final DataStoreRepository dataStore;
-  final String currentUserId;
+  final Reader reader;
   final String surveyID;
 
-  final StateController<Survey> surveyController;
-  final StateController<Question?> questionController;
+  SurveyRepository get surveyRepository => reader(surveyRepositoryProvider);
+
+  UserSurveyResultRepository get resultRepository =>
+      reader(resultRepositoryProvider);
+
+  DataStoreRepository get dataStore => reader(dataStoreRepositoryProvider);
+
+  String get currentUserId => reader(userEntityProvider).state.id;
+
+  StateController<Survey> get surveyController =>
+      reader(surveyEntityProvider.notifier);
+
+  StateController<Question?> get questionController =>
+      reader(questionEntityProvider.notifier);
 
   int currentQuestionIndex = 0;
   Map<String, UserSurveyAnswer> answers = {};

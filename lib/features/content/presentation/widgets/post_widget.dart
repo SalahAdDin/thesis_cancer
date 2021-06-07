@@ -124,8 +124,8 @@ class PostWidget extends StatelessWidget {
               post.description,
               colorClickableText: Colors.pink,
               trimMode: TrimMode.Line,
-              trimCollapsedText: '...more',
-              trimExpandedText: '...less',
+              trimCollapsedText: 'more',
+              trimExpandedText: 'less',
               moreStyle: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,

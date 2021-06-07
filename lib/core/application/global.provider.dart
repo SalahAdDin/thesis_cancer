@@ -8,7 +8,6 @@ import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.repository.dart';
 import 'package:thesis_cancer/core/infrastructure/settings.repository.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
-import 'package:thesis_cancer/features/user/application/user.provider.dart';
 
 /*
 final navigatorProvider =
@@ -23,12 +22,10 @@ final packageInfoProvider = FutureProvider<PackageInfo>(
 final graphQLClientProvider = Provider<GraphQLClient>((ref) {
   final _httpLink = HttpLink(
     // String.fromEnvironment('API_URL'),
-    'http://10.30.30.17:1337/graphql',
+    'http://192.168.1.36:1337/graphql',
   );
 
   final String token = ref.watch(tokenProvider).state;
-
-  print(token);
 
   final _authLink = AuthLink(
     getToken: () async => 'Bearer $token',
@@ -43,39 +40,21 @@ final graphQLClientProvider = Provider<GraphQLClient>((ref) {
   );
 }, name: "GraphQL Client Provider");
 
-final graphQLAuthClientProvider = Provider<GraphQLClient>((ref) {
-  final _httpLink = HttpLink(
-    'http://192.168.1.36:1337/graphql',
-  );
-
-  final _authLink = AuthLink(
-    getToken: () async =>
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDUsImlhdCI6MTYyMjYyNTQ1MiwiZXhwIjoxNjI1MjE3NDUyfQ.zGSa7vqDqfnBpy3d7k-2_jClZsofWgL23abL3jDTq-E',
-  );
-
-  final Link _link = _authLink.concat(_httpLink);
-
-  return GraphQLClient(
-    cache: GraphQLCache(),
-    link: _link,
-  );
-}, name: "GraphQL Auth Client Provider");
-
 final dataStoreRepositoryProvider = Provider<DataStoreRepository>(
   (ref) => throw UnimplementedError(),
   name: 'Data Store Provider',
 );
 
 final settingsRepositoryProvider = Provider<SettingsRepository>(
-  (ref) => GraphQLSettingsRepository(client: ref.watch(graphQLClientProvider)),
+  (ref) => GraphQLSettingsRepository(reader: ref.read),
   name: 'Settings Repository Provider',
 );
 
 // TODO: May it require a notifier if we need to change local app settings
 final settingsProvider = FutureProvider<Settings>(
   (ref) async {
-    final dataStore = ref.watch(dataStoreRepositoryProvider);
-    final settingsRepository = ref.watch(settingsRepositoryProvider);
+    final dataStore = ref.read(dataStoreRepositoryProvider);
+    final settingsRepository = ref.read(settingsRepositoryProvider);
 
     final Settings settings = await dataStore.getSettings();
 
@@ -93,11 +72,6 @@ final settingsProvider = FutureProvider<Settings>(
 );
 
 final launcherProvider = StateNotifierProvider<LauncherNotifier, LauncherState>(
-  (ref) {
-    final dataStore = ref.watch(dataStoreRepositoryProvider);
-    return LauncherNotifier(
-        dataStore: dataStore,
-        userController: ref.watch(userEntityProvider.notifier));
-  },
+  (ref) => LauncherNotifier(reader: ref.read),
   name: 'Launcher Provider',
 );

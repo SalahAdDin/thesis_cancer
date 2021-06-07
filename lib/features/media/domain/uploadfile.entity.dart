@@ -11,6 +11,7 @@ class UploadFile with _$UploadFile {
     required String url,
     int? width,
     int? height,
+    String? mime,
   }) = _UploadFile;
 
   factory UploadFile.fromJson(Map<String, dynamic> json) =>

@@ -1,27 +1,31 @@
 import 'dart:async';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
+import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
 import 'package:thesis_cancer/features/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
+import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 class AuthNotifier extends StateNotifier<AuthState> {
-  AuthNotifier(
-      {required this.authRepository,
-      required this.profileRepository,
-      required this.dataStore,
-      required this.userController,
-      required this.tokenController})
-      : super(const AuthState.loading());
+  AuthNotifier({required this.reader}) : super(const AuthState.loading());
 
-  final ProfileRepository profileRepository;
-  final AuthRepository authRepository;
-  final DataStoreRepository dataStore;
-  final StateController<User?> userController;
-  final StateController<String> tokenController;
+  final Reader reader;
+
+  AuthRepository get authRepository => reader(authRepositoryProvider);
+
+  DataStoreRepository get dataStore => reader(dataStoreRepositoryProvider);
+
+  ProfileRepository get profileRepository => reader(profileRepositoryProvider);
+
+  StateController<User?> get userController =>
+      reader(userEntityProvider.notifier);
+
+  StateController<String> get tokenController => reader(tokenProvider.notifier);
 
   // StreamSubscription? _subscription;
 
@@ -73,7 +77,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
           identifier: username, password: password) as Map<String, dynamic>;
       final User sessionUser = User.fromJson(rawUser);
       if (sessionUser.confirmed != false) {
-        // tokenController.state = sessionUser.token!;
+        tokenController.state = sessionUser.token!;
       }
       await dataStore.writeUserProfile(sessionUser);
       userController.state = sessionUser;
