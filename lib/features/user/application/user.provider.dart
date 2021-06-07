@@ -7,7 +7,8 @@ import 'package:thesis_cancer/features/user/infrastructure/profile.repository.da
 import 'package:thesis_cancer/features/user/infrastructure/user.repository.dart';
 
 final profileRepositoryProvider = Provider<ProfileRepository>(
-  (ref) => GraphQLProfileRepository(client: ref.watch(graphQLClientProvider)),
+  (ref) =>
+      GraphQLProfileRepository(client: ref.watch(graphQLAuthClientProvider)),
   name: 'Profile Repository Provider',
 );
 

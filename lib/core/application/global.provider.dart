@@ -43,6 +43,24 @@ final graphQLClientProvider = Provider<GraphQLClient>((ref) {
   );
 }, name: "GraphQL Client Provider");
 
+final graphQLAuthClientProvider = Provider<GraphQLClient>((ref) {
+  final _httpLink = HttpLink(
+    'http://192.168.1.36:1337/graphql',
+  );
+
+  final _authLink = AuthLink(
+    getToken: () async =>
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDUsImlhdCI6MTYyMjYyNTQ1MiwiZXhwIjoxNjI1MjE3NDUyfQ.zGSa7vqDqfnBpy3d7k-2_jClZsofWgL23abL3jDTq-E',
+  );
+
+  final Link _link = _authLink.concat(_httpLink);
+
+  return GraphQLClient(
+    cache: GraphQLCache(),
+    link: _link,
+  );
+}, name: "GraphQL Auth Client Provider");
+
 final dataStoreRepositoryProvider = Provider<DataStoreRepository>(
   (ref) => throw UnimplementedError(),
   name: 'Data Store Provider',
