@@ -20,7 +20,7 @@ class IntroductoryScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: IntroductionScreen(
-        pages: [
+        pages: <PageViewModel>[
           PageViewModel(
             title: "",
             image: VideoItem(

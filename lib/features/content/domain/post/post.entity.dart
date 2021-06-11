@@ -11,7 +11,7 @@ part 'post.entity.g.dart';
 class Post with _$Post {
   const factory Post({
     required String id,
-    required ContentType type,
+    required PostType type,
     required String description,
     // required String author,
     required List<UploadFile> gallery,
@@ -23,12 +23,12 @@ class Post with _$Post {
   }) = _Post;
 
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
-  static const empty = Post(
+  static const Post empty = Post(
     id: '',
-    type: ContentType.ACADEMY,
+    type: PostType.ACADEMY,
     description: '',
     // author: '',
-    gallery: [],
+    gallery: <UploadFile>[],
     likesCount: 0,
   );
 }

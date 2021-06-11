@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-Future pushToPage(BuildContext context, Widget widget) async {
-  await Navigator.of(context).push(MaterialPageRoute(builder: (_) => widget));
-}
+/// Navigate to Page.
+Future<void> pushToPage(BuildContext context, Widget widget) async =>
+    Navigator.of(context).push(
+      MaterialPageRoute<Widget>(builder: (_) => widget),
+    );
 
-Future pushAndReplaceToPage(BuildContext context, Widget widget) async {
-  await Navigator.of(context)
-      .pushReplacement(MaterialPageRoute(builder: (_) => widget));
-}
+/// Navigate to page by replacing the current one on the stack.
+Future<void> pushAndReplaceToPage(BuildContext context, Widget widget) async =>
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<Widget>(builder: (_) => widget),
+    );
 
-Future popAllAndPush(BuildContext context, Widget widget) async {
-  await Navigator.pushAndRemoveUntil(
+/// Navigate to page and replace previous pages on stack till the root page.
+Future<void> popAllAndPush(BuildContext context, Widget widget) async =>
+    Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (BuildContext context) => widget),
-      ModalRoute.withName('/'));
-}
-
-Future popToBack(BuildContext context, Widget widget) async {
-  Navigator.of(context).pop(MaterialPageRoute(builder: (_) => widget));
-}
+      MaterialPageRoute<Widget>(builder: (BuildContext context) => widget),
+      ModalRoute.withName('/'),
+    );

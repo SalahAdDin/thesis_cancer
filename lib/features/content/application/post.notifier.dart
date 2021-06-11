@@ -19,7 +19,7 @@ class PostNotifier extends StateNotifier<PostsState> {
   }) : super(const PostsState.loading());
 
   final Reader reader;
-  final ContentType type;
+  final PostType type;
 
   PostRepository get postRepository => reader(postRepositoryProvider);
 

@@ -22,7 +22,7 @@ class _$PostTearOff {
 
   _Post call(
       {required String id,
-      required ContentType type,
+      required PostType type,
       required String description,
       required List<UploadFile> gallery,
       String? title,
@@ -54,7 +54,7 @@ const $Post = _$PostTearOff();
 /// @nodoc
 mixin _$Post {
   String get id => throw _privateConstructorUsedError;
-  ContentType get type => throw _privateConstructorUsedError;
+  PostType get type => throw _privateConstructorUsedError;
   String get description =>
       throw _privateConstructorUsedError; // required String author,
   List<UploadFile> get gallery => throw _privateConstructorUsedError;
@@ -75,7 +75,7 @@ abstract class $PostCopyWith<$Res> {
       _$PostCopyWithImpl<$Res>;
   $Res call(
       {String id,
-      ContentType type,
+      PostType type,
       String description,
       List<UploadFile> gallery,
       String? title,
@@ -113,7 +113,7 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as ContentType,
+              as PostType,
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -153,7 +153,7 @@ abstract class _$PostCopyWith<$Res> implements $PostCopyWith<$Res> {
   @override
   $Res call(
       {String id,
-      ContentType type,
+      PostType type,
       String description,
       List<UploadFile> gallery,
       String? title,
@@ -192,7 +192,7 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as ContentType,
+              as PostType,
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -245,7 +245,7 @@ class _$_Post implements _Post {
   @override
   final String id;
   @override
-  final ContentType type;
+  final PostType type;
   @override
   final String description;
   @override // required String author,
@@ -323,7 +323,7 @@ class _$_Post implements _Post {
 abstract class _Post implements Post {
   const factory _Post(
       {required String id,
-      required ContentType type,
+      required PostType type,
       required String description,
       required List<UploadFile> gallery,
       String? title,
@@ -337,7 +337,7 @@ abstract class _Post implements Post {
   @override
   String get id => throw _privateConstructorUsedError;
   @override
-  ContentType get type => throw _privateConstructorUsedError;
+  PostType get type => throw _privateConstructorUsedError;
   @override
   String get description => throw _privateConstructorUsedError;
   @override // required String author,

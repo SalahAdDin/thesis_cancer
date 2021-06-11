@@ -10,28 +10,32 @@ class ResetPasswordWidget extends HookWidget {
 
   final ConfirmSignInCallback onConfirm;
 
-  final passwordValidator = MultiValidator([
-    RequiredValidator(errorText: 'Password is required,'),
-    MinLengthValidator(8,
-        errorText: 'Password must be at least 8 digits long.'),
-    PatternValidator(r'(?=.*?[_#?!@$%^&*-])',
-        errorText: 'Passwords must have at least one special character.')
-  ]);
+  final MultiValidator passwordValidator = MultiValidator(
+    <FieldValidator<dynamic>>[
+      RequiredValidator(errorText: 'Password is required,'),
+      MinLengthValidator(8,
+          errorText: 'Password must be at least 8 digits long.'),
+      PatternValidator(r'(?=.*?[_#?!@$%^&*-])',
+          errorText: 'Passwords must have at least one special character.')
+    ],
+  );
 
-  final confirmationCodeValidator = MultiValidator([
-    RequiredValidator(errorText: 'Confirmation code is required'),
-    PatternValidator(r'^[a-z0-9_]*$',
-        errorText: 'Just alphanumeric characters.')
-  ]);
+  final MultiValidator confirmationCodeValidator = MultiValidator(
+    <FieldValidator<dynamic>>[
+      RequiredValidator(errorText: 'Confirmation code is required'),
+      PatternValidator(r'^[a-z0-9_]*$',
+          errorText: 'Just alphanumeric characters.')
+    ],
+  );
 
   // Future<bool> _submit(
   Future<void> _submit({
-    required final formKey,
+    required GlobalKey<FormState> formKey,
     required String password,
     required String passwordConfirmation,
     required String confirmationCode,
   }) async {
-    final bool isValid = formKey.currentState!.validate() as bool;
+    final bool isValid = formKey.currentState!.validate();
     if (!isValid) {
       // raise and error (snack bar way)
       // return false;
@@ -60,8 +64,10 @@ class ResetPasswordWidget extends HookWidget {
     final TextEditingController _confirmationCodePasswordController =
         useTextEditingController();
 
-    final theme = Theme.of(context);
-    final deviceSize = MediaQuery.of(context).size;
+    /*
+    final ThemeData theme = Theme.of(context);
+    final Size deviceSize = MediaQuery.of(context).size;
+    */
 
     return Scaffold(
       body: Column(
@@ -72,7 +78,9 @@ class ResetPasswordWidget extends HookWidget {
               constraints: const BoxConstraints(maxWidth: 350),
               decoration: const BoxDecoration(
                   color: Colors.transparent,
-                  boxShadow: [BoxShadow(blurRadius: 4, offset: Offset(4, 8))],
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(blurRadius: 4, offset: Offset(4, 8))
+                  ],
                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
               child: Padding(
                 padding: const EdgeInsets.all(40.0),
@@ -92,7 +100,7 @@ class ResetPasswordWidget extends HookWidget {
                       TextFormField(
                         controller: _confirmNewPasswordController,
                         obscureText: true,
-                        validator: (value) => MatchValidator(
+                        validator: (String? value) => MatchValidator(
                                 errorText: "Your password does not match.")
                             .validateMatch(_newPasswordController.text,
                                 _confirmNewPasswordController.text),

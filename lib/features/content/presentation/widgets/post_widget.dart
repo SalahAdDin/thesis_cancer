@@ -8,12 +8,15 @@ import 'package:like_button/like_button.dart';
 import 'package:readmore/readmore.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
 
+/// Post Widget
 class PostWidget extends StatelessWidget {
+  ///
   const PostWidget({
     Key? key,
     required this.post,
   }) : super(key: key);
 
+  ///
   final Post post;
 
   @override
@@ -30,14 +33,14 @@ class PostWidget extends StatelessWidget {
               // TODO: do like on post
               onDoubleTap: () => null,
               child: SizedBox(
-                  height: swiperHeight,
-                  child: Swiper(
-                    itemCount: post.gallery.length,
-                    itemHeight: swiperHeight,
-                    itemWidth: swiperWidth,
-                    pagination: const SwiperPagination(),
-                    indicatorLayout: PageIndicatorLayout.SCALE,
-                    /*pagination: SwiperPagination(
+                height: swiperHeight,
+                child: Swiper(
+                  itemCount: post.gallery.length,
+                  itemHeight: swiperHeight,
+                  itemWidth: swiperWidth,
+                  pagination: const SwiperPagination(),
+                  indicatorLayout: PageIndicatorLayout.SCALE,
+                  /*pagination: SwiperPagination(
                     builder: SwiperCustomPagination(
                       builder:
                           (BuildContext context, SwiperPluginConfig? config) =>
@@ -47,22 +50,24 @@ class PostWidget extends StatelessWidget {
                       ).build(context, config),
                     ),
                   ),*/
-                    itemBuilder: (_, int index) => CachedNetworkImage(
-                      imageUrl: post.gallery[index].url,
-                      fit: BoxFit.fill,
-                      progressIndicatorBuilder:
-                          (context, url, downloadProgress) => SizedBox(
-                        height: 400.0,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            value: downloadProgress.progress,
-                          ),
+                  itemBuilder: (_, int index) => CachedNetworkImage(
+                    imageUrl: post.gallery[index].url,
+                    fit: BoxFit.fill,
+                    progressIndicatorBuilder: (BuildContext context, String url,
+                            DownloadProgress downloadProgress) =>
+                        SizedBox(
+                      height: 400.0,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          value: downloadProgress.progress,
                         ),
                       ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
                     ),
-                  ))
+                    errorWidget: (BuildContext context, String url, _) =>
+                        const Icon(Icons.error),
+                  ),
+                ),
+              )
               /*CarouselSlider(
             items: post.gallery
                 .map(

@@ -21,7 +21,7 @@ class GraphQLPostRepository implements PostRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentCreatePost),
-        variables: {"data": post},
+        variables: <String, dynamic>{"data": post},
       );
       final QueryResult response = await client.query(options);
       if (response.hasException) {
@@ -51,7 +51,7 @@ class GraphQLPostRepository implements PostRepository {
       }
       final List<dynamic> data = response.data?['posts'] as List<dynamic>;
       final List<Post> result = data
-          .map((item) => Post.fromJson(item as Map<String, dynamic>))
+          .map((dynamic item) => Post.fromJson(item as Map<String, dynamic>))
           .toList();
       return result;
     } on Exception catch (error) {
@@ -61,11 +61,13 @@ class GraphQLPostRepository implements PostRepository {
   }
 
   @override
-  Future<List<Post>> findByContentType(ContentType contentType) async {
+  Future<List<Post>> findByContentType(PostType contentType) async {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentListPostsByContentType),
-        variables: {"contentType": EnumToString.convertToString(contentType)},
+        variables: <String, dynamic>{
+          "contentType": EnumToString.convertToString(contentType)
+        },
       );
       final QueryResult response = await client.query(options);
       if (response.hasException) {
@@ -74,7 +76,7 @@ class GraphQLPostRepository implements PostRepository {
       }
       final List<dynamic> data = response.data?['posts'] as List<dynamic>;
       final List<Post> result = data
-          .map((item) => Post.fromJson(item as Map<String, dynamic>))
+          .map((dynamic item) => Post.fromJson(item as Map<String, dynamic>))
           .toList();
       return result;
     } on Exception catch (error) {
@@ -88,7 +90,7 @@ class GraphQLPostRepository implements PostRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentGetPost),
-        variables: {"id": id},
+        variables: <String, dynamic>{"id": id},
       );
       final QueryResult response = await client.query(options);
       if (response.hasException) {
@@ -109,7 +111,7 @@ class GraphQLPostRepository implements PostRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentListPostsByUserId),
-        variables: {"id": id},
+        variables: <String, dynamic>{"id": id},
       );
       final QueryResult response = await client.query(options);
       if (response.hasException) {
@@ -118,7 +120,7 @@ class GraphQLPostRepository implements PostRepository {
       }
       final List<dynamic> data = response.data?['posts'] as List<dynamic>;
       final List<Post> result = data
-          .map((item) => Post.fromJson(item as Map<String, dynamic>))
+          .map((dynamic item) => Post.fromJson(item as Map<String, dynamic>))
           .toList();
       return result;
     } on Exception catch (error) {
@@ -132,7 +134,7 @@ class GraphQLPostRepository implements PostRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentDeletePost),
-        variables: {"id": postId},
+        variables: <String, dynamic>{"id": postId},
       );
       final QueryResult response = await client.query(options);
       if (response.hasException) {
@@ -156,7 +158,7 @@ class GraphQLPostRepository implements PostRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentUpdatePost),
-        variables: {"id": post.id, "data": post},
+        variables: <String, dynamic>{"id": post.id, "data": post},
       );
       final QueryResult response = await client.query(options);
       if (response.hasException) {

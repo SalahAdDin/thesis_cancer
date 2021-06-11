@@ -4,7 +4,7 @@ import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
 abstract class PostRepository {
   Future<List<Post>> findAll();
 
-  Future<List<Post>> findByContentType(ContentType contentType);
+  Future<List<Post>> findByContentType(PostType contentType);
 
   Future<List<Post>> findByUserId(String id);
 

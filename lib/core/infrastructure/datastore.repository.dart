@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
@@ -11,31 +13,51 @@ import 'package:thesis_cancer/features/survey/domain/result/result.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
+/// Store Path literals
 class StorePath {
-  static const profile = 'profile';
-  static const loggedUserId = 'loggedUserId';
-  static const surveys = 'surveys';
-  static const settings = 'settings';
-  static const posts = 'posts';
-  static const surveyResults = 'results';
+  /// Path for [Profile]
+  static const String profile = 'profile';
 
+  // static const String loggedUserId = 'loggedUserId';
+
+  /// Path for [Survey] list.
+  static const String surveys = 'surveys';
+
+  /// Path for [Settings].
+  static const String settings = 'settings';
+
+  /// Path for grouped [Post] lists.
+  static const String posts = 'posts';
+
+  /// Path for [UserSurveyResult] lists.
+  static const String surveyResults = 'results';
+
+  /// Path for [Post] group.
   static String postByContentType(String type) => 'posts/$type';
 }
 
+/// [SembastDataStore] implementation for [DataStoreRepository] interface.
 class SembastDataStore implements DataStoreRepository {
-  static DatabaseFactory databaseFactory = databaseFactoryIo;
-
+  ///
   SembastDataStore(this.database);
 
-  final Database database;
-  final store = StoreRef.main();
+  ///
+  static DatabaseFactory databaseFactory = databaseFactoryIo;
 
+  ///
+  final Database database;
+
+  ///
+  final StoreRef<String, dynamic> store = StoreRef<String, dynamic>.main();
+
+  ///
   static Future<SembastDataStore> makeDefault() async {
-    final appDocDir = await getApplicationDocumentsDirectory();
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
     return SembastDataStore(
         await databaseFactory.openDatabase('${appDocDir.path}/default.db'));
   }
 
+  ///
   static Future<SembastDataStore> init(String databasePath) async =>
       SembastDataStore(await databaseFactory.openDatabase(databasePath));
 
@@ -52,19 +74,19 @@ class SembastDataStore implements DataStoreRepository {
 
   @override
   Future<void> removeSettings() async {
-    final record = store.record(StorePath.settings);
+    final RecordRef<dynamic, dynamic> record = store.record(StorePath.settings);
     await record.delete(database);
   }
 
   @override
   Future<void> writeSettings(Settings settings) async {
-    const recordName = StorePath.settings;
+    const String recordName = StorePath.settings;
     await store.record(recordName).put(database, settings.toJson());
   }
 
   @override
   Future<void> writeUserProfile(User user) async {
-    const recordName = StorePath.profile;
+    const String recordName = StorePath.profile;
     await store.record(recordName).put(database, user.toJson());
   }
 
@@ -102,17 +124,18 @@ class SembastDataStore implements DataStoreRepository {
   }
 
   @override
-  Future<List<Post>> getPosts(ContentType type) async {
-    final recordName =
+  Future<List<Post>> getPosts(PostType type) async {
+    final String recordName =
         StorePath.postByContentType(EnumToString.convertToString(type));
     final List<dynamic>? postsJson =
         await store.record(recordName).get(database) as List<dynamic>?;
 
     final List<Post> result = postsJson != null
         ? postsJson
-            .map((element) => Post.fromJson(element as Map<String, dynamic>))
+            .map((dynamic element) =>
+                Post.fromJson(element as Map<String, dynamic>))
             .toList()
-        : [];
+        : <Post>[];
 
     return result;
   }
@@ -136,9 +159,10 @@ class SembastDataStore implements DataStoreRepository {
 
     final List<Survey> result = surveysJson != null
         ? surveysJson
-            .map((element) => Survey.fromJson(element as Map<String, dynamic>))
+            .map((dynamic element) =>
+                Survey.fromJson(element as Map<String, dynamic>))
             .toList()
-        : [];
+        : <Survey>[];
 
     return result;
   }
@@ -163,13 +187,13 @@ class SembastDataStore implements DataStoreRepository {
 
   @override
   Future<void> removeSurveys() async {
-    final record = store.record(StorePath.surveys);
+    final RecordRef<dynamic, dynamic> record = store.record(StorePath.surveys);
     await record.delete(database);
   }
 
   @override
   Future<void> removeUserProfile() async {
-    final record = store.record(StorePath.profile);
+    final RecordRef<dynamic, dynamic> record = store.record(StorePath.profile);
     await record.delete(database);
   }
 
@@ -190,13 +214,13 @@ class SembastDataStore implements DataStoreRepository {
 
   @override
   Future<void> writePosts({
-    required ContentType type,
+    required PostType type,
     required List<Post> posts,
   }) async {
-    final recordName =
+    final String recordName =
         StorePath.postByContentType(EnumToString.convertToString(type));
     final String encodedPosts =
-        posts.map((element) => element.toJson()).toList().toString();
+        posts.map((Post element) => element.toJson()).toList().toString();
 
     await store.record(recordName).put(database, encodedPosts);
   }
@@ -215,7 +239,7 @@ class SembastDataStore implements DataStoreRepository {
 
   @override
   Future<void> removePosts() async {
-    final record = store.record(StorePath.posts);
+    final RecordRef<dynamic, dynamic> record = store.record(StorePath.posts);
     await record.delete(database);
   }
 }

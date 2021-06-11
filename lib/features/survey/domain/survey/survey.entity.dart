@@ -15,5 +15,5 @@ class Survey with _$Survey {
   }) = _Survey;
 
   factory Survey.fromJson(Map<String, dynamic> json) => _$SurveyFromJson(json);
-  static const empty = Survey(id: '', title: 'Mock Survey');
+  static const Survey empty = Survey(id: '', title: 'Mock Survey');
 }

@@ -94,13 +94,14 @@ class UserNotifier extends StateNotifier<UserState> {
   Future<void> deleteProfile(User currentProfile) async {}
 
   Future<void> init() async {
-    final sessionUser = userController.state!;
+    final User sessionUser = userController.state!;
     if (sessionUser.confirmed == true) {
       final Profile sessionUserProfile =
           await profileRepository.findByUserId(sessionUser.id);
 
-      final sessionUserWithProfile =
-          sessionUser.copyWith(profile: sessionUserProfile);
+      final User sessionUserWithProfile = sessionUser.copyWith(
+        profile: sessionUserProfile,
+      );
 
       await dataStore.writeUserProfile(sessionUserWithProfile);
 

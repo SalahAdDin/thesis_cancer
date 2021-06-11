@@ -21,5 +21,5 @@ class Profile with _$Profile {
   factory Profile.fromJson(Map<String, dynamic> json) =>
       _$ProfileFromJson(json);
 
-  static const empty = Profile(firstName: 'Dummy', lastName: 'Do');
+  static const Profile empty = Profile(firstName: 'Dummy', lastName: 'Do');
 }

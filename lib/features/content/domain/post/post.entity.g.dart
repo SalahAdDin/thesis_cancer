@@ -9,7 +9,7 @@ part of 'post.entity.dart';
 _$_Post _$_$_PostFromJson(Map<String, dynamic> json) {
   return _$_Post(
     id: json['id'] as String,
-    type: _$enumDecode(_$ContentTypeEnumMap, json['type']),
+    type: _$enumDecode(_$PostTypeEnumMap, json['type']),
     description: json['description'] as String,
     gallery: (json['gallery'] as List<dynamic>)
         .map((e) => UploadFile.fromJson(e as Map<String, dynamic>))
@@ -30,7 +30,7 @@ _$_Post _$_$_PostFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$_$_PostToJson(_$_Post instance) => <String, dynamic>{
       'id': instance.id,
-      'type': _$ContentTypeEnumMap[instance.type],
+      'type': _$PostTypeEnumMap[instance.type],
       'description': instance.description,
       'gallery': instance.gallery.map((e) => e.toJson()).toList(),
       'title': instance.title,
@@ -66,9 +66,9 @@ K _$enumDecode<K, V>(
   ).key;
 }
 
-const _$ContentTypeEnumMap = {
-  ContentType.INFORMATION: 'INFORMATION',
-  ContentType.TREATMENT: 'TREATMENT',
-  ContentType.ACADEMY: 'ACADEMY',
-  ContentType.SUCCESS_STORIES: 'SUCCESS_STORIES',
+const _$PostTypeEnumMap = {
+  PostType.INFORMATION: 'INFORMATION',
+  PostType.TREATMENT: 'TREATMENT',
+  PostType.ACADEMY: 'ACADEMY',
+  PostType.SUCCESS_STORIES: 'SUCCESS_STORIES',
 };
