@@ -8,7 +8,7 @@ part of 'activityfeed.entity.dart';
 
 _$_ActivityFeed _$_$_ActivityFeedFromJson(Map<String, dynamic> json) {
   return _$_ActivityFeed(
-    id: json['id'] as String,
+    id: json['id'] as String?,
     type: _$enumDecode(_$ActivityTypeEnumMap, json['type']),
     issuerID: json['issuerID'] as String,
     description: json['description'] as String,
@@ -51,7 +51,9 @@ K _$enumDecode<K, V>(
 
 const _$ActivityTypeEnumMap = {
   ActivityType.NEW_COMMENT: 'NEW_COMMENT',
+  ActivityType.NEW_FOLLOW: 'NEW_FOLLOW',
   ActivityType.NEW_LIKE: 'NEW_LIKE',
   ActivityType.NEW_POST: 'NEW_POST',
   ActivityType.NEW_SURVEY_SCHEDULED: 'NEW_SURVEY_SCHEDULED',
+  ActivityType.NEW_RECOMMENDATION: 'NEW_RECOMMENDATION',
 };

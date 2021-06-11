@@ -4,14 +4,14 @@ import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 
 class CompletedSurvey extends StatelessWidget {
-  final OnPressedButton onPressed;
-  final String actionLabel;
-
   const CompletedSurvey({
     Key? key,
     required this.onPressed,
     required this.actionLabel,
   }) : super(key: key);
+
+  final OnPressedButton onPressed;
+  final String actionLabel;
 
   // TODO: Improve style
   @override
@@ -26,7 +26,9 @@ class CompletedSurvey extends StatelessWidget {
                 constraints: const BoxConstraints(maxWidth: 350),
                 decoration: const BoxDecoration(
                     color: Colors.greenAccent,
-                    boxShadow: [BoxShadow(blurRadius: 4, offset: Offset(4, 8))],
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(blurRadius: 4, offset: Offset(4, 8))
+                    ],
                     borderRadius: BorderRadius.all(Radius.circular(15.0))),
                 child: Padding(
                   padding: const EdgeInsets.all(40.0),

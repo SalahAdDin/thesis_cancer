@@ -6,6 +6,7 @@ import 'package:thesis_cancer/features/survey/domain/result/result.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
+/// Data Store Repository Interface
 abstract class DataStoreRepository {
   // Settings
   Future<void> writeSettings(Settings settings);
@@ -57,11 +58,11 @@ abstract class DataStoreRepository {
   Future<void> writePost(Post post);
 
   Future<void> writePosts({
-    required ContentType type,
+    required PostType type,
     required List<Post> posts,
   });
 
-  Future<List<Post>> getPosts(ContentType type);
+  Future<List<Post>> getPosts(PostType type);
 
   Future<void> removePost(Post post);
 

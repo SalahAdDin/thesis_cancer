@@ -15,6 +15,6 @@ class Comment with _$Comment {
   factory Comment.fromJson(Map<String, dynamic> json) =>
       _$CommentFromJson(json);
 
-  static const empty =
+  static const Comment empty =
       Comment(id: '', postID: '', userID: '', content: 'Dummy comment');
 }

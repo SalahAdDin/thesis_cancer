@@ -17,7 +17,7 @@ class LobbyScreen extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 100, horizontal: 30),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   Text('Neredeyse oradasın!',
                       style: Theme.of(context)
                           .textTheme

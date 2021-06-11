@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:thesis_cancer/core/application/responsive.dart';
 import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
 
+/// Side Menu's header
 class SideMenuHeader extends StatelessWidget {
+  ///
   const SideMenuHeader({
     Key? key,
     required this.displayedUserName,
@@ -12,8 +14,13 @@ class SideMenuHeader extends StatelessWidget {
     this.userAvatarUrl,
   }) : super(key: key);
 
+  ///
   final String displayedUserName;
+
+  ///
   final String displayedName;
+
+  ///
   final String? userAvatarUrl;
 
   @override

@@ -20,13 +20,15 @@ class QuestionWidget extends StatelessWidget {
   final UserSurveyAnswer? userAnswer;
   final OnSelectedCallback? onSelected;
 
-  final _shortAnswerValidator = MultiValidator([
+  final MultiValidator _shortAnswerValidator =
+      MultiValidator(<FieldValidator<dynamic>>[
     RequiredValidator(errorText: 'Bu soruya cevap vermelisiniz.'),
     MinLengthValidator(15, errorText: 'Bu cevap çok kısa'),
     MaxLengthValidator(50, errorText: 'Bu cevap çok uzun.')
   ]);
 
-  final _longAnswerValidator = MultiValidator([
+  final MultiValidator _longAnswerValidator =
+      MultiValidator(<FieldValidator<dynamic>>[
     RequiredValidator(errorText: 'Bu soruya cevap vermelisiniz.'),
     MinLengthValidator(50, errorText: 'Bu cevap çok kısa'),
     MaxLengthValidator(150, errorText: 'Bu cevap çok uzun.')
@@ -63,7 +65,8 @@ class QuestionWidget extends StatelessWidget {
         answerWidget = GroupButton(
           spacing: 10,
           buttons: buttons,
-          onSelected: (index, isSelected) => onSelected!(buttons[index]),
+          onSelected: (int index, bool isSelected) =>
+              onSelected!(buttons[index]),
           direction: Axis.vertical,
           selectedButton: selectedButton != ''
               ? buttons.indexOf(selectedButton).toInt()
@@ -77,10 +80,11 @@ class QuestionWidget extends StatelessWidget {
         answerWidget = GroupButton(
           spacing: 10,
           buttons: buttons,
-          onSelected: (index, isSelected) {
+          onSelected: (int index, bool isSelected) {
             final String rawCurrentAnswer = userAnswer?.answer ?? '';
-            final List<String> currentAnswer =
-                rawCurrentAnswer != '' ? rawCurrentAnswer.split(",") : [];
+            final List<String> currentAnswer = rawCurrentAnswer != ''
+                ? rawCurrentAnswer.split(",")
+                : <String>[];
             // TODO: if currentAnswer left empty, remove the answer
             if (isSelected) {
               currentAnswer.add(buttons[index]);
@@ -94,13 +98,13 @@ class QuestionWidget extends StatelessWidget {
           selectedButtons: selectedButtons != ''
               ? selectedButtons
                   .split(",")
-                  .map((value) => buttons.indexOf(value).toInt())
+                  .map((String value) => buttons.indexOf(value).toInt())
                   .toList()
               : null,
         );
         break;
       case QuestionType.BOOL:
-        final List<String> buttons = ['Yanlış', 'Doğru'];
+        final List<String> buttons = <String>['Yanlış', 'Doğru'];
         final String selectedButton = userAnswer?.answer ?? '';
 
         answerWidget = GroupButton(
@@ -109,7 +113,8 @@ class QuestionWidget extends StatelessWidget {
           selectedButton: selectedButton != ''
               ? buttons.indexOf(selectedButton).toInt()
               : null,
-          onSelected: (index, isSelected) => onSelected!(buttons[index]),
+          onSelected: (int index, bool isSelected) =>
+              onSelected!(buttons[index]),
           direction: Axis.vertical,
         );
         break;

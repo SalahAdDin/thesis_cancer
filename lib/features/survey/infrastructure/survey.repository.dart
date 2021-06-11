@@ -35,7 +35,7 @@ class GraphQLSurveyRepository implements SurveyRepository {
       final List<dynamic> data = response.data?['surveys'] as List<dynamic>;
       print(Colorize(data.toString()).yellow());
       final List<Survey> result = data
-          .map((item) => Survey.fromJson(item as Map<String, dynamic>))
+          .map((dynamic item) => Survey.fromJson(item as Map<String, dynamic>))
           .toList();
       return result;
     } on Exception catch (error) {
@@ -54,7 +54,7 @@ class GraphQLSurveyRepository implements SurveyRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentGetSurvey),
-        variables: {"id": id},
+        variables: <String, dynamic>{"id": id},
       );
       final QueryResult response = await client.query(options);
       if (response.hasException) {

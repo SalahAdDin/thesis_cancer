@@ -5,11 +5,15 @@ import 'package:thesis_cancer/core/domain/settings/settings.repository.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/infrastructure/settings.gql.dart';
 
+/// **GraphQL** implementation for [SettingsRepository] interface
 class GraphQLSettingsRepository implements SettingsRepository {
+  /// Default constructor, it requires a [Provider] reference [Reader].
   GraphQLSettingsRepository({required this.reader}) : super();
 
+  /// Provider reference [Reader].
   final Reader reader;
 
+  /// Injecting the required [GraphQLClient] by reading it from providers.
   GraphQLClient get client => reader(graphQLClientProvider);
 
   @override
@@ -30,7 +34,7 @@ class GraphQLSettingsRepository implements SettingsRepository {
       final List<dynamic> rawSurveySchedules =
           data['surveySchedules'] as List<dynamic>;
       final List<Map<String, dynamic>> flattenSurveySchedules =
-          rawSurveySchedules.map((data) {
+          rawSurveySchedules.map((dynamic data) {
         final Map<String, dynamic> flattenSurvey = data as Map<String, dynamic>;
         flattenSurvey['survey'] = data['survey']['id'];
         return flattenSurvey;

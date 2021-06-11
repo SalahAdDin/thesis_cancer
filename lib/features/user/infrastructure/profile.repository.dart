@@ -1,9 +1,10 @@
 import 'package:colorize/colorize.dart';
 import 'package:graphql/client.dart';
-import 'package:hooks_riverpod/all.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
+import 'package:thesis_cancer/features/user/application/user.state.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/infrastructure/failure.dart';
@@ -21,7 +22,7 @@ class GraphQLProfileRepository implements ProfileRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentGetProfile),
-        variables: {"id": profileId},
+        variables: <String, dynamic>{"id": profileId},
       );
       final QueryResult response = await client.query(options);
 
@@ -42,7 +43,7 @@ class GraphQLProfileRepository implements ProfileRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentGetProfileByUserId),
-        variables: {"userId": userId},
+        variables: <String, dynamic>{"userId": userId},
       );
       final QueryResult response = await client.query(options);
 
@@ -71,9 +72,8 @@ class GraphQLProfileRepository implements ProfileRepository {
     }
   }
 
-  /* Updates the profile on server
-  * return: The new updated profile to update now on the User state.
-  * */
+  /// Updates the profile on server
+  /// Returns the new updated [Profile] to update now on the [UserState].
   @override
   Future<Profile> updateProfile({
     required String profileId,
@@ -82,7 +82,7 @@ class GraphQLProfileRepository implements ProfileRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentUpdateProfile),
-        variables: {"id": profileId, "data": updatedProfile},
+        variables: <String, dynamic>{"id": profileId, "data": updatedProfile},
       );
       final QueryResult response = await client.query(options);
 
@@ -98,9 +98,8 @@ class GraphQLProfileRepository implements ProfileRepository {
     }
   }
 
-  /* Upload the profile photo on server
-  * return: The new uploaded profile photo to update now on the User state.
-  * */
+  /// Upload the profile photo on server
+  /// Returns the new uploaded [Profile] photo to update now on the [UserState].
   @override
   Future<UploadFile> uploadProfilePhoto(UploadFile profilePhoto) {
     // TODO: implement uploadProfilePhoto

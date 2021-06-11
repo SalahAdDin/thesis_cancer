@@ -14,6 +14,7 @@ import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart'
 import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
 
+/// Login Screen
 class LoginScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
@@ -94,7 +95,7 @@ class LoginScreen extends HookWidget {
                         pushAndReplaceToPage(context, SplashScreen())),*/
                 )),
         // TODO: block backward arrow button on this screen (LoginScreen breaks here).
-        error: (error) => ErrorScreen(
+        error: (String error) => ErrorScreen(
           message: error,
           actionLabel: 'Home',
           onPressed: () => pushAndReplaceToPage(context, SplashScreen()),

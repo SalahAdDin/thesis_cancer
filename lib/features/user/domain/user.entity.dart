@@ -26,7 +26,7 @@ class User with _$User {
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-  static const empty = User(
+  static const User empty = User(
     id: '',
     email: 'name@dummy.com',
     username: 'DummyName',

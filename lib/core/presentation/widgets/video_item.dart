@@ -31,7 +31,7 @@ class _VideoItemState extends State<VideoItem> {
       autoPlay: widget.autoplay,
       looping: widget.looping,
       showControls: false,
-      errorBuilder: (context, errorMessage) {
+      errorBuilder: (BuildContext context, String errorMessage) {
         return Center(
           child: Text(
             errorMessage,

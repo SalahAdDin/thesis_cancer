@@ -27,7 +27,7 @@ class GraphQLAuthRepository implements AuthRepository {
     try {
       final QueryOptions options = QueryOptions(
           document: gql(graphQLDocumentForgotPassword),
-          variables: {
+          variables: <String, dynamic>{
             "email": email,
           });
       final QueryResult response = await client.query(options);
@@ -54,7 +54,7 @@ class GraphQLAuthRepository implements AuthRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentResetPassword),
-        variables: {
+        variables: <String, dynamic>{
           "password": password,
           "passwordConfirmation": passwordConfirmation,
           "code": confirmationCode
@@ -85,7 +85,7 @@ class GraphQLAuthRepository implements AuthRepository {
     try {
       final QueryOptions options = QueryOptions(
           document: gql(graphQLDocumentLoginUser),
-          variables: {
+          variables: <String, dynamic>{
             "identifier": identifier,
             "password": password,
             "provider": provider
@@ -138,7 +138,11 @@ class GraphQLAuthRepository implements AuthRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentRegisterUser),
-        variables: {'username': username, 'email': email, 'password': password},
+        variables: <String, dynamic>{
+          'username': username,
+          'email': email,
+          'password': password
+        },
       );
       final QueryResult response = await client.query(options);
       if (response.hasException) {

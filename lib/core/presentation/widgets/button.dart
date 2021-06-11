@@ -4,10 +4,6 @@ import 'package:thesis_cancer/core/domain/types.dart';
 // TODO: Improve a disable button style(as in web).
 
 class Button extends StatelessWidget {
-  final String buttonLabel;
-  final OnPressedButton? onPressed;
-  final bool isPrimary;
-
   const Button.primary({
     required this.buttonLabel,
     required this.onPressed,
@@ -17,6 +13,10 @@ class Button extends StatelessWidget {
     required this.buttonLabel,
     required this.onPressed,
   }) : isPrimary = false;
+
+  final String buttonLabel;
+  final OnPressedButton? onPressed;
+  final bool isPrimary;
 
   @override
   Widget build(BuildContext context) {

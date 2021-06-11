@@ -11,16 +11,18 @@ import 'package:thesis_cancer/features/home/application/home.provider.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
+/// Application's side menu.
 class SideMenu extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final userEntityController = useProvider(userEntityProvider);
+    final StateController<User> userEntityController =
+        useProvider(userEntityProvider);
     final User sessionUser = userEntityController.state;
     final AuthNotifier authNotifier =
         useProvider(authNotifierProvider.notifier);
-    final tabType = useProvider(tabTypeProvider);
+    final StateController<PostType> tabType = useProvider(tabTypeProvider);
     final PageController pageController =
-        useProvider(pageControllerProvider).state;
+        useProvider(homePageControllerProvider).state;
 
     return Drawer(
       child: SafeArea(
@@ -43,7 +45,7 @@ class SideMenu extends HookWidget {
                         leading: const Icon(Icons.book_outlined),
                         title: const Text('Bilgi'),
                         onTap: () {
-                          tabType.state = ContentType.INFORMATION;
+                          tabType.state = PostType.INFORMATION;
                           pageController.animateToPage(
                             0,
                             duration: const Duration(milliseconds: 500),
@@ -55,7 +57,7 @@ class SideMenu extends HookWidget {
                         leading: const Icon(Icons.self_improvement_outlined),
                         title: const Text('Tedavi'),
                         onTap: () {
-                          tabType.state = ContentType.TREATMENT;
+                          tabType.state = PostType.TREATMENT;
                           pageController.animateToPage(
                             1,
                             duration: const Duration(milliseconds: 500),
@@ -67,7 +69,7 @@ class SideMenu extends HookWidget {
                         leading: const Icon(Icons.science_outlined),
                         title: const Text('Geliştirmeler'),
                         onTap: () {
-                          tabType.state = ContentType.ACADEMY;
+                          tabType.state = PostType.ACADEMY;
                           pageController.animateToPage(
                             2,
                             duration: const Duration(milliseconds: 500),
@@ -81,7 +83,7 @@ class SideMenu extends HookWidget {
                           ),
                           title: const Text('Hikayeler'),
                           onTap: () {
-                            tabType.state = ContentType.SUCCESS_STORIES;
+                            tabType.state = PostType.SUCCESS_STORIES;
                             pageController.animateToPage(
                               3,
                               duration: const Duration(milliseconds: 500),

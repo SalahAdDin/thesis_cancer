@@ -21,7 +21,7 @@ class _$ActivityFeedTearOff {
   const _$ActivityFeedTearOff();
 
   _ActivityFeed call(
-      {required String id,
+      {String? id,
       required ActivityType type,
       required String issuerID,
       required String description}) {
@@ -43,7 +43,7 @@ const $ActivityFeed = _$ActivityFeedTearOff();
 
 /// @nodoc
 mixin _$ActivityFeed {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   ActivityType get type => throw _privateConstructorUsedError;
   String get issuerID => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
@@ -60,7 +60,7 @@ abstract class $ActivityFeedCopyWith<$Res> {
           ActivityFeed value, $Res Function(ActivityFeed) then) =
       _$ActivityFeedCopyWithImpl<$Res>;
   $Res call(
-      {String id, ActivityType type, String issuerID, String description});
+      {String? id, ActivityType type, String issuerID, String description});
 }
 
 /// @nodoc
@@ -82,7 +82,7 @@ class _$ActivityFeedCopyWithImpl<$Res> implements $ActivityFeedCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -107,7 +107,7 @@ abstract class _$ActivityFeedCopyWith<$Res>
       __$ActivityFeedCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id, ActivityType type, String issuerID, String description});
+      {String? id, ActivityType type, String issuerID, String description});
 }
 
 /// @nodoc
@@ -131,7 +131,7 @@ class __$ActivityFeedCopyWithImpl<$Res> extends _$ActivityFeedCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -150,18 +150,19 @@ class __$ActivityFeedCopyWithImpl<$Res> extends _$ActivityFeedCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ActivityFeed implements _ActivityFeed {
+class _$_ActivityFeed extends _ActivityFeed {
   const _$_ActivityFeed(
-      {required this.id,
+      {this.id,
       required this.type,
       required this.issuerID,
-      required this.description});
+      required this.description})
+      : super._();
 
   factory _$_ActivityFeed.fromJson(Map<String, dynamic> json) =>
       _$_$_ActivityFeedFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
   final ActivityType type;
   @override
@@ -209,18 +210,19 @@ class _$_ActivityFeed implements _ActivityFeed {
   }
 }
 
-abstract class _ActivityFeed implements ActivityFeed {
+abstract class _ActivityFeed extends ActivityFeed {
   const factory _ActivityFeed(
-      {required String id,
+      {String? id,
       required ActivityType type,
       required String issuerID,
       required String description}) = _$_ActivityFeed;
+  const _ActivityFeed._() : super._();
 
   factory _ActivityFeed.fromJson(Map<String, dynamic> json) =
       _$_ActivityFeed.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   @override
   ActivityType get type => throw _privateConstructorUsedError;
   @override

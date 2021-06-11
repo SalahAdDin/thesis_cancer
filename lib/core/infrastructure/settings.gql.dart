@@ -1,3 +1,4 @@
+///
 const String graphQLDocumentGetSettings = '''
 query Application{
   application{

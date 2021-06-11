@@ -6,24 +6,25 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/features/content/application/post.provider.dart';
+import 'package:thesis_cancer/features/content/application/post.state.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
 import 'package:thesis_cancer/features/content/presentation/widgets/post_widget.dart';
 
 class PostsList extends HookWidget {
   PostsList({required this.type});
 
-  final ContentType type;
+  final PostType type;
   final RefreshController _refreshController = RefreshController();
 
   @override
   Widget build(BuildContext context) {
-    final screenNotifier = useProvider(postsNotifierProvider(type));
+    final PostsState screenNotifier = useProvider(postsNotifierProvider(type));
     final List<Post> postList = useProvider(postListProvider(type)).state;
     return screenNotifier.when(
       loading: () => const Center(
         child: CircularProgressIndicator(),
       ),
-      error: (error) => ErrorScreen(
+      error: (String? error) => ErrorScreen(
         // TODO: Refresh
         onPressed: () => null,
         message: error.toString(),

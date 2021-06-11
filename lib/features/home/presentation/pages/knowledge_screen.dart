@@ -6,6 +6,6 @@ import 'package:thesis_cancer/features/home/presentation/widgets/posts_list.dart
 class KnowledgeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return PostsList(type: ContentType.INFORMATION);
+    return PostsList(type: PostType.INFORMATION);
   }
 }

@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 
+/// [PostWidget]'s header.
 class PostHeader extends StatelessWidget {
+  ///
   const PostHeader({
     required this.author,
     Key? key,
   }) : super(key: key);
 
+  ///
   final Profile author;
 
   @override

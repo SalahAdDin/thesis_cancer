@@ -15,6 +15,10 @@ class Question with _$Question {
 
   factory Question.fromJson(Map<String, dynamic> json) =>
       _$QuestionFromJson(json);
-  static const empty = Question(
-      id: '', statement: 'This is a dummy question!', type: QuestionType.BOOL);
+  static const Question empty = Question(
+    id: '',
+    statement: 'This is a dummy question!',
+    type: QuestionType.BOOL,
+  );
+
 }

@@ -22,7 +22,7 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentCountResults),
-        variables: {"surveyID": surveyId, "userID": userId},
+        variables: <String, dynamic>{"surveyID": surveyId, "userID": userId},
       );
       final QueryResult response = await client.query(options);
       if (response.hasException) {
@@ -41,7 +41,7 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentCreateResult),
-        variables: {"data": userSurveyResult},
+        variables: <String, dynamic>{"data": userSurveyResult},
       );
       final QueryResult response = await client.query(options);
       if (response.hasException) {
