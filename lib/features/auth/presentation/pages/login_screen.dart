@@ -31,7 +31,7 @@ class LoginScreen extends HookWidget {
       //footer: AppLiterals.copyRight,
       // TODO: logo: '',
       messages: LoginMessages(
-        usernameHint: "E-posta",
+        userHint: "E-posta",
         passwordHint: "Şifre",
         confirmPasswordHint: "Şifreyi Onayla",
         forgotPasswordButton: "Şifremi unuttum",
