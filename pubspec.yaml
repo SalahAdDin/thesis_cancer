@@ -21,19 +21,20 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  # badges: ^2.0.1
   cached_network_image: ^3.0.0
   card_swiper: ^1.0.2
   # carousel_slider: ^4.0.0-nullsafety.0
   chewie: ^1.2.2
   colorize: ^3.0.0
-  # connectivity: ^3.0.3
-  # device_info: ^2.0.0
+  # connectivity_plus: ^1.0.2
+  # connectivity_plus: ^1.0.2
   dots_indicator: ^2.0.0
   enum_to_string: ^2.0.1
   # fluro: ^2.0.3
   flutter:
     sdk: flutter
-  # flutter_form_builder: ^6.0.0-nullsafety.1
+  # flutter_form_builder: ^6.0.1
   # flutter_app_badger: ^1.2.0
   flutter_hooks: ^0.17.0
   flutter_local_notifications: ^6.0.0
@@ -44,7 +45,7 @@ dependencies:
   # flutter_whatsnew: ^1.0.3
   form_field_validator: ^1.1.0
   freezed_annotation: ^0.14.2
-  graphql: ^5.0.0-nullsafety.5
+  graphql: ^5.0.0
   group_button: ^2.2.2
   hooks_riverpod: ^0.14.0+4
   introduction_screen: ^2.1.0
