@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:rxdart/subjects.dart';
 import 'package:thesis_cancer/features/notification/domain/activityfeed.entity.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -19,6 +20,10 @@ class LocalNotificationService {
   ///
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+
+  ///
+  final BehaviorSubject<ActivityFeed> didReceiveLocalNotificationSubject =
+      BehaviorSubject<ActivityFeed>();
 
   ///
   late InitializationSettings initializationSettings;
@@ -147,7 +152,9 @@ class LocalNotificationService {
     String? payload,
   ) async {
     if (payload != null) {
-      // await handleOnNotificationClick(payload);
+      final ActivityFeed feed = ActivityFeed.fromPayload(payload: payload);
+      await cancelNotificationById(feed.hashCode);
+      didReceiveLocalNotificationSubject.add(feed);
     }
   }
 
@@ -194,7 +201,7 @@ class LocalNotificationService {
         feed.hashCode,
         feed.title,
         feed.description,
-        tz.TZDateTime.now(tz.local).add(Duration(minutes: step)),
+        tz.TZDateTime.now(tz.local).add(Duration(days: step * 7)),
         notificationDetails,
         payload: jsonEncode(feed),
         uiLocalNotificationDateInterpretation:

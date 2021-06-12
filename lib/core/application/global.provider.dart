@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:package_info/package_info.dart';
