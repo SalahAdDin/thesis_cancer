@@ -37,7 +37,7 @@ dependencies:
   # flutter_app_badger: ^1.2.0
   flutter_hooks: ^0.17.0
   flutter_local_notifications: ^6.0.0
-  flutter_login: ^2.0.0-nullsafety.0
+  flutter_login: ^2.0.0
   flutter_native_timezone: ^2.0.0
   # flutter_markdown: ^0.6.1
   # fluttertoast: ^8.0.3
