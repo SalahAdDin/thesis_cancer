@@ -11,6 +11,7 @@ fragment ProfileFields on Profile {
     height
     url
     previewUrl
+    mime
   }
   role
   phoneNumber
