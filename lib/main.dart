@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,6 +50,7 @@ class CancerApp extends HookWidget {
     LocalNotificationService()
         .handleApplicationWasLaunchedFromNotification(_onSelectNotification);
     LocalNotificationService().setOnSelectNotification(_onSelectNotification);
+    _configureDidReceiveLocalNotification();
 
     // final navigator = useProvider(navigatorProvider);
     final Settings? appSettings = useProvider(settingsProvider).data?.value;
@@ -101,23 +104,25 @@ class CancerApp extends HookWidget {
     }
   }
 
-  Future<void> _configureDidReceiveLocalNotification(String payload) async {
-    final ActivityFeed feed = ActivityFeed.fromPayload(payload: payload);
-    await LocalNotificationService().cancelNotificationById(feed.hashCode);
-    final BuildContext context = useContext();
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: Text(feed.title),
-        content: Text(feed.description),
-        actions: <Widget>[
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            onPressed: () async => _onSelectNotification(payload),
-            child: const Text('Ok'),
-          )
-        ],
-      ),
-    );
+  Future<void> _configureDidReceiveLocalNotification() async {
+    LocalNotificationService()
+        .didReceiveLocalNotificationSubject
+        .stream
+        .listen((ActivityFeed feed) async {
+      await showDialog(
+        context: _navigatorKey.currentState!.context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text(feed.title),
+          content: Text(feed.description),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () async => _onSelectNotification(jsonEncode(feed)),
+              child: const Text('Ok'),
+            )
+          ],
+        ),
+      );
+    });
   }
 }
