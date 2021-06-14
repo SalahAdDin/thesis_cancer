@@ -1,8 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/application/responsive.dart';
+import 'package:thesis_cancer/core/domain/constants.dart';
 import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
+import 'package:thesis_cancer/features/user/presentation/pages/profile_screen.dart';
 
 /// Side Menu's header
 class SideMenuHeader extends StatelessWidget {
@@ -42,6 +45,7 @@ class SideMenuHeader extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
                 onTap: () {},
+                onTap: () => pushToPage(context, ProfileScreen()),
                 child: Row(
                   children: <Widget>[
                     UserAvatar(userAvatarUrl: userAvatarUrl),

@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
+import 'package:thesis_cancer/core/domain/constants.dart';
 import 'package:thesis_cancer/core/domain/settings/schedules.entity.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
@@ -91,7 +92,7 @@ class MainLayout extends HookWidget {
   Widget build(BuildContext context) {
     // final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: const Header(),
+      appBar: Header(),
       endDrawer: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 300),
         child: SideMenu(),

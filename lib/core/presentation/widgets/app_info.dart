@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:package_info/package_info.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
-import 'package:thesis_cancer/core/domain/configuration.dart';
+import 'package:thesis_cancer/core/domain/constants.dart';
 
 /// Application's basic information widget.
 class AppInfo extends HookWidget {
