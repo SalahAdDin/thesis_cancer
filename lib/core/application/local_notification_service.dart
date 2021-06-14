@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:rxdart/subjects.dart';
@@ -142,6 +143,8 @@ class LocalNotificationService {
       await _requestOsXPermissions();
     }
     */
+
+    await updateBadgeCount();
   }
 
   /// Work around for old iOS versions (10-).
@@ -222,4 +225,25 @@ class LocalNotificationService {
         notificationDetails,
         payload: jsonEncode(feed),
       );
+
+  ///
+  Future<void> updateBadgeCount() async {
+    final int notificationsCount = await getPendingNotificationCount();
+    final bool supportBadgesCount =
+        await FlutterAppBadger.isAppBadgeSupported();
+    if (supportBadgesCount) {
+      if (notificationsCount > 0) {
+        FlutterAppBadger.updateBadgeCount(await getPendingNotificationCount());
+      } else {
+        FlutterAppBadger.removeBadge();
+      }
+    }
+  }
+
+  ///
+  Future<int> getPendingNotificationCount() async {
+    final List<PendingNotificationRequest> pendingNotificationRequests =
+        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+    return pendingNotificationRequests.length;
+  }
 }

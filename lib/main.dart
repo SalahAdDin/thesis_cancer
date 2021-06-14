@@ -77,6 +77,8 @@ class CancerApp extends HookWidget {
   Future<void> _onSelectNotification(String payload) async {
     final ActivityFeed feed = ActivityFeed.fromPayload(payload: payload);
     await LocalNotificationService().cancelNotificationById(feed.hashCode);
+    await LocalNotificationService().updateBadgeCount();
+
     switch (feed.type) {
       case ActivityType.NEW_COMMENT:
         // TODO: Handle this case.
