@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/application/launcher/launcher.notifier.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/side_menu/side_menu_footer.dart';
 import 'package:thesis_cancer/core/presentation/widgets/side_menu/side_menu_header.dart';
-import 'package:thesis_cancer/features/auth/application/auth.notifier.dart';
-import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/home/application/home.provider.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
@@ -18,8 +18,8 @@ class SideMenu extends HookWidget {
     final StateController<User> userEntityController =
         useProvider(userEntityProvider);
     final User sessionUser = userEntityController.state;
-    final AuthNotifier authNotifier =
-        useProvider(authNotifierProvider.notifier);
+    final LauncherNotifier launcherNotifier =
+        useProvider(launcherProvider.notifier);
     final StateController<PostType> tabType = useProvider(tabTypeProvider);
     final PageController pageController =
         useProvider(homePageControllerProvider).state;
@@ -99,7 +99,7 @@ class SideMenu extends HookWidget {
                   ListTile(
                     leading: const Icon(Icons.exit_to_app),
                     title: const Text('Çıkış yap'),
-                    onTap: () => authNotifier.signOut(),
+                    onTap: () => launcherNotifier.signOut(),
                   ),
                 ],
               ),

@@ -100,7 +100,6 @@ class LoginScreen extends HookWidget {
           actionLabel: 'Home',
           onPressed: () => pushAndReplaceToPage(context, SplashScreen()),
         ),
-        loggedOut: () => null,
       ),
     );
   }

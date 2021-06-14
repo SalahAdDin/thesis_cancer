@@ -27,7 +27,6 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
   /// [DataStoreRepository] to read the application's storage.
   DataStoreRepository get dataStore => reader(dataStoreRepositoryProvider);
 
-  // TODO: should this to watch the user controller?
   /// User's provider [StateController] to manipulate the current user.
   StateController<User?> get userController =>
       reader(userEntityProvider.notifier);
@@ -54,5 +53,14 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
       tokenController.state = profileData.token!;
       state = const LauncherState.profileLoaded();
     }
+  }
+
+  /// Close the user's session by cleaning [tokenProvider], [userEntityProvider],
+  /// [Database] and setting [LauncherState.needsProfile] as [LauncherState].
+  Future<void> signOut() async {
+    tokenController.state = '';
+    userController.state = User.empty;
+    await dataStore.removeUserProfile();
+    state = const LauncherState.needsProfile();
   }
 }

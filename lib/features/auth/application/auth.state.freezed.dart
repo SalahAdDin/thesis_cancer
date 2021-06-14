@@ -28,10 +28,6 @@ class _$AuthStateTearOff {
     return const _LoggedIn();
   }
 
-  _LoggedOut loggedOut() {
-    return const _LoggedOut();
-  }
-
   _Error error(String error) {
     return _Error(
       error,
@@ -53,7 +49,6 @@ mixin _$AuthState {
     required TResult Function() loading,
     required TResult Function() signedUp,
     required TResult Function() loggedIn,
-    required TResult Function() loggedOut,
     required TResult Function(String error) error,
     required TResult Function() resetPassword,
   }) =>
@@ -63,7 +58,6 @@ mixin _$AuthState {
     TResult Function()? loading,
     TResult Function()? signedUp,
     TResult Function()? loggedIn,
-    TResult Function()? loggedOut,
     TResult Function(String error)? error,
     TResult Function()? resetPassword,
     required TResult orElse(),
@@ -74,7 +68,6 @@ mixin _$AuthState {
     required TResult Function(_Loading value) loading,
     required TResult Function(_SignedUp value) signedUp,
     required TResult Function(_LoggedIn value) loggedIn,
-    required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_Error value) error,
     required TResult Function(_ResetPassword value) resetPassword,
   }) =>
@@ -84,7 +77,6 @@ mixin _$AuthState {
     TResult Function(_Loading value)? loading,
     TResult Function(_SignedUp value)? signedUp,
     TResult Function(_LoggedIn value)? loggedIn,
-    TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_Error value)? error,
     TResult Function(_ResetPassword value)? resetPassword,
     required TResult orElse(),
@@ -147,7 +139,6 @@ class _$_Loading implements _Loading {
     required TResult Function() loading,
     required TResult Function() signedUp,
     required TResult Function() loggedIn,
-    required TResult Function() loggedOut,
     required TResult Function(String error) error,
     required TResult Function() resetPassword,
   }) {
@@ -160,7 +151,6 @@ class _$_Loading implements _Loading {
     TResult Function()? loading,
     TResult Function()? signedUp,
     TResult Function()? loggedIn,
-    TResult Function()? loggedOut,
     TResult Function(String error)? error,
     TResult Function()? resetPassword,
     required TResult orElse(),
@@ -177,7 +167,6 @@ class _$_Loading implements _Loading {
     required TResult Function(_Loading value) loading,
     required TResult Function(_SignedUp value) signedUp,
     required TResult Function(_LoggedIn value) loggedIn,
-    required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_Error value) error,
     required TResult Function(_ResetPassword value) resetPassword,
   }) {
@@ -190,7 +179,6 @@ class _$_Loading implements _Loading {
     TResult Function(_Loading value)? loading,
     TResult Function(_SignedUp value)? signedUp,
     TResult Function(_LoggedIn value)? loggedIn,
-    TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_Error value)? error,
     TResult Function(_ResetPassword value)? resetPassword,
     required TResult orElse(),
@@ -246,7 +234,6 @@ class _$_SignedUp implements _SignedUp {
     required TResult Function() loading,
     required TResult Function() signedUp,
     required TResult Function() loggedIn,
-    required TResult Function() loggedOut,
     required TResult Function(String error) error,
     required TResult Function() resetPassword,
   }) {
@@ -259,7 +246,6 @@ class _$_SignedUp implements _SignedUp {
     TResult Function()? loading,
     TResult Function()? signedUp,
     TResult Function()? loggedIn,
-    TResult Function()? loggedOut,
     TResult Function(String error)? error,
     TResult Function()? resetPassword,
     required TResult orElse(),
@@ -276,7 +262,6 @@ class _$_SignedUp implements _SignedUp {
     required TResult Function(_Loading value) loading,
     required TResult Function(_SignedUp value) signedUp,
     required TResult Function(_LoggedIn value) loggedIn,
-    required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_Error value) error,
     required TResult Function(_ResetPassword value) resetPassword,
   }) {
@@ -289,7 +274,6 @@ class _$_SignedUp implements _SignedUp {
     TResult Function(_Loading value)? loading,
     TResult Function(_SignedUp value)? signedUp,
     TResult Function(_LoggedIn value)? loggedIn,
-    TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_Error value)? error,
     TResult Function(_ResetPassword value)? resetPassword,
     required TResult orElse(),
@@ -345,7 +329,6 @@ class _$_LoggedIn implements _LoggedIn {
     required TResult Function() loading,
     required TResult Function() signedUp,
     required TResult Function() loggedIn,
-    required TResult Function() loggedOut,
     required TResult Function(String error) error,
     required TResult Function() resetPassword,
   }) {
@@ -358,7 +341,6 @@ class _$_LoggedIn implements _LoggedIn {
     TResult Function()? loading,
     TResult Function()? signedUp,
     TResult Function()? loggedIn,
-    TResult Function()? loggedOut,
     TResult Function(String error)? error,
     TResult Function()? resetPassword,
     required TResult orElse(),
@@ -375,7 +357,6 @@ class _$_LoggedIn implements _LoggedIn {
     required TResult Function(_Loading value) loading,
     required TResult Function(_SignedUp value) signedUp,
     required TResult Function(_LoggedIn value) loggedIn,
-    required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_Error value) error,
     required TResult Function(_ResetPassword value) resetPassword,
   }) {
@@ -388,7 +369,6 @@ class _$_LoggedIn implements _LoggedIn {
     TResult Function(_Loading value)? loading,
     TResult Function(_SignedUp value)? signedUp,
     TResult Function(_LoggedIn value)? loggedIn,
-    TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_Error value)? error,
     TResult Function(_ResetPassword value)? resetPassword,
     required TResult orElse(),
@@ -402,106 +382,6 @@ class _$_LoggedIn implements _LoggedIn {
 
 abstract class _LoggedIn implements AuthState {
   const factory _LoggedIn() = _$_LoggedIn;
-}
-
-/// @nodoc
-abstract class _$LoggedOutCopyWith<$Res> {
-  factory _$LoggedOutCopyWith(
-          _LoggedOut value, $Res Function(_LoggedOut) then) =
-      __$LoggedOutCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$LoggedOutCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
-    implements _$LoggedOutCopyWith<$Res> {
-  __$LoggedOutCopyWithImpl(_LoggedOut _value, $Res Function(_LoggedOut) _then)
-      : super(_value, (v) => _then(v as _LoggedOut));
-
-  @override
-  _LoggedOut get _value => super._value as _LoggedOut;
-}
-
-/// @nodoc
-
-class _$_LoggedOut implements _LoggedOut {
-  const _$_LoggedOut();
-
-  @override
-  String toString() {
-    return 'AuthState.loggedOut()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _LoggedOut);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function() signedUp,
-    required TResult Function() loggedIn,
-    required TResult Function() loggedOut,
-    required TResult Function(String error) error,
-    required TResult Function() resetPassword,
-  }) {
-    return loggedOut();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function()? signedUp,
-    TResult Function()? loggedIn,
-    TResult Function()? loggedOut,
-    TResult Function(String error)? error,
-    TResult Function()? resetPassword,
-    required TResult orElse(),
-  }) {
-    if (loggedOut != null) {
-      return loggedOut();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_SignedUp value) signedUp,
-    required TResult Function(_LoggedIn value) loggedIn,
-    required TResult Function(_LoggedOut value) loggedOut,
-    required TResult Function(_Error value) error,
-    required TResult Function(_ResetPassword value) resetPassword,
-  }) {
-    return loggedOut(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_SignedUp value)? signedUp,
-    TResult Function(_LoggedIn value)? loggedIn,
-    TResult Function(_LoggedOut value)? loggedOut,
-    TResult Function(_Error value)? error,
-    TResult Function(_ResetPassword value)? resetPassword,
-    required TResult orElse(),
-  }) {
-    if (loggedOut != null) {
-      return loggedOut(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _LoggedOut implements AuthState {
-  const factory _LoggedOut() = _$_LoggedOut;
 }
 
 /// @nodoc
@@ -569,7 +449,6 @@ class _$_Error implements _Error {
     required TResult Function() loading,
     required TResult Function() signedUp,
     required TResult Function() loggedIn,
-    required TResult Function() loggedOut,
     required TResult Function(String error) error,
     required TResult Function() resetPassword,
   }) {
@@ -582,7 +461,6 @@ class _$_Error implements _Error {
     TResult Function()? loading,
     TResult Function()? signedUp,
     TResult Function()? loggedIn,
-    TResult Function()? loggedOut,
     TResult Function(String error)? error,
     TResult Function()? resetPassword,
     required TResult orElse(),
@@ -599,7 +477,6 @@ class _$_Error implements _Error {
     required TResult Function(_Loading value) loading,
     required TResult Function(_SignedUp value) signedUp,
     required TResult Function(_LoggedIn value) loggedIn,
-    required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_Error value) error,
     required TResult Function(_ResetPassword value) resetPassword,
   }) {
@@ -612,7 +489,6 @@ class _$_Error implements _Error {
     TResult Function(_Loading value)? loading,
     TResult Function(_SignedUp value)? signedUp,
     TResult Function(_LoggedIn value)? loggedIn,
-    TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_Error value)? error,
     TResult Function(_ResetPassword value)? resetPassword,
     required TResult orElse(),
@@ -674,7 +550,6 @@ class _$_ResetPassword implements _ResetPassword {
     required TResult Function() loading,
     required TResult Function() signedUp,
     required TResult Function() loggedIn,
-    required TResult Function() loggedOut,
     required TResult Function(String error) error,
     required TResult Function() resetPassword,
   }) {
@@ -687,7 +562,6 @@ class _$_ResetPassword implements _ResetPassword {
     TResult Function()? loading,
     TResult Function()? signedUp,
     TResult Function()? loggedIn,
-    TResult Function()? loggedOut,
     TResult Function(String error)? error,
     TResult Function()? resetPassword,
     required TResult orElse(),
@@ -704,7 +578,6 @@ class _$_ResetPassword implements _ResetPassword {
     required TResult Function(_Loading value) loading,
     required TResult Function(_SignedUp value) signedUp,
     required TResult Function(_LoggedIn value) loggedIn,
-    required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_Error value) error,
     required TResult Function(_ResetPassword value) resetPassword,
   }) {
@@ -717,7 +590,6 @@ class _$_ResetPassword implements _ResetPassword {
     TResult Function(_Loading value)? loading,
     TResult Function(_SignedUp value)? signedUp,
     TResult Function(_LoggedIn value)? loggedIn,
-    TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_Error value)? error,
     TResult Function(_ResetPassword value)? resetPassword,
     required TResult orElse(),

@@ -35,17 +35,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
     super.dispose();
   }
 
-  Future<String?> signOut() async {
-    try {
-      tokenController.state = '';
-      await dataStore.removeUserProfile();
-      state = const AuthState.loggedOut();
-    } on Exception catch (error) {
-      // TODO: Which exception?
-      state = AuthState.error(error.toString());
-    }
-  }
-
   Future<String?> registerUser({
     required String username,
     required String password,
@@ -68,6 +57,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }*/
   }
 
+  ///
   Future<String?> signIn({
     required String username,
     required String password,
@@ -183,7 +173,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
           confirmationCode: confirmationCode) as Map<String, dynamic>;
       final User sessionUser = User.fromJson(rawUser);
       // TODO: Redirect to login page again as with logout.
-      state = const AuthState.loggedOut();
+      // state = const AuthState.loggedOut();
     } on ResetPasswordFailure catch (error) {
       // state = AuthState.error(error.toString());
       return error.toString();
