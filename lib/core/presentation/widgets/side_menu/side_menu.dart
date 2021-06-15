@@ -30,8 +30,7 @@ class SideMenu extends HookWidget {
           children: <Widget>[
             SideMenuHeader(
               displayedUserName: sessionUser.username,
-              displayedName:
-                  "${sessionUser.profile?.firstName} ${sessionUser.profile?.lastName}",
+              displayedName: sessionUser.profile!.fullName,
               userAvatarUrl: sessionUser.profile!.profilePhoto?.url,
             ),
             Expanded(

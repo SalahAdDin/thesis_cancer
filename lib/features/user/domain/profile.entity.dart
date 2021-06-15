@@ -20,10 +20,16 @@ class Profile with _$Profile {
     String? bio,
   }) = _Profile;
 
+  const Profile._();
+
   ///Builds a [Profile] from a given json [String].
   factory Profile.fromJson(Map<String, dynamic> json) =>
       _$ProfileFromJson(json);
 
   /// Builds a empty(dummy) [Profile].
   static const Profile empty = Profile(firstName: 'Dummy', lastName: 'Do');
+
+  ///
+  String get fullName =>
+      firstName != null && lastName != null ? "$firstName $lastName" : '';
 }

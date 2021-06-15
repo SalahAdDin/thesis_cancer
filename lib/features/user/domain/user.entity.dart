@@ -8,7 +8,6 @@ import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 part 'user.entity.freezed.dart';
 part 'user.entity.g.dart';
 
-// TODO: First name, last name?
 @freezed
 class User with _$User {
   const factory User({

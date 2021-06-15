@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
-import 'package:thesis_cancer/core/application/responsive.dart';
 import 'package:thesis_cancer/core/domain/constants.dart';
 import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
 import 'package:thesis_cancer/features/user/presentation/pages/profile_screen.dart';
@@ -44,26 +43,35 @@ class SideMenuHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             GestureDetector(
-                onTap: () {},
+                key: GlobalKeys().userNameButtonKey,
                 onTap: () => pushToPage(context, ProfileScreen()),
                 child: Row(
                   children: <Widget>[
                     UserAvatar(userAvatarUrl: userAvatarUrl),
-                    Visibility(
-                      visible: !isMobile(context),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Column(
                         children: <Widget>[
                           // SizedBox(width: 10),
                           Text(
                             displayedName,
-                            style: Theme.of(context).textTheme.headline4,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline4!
+                                .copyWith(fontSize: 14),
                           ),
-                          Text(displayedUserName,
-                              style: Theme.of(context).textTheme.subtitle1),
+                          Text(
+                            displayedUserName,
+                            // TODO: Should be gray
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(fontSize: 10),
+                          ),
                           // SizedBox(width: 20)
                         ],
                       ),
-                    ),
+                    )
                   ],
                 )),
             Row(
