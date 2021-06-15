@@ -20,11 +20,19 @@ _$_Settings _$_$_SettingsFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_SettingsToJson(_$_Settings instance) =>
-    <String, dynamic>{
-      'introductoryVideo': instance.introductoryVideo?.toJson(),
-      'registeringSurvey': instance.registeringSurvey,
-      'surveySchedules':
-          instance.surveySchedules?.map((e) => e.toJson()).toList(),
-      'darkTheme': instance.darkTheme,
-    };
+Map<String, dynamic> _$_$_SettingsToJson(_$_Settings instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('introductoryVideo', instance.introductoryVideo?.toJson());
+  writeNotNull('registeringSurvey', instance.registeringSurvey);
+  writeNotNull('surveySchedules',
+      instance.surveySchedules?.map((e) => e.toJson()).toList());
+  val['darkTheme'] = instance.darkTheme;
+  return val;
+}

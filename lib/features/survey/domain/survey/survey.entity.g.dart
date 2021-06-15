@@ -20,10 +20,21 @@ _$_Survey _$_$_SurveyFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_SurveyToJson(_$_Survey instance) => <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'intro': instance.intro,
-      'questions': instance.questions?.map((e) => e.toJson()).toList(),
-    };
+Map<String, dynamic> _$_$_SurveyToJson(_$_Survey instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'title': instance.title,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('createdAt', instance.createdAt?.toIso8601String());
+  writeNotNull('intro', instance.intro);
+  writeNotNull(
+      'questions', instance.questions?.map((e) => e.toJson()).toList());
+  return val;
+}

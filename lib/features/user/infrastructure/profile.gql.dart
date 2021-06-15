@@ -1,3 +1,4 @@
+/// GraphQL Fragment containing the required attributes for ous query/mutation.
 const String graphQLFragmentBody = '''
 fragment ProfileFields on Profile {
   id
@@ -5,6 +6,7 @@ fragment ProfileFields on Profile {
   firstName
   lastName
   profilePhoto {
+    id
     alternativeText
     caption
     width
@@ -21,6 +23,7 @@ fragment ProfileFields on Profile {
 }
 ''';
 
+///
 const String graphQLDocumentGetProfile = '''
 query GetProfileById(\$id: ID!){
   profile(id: \$id){
@@ -29,6 +32,7 @@ query GetProfileById(\$id: ID!){
 }
 ''';
 
+///
 const String graphQLDocumentGetProfileByUserId = '''
 $graphQLFragmentBody
 query GetProfileByUserId(\$userId: ID!) {
@@ -38,6 +42,7 @@ query GetProfileByUserId(\$userId: ID!) {
 }
 ''';
 
+///
 const String graphQLDocumentUpdateProfile = '''
 $graphQLFragmentBody
 mutation UpdateProfile(\$id: ID!, \$data: editProfileInput) {
@@ -49,6 +54,7 @@ mutation UpdateProfile(\$id: ID!, \$data: editProfileInput) {
 }
 ''';
 
+///
 const String graphQLDocumentListProfiles = '''
 $graphQLFragmentBody
 query ListProfiles {

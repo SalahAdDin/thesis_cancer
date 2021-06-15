@@ -15,13 +15,22 @@ _$_Question _$_$_QuestionFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_QuestionToJson(_$_Question instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'statement': instance.statement,
-      'type': _$QuestionTypeEnumMap[instance.type],
-      'answer': instance.answer,
-    };
+Map<String, dynamic> _$_$_QuestionToJson(_$_Question instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'statement': instance.statement,
+    'type': _$QuestionTypeEnumMap[instance.type],
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('answer', instance.answer);
+  return val;
+}
 
 K _$enumDecode<K, V>(
   Map<K, V> enumValues,

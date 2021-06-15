@@ -8,6 +8,7 @@ part 'uploadfile.entity.g.dart';
 class UploadFile with _$UploadFile {
   ///
   const factory UploadFile({
+    String? id,
     required String alternativeText,
     required String caption,
     required String url,

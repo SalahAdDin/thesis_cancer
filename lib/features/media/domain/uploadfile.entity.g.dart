@@ -8,6 +8,7 @@ part of 'uploadfile.entity.dart';
 
 _$_UploadFile _$_$_UploadFileFromJson(Map<String, dynamic> json) {
   return _$_UploadFile(
+    id: json['id'] as String?,
     alternativeText: json['alternativeText'] as String,
     caption: json['caption'] as String,
     url: json['url'] as String,
@@ -17,12 +18,21 @@ _$_UploadFile _$_$_UploadFileFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_UploadFileToJson(_$_UploadFile instance) =>
-    <String, dynamic>{
-      'alternativeText': instance.alternativeText,
-      'caption': instance.caption,
-      'url': instance.url,
-      'width': instance.width,
-      'height': instance.height,
-      'mime': instance.mime,
-    };
+Map<String, dynamic> _$_$_UploadFileToJson(_$_UploadFile instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  val['alternativeText'] = instance.alternativeText;
+  val['caption'] = instance.caption;
+  val['url'] = instance.url;
+  writeNotNull('width', instance.width);
+  writeNotNull('height', instance.height);
+  writeNotNull('mime', instance.mime);
+  return val;
+}

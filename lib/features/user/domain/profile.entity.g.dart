@@ -22,17 +22,25 @@ _$_Profile _$_$_ProfileFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_ProfileToJson(_$_Profile instance) =>
-    <String, dynamic>{
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
-      'profilePhoto': instance.profilePhoto?.toJson(),
-      'role': _$UserRoleEnumMap[instance.role],
-      'phoneNumber': instance.phoneNumber,
-      'hasSeenTutorial': instance.hasSeenTutorial,
-      'hasSeenIntroductoryVideo': instance.hasSeenIntroductoryVideo,
-      'bio': instance.bio,
-    };
+Map<String, dynamic> _$_$_ProfileToJson(_$_Profile instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('firstName', instance.firstName);
+  writeNotNull('lastName', instance.lastName);
+  writeNotNull('profilePhoto', instance.profilePhoto?.toJson());
+  val['role'] = _$UserRoleEnumMap[instance.role];
+  writeNotNull('phoneNumber', instance.phoneNumber);
+  writeNotNull('hasSeenTutorial', instance.hasSeenTutorial);
+  writeNotNull('hasSeenIntroductoryVideo', instance.hasSeenIntroductoryVideo);
+  writeNotNull('bio', instance.bio);
+  return val;
+}
 
 K _$enumDecode<K, V>(
   Map<K, V> enumValues,

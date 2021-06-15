@@ -32,16 +32,27 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
-      'id': instance.id,
-      'email': instance.email,
-      'username': instance.username,
-      'profile': instance.profile?.toJson(),
-      'token': instance.token,
-      'confirmed': instance.confirmed,
-      'isLoggedIn': instance.isLoggedIn,
-      'surveyResults': instance.surveyResults?.map((e) => e.toJson()).toList(),
-      'posts': instance.posts?.map((e) => e.toJson()).toList(),
-      'comments': instance.comments?.map((e) => e.toJson()).toList(),
-      'likes': instance.likes?.map((e) => e.toJson()).toList(),
-    };
+Map<String, dynamic> _$_$_UserToJson(_$_User instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'email': instance.email,
+    'username': instance.username,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('profile', instance.profile?.toJson());
+  writeNotNull('token', instance.token);
+  writeNotNull('confirmed', instance.confirmed);
+  writeNotNull('isLoggedIn', instance.isLoggedIn);
+  writeNotNull(
+      'surveyResults', instance.surveyResults?.map((e) => e.toJson()).toList());
+  writeNotNull('posts', instance.posts?.map((e) => e.toJson()).toList());
+  writeNotNull('comments', instance.comments?.map((e) => e.toJson()).toList());
+  writeNotNull('likes', instance.likes?.map((e) => e.toJson()).toList());
+  return val;
+}

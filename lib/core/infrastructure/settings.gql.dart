@@ -3,6 +3,7 @@ const String graphQLDocumentGetSettings = '''
 query Application{
   application{
     introductoryVideo{
+      id
       url
       alternativeText
       caption

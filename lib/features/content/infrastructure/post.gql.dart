@@ -6,6 +6,7 @@ fragment PostFields on Post {
   description
   title
   gallery {
+    id
     url
     alternativeText
     caption

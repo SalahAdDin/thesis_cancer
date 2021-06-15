@@ -28,17 +28,27 @@ _$_Post _$_$_PostFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_PostToJson(_$_Post instance) => <String, dynamic>{
-      'id': instance.id,
-      'type': _$PostTypeEnumMap[instance.type],
-      'description': instance.description,
-      'gallery': instance.gallery.map((e) => e.toJson()).toList(),
-      'title': instance.title,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'comments': instance.comments?.map((e) => e.toJson()).toList(),
-      'likes': instance.likes?.map((e) => e.toJson()).toList(),
-      'likesCount': instance.likesCount,
-    };
+Map<String, dynamic> _$_$_PostToJson(_$_Post instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'type': _$PostTypeEnumMap[instance.type],
+    'description': instance.description,
+    'gallery': instance.gallery.map((e) => e.toJson()).toList(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('title', instance.title);
+  writeNotNull('createdAt', instance.createdAt?.toIso8601String());
+  writeNotNull('comments', instance.comments?.map((e) => e.toJson()).toList());
+  writeNotNull('likes', instance.likes?.map((e) => e.toJson()).toList());
+  val['likesCount'] = instance.likesCount;
+  return val;
+}
 
 K _$enumDecode<K, V>(
   Map<K, V> enumValues,

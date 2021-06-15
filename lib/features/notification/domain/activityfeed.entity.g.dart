@@ -15,13 +15,21 @@ _$_ActivityFeed _$_$_ActivityFeedFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_ActivityFeedToJson(_$_ActivityFeed instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'type': _$ActivityTypeEnumMap[instance.type],
-      'issuerID': instance.issuerID,
-      'description': instance.description,
-    };
+Map<String, dynamic> _$_$_ActivityFeedToJson(_$_ActivityFeed instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  val['type'] = _$ActivityTypeEnumMap[instance.type];
+  val['issuerID'] = instance.issuerID;
+  val['description'] = instance.description;
+  return val;
+}
 
 K _$enumDecode<K, V>(
   Map<K, V> enumValues,

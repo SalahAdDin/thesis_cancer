@@ -21,13 +21,15 @@ class _$UploadFileTearOff {
   const _$UploadFileTearOff();
 
   _UploadFile call(
-      {required String alternativeText,
+      {String? id,
+      required String alternativeText,
       required String caption,
       required String url,
       int? width,
       int? height,
       String? mime}) {
     return _UploadFile(
+      id: id,
       alternativeText: alternativeText,
       caption: caption,
       url: url,
@@ -47,6 +49,7 @@ const $UploadFile = _$UploadFileTearOff();
 
 /// @nodoc
 mixin _$UploadFile {
+  String? get id => throw _privateConstructorUsedError;
   String get alternativeText => throw _privateConstructorUsedError;
   String get caption => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
@@ -66,7 +69,8 @@ abstract class $UploadFileCopyWith<$Res> {
           UploadFile value, $Res Function(UploadFile) then) =
       _$UploadFileCopyWithImpl<$Res>;
   $Res call(
-      {String alternativeText,
+      {String? id,
+      String alternativeText,
       String caption,
       String url,
       int? width,
@@ -84,6 +88,7 @@ class _$UploadFileCopyWithImpl<$Res> implements $UploadFileCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? alternativeText = freezed,
     Object? caption = freezed,
     Object? url = freezed,
@@ -92,6 +97,10 @@ class _$UploadFileCopyWithImpl<$Res> implements $UploadFileCopyWith<$Res> {
     Object? mime = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       alternativeText: alternativeText == freezed
           ? _value.alternativeText
           : alternativeText // ignore: cast_nullable_to_non_nullable
@@ -127,7 +136,8 @@ abstract class _$UploadFileCopyWith<$Res> implements $UploadFileCopyWith<$Res> {
       __$UploadFileCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String alternativeText,
+      {String? id,
+      String alternativeText,
       String caption,
       String url,
       int? width,
@@ -147,6 +157,7 @@ class __$UploadFileCopyWithImpl<$Res> extends _$UploadFileCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? alternativeText = freezed,
     Object? caption = freezed,
     Object? url = freezed,
@@ -155,6 +166,10 @@ class __$UploadFileCopyWithImpl<$Res> extends _$UploadFileCopyWithImpl<$Res>
     Object? mime = freezed,
   }) {
     return _then(_UploadFile(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       alternativeText: alternativeText == freezed
           ? _value.alternativeText
           : alternativeText // ignore: cast_nullable_to_non_nullable
@@ -187,7 +202,8 @@ class __$UploadFileCopyWithImpl<$Res> extends _$UploadFileCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_UploadFile implements _UploadFile {
   const _$_UploadFile(
-      {required this.alternativeText,
+      {this.id,
+      required this.alternativeText,
       required this.caption,
       required this.url,
       this.width,
@@ -197,6 +213,8 @@ class _$_UploadFile implements _UploadFile {
   factory _$_UploadFile.fromJson(Map<String, dynamic> json) =>
       _$_$_UploadFileFromJson(json);
 
+  @override
+  final String? id;
   @override
   final String alternativeText;
   @override
@@ -212,13 +230,15 @@ class _$_UploadFile implements _UploadFile {
 
   @override
   String toString() {
-    return 'UploadFile(alternativeText: $alternativeText, caption: $caption, url: $url, width: $width, height: $height, mime: $mime)';
+    return 'UploadFile(id: $id, alternativeText: $alternativeText, caption: $caption, url: $url, width: $width, height: $height, mime: $mime)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _UploadFile &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.alternativeText, alternativeText) ||
                 const DeepCollectionEquality()
                     .equals(other.alternativeText, alternativeText)) &&
@@ -238,6 +258,7 @@ class _$_UploadFile implements _UploadFile {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(alternativeText) ^
       const DeepCollectionEquality().hash(caption) ^
       const DeepCollectionEquality().hash(url) ^
@@ -258,7 +279,8 @@ class _$_UploadFile implements _UploadFile {
 
 abstract class _UploadFile implements UploadFile {
   const factory _UploadFile(
-      {required String alternativeText,
+      {String? id,
+      required String alternativeText,
       required String caption,
       required String url,
       int? width,
@@ -268,6 +290,8 @@ abstract class _UploadFile implements UploadFile {
   factory _UploadFile.fromJson(Map<String, dynamic> json) =
       _$_UploadFile.fromJson;
 
+  @override
+  String? get id => throw _privateConstructorUsedError;
   @override
   String get alternativeText => throw _privateConstructorUsedError;
   @override

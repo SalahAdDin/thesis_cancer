@@ -44,6 +44,8 @@ const $SurveySchedule = _$SurveyScheduleTearOff();
 /// @nodoc
 mixin _$SurveySchedule {
   int get iterations => throw _privateConstructorUsedError;
+
+  /// Amount of weeks between each iteration.
   int get step => throw _privateConstructorUsedError;
   String get survey => throw _privateConstructorUsedError; // Survey ID
   String get label => throw _privateConstructorUsedError;
@@ -163,6 +165,8 @@ class _$_SurveySchedule implements _SurveySchedule {
   @override
   final int iterations;
   @override
+
+  /// Amount of weeks between each iteration.
   final int step;
   @override
   final String survey;
@@ -221,6 +225,8 @@ abstract class _SurveySchedule implements SurveySchedule {
   @override
   int get iterations => throw _privateConstructorUsedError;
   @override
+
+  /// Amount of weeks between each iteration.
   int get step => throw _privateConstructorUsedError;
   @override
   String get survey => throw _privateConstructorUsedError;
