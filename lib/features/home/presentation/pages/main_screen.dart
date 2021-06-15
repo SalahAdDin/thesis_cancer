@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
-import 'package:thesis_cancer/core/domain/constants.dart';
 import 'package:thesis_cancer/core/domain/settings/schedules.entity.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
@@ -21,6 +20,7 @@ import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
 import 'package:thesis_cancer/features/user/application/user.notifier.dart';
 import 'package:thesis_cancer/features/user/application/user.state.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 /// Main Screen
 class MainScreen extends HookWidget {
@@ -55,9 +55,9 @@ class MainScreen extends HookWidget {
         onDone: () => pushToPage(
           context,
           SurveyScreen(
-            onCompleteSurvey: () {
+            onCompleteSurvey: () async {
               Navigator.of(context).pop();
-              homeNotifier.hasSeenIntroductoryVideo();
+              await homeNotifier.hasSeenIntroductoryVideo();
             },
             surveyID: scheduledSurveys
                 .firstWhere(
@@ -66,7 +66,9 @@ class MainScreen extends HookWidget {
           ),
         ),
       ),
-      mustSeeTutorial: () => MainLayout(),
+      mustSeeTutorial: () => MainLayout(
+        showTutorial: true,
+      ),
       completed: () => MainLayout(),
       error: (String error) => ErrorScreen(
         message: error,
@@ -81,16 +83,63 @@ class MainScreen extends HookWidget {
 /// User's main screen. Shows the published posts grouped by their [PostType].
 /// Enables navigation through tabs by clicking on navigation bar or swiping the view.
 class MainLayout extends HookWidget {
-  /// [StateProvider] which handles the current screen's viewing tab.
-  final StateController<PostType> tabType = useProvider(tabTypeProvider);
+  ///
+  MainLayout({this.showTutorial = false});
 
-  /// [Provider] for the screen's [PageView] controller.
-  final PageController pageController =
-      useProvider(homePageControllerProvider).state;
+  ///
+  final bool showTutorial;
+
+  ///
+  final GlobalKey _knowledgeButtonKey = GlobalKey();
+
+  ///
+  final GlobalKey _treatmentButtonKey = GlobalKey();
+
+  ///
+  final GlobalKey _academyButtonKey = GlobalKey();
+
+  ///
+  final GlobalKey _successStoriesButtonKey = GlobalKey();
+
+  ///
+  final List<TargetFocus> targets = <TargetFocus>[];
+
+  ///
+  late final TutorialCoachMark tutorialCoachMark;
 
   @override
   Widget build(BuildContext context) {
     // final Size size = MediaQuery.of(context).size;
+
+    // [StateProvider] which handles the current screen's viewing tab.
+    final StateController<PostType> tabType = useProvider(tabTypeProvider);
+
+    // [Provider] for the screen's [PageView] controller.
+    final PageController pageController =
+        useProvider(homePageControllerProvider).state;
+
+    final UserNotifier userNotifierProvider =
+        useProvider(homeScreenNotifierProvider.notifier);
+
+    if (showTutorial) {
+      _initializeTargets();
+      tutorialCoachMark = TutorialCoachMark(
+        context,
+        targets: targets,
+        skipWidget: const Padding(
+          padding: EdgeInsets.only(bottom: 56, right: 8),
+          child: Text(
+            "Skip",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        // onClickTarget: (TargetFocus target) => target.keyTarget.currentWidget.,
+        onFinish: () async => userNotifierProvider.hasSeenTutorial(),
+        onSkip: () async => userNotifierProvider.hasSeenTutorial(),
+        paddingFocus: 7.5,
+      )..show();
+    }
+
     return Scaffold(
       appBar: Header(),
       endDrawer: ConstrainedBox(
@@ -111,17 +160,39 @@ class MainLayout extends HookWidget {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: tabType.state.index,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.book_outlined), label: ''),
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(Icons.self_improvement_outlined), label: ''),
+            icon: Icon(
+              Icons.book_outlined,
+              key: _knowledgeButtonKey,
+            ),
+            label: '',
+            tooltip: 'Bilgi',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.science_outlined), label: ''),
+            icon: Icon(
+              Icons.self_improvement_outlined,
+              key: _treatmentButtonKey,
+            ),
+            label: '',
+            tooltip: 'Tedavi',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.question_answer_outlined,
-              ),
-              label: ''),
+            icon: Icon(
+              Icons.science_outlined,
+              key: _academyButtonKey,
+            ),
+            label: '',
+            tooltip: 'Geliştirmeler',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.question_answer_outlined,
+              key: _successStoriesButtonKey,
+            ),
+            label: '',
+            tooltip: 'Hikayeler',
+          ),
         ],
         onTap: (int index) {
           tabType.state = PostType.values[index];
@@ -135,6 +206,162 @@ class MainLayout extends HookWidget {
         type: BottomNavigationBarType.shifting,
         unselectedItemColor: Colors.grey,
       ),
+    );
+  }
+
+  void _initializeTargets() {
+    targets.addAll(
+      <TargetFocus>[
+        TargetFocus(
+          identify: "InformationTarget",
+          keyTarget: _knowledgeButtonKey,
+          shape: ShapeLightFocus.Circle,
+          contents: <TargetContent>[
+            TargetContent(
+              align: ContentAlign.top,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const <Widget>[
+                  Text(
+                    "Bilgi",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0, right: 56, bottom: 56),
+                    child: Text(
+                      "You will find here information about cancer, treatments, side effects and advices to overcome this illness.",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+        TargetFocus(
+          identify: "TreatmentTarget",
+          keyTarget: _treatmentButtonKey,
+          shape: ShapeLightFocus.Circle,
+          contents: <TargetContent>[
+            TargetContent(
+              align: ContentAlign.top,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const <Widget>[
+                  Text(
+                    "Geliştirmeler",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0, bottom: 56),
+                    child: Text(
+                      "New researches and discoveries about cancer; myths and truths about cancer.",
+                      style: TextStyle(color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+        TargetFocus(
+          identify: "AcademyTarget",
+          keyTarget: _academyButtonKey,
+          shape: ShapeLightFocus.Circle,
+          contents: <TargetContent>[
+            TargetContent(
+              align: ContentAlign.top,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const <Widget>[
+                  Text(
+                    "Tedavi",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0, bottom: 56),
+                    child: Text(
+                      "All about treatments: description, aim, etc.",
+                      style: TextStyle(color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+        TargetFocus(
+          identify: "SuccessStoriesTarget",
+          keyTarget: _successStoriesButtonKey,
+          shape: ShapeLightFocus.Circle,
+          contents: <TargetContent>[
+            TargetContent(
+              align: ContentAlign.top,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: const <Widget>[
+                  Text(
+                    "Başarı Öyküleri",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0, bottom: 56, left: 56),
+                    child: Text(
+                      "Histories about patients which could defeat and overcome the cancer.",
+                      style: TextStyle(color: Colors.white),
+                      textAlign: TextAlign.right,
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+        /*
+        TargetFocus(
+      identify: "NotificationsTarget",
+      keyTarget: GlobalKeys().notificationButtonKey,
+      shape: ShapeLightFocus.Circle,
+      contents: <TargetContent>[
+        TargetContent(
+          align: ContentAlign.top,
+          child: Container(),
+        )
+      ],
+    ),
+    TargetFocus(
+      identify: "UserButtonTarget",
+      keyTarget: GlobalKeys().userNameButtonKey,
+      shape: ShapeLightFocus.RRect,
+      contents: <TargetContent>[
+        TargetContent(
+          align: ContentAlign.top,
+          child: Container(),
+        )
+      ],
+    ),
+    */
+      ],
     );
   }
 }

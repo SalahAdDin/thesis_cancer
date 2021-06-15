@@ -9,21 +9,37 @@ import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.repository.dart';
 
+/// User Notifier
+/// Handles business logic related to the application session's user.
 class UserNotifier extends StateNotifier<UserState> {
+  /// Notifier constructor
+  /// Receives a [Reader] from which notifier will get all dependencies.
+  /// Throws the initialization function.
   UserNotifier({
     required this.reader,
   }) : super(const UserState.loading());
 
+  ///
   final Reader reader;
 
+  ///
   DataStoreRepository get dataStore => reader(dataStoreRepositoryProvider);
 
+  ///
   UserRepository get userRepository => reader(userRepositoryProvider);
 
+  ///
   ProfileRepository get profileRepository => reader(profileRepositoryProvider);
 
+  ///
   StateController<User?> get userController =>
       reader(userEntityProvider.notifier);
+
+  ///
+  User? get currentUser => userController.state;
+
+  ///
+  Profile? get currentUserProfile => currentUser?.profile;
 
   // StreamSubscription? _subscription;
 
@@ -33,6 +49,7 @@ class UserNotifier extends StateNotifier<UserState> {
     super.dispose();
   }
 
+  /// Assigns a user status based on user and user profile conditions
   UserStatus assignUserStatus(User targetUser) {
     if (targetUser.confirmed == true) {
       /*
@@ -54,6 +71,7 @@ class UserNotifier extends StateNotifier<UserState> {
     }
   }
 
+  /// Delivers a screen based on the [UserStatus] assigned.
   void deliverUserScreen() {
     final UserStatus userStatus = assignUserStatus(userController.state!);
     switch (userStatus) {
@@ -75,24 +93,45 @@ class UserNotifier extends StateNotifier<UserState> {
     }
   }
 
-  void hasSeenIntroductoryVideo() {
-    final User? currentUser = userController.state;
-    final Profile? currentUserProfile = currentUser?.profile;
+  ///
+  Future<void> hasSeenIntroductoryVideo() async {
     if (currentUser != null && currentUserProfile != null) {
       final Profile updatedProfile =
-          currentUserProfile.copyWith(hasSeenIntroductoryVideo: true);
-      final User updatedUser = currentUser.copyWith(profile: updatedProfile);
-      userController.state = updatedUser;
+          currentUserProfile!.copyWith(hasSeenIntroductoryVideo: true);
+      await updateProfile(updatedProfile);
       state = const UserState.mustSeeTutorial();
+    }
+  }
+
+  ///
+  Future<void> hasSeenTutorial() async {
+    if (currentUser != null && currentUserProfile != null) {
+      final Profile updatedProfile =
+          currentUserProfile!.copyWith(hasSeenTutorial: true);
+      await updateProfile(updatedProfile);
+      state = const UserState.completed();
     }
   }
 
   // Future<Profile> getProfile(String userId) async {}
 
-  Future<void> updateProfile(User currentProfile) async {}
+  ///
+  Future<void> updateProfile(Profile updatedProfile) async {
+    final Profile fetchedUpdatedProfile = await profileRepository.updateProfile(
+      profileId: currentUser!.id,
+      // Uploading files with GraphQL requires a different process,
+      // so we will handle it in a separate query.
+      updatedProfile: updatedProfile.copyWith(profilePhoto: null),
+    );
+    final User updatedUser =
+        currentUser!.copyWith(profile: fetchedUpdatedProfile);
+    userController.state = updatedUser;
+  }
 
+  ///
   Future<void> deleteProfile(User currentProfile) async {}
 
+  ///
   Future<void> init() async {
     final User sessionUser = userController.state!;
     if (sessionUser.confirmed == true) {
