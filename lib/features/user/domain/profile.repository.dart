@@ -7,7 +7,6 @@ abstract class ProfileRepository {
   Future<Profile> findByUserId(String userId);
 
   Future<Profile> updateProfile({
-    required String profileId,
     required Profile updatedProfile,
   });
 

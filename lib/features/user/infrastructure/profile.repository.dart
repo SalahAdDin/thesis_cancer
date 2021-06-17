@@ -76,13 +76,20 @@ class GraphQLProfileRepository implements ProfileRepository {
   /// Returns the new updated [Profile] to update now on the [UserState].
   @override
   Future<Profile> updateProfile({
-    required String profileId,
     required Profile updatedProfile,
   }) async {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentUpdateProfile),
-        variables: <String, dynamic>{"id": profileId, "data": updatedProfile},
+        variables: <String, dynamic>{
+          "id": updatedProfile.id,
+          // Uploading files with GraphQL requires a different process,
+          // so we will handle it in a separate query.
+          "data": updatedProfile.copyWith(
+            profilePhoto: null,
+            id: null,
+          ),
+        },
       );
       final QueryResult response = await client.query(options);
 

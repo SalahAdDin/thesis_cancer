@@ -118,10 +118,7 @@ class UserNotifier extends StateNotifier<UserState> {
   ///
   Future<void> updateProfile(Profile updatedProfile) async {
     final Profile fetchedUpdatedProfile = await profileRepository.updateProfile(
-      profileId: currentUser!.id,
-      // Uploading files with GraphQL requires a different process,
-      // so we will handle it in a separate query.
-      updatedProfile: updatedProfile.copyWith(profilePhoto: null),
+      updatedProfile: updatedProfile,
     );
     final User updatedUser =
         currentUser!.copyWith(profile: fetchedUpdatedProfile);

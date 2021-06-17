@@ -8,6 +8,7 @@ part of 'profile.entity.dart';
 
 _$_Profile _$_$_ProfileFromJson(Map<String, dynamic> json) {
   return _$_Profile(
+    id: json['id'] as String?,
     firstName: json['firstName'] as String?,
     lastName: json['lastName'] as String?,
     profilePhoto: json['profilePhoto'] == null
@@ -31,6 +32,7 @@ Map<String, dynamic> _$_$_ProfileToJson(_$_Profile instance) {
     }
   }
 
+  writeNotNull('id', instance.id);
   writeNotNull('firstName', instance.firstName);
   writeNotNull('lastName', instance.lastName);
   writeNotNull('profilePhoto', instance.profilePhoto?.toJson());

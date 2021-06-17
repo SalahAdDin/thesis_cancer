@@ -10,6 +10,7 @@ part 'profile.entity.g.dart';
 class Profile with _$Profile {
   ///
   const factory Profile({
+    String? id,
     String? firstName,
     String? lastName,
     UploadFile? profilePhoto,
@@ -27,7 +28,10 @@ class Profile with _$Profile {
       _$ProfileFromJson(json);
 
   /// Builds a empty(dummy) [Profile].
-  static const Profile empty = Profile(firstName: 'Dummy', lastName: 'Do');
+  static const Profile empty = Profile(
+    firstName: 'Dummy',
+    lastName: 'Do',
+  );
 
   ///
   String get fullName =>

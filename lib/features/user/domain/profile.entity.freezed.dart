@@ -21,7 +21,8 @@ class _$ProfileTearOff {
   const _$ProfileTearOff();
 
   _Profile call(
-      {String? firstName,
+      {String? id,
+      String? firstName,
       String? lastName,
       UploadFile? profilePhoto,
       UserRole role = UserRole.GUEST,
@@ -30,6 +31,7 @@ class _$ProfileTearOff {
       bool? hasSeenIntroductoryVideo,
       String? bio}) {
     return _Profile(
+      id: id,
       firstName: firstName,
       lastName: lastName,
       profilePhoto: profilePhoto,
@@ -51,6 +53,7 @@ const $Profile = _$ProfileTearOff();
 
 /// @nodoc
 mixin _$Profile {
+  String? get id => throw _privateConstructorUsedError;
   String? get firstName => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
   UploadFile? get profilePhoto => throw _privateConstructorUsedError;
@@ -70,7 +73,8 @@ abstract class $ProfileCopyWith<$Res> {
   factory $ProfileCopyWith(Profile value, $Res Function(Profile) then) =
       _$ProfileCopyWithImpl<$Res>;
   $Res call(
-      {String? firstName,
+      {String? id,
+      String? firstName,
       String? lastName,
       UploadFile? profilePhoto,
       UserRole role,
@@ -92,6 +96,7 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? profilePhoto = freezed,
@@ -102,6 +107,10 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
     Object? bio = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       firstName: firstName == freezed
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -155,7 +164,8 @@ abstract class _$ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       __$ProfileCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? firstName,
+      {String? id,
+      String? firstName,
       String? lastName,
       UploadFile? profilePhoto,
       UserRole role,
@@ -179,6 +189,7 @@ class __$ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? profilePhoto = freezed,
@@ -189,6 +200,10 @@ class __$ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
     Object? bio = freezed,
   }) {
     return _then(_Profile(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       firstName: firstName == freezed
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -229,7 +244,8 @@ class __$ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Profile extends _Profile {
   const _$_Profile(
-      {this.firstName,
+      {this.id,
+      this.firstName,
       this.lastName,
       this.profilePhoto,
       this.role = UserRole.GUEST,
@@ -242,6 +258,8 @@ class _$_Profile extends _Profile {
   factory _$_Profile.fromJson(Map<String, dynamic> json) =>
       _$_$_ProfileFromJson(json);
 
+  @override
+  final String? id;
   @override
   final String? firstName;
   @override
@@ -262,13 +280,15 @@ class _$_Profile extends _Profile {
 
   @override
   String toString() {
-    return 'Profile(firstName: $firstName, lastName: $lastName, profilePhoto: $profilePhoto, role: $role, phoneNumber: $phoneNumber, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, bio: $bio)';
+    return 'Profile(id: $id, firstName: $firstName, lastName: $lastName, profilePhoto: $profilePhoto, role: $role, phoneNumber: $phoneNumber, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, bio: $bio)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Profile &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.firstName, firstName) ||
                 const DeepCollectionEquality()
                     .equals(other.firstName, firstName)) &&
@@ -298,6 +318,7 @@ class _$_Profile extends _Profile {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(firstName) ^
       const DeepCollectionEquality().hash(lastName) ^
       const DeepCollectionEquality().hash(profilePhoto) ^
@@ -320,7 +341,8 @@ class _$_Profile extends _Profile {
 
 abstract class _Profile extends Profile {
   const factory _Profile(
-      {String? firstName,
+      {String? id,
+      String? firstName,
       String? lastName,
       UploadFile? profilePhoto,
       UserRole role,
@@ -332,6 +354,8 @@ abstract class _Profile extends Profile {
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$_Profile.fromJson;
 
+  @override
+  String? get id => throw _privateConstructorUsedError;
   @override
   String? get firstName => throw _privateConstructorUsedError;
   @override
