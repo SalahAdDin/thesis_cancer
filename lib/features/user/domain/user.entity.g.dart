@@ -16,7 +16,6 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
         : Profile.fromJson(json['profile'] as Map<String, dynamic>),
     token: json['token'] as String?,
     confirmed: json['confirmed'] as bool?,
-    isLoggedIn: json['isLoggedIn'] as bool?,
     surveyResults: (json['surveyResults'] as List<dynamic>?)
         ?.map((e) => UserSurveyResult.fromJson(e as Map<String, dynamic>))
         .toList(),
@@ -48,7 +47,6 @@ Map<String, dynamic> _$_$_UserToJson(_$_User instance) {
   writeNotNull('profile', instance.profile?.toJson());
   writeNotNull('token', instance.token);
   writeNotNull('confirmed', instance.confirmed);
-  writeNotNull('isLoggedIn', instance.isLoggedIn);
   writeNotNull(
       'surveyResults', instance.surveyResults?.map((e) => e.toJson()).toList());
   writeNotNull('posts', instance.posts?.map((e) => e.toJson()).toList());

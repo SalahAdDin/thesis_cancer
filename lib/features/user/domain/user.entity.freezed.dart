@@ -27,7 +27,6 @@ class _$UserTearOff {
       Profile? profile,
       String? token,
       bool? confirmed,
-      bool? isLoggedIn,
       List<UserSurveyResult>? surveyResults,
       List<Post>? posts,
       List<Comment>? comments,
@@ -39,7 +38,6 @@ class _$UserTearOff {
       profile: profile,
       token: token,
       confirmed: confirmed,
-      isLoggedIn: isLoggedIn,
       surveyResults: surveyResults,
       posts: posts,
       comments: comments,
@@ -63,7 +61,6 @@ mixin _$User {
   Profile? get profile => throw _privateConstructorUsedError;
   String? get token => throw _privateConstructorUsedError;
   bool? get confirmed => throw _privateConstructorUsedError;
-  bool? get isLoggedIn => throw _privateConstructorUsedError;
   List<UserSurveyResult>? get surveyResults =>
       throw _privateConstructorUsedError;
   List<Post>? get posts => throw _privateConstructorUsedError;
@@ -86,7 +83,6 @@ abstract class $UserCopyWith<$Res> {
       Profile? profile,
       String? token,
       bool? confirmed,
-      bool? isLoggedIn,
       List<UserSurveyResult>? surveyResults,
       List<Post>? posts,
       List<Comment>? comments,
@@ -111,7 +107,6 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? profile = freezed,
     Object? token = freezed,
     Object? confirmed = freezed,
-    Object? isLoggedIn = freezed,
     Object? surveyResults = freezed,
     Object? posts = freezed,
     Object? comments = freezed,
@@ -141,10 +136,6 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       confirmed: confirmed == freezed
           ? _value.confirmed
           : confirmed // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isLoggedIn: isLoggedIn == freezed
-          ? _value.isLoggedIn
-          : isLoggedIn // ignore: cast_nullable_to_non_nullable
               as bool?,
       surveyResults: surveyResults == freezed
           ? _value.surveyResults
@@ -189,7 +180,6 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       Profile? profile,
       String? token,
       bool? confirmed,
-      bool? isLoggedIn,
       List<UserSurveyResult>? surveyResults,
       List<Post>? posts,
       List<Comment>? comments,
@@ -216,7 +206,6 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? profile = freezed,
     Object? token = freezed,
     Object? confirmed = freezed,
-    Object? isLoggedIn = freezed,
     Object? surveyResults = freezed,
     Object? posts = freezed,
     Object? comments = freezed,
@@ -246,10 +235,6 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       confirmed: confirmed == freezed
           ? _value.confirmed
           : confirmed // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isLoggedIn: isLoggedIn == freezed
-          ? _value.isLoggedIn
-          : isLoggedIn // ignore: cast_nullable_to_non_nullable
               as bool?,
       surveyResults: surveyResults == freezed
           ? _value.surveyResults
@@ -281,7 +266,6 @@ class _$_User implements _User {
       this.profile,
       this.token,
       this.confirmed,
-      this.isLoggedIn,
       this.surveyResults,
       this.posts,
       this.comments,
@@ -303,8 +287,6 @@ class _$_User implements _User {
   @override
   final bool? confirmed;
   @override
-  final bool? isLoggedIn;
-  @override
   final List<UserSurveyResult>? surveyResults;
   @override
   final List<Post>? posts;
@@ -315,7 +297,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, username: $username, profile: $profile, token: $token, confirmed: $confirmed, isLoggedIn: $isLoggedIn, surveyResults: $surveyResults, posts: $posts, comments: $comments, likes: $likes)';
+    return 'User(id: $id, email: $email, username: $username, profile: $profile, token: $token, confirmed: $confirmed, surveyResults: $surveyResults, posts: $posts, comments: $comments, likes: $likes)';
   }
 
   @override
@@ -337,9 +319,6 @@ class _$_User implements _User {
             (identical(other.confirmed, confirmed) ||
                 const DeepCollectionEquality()
                     .equals(other.confirmed, confirmed)) &&
-            (identical(other.isLoggedIn, isLoggedIn) ||
-                const DeepCollectionEquality()
-                    .equals(other.isLoggedIn, isLoggedIn)) &&
             (identical(other.surveyResults, surveyResults) ||
                 const DeepCollectionEquality()
                     .equals(other.surveyResults, surveyResults)) &&
@@ -361,7 +340,6 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(profile) ^
       const DeepCollectionEquality().hash(token) ^
       const DeepCollectionEquality().hash(confirmed) ^
-      const DeepCollectionEquality().hash(isLoggedIn) ^
       const DeepCollectionEquality().hash(surveyResults) ^
       const DeepCollectionEquality().hash(posts) ^
       const DeepCollectionEquality().hash(comments) ^
@@ -386,7 +364,6 @@ abstract class _User implements User {
       Profile? profile,
       String? token,
       bool? confirmed,
-      bool? isLoggedIn,
       List<UserSurveyResult>? surveyResults,
       List<Post>? posts,
       List<Comment>? comments,
@@ -406,8 +383,6 @@ abstract class _User implements User {
   String? get token => throw _privateConstructorUsedError;
   @override
   bool? get confirmed => throw _privateConstructorUsedError;
-  @override
-  bool? get isLoggedIn => throw _privateConstructorUsedError;
   @override
   List<UserSurveyResult>? get surveyResults =>
       throw _privateConstructorUsedError;

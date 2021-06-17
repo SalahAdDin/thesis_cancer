@@ -8,8 +8,10 @@ import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 part 'user.entity.freezed.dart';
 part 'user.entity.g.dart';
 
+/// User Entity
 @freezed
 class User with _$User {
+  /// Default builder
   const factory User({
     required String id,
     required String email,
@@ -17,14 +19,16 @@ class User with _$User {
     Profile? profile,
     String? token,
     bool? confirmed,
-    bool? isLoggedIn,
     List<UserSurveyResult>? surveyResults,
     List<Post>? posts,
     List<Comment>? comments,
     List<Like>? likes,
   }) = _User;
 
+  /// Builds a [User] from a given json [String].
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  /// Builds a empty(dummy) [User].
   static const User empty = User(
     id: '',
     email: 'name@dummy.com',
