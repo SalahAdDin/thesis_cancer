@@ -1,13 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:group_button/group_button.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
+import 'package:thesis_cancer/features/survey/presentation/widgets/debounce_text_form_field.dart';
 
+///
 typedef OnSelectedCallback = Function(String);
 
+///
 class QuestionWidget extends StatelessWidget {
+  ///
   QuestionWidget({
     required this.surveyID,
     this.question,
@@ -15,9 +20,16 @@ class QuestionWidget extends StatelessWidget {
     this.userAnswer,
   });
 
+  ///
   final String surveyID;
+
+  ///
   final Question? question;
+
+  ///
   final UserSurveyAnswer? userAnswer;
+
+  ///
   final OnSelectedCallback? onSelected;
 
   final MultiValidator _shortAnswerValidator =
@@ -31,32 +43,29 @@ class QuestionWidget extends StatelessWidget {
       MultiValidator(<FieldValidator<dynamic>>[
     RequiredValidator(errorText: 'Bu soruya cevap vermelisiniz.'),
     MinLengthValidator(50, errorText: 'Bu cevap çok kısa'),
-    MaxLengthValidator(150, errorText: 'Bu cevap çok uzun.')
+    MaxLengthValidator(500, errorText: 'Bu cevap çok uzun.')
   ]);
 
   Widget _renderInput({required Question question}) {
     Widget answerWidget;
     switch (question.type) {
       case QuestionType.OPEN_SHORT:
-        answerWidget = TextFormField(
-          // controller: _,
+        answerWidget = DebounceTextFormField(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          onAnswer: (String answer) => onSelected!(answer),
           validator: _shortAnswerValidator,
-          decoration: const InputDecoration(
-            hintText: "Cevabı buraya yazınız...",
-          ),
+          initialText: userAnswer?.answer,
         );
         break;
       case QuestionType.OPEN_LONG:
-        answerWidget = TextFormField(
-          // controller: _,
-          validator: _longAnswerValidator,
-          decoration: const InputDecoration(
-            hintText: "Cevabı buraya yazınız...",
-          ),
-          keyboardType: TextInputType.multiline,
-          maxLines: 8,
-          maxLength: 1000,
-        );
+        answerWidget = DebounceTextFormField(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            onAnswer: (String answer) => onSelected!(answer),
+            validator: _longAnswerValidator,
+            keyboardType: TextInputType.multiline,
+            maxLines: 8,
+            maxLength: 500,
+            initialText: userAnswer?.answer);
         break;
       case QuestionType.SINGLE:
         final List<String> buttons = question.answer!.split(",");
