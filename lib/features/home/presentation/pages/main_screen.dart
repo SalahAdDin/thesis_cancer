@@ -19,6 +19,7 @@ import 'package:thesis_cancer/features/home/presentation/pages/therapy_screen.da
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
 import 'package:thesis_cancer/features/user/application/user.notifier.dart';
+import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/application/user.state.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
@@ -43,28 +44,34 @@ class MainScreen extends HookWidget {
     final List<SurveySchedule> scheduledSurveys =
         useProvider(settingsProvider).data?.value.surveySchedules ??
             <SurveySchedule>[];
+    final UserRole currentUser =
+        useProvider(userEntityProvider).state.profile?.role ?? UserRole.GUEST;
 
     return currentUserState.when(
       loading: () => const Center(child: CircularProgressIndicator()),
-      // TODO: Handle the main layout builder to navigate to isAdmin: () => DashBoardScreen(),
       isAdmin: () => MainLayout(),
-      // TODO: how to wrap this one in a scaffold widget?
       unConfirmed: () => LobbyScreen(),
       mustSeeIntroduction: () => IntroductoryScreen(
         dataSource: introductoryVideo.url,
-        onDone: () => pushToPage(
-          context,
-          SurveyScreen(
-            onCompleteSurvey: () async {
-              Navigator.of(context).pop();
-              await homeNotifier.hasSeenIntroductoryVideo();
-            },
-            surveyID: scheduledSurveys
-                .firstWhere(
-                    (SurveySchedule element) => element.label == "control")
-                .survey,
-          ),
-        ),
+        onDone: () async {
+          if (currentUser == UserRole.PILOT) {
+            await homeNotifier.hasSeenIntroductoryVideo();
+          } else {
+            pushToPage(
+              context,
+              SurveyScreen(
+                onCompleteSurvey: () async {
+                  Navigator.of(context).pop();
+                  await homeNotifier.hasSeenIntroductoryVideo();
+                },
+                surveyID: scheduledSurveys
+                    .firstWhere(
+                        (SurveySchedule element) => element.label == "control")
+                    .survey,
+              ),
+            );
+          }
+        },
       ),
       mustSeeTutorial: () => MainLayout(
         showTutorial: true,
