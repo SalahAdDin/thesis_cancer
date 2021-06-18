@@ -7,11 +7,15 @@ import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.repository.dart';
 import 'package:thesis_cancer/features/survey/infrastructure/survey.gql.dart';
 
+/// **GraphQL** implementation for [SurveyRepository] interface
 class GraphQLSurveyRepository implements SurveyRepository {
+  /// Default constructor, it requires a [Provider] reference [Reader].
   GraphQLSurveyRepository({required this.reader}) : super();
 
+  /// Provider reference [Reader].
   final Reader reader;
 
+  /// Injecting the required [GraphQLClient] by reading it from providers.
   GraphQLClient get client => reader(graphQLClientProvider);
 
   @override

@@ -9,11 +9,15 @@ import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.repository.dart';
 import 'package:thesis_cancer/features/content/infrastructure/post.gql.dart';
 
+/// **GraphQL** implementation for [PostRepository] interface
 class GraphQLPostRepository implements PostRepository {
+  /// Default constructor, it requires a [Provider] reference [Reader].
   GraphQLPostRepository({required this.reader}) : super();
 
+  /// Provider reference [Reader].
   final Reader reader;
 
+  /// Injecting the required [GraphQLClient] by reading it from providers.
   GraphQLClient get client => reader(graphQLClientProvider);
 
   @override

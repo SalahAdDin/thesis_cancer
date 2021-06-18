@@ -4,11 +4,15 @@ import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.repository.dart';
 
+/// **GraphQL** implementation for [UserRepository] interface
 class GraphQLUserRepository implements UserRepository {
+  /// Default constructor, it requires a [Provider] reference [Reader].
   GraphQLUserRepository({required this.reader}) : super();
 
+  /// Provider reference [Reader].
   final Reader reader;
 
+  /// Injecting the required [GraphQLClient] by reading it from providers.
   GraphQLClient get client => reader(graphQLClientProvider);
 
   @override

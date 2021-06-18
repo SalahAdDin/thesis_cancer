@@ -1,3 +1,4 @@
+/// GraphQL Fragment containing the fetching required attributes for our query/mutation.
 const String graphQLFragmentBody = '''
 fragment SurveyFields on Survey {
   id
@@ -13,6 +14,7 @@ fragment SurveyFields on Survey {
 }
 ''';
 
+///
 const String graphQLDocumentGetSurvey = '''
   $graphQLFragmentBody
   query GetSurvey(\$id: ID!) {
@@ -22,6 +24,7 @@ const String graphQLDocumentGetSurvey = '''
   }
 ''';
 
+///
 const String graphQLDocumentListSurveys = '''
   $graphQLFragmentBody
   query ListSurveys {
@@ -31,6 +34,7 @@ const String graphQLDocumentListSurveys = '''
   }
 ''';
 
+///
 const String graphQLDocumentCreateSurvey = '''
   $graphQLFragmentBody
   mutation CreateSurvey(
@@ -48,6 +52,7 @@ const String graphQLDocumentCreateSurvey = '''
   }
 ''';
 
+///
 const String graphQLDocumentDeleteSurvey = '''
   mutation DeleteSurvey(\$id: ID!){
     deleteSurvey(input: {id: \$id}) {
@@ -56,6 +61,7 @@ const String graphQLDocumentDeleteSurvey = '''
   }
 ''';
 
+///
 const String graphQLDocumentUpdateSurvey = '''
   $graphQLFragmentBody
   mutation UpdateQuestion(
@@ -73,6 +79,7 @@ const String graphQLDocumentUpdateSurvey = '''
   }
 ''';
 
+///
 const String graphQLDocumentOnCreateSurvey = '''
 subscription OnCreateSurvey {
   onCreateSurvey {

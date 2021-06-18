@@ -1,3 +1,4 @@
+/// GraphQL Fragment containing the fetching required attributes for our query/mutation.
 String graphQLFragmentBody = '''
 fragment ResultFields on Result {
   id
@@ -10,6 +11,7 @@ fragment ResultFields on Result {
 }
 ''';
 
+///
 String graphQLDocumentGetResult = '''
   $graphQLFragmentBody
   query GetResult(\$id: ID!){
@@ -19,6 +21,7 @@ String graphQLDocumentGetResult = '''
   }
 ''';
 
+///
 String graphQLDocumentListResults = '''
 $graphQLFragmentBody
 query ListResults {
@@ -30,15 +33,18 @@ query ListResults {
 }
 ''';
 
-// TOD: are "" required?
+///
 String graphQLFilterResultBySurvey(String surveyId) =>
     '{surveyID: {eq: "$surveyId"}}';
 
+///
 String graphQLFilterResultByUser(String userId) => '{userID: {eq: "$userId"}}';
 
+///
 String graphQLFilterResultBySurveyAndUser(String surveyId, String userId) =>
     '{surveyID: {eq: "$surveyId"}, userID: {eq: "$userId"}}';
 
+///
 String graphQLDocumentListFilteredResults = '''
 $graphQLFragmentBody
 query ListFilteredResults{
@@ -50,6 +56,7 @@ query ListFilteredResults{
 }
 ''';
 
+///
 String graphQLDocumentCountResults = '''
 query CountResults(
   \$surveyID: ID!,
@@ -59,6 +66,7 @@ query CountResults(
 }
 ''';
 
+///
 String graphQLDocumentCreateResult = '''
   $graphQLFragmentBody
   mutation CreateResult(
@@ -74,6 +82,7 @@ String graphQLDocumentCreateResult = '''
   }
 ''';
 
+///
 String graphQLDocumentDeleteResult = '''
 mutation DeleteResult(\$id: ID!){
   deleteResult(input: {id: \$id}) {
@@ -82,6 +91,7 @@ mutation DeleteResult(\$id: ID!){
 }
 ''';
 
+///
 String graphQLDocumentOnCreateResult = '''
 subscription OnCreateResult {
   onCreateResult {

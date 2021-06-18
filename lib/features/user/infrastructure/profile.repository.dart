@@ -10,11 +10,15 @@ import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/infrastructure/profile.gql.dart';
 
+/// **GraphQL** implementation for [ProfileRepository] interface
 class GraphQLProfileRepository implements ProfileRepository {
+  /// Default constructor, it requires a [Provider] reference [Reader].
   GraphQLProfileRepository({required this.reader}) : super();
 
+  /// Provider reference [Reader].
   final Reader reader;
 
+  /// Injecting the required [GraphQLClient] by reading it from providers.
   GraphQLClient get client => reader(graphQLClientProvider);
 
   @override

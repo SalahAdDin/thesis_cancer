@@ -6,13 +6,19 @@ import 'package:thesis_cancer/features/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/auth.gql.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
 
+/// **GraphQL** implementation for [AuthRepository] interface
 class GraphQLAuthRepository implements AuthRepository {
+  /// Default constructor, it requires a [Provider] reference [Reader].
   GraphQLAuthRepository({required this.reader}) : super();
 
+  /// Provider reference [Reader].
   final Reader reader;
 
+  /// Injecting the required [GraphQLClient] by reading it from providers.
   GraphQLClient get client => reader(graphQLClientProvider);
 
+  /// As the [GraphQL] response comes in a slightly different format,
+  /// it is needed to "flat" it before to pass it to the [User]'s serialization function.
   Map<String, dynamic> flatAuthResponse({required Map<String, dynamic> data}) {
     final Map<String, dynamic> flattenResult =
         data['user'] as Map<String, dynamic>;

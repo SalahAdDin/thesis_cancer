@@ -1,3 +1,4 @@
+/// GraphQL Fragment containing the fetching required attributes for our query/mutation.
 const String graphQLFragmentBody = '''
 fragment AuthFields on UsersPermissionsLoginPayload {
   jwt
@@ -10,6 +11,7 @@ fragment AuthFields on UsersPermissionsLoginPayload {
 }
 ''';
 
+///
 const String graphQLDocumentRegisterUser = '''
     $graphQLFragmentBody
     mutation RegisterUser(
@@ -23,6 +25,7 @@ const String graphQLDocumentRegisterUser = '''
 }
 ''';
 
+///
 const String graphQLDocumentLoginUser = '''
     $graphQLFragmentBody
     mutation LoginUser(
@@ -36,6 +39,7 @@ const String graphQLDocumentLoginUser = '''
 }
 ''';
 
+///
 const String graphQLDocumentForgotPassword = r'''
 mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email) {
@@ -44,6 +48,7 @@ mutation ForgotPassword($email: String!) {
 }
 ''';
 
+///
 const String graphQLDocumentResetPassword = '''
     $graphQLFragmentBody
 mutation ResetPassword(

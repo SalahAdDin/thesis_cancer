@@ -1,4 +1,4 @@
-/// GraphQL Fragment containing the required attributes for ous query/mutation.
+/// GraphQL Fragment containing the fetching required attributes for our query/mutation.
 const String graphQLFragmentBody = '''
 fragment ProfileFields on Profile {
   id

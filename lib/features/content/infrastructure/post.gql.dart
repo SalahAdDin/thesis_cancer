@@ -1,3 +1,4 @@
+/// GraphQL Fragment containing the fetching required attributes for our query/mutation.
 const String graphQLFragmentBody = '''
 fragment PostFields on Post {
   id
@@ -18,6 +19,7 @@ fragment PostFields on Post {
 }
 ''';
 
+///
 const String graphQLDocumentGetPost = '''
 $graphQLFragmentBody
 query getPost(\$id:ID!){
@@ -27,6 +29,7 @@ query getPost(\$id:ID!){
 }
 ''';
 
+///
 const String graphQLDocumentListPosts = '''
 $graphQLFragmentBody
 query ListPosts{
@@ -36,6 +39,7 @@ query ListPosts{
 }
 ''';
 
+///
 // start: 0, limit: 5, sort: "created_at:desc"
 const String graphQLDocumentListPostsByContentType = '''
 $graphQLFragmentBody
@@ -46,6 +50,7 @@ query ListPostsByContentType(\$contentType: ContentType!) {
 }
 ''';
 
+///
 const String graphQLDocumentListPostsByUserId = '''
 $graphQLFragmentBody
 query ListPostsByUserId(\$id: ID!) {
@@ -55,6 +60,7 @@ query ListPostsByUserId(\$id: ID!) {
 }
 ''';
 
+///
 const String graphQLDocumentCreatePost = '''
 $graphQLFragmentBody
 mutation CreatePost(\$data: PostInput) {
@@ -66,6 +72,7 @@ mutation CreatePost(\$data: PostInput) {
 }
 ''';
 
+///
 const String graphQLDocumentDeletePost = r'''
 mutation DeletePost($id: ID!) {
   deletePost(input: { where: { id: $id } }){
@@ -76,7 +83,8 @@ mutation DeletePost($id: ID!) {
 }
 ''';
 
-String graphQLDocumentUpdatePost = '''
+///
+const String graphQLDocumentUpdatePost = '''
 $graphQLFragmentBody
 mutation UpdatePost(\$id: ID!, \$data: editPostInput) {
   updatePost(input: { where: { id: \$id }, data: \$data }) {

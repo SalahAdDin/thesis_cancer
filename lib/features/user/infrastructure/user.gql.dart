@@ -1,6 +1,4 @@
-// TODO: delete, update, create return user, we can compare returned users to check success.
-
-// fragment: body
+/// GraphQL Fragment containing the fetching required attributes for our query/mutation.
 String graphQLFragmentBody = '''
 fragment UserFields on User {
   id
@@ -22,6 +20,7 @@ fragment UserFields on User {
 }
 ''';
 
+///
 String graphQLFragmentPost = '''
 fragment PostFields on User {
   posts {
@@ -39,6 +38,7 @@ fragment PostFields on User {
 }
 ''';
 
+///
 String graphQLFragmentSurveyResult = '''
 fragment SurveyFields on User {
   surveyResults {
@@ -56,6 +56,7 @@ fragment SurveyFields on User {
 }
 ''';
 
+///
 String graphQLDocumentGetUser = '''
   $graphQLFragmentBody
   $graphQLFragmentPost
@@ -72,6 +73,7 @@ String graphQLDocumentGetUser = '''
 // comments count
 // posts count
 // likes count
+///
 String graphQLDocumentListUsers = '''
 query ListUsers {
   listUsers {
@@ -87,6 +89,7 @@ query ListUsers {
   }
 }''';
 
+///
 String graphQLDocumentCreateUser = '''
   $graphQLFragmentBody
   mutation CreateUser(
@@ -120,6 +123,7 @@ String graphQLDocumentCreateUser = '''
   }
 ''';
 
+///
 String graphQLDocumentDeleteUser = '''
 mutation DeleteUser(\$id: ID!){
   deleteUser(input: {id: \$id}){
@@ -128,6 +132,7 @@ mutation DeleteUser(\$id: ID!){
 }
 ''';
 
+///
 String graphQLDocumentUpdateUser = '''
   $graphQLFragmentBody
   mutation UpdateUser(
@@ -161,6 +166,7 @@ String graphQLDocumentUpdateUser = '''
   }
 ''';
 
+///
 String graphQLDocumentOnCreateUser = '''
 subscription OnCreateUser {
   onCreateUser {
