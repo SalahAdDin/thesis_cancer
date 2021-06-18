@@ -6,14 +6,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class Logger extends ProviderObserver {
   @override
   void didUpdateProvider(ProviderBase provider, Object? newValue) {
-    Colorize string;
+    Colorize title;
+    Colorize value;
     if (newValue is StateController<dynamic>) {
-      string = Colorize(
-          '[${provider.name ?? provider.runtimeType}] value: ${newValue.state}');
+      title = Colorize('[${provider.name ?? provider.runtimeType}]\n');
+      value = Colorize('\tValue: ${newValue.state}');
     } else {
-      string = Colorize(
-          '[${provider.name ?? provider.runtimeType}] value: $newValue');
+      title = Colorize('[${provider.name ?? provider.runtimeType}]\n');
+      value = Colorize('\tValue: $newValue');
     }
-    print(string.green());
+    print('${title.yellow()}${value.green()}');
   }
 }
