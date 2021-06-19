@@ -5,12 +5,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
-import 'package:thesis_cancer/features/auth/application/auth.notifier.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
 import 'package:thesis_cancer/features/auth/presentation/widgets/reset_password.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart';
-import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
 
@@ -19,9 +17,6 @@ class LoginScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final AuthState authScreenState = useProvider(authNotifierProvider);
-
-    final AuthNotifier authNotifier =
-        useProvider(authNotifierProvider.notifier);
 
     final String registerSurveyID =
         useProvider(settingsProvider).data?.value.registeringSurvey ?? '';
@@ -60,12 +55,19 @@ class LoginScreen extends HookWidget {
             callback: () => authNotifier.signInWithApple()),
       ],
       */
-      onSignup: (LoginData data) => authNotifier.registerUser(
-          username: data.name, password: data.password),
+      onSignup: (LoginData data) =>
+          context.read(authNotifierProvider.notifier).registerUser(
+                username: data.name,
+                password: data.password,
+              ),
       onLogin: (LoginData data) =>
-          authNotifier.signIn(username: data.name, password: data.password),
-      onRecoverPassword: (String name) =>
-          authNotifier.requestPasswordRecovery(email: name),
+          context.read(authNotifierProvider.notifier).signIn(
+                username: data.name,
+                password: data.password,
+              ),
+      onRecoverPassword: (String name) => context
+          .read(authNotifierProvider.notifier)
+          .requestPasswordRecovery(email: name),
       onSubmitAnimationCompleted: () => authScreenState.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         signedUp: () => pushToPage(
@@ -78,16 +80,14 @@ class LoginScreen extends HookWidget {
             surveyID: registerSurveyID,
           ),
         ),
-        loggedIn: () {
-          pushAndReplaceToPage(context, MainScreen());
-        },
+        loggedIn: () => context.read(launcherProvider.notifier).singIn(),
         // TODO:
         resetPassword: () => pushToPage(
             context,
             ResetPasswordWidget(
                 onConfirm: (String password, String passwordConfirmation,
                         String confirmationCode) =>
-                    authNotifier.recoverPassword(
+                    context.read(authNotifierProvider.notifier).recoverPassword(
                         password: password,
                         passwordConfirmation: passwordConfirmation,
                         confirmationCode: confirmationCode)

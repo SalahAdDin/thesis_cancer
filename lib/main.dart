@@ -58,7 +58,8 @@ class CancerApp extends HookWidget {
     final LauncherState launcherState = useProvider(launcherProvider);
 
     SystemChrome.setEnabledSystemUIOverlays(
-        <SystemUiOverlay>[SystemUiOverlay.bottom]);
+      <SystemUiOverlay>[SystemUiOverlay.bottom],
+    );
 
     return MaterialApp(
       title: 'Thesis Cancer',

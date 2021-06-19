@@ -63,4 +63,10 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
     await dataStore.removeUserProfile();
     state = const LauncherState.needsProfile();
   }
+
+  /// Re-render the application based on [User] is fetched and persisted on local storage,
+  /// the application needs to render the [MainScreen].
+  Future<void> singIn() async {
+    state = const LauncherState.profileLoaded();
+  }
 }
