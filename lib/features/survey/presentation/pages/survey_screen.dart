@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
-import 'package:thesis_cancer/features/survey/application/survey.notifier.dart';
 import 'package:thesis_cancer/features/survey/application/survey.provider.dart';
 import 'package:thesis_cancer/features/survey/application/survey.state.dart';
 import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
@@ -78,11 +77,10 @@ class SurveyWidget extends HookWidget {
   Widget build(BuildContext context) {
     // We get the state(not the StateController).
     final Survey currentSurvey = useProvider(surveyEntityProvider).state;
-    final SurveyNotifier currentSurveyNotifier =
-        useProvider(surveyNotifierProvider(surveyID).notifier);
 
-    bool answeredQuestion(int index) =>
-        currentSurveyNotifier.isAnsweredQuestion(
+    bool answeredQuestion(int index) => context
+        .read(surveyNotifierProvider(surveyID).notifier)
+        .isAnsweredQuestion(
           questionId: currentSurvey.questions![index].id,
         );
 
@@ -127,7 +125,9 @@ class SurveyWidget extends HookWidget {
                       child: Center(
                         child: DotsIndicator(
                           dotsCount: currentSurvey.questions!.length,
-                          position: currentSurveyNotifier.currentQuestionIndex
+                          position: context
+                              .read(surveyNotifierProvider(surveyID).notifier)
+                              .currentQuestionIndex
                               .toDouble(),
                           decorator: DotsDecorator(
                             size: const Size.square(15),
@@ -135,10 +135,13 @@ class SurveyWidget extends HookWidget {
                             activeColor: Theme.of(context).primaryColor,
                             color: Theme.of(context).disabledColor,
                           ),
-                          onTap: (double position) =>
-                              answeredQuestion(position.toInt())
-                                  ? currentSurveyNotifier.goTo(position.toInt())
-                                  : null
+                          onTap: (double position) => answeredQuestion(
+                                  position.toInt())
+                              ? context
+                                  .read(
+                                      surveyNotifierProvider(surveyID).notifier)
+                                  .goTo(position.toInt())
+                              : null
                           // print("Current index: $currentQuestion");
                           ,
                         ),
@@ -149,21 +152,27 @@ class SurveyWidget extends HookWidget {
                       child: SizedBox(
                         height: questionZoneHeight,
                         child: PageView(
-                          controller: currentSurveyNotifier.pageController,
+                          controller: context
+                              .read(surveyNotifierProvider(surveyID).notifier)
+                              .pageController,
                           physics: const NeverScrollableScrollPhysics(),
                           children: currentSurvey.questions
                                   ?.map(
                                     (Question question) => QuestionWidget(
                                       question: question,
                                       surveyID: surveyID,
-                                      userAnswer: currentSurveyNotifier
+                                      userAnswer: context
+                                          .read(surveyNotifierProvider(surveyID)
+                                              .notifier)
                                           .answers[question.id],
-                                      onSelected: (String answer) =>
-                                          currentSurveyNotifier.answerQuestion(
-                                        questionId: question.id,
-                                        answer: answer,
-                                        statement: question.statement,
-                                      ),
+                                      onSelected: (String answer) => context
+                                          .read(surveyNotifierProvider(surveyID)
+                                              .notifier)
+                                          .answerQuestion(
+                                            questionId: question.id,
+                                            answer: answer,
+                                            statement: question.statement,
+                                          ),
                                     ),
                                   )
                                   .toList() ??
@@ -180,21 +189,30 @@ class SurveyWidget extends HookWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             Visibility(
-                              visible:
-                                  currentSurveyNotifier.currentQuestionIndex !=
-                                      0,
+                              visible: context
+                                      .read(surveyNotifierProvider(surveyID)
+                                          .notifier)
+                                      .currentQuestionIndex !=
+                                  0,
                               child: Button.accent(
                                 buttonLabel: 'Back',
-                                onPressed: () =>
-                                    currentSurveyNotifier.lastQuestion(),
+                                onPressed: () => context
+                                    .read(surveyNotifierProvider(surveyID)
+                                        .notifier)
+                                    .lastQuestion(),
                               ),
                             ),
                             // TODO: Disabled effect is not working
                             Button.primary(
                               buttonLabel: 'Next',
-                              onPressed: answeredQuestion(currentSurveyNotifier
+                              onPressed: answeredQuestion(context
+                                      .read(surveyNotifierProvider(surveyID)
+                                          .notifier)
                                       .currentQuestionIndex)
-                                  ? () => currentSurveyNotifier.nextQuestion()
+                                  ? () => context
+                                      .read(surveyNotifierProvider(surveyID)
+                                          .notifier)
+                                      .nextQuestion()
                                   : null,
                             )
                           ],

@@ -36,8 +36,6 @@ class MainScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final UserState currentUserState = useProvider(homeScreenNotifierProvider);
-    final UserNotifier homeNotifier =
-        useProvider(homeScreenNotifierProvider.notifier);
     final UploadFile introductoryVideo =
         useProvider(settingsProvider).data?.value.introductoryVideo ??
             UploadFile.empty;
@@ -55,14 +53,18 @@ class MainScreen extends HookWidget {
         dataSource: introductoryVideo.url,
         onDone: () async {
           if (currentUser == UserRole.PILOT) {
-            await homeNotifier.hasSeenIntroductoryVideo();
+            await context
+                .read(homeScreenNotifierProvider.notifier)
+                .hasSeenIntroductoryVideo();
           } else {
             pushToPage(
               context,
               SurveyScreen(
                 onCompleteSurvey: () async {
                   Navigator.of(context).pop();
-                  await homeNotifier.hasSeenIntroductoryVideo();
+                  await context
+                      .read(homeScreenNotifierProvider.notifier)
+                      .hasSeenIntroductoryVideo();
                 },
                 surveyID: scheduledSurveys
                     .firstWhere(
