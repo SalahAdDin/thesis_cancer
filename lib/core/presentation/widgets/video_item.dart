@@ -1,55 +1,35 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:thesis_cancer/core/presentation/hooks/use_chewie_controller.dart';
 import 'package:video_player/video_player.dart';
 
-class VideoItem extends StatefulWidget {
+/// Video Item
+class VideoItem extends HookWidget {
+  ///
   const VideoItem({
     Key? key,
     required this.videoPlayerController,
-    this.autoplay = false,
+    this.autoPlay = false,
     this.looping = false,
   }) : super(key: key);
 
+  ///
   final VideoPlayerController videoPlayerController;
+
+  ///
   final bool looping;
-  final bool autoplay;
 
-  @override
-  _VideoItemState createState() => _VideoItemState();
-}
-
-class _VideoItemState extends State<VideoItem> {
-  late ChewieController _chewieController;
-
-  @override
-  void initState() {
-    super.initState();
-    _chewieController = ChewieController(
-      videoPlayerController: widget.videoPlayerController,
-      aspectRatio: 5 / 8,
-      autoInitialize: true,
-      autoPlay: widget.autoplay,
-      looping: widget.looping,
-      showControls: false,
-      errorBuilder: (BuildContext context, String errorMessage) {
-        return Center(
-          child: Text(
-            errorMessage,
-            style: const TextStyle(color: Colors.white),
-          ),
-        );
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    _chewieController.dispose();
-    super.dispose();
-  }
+  ///
+  final bool autoPlay;
 
   @override
   Widget build(BuildContext context) {
+    final ChewieController _chewieController = useChewieController(
+        videoPlayerController: videoPlayerController,
+        looping: looping,
+        autoPlay: autoPlay);
+
     return Chewie(controller: _chewieController);
   }
 }
