@@ -9,6 +9,7 @@ ChewieController useChewieController({
   required VideoPlayerController videoPlayerController,
   bool looping = false,
   bool autoPlay = false,
+  Widget Function(BuildContext context, String errorMessage)? errorBuilder,
 }) {
   final ChewieController controller = ChewieController(
     videoPlayerController: videoPlayerController,
@@ -17,14 +18,7 @@ ChewieController useChewieController({
     autoPlay: autoPlay,
     looping: looping,
     showControls: false,
-    errorBuilder: (BuildContext context, String errorMessage) {
-      return Center(
-        child: Text(
-          errorMessage,
-          style: const TextStyle(color: Colors.white),
-        ),
-      );
-    },
+    errorBuilder: errorBuilder,
   );
   useEffect(() {
     return controller.dispose;
