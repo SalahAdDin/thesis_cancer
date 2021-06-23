@@ -15,8 +15,9 @@ final StateProvider<PostType> tabTypeProvider = StateProvider<PostType>(
   name: "Bottom Navigator Index Provider",
 );
 
-final StateNotifierProvider<UserNotifier, UserState>
-    homeScreenNotifierProvider = StateNotifierProvider<UserNotifier, UserState>(
+final AutoDisposeStateNotifierProvider<UserNotifier, UserState>
+    homeScreenNotifierProvider =
+    StateNotifierProvider.autoDispose<UserNotifier, UserState>(
   (ProviderReference ref) => UserNotifier(reader: ref.read)..init(),
   name: "Home Screen Notifier Provider",
 );
