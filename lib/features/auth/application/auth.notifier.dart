@@ -64,7 +64,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }) async {
     try {
       final Map<String, dynamic> rawUser = await authRepository.signIn(
-          identifier: username, password: password) as Map<String, dynamic>;
+        identifier: username,
+        password: password,
+      ) as Map<String, dynamic>;
       final User sessionUser = User.fromJson(rawUser);
       if (sessionUser.confirmed != false) {
         tokenController.state = sessionUser.token!;
@@ -168,9 +170,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }) async {
     try {
       final Map<String, dynamic> rawUser = await authRepository.resetPassword(
-          password: password,
-          passwordConfirmation: passwordConfirmation,
-          confirmationCode: confirmationCode) as Map<String, dynamic>;
+        password: password,
+        passwordConfirmation: passwordConfirmation,
+        confirmationCode: confirmationCode,
+      ) as Map<String, dynamic>;
       final User sessionUser = User.fromJson(rawUser);
       // TODO: Redirect to login page again as with logout.
       // state = const AuthState.loggedOut();
