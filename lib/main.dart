@@ -53,7 +53,7 @@ class CancerApp extends HookWidget {
     _configureDidReceiveLocalNotification();
 
     // final navigator = useProvider(navigatorProvider);
-    final Settings? appSettings = useProvider(settingsProvider).data?.value;
+    final Settings? appSettings = useProvider(settingsNotifierProvider);
     final bool darkTheme = appSettings?.darkTheme ?? false;
     final LauncherState launcherState = useProvider(launcherProvider);
 

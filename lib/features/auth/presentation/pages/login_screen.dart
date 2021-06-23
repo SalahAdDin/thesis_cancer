@@ -19,7 +19,7 @@ class LoginScreen extends HookWidget {
     final AuthState authScreenState = useProvider(authNotifierProvider);
 
     final String registerSurveyID =
-        useProvider(settingsProvider).data?.value.registeringSurvey ?? '';
+        useProvider(settingsNotifierProvider).registeringSurvey ?? '';
 
     return FlutterLogin(
       //title: AppLiterals.title,

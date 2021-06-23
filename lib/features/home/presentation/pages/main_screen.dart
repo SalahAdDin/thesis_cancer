@@ -37,10 +37,10 @@ class MainScreen extends HookWidget {
   Widget build(BuildContext context) {
     final UserState currentUserState = useProvider(homeScreenNotifierProvider);
     final UploadFile introductoryVideo =
-        useProvider(settingsProvider).data?.value.introductoryVideo ??
+        useProvider(settingsNotifierProvider).introductoryVideo ??
             UploadFile.empty;
     final List<SurveySchedule> scheduledSurveys =
-        useProvider(settingsProvider).data?.value.surveySchedules ??
+        useProvider(settingsNotifierProvider).surveySchedules ??
             <SurveySchedule>[];
     final UserRole currentUser =
         useProvider(userEntityProvider).state.profile?.role ?? UserRole.GUEST;
