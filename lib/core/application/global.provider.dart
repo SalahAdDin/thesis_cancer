@@ -1,3 +1,4 @@
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:package_info/package_info.dart';
@@ -11,6 +12,7 @@ import 'package:thesis_cancer/core/domain/settings/settings.repository.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/infrastructure/settings.repository.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
+import 'package:thesis_cancer/features/media/application/uploadfile.provider.dart';
 import 'package:thesis_cancer/features/notification/domain/activityfeed.entity.dart';
 
 /// Package Info Provider
@@ -25,9 +27,11 @@ final FutureProvider<PackageInfo> packageInfoProvider =
 /// Provides a [GraphQLClient] with/without an authentication token.
 final Provider<GraphQLClient> graphQLClientProvider =
     Provider<GraphQLClient>((ProviderReference ref) {
+  // String.fromEnvironment('API_URL'),
+  const String graphQLEndpoint = 'http://10.30.30.176:1337/graphql';
+  // const String subscriptionEndpoint = "ws://10.30.30.176:3000/subscription";
   final HttpLink _httpLink = HttpLink(
-    // String.fromEnvironment('API_URL'),
-    'http://192.168.1.36:1337/graphql',
+    graphQLEndpoint,
   );
 
   final String token = ref.watch(tokenProvider).state;
@@ -36,7 +40,15 @@ final Provider<GraphQLClient> graphQLClientProvider =
     getToken: () async => 'Bearer $token',
   );
 
-  final Link _link = _authLink.concat(_httpLink);
+  Link _link = _authLink.concat(_httpLink);
+
+  /*
+  if (subscriptionEndpoint != null) {
+    final WebSocketLink _wsLink = WebSocketLink(subscriptionEndpoint);
+    _link =
+        Link.split((Request request) => request.isSubscription, _wsLink, _link);
+  }
+  */
 
   return GraphQLClient(
     /// **NOTE** The default store is the InMemoryStore, which does NOT persist to disk
@@ -70,6 +82,7 @@ final Provider<SettingsRepository> settingsRepositoryProvider =
 final FutureProvider<Settings> settingsProvider = FutureProvider<Settings>(
   (ProviderReference ref) async {
     final DataStoreRepository dataStore = ref.read(dataStoreRepositoryProvider);
+    final CacheManager _cacheManager = ref.read(cacheManagerProvider);
     final SettingsRepository settingsRepository =
         ref.read(settingsRepositoryProvider);
 
@@ -80,6 +93,12 @@ final FutureProvider<Settings> settingsProvider = FutureProvider<Settings>(
           await settingsRepository.fetchSettings() as Map<String, dynamic>;
       final Settings fetchedSettings = Settings.fromJson(result);
       await dataStore.writeSettings(settings);
+
+      if (fetchedSettings.introductoryVideo != null &&
+          fetchedSettings.introductoryVideo?.url != null) {
+        _cacheManager.downloadFile(fetchedSettings.introductoryVideo!.url);
+      }
+
       // Local notifications will be scheduled at first app launch.
       // At this moment there is no any settings on the storage.
       // TODO: Watch here if the user is logged, don't schedule till the user is logged in.
