@@ -8,6 +8,7 @@ import 'package:thesis_cancer/core/presentation/widgets/side_menu/side_menu_foot
 import 'package:thesis_cancer/core/presentation/widgets/side_menu/side_menu_header.dart';
 import 'package:thesis_cancer/features/home/application/home.provider.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
+import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 /// Application's side menu.
@@ -17,6 +18,7 @@ class SideMenu extends HookWidget {
     final StateController<User> userEntityController =
         useProvider(userEntityProvider);
     final User sessionUser = userEntityController.state;
+    final Profile? sessionProfile = sessionUser.profile;
     final StateController<PostType> tabType = useProvider(tabTypeProvider);
     final PageController pageController =
         useProvider(homePageControllerProvider).state;
@@ -27,8 +29,12 @@ class SideMenu extends HookWidget {
           children: <Widget>[
             SideMenuHeader(
               displayedUserName: sessionUser.username,
-              displayedName: sessionUser.profile!.fullName,
-              userAvatarUrl: sessionUser.profile!.profilePhoto?.url,
+              displayedName: sessionProfile!.fullName,
+              userAvatarUrl: sessionProfile.profilePhoto?.url,
+              darkMode: context.read(settingsNotifierProvider).darkTheme,
+              toggleDarkMode: () => context
+                  .read(settingsNotifierProvider.notifier)
+                  .toggleDarkMode(),
             ),
             Expanded(
               child: ListView(

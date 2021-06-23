@@ -42,7 +42,9 @@ class SettingsNotifier extends StateNotifier<Settings> {
   Future<void> toggleDarkMode() async {
     // final darkMode = currentSettings.state.darkMode;
     final bool darkMode = state.darkTheme;
-    state = state.copyWith(darkTheme: !darkMode);
+    final Settings updatedState = state.copyWith(darkTheme: !darkMode);
+    dataStore.writeSettings(updatedState);
+    state = updatedState;
   }
 
   ///

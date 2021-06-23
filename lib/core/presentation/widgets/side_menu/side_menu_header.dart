@@ -14,6 +14,8 @@ class SideMenuHeader extends StatelessWidget {
     required this.displayedUserName,
     required this.displayedName,
     this.userAvatarUrl,
+    required this.darkMode,
+    this.toggleDarkMode,
   }) : super(key: key);
 
   ///
@@ -24,6 +26,12 @@ class SideMenuHeader extends StatelessWidget {
 
   ///
   final String? userAvatarUrl;
+
+  ///
+  final bool darkMode;
+
+  ///
+  final VoidCallback? toggleDarkMode;
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +84,16 @@ class SideMenuHeader extends StatelessWidget {
                 )),
             Row(
               children: <Widget>[
+                Visibility(
+                  visible: toggleDarkMode != null,
+                  child: IconButton(
+                    padding: const EdgeInsets.all(0),
+                    onPressed: toggleDarkMode,
+                    icon: darkMode
+                        ? const Icon(Icons.dark_mode)
+                        : const Icon(Icons.light_mode),
+                  ),
+                ),
                 Transform.rotate(
                   angle: 180 * pi / 180,
                   child: IconButton(
