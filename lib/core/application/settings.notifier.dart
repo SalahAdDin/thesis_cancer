@@ -71,6 +71,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
     final Settings settings = await dataStore.getSettings();
 
     if (settings == Settings.empty) {
+      print('[Settings Notifier Provider]: Fetching settings from server.');
       final Map<String, dynamic> result =
           await settingsRepository.fetchSettings() as Map<String, dynamic>;
       final Settings fetchedSettings = Settings.fromJson(result);
@@ -94,6 +95,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
       state = fetchedSettings;
     } else {
+      print('[Settings Notifier Provider]: Fetching settings from storage.');
       state = settings;
     }
   }

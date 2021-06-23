@@ -18,13 +18,13 @@ final FutureProviderFamily<VideoPlayerController, String>
   final FileInfo? fileInfo = await _cacheManager.getFileFromCache(url);
 
   if (fileInfo == null) {
-    print('[VideoControllerService]: No video in cache');
+    print('[VideoControllerService]: No video in cache.');
 
-    print('[VideoControllerService]: Saving video to cache');
+    print('[VideoControllerService]: Saving video to cache.');
     _cacheManager.downloadFile(url);
     return VideoPlayerController.network(url);
   } else {
-    print('[VideoControllerService]: Loading video from cache');
+    print('[VideoControllerService]: Loading video from cache.');
     return VideoPlayerController.file(fileInfo.file);
   }
 }, name: "Video Controller Provider");

@@ -45,12 +45,14 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
     final User profileData = await dataStore.getUserProfileData();
     // This does mean a dummy user was created.
     if (profileData.email == 'name@dummy.com') {
+      print('[Launcher Notifier Provider]: There is no user on storage.');
       state = const LauncherState.needsProfile();
     } else {
       // Updates the current user.
       userController.state = profileData;
       // Updates the current auth token.
       tokenController.state = profileData.token!;
+      print('[Launcher Notifier Provider]: Loading user from storage.');
       state = const LauncherState.profileLoaded();
     }
   }
