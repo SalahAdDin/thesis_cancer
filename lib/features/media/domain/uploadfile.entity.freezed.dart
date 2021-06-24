@@ -27,7 +27,7 @@ class _$UploadFileTearOff {
       required String url,
       int? width,
       int? height,
-      String? mime}) {
+      required String mime}) {
     return _UploadFile(
       id: id,
       alternativeText: alternativeText,
@@ -55,7 +55,7 @@ mixin _$UploadFile {
   String get url => throw _privateConstructorUsedError;
   int? get width => throw _privateConstructorUsedError;
   int? get height => throw _privateConstructorUsedError;
-  String? get mime => throw _privateConstructorUsedError;
+  String get mime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -75,7 +75,7 @@ abstract class $UploadFileCopyWith<$Res> {
       String url,
       int? width,
       int? height,
-      String? mime});
+      String mime});
 }
 
 /// @nodoc
@@ -124,7 +124,7 @@ class _$UploadFileCopyWithImpl<$Res> implements $UploadFileCopyWith<$Res> {
       mime: mime == freezed
           ? _value.mime
           : mime // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -142,7 +142,7 @@ abstract class _$UploadFileCopyWith<$Res> implements $UploadFileCopyWith<$Res> {
       String url,
       int? width,
       int? height,
-      String? mime});
+      String mime});
 }
 
 /// @nodoc
@@ -193,7 +193,7 @@ class __$UploadFileCopyWithImpl<$Res> extends _$UploadFileCopyWithImpl<$Res>
       mime: mime == freezed
           ? _value.mime
           : mime // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -208,7 +208,7 @@ class _$_UploadFile implements _UploadFile {
       required this.url,
       this.width,
       this.height,
-      this.mime});
+      required this.mime});
 
   factory _$_UploadFile.fromJson(Map<String, dynamic> json) =>
       _$_$_UploadFileFromJson(json);
@@ -226,7 +226,7 @@ class _$_UploadFile implements _UploadFile {
   @override
   final int? height;
   @override
-  final String? mime;
+  final String mime;
 
   @override
   String toString() {
@@ -285,7 +285,7 @@ abstract class _UploadFile implements UploadFile {
       required String url,
       int? width,
       int? height,
-      String? mime}) = _$_UploadFile;
+      required String mime}) = _$_UploadFile;
 
   factory _UploadFile.fromJson(Map<String, dynamic> json) =
       _$_UploadFile.fromJson;
@@ -303,7 +303,7 @@ abstract class _UploadFile implements UploadFile {
   @override
   int? get height => throw _privateConstructorUsedError;
   @override
-  String? get mime => throw _privateConstructorUsedError;
+  String get mime => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UploadFileCopyWith<_UploadFile> get copyWith =>

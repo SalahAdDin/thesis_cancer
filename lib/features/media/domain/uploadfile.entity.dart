@@ -14,7 +14,7 @@ class UploadFile with _$UploadFile {
     required String url,
     int? width,
     int? height,
-    String? mime,
+    required String mime,
   }) = _UploadFile;
 
   /// Builds a [UploadFile] from a given json [String].
@@ -25,6 +25,7 @@ class UploadFile with _$UploadFile {
   static const UploadFile empty = UploadFile(
       alternativeText: 'Dummy alternative text.',
       caption: 'Dummy caption.',
+      mime: 'image/png',
       url: '',
       width: 150,
       height: 150);

@@ -2,11 +2,15 @@ import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:readmore/readmore.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/core/presentation/widgets/video_item.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
+import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
 
 /// Post Widget
 class PostWidget extends StatelessWidget {
@@ -18,6 +22,47 @@ class PostWidget extends StatelessWidget {
 
   ///
   final Post post;
+
+  Widget _deliverContent(UploadFile content) {
+    final String contentType = content.mime.split("/")[0];
+    final FileType? fileType =
+        EnumToString.fromString(FileType.values, contentType);
+
+    switch (fileType) {
+      case FileType.image:
+        return CachedNetworkImage(
+          imageUrl: content.url,
+          fit: BoxFit.fill,
+          progressIndicatorBuilder: (BuildContext context, String url,
+                  DownloadProgress downloadProgress) =>
+              SizedBox(
+            height: 400.0,
+            child: Center(
+              child: CircularProgressIndicator(
+                value: downloadProgress.progress,
+              ),
+            ),
+          ),
+          errorWidget: (BuildContext context, String url, _) =>
+              const Icon(Icons.error),
+        );
+      case FileType.video:
+        return CachedNetworkVideo(
+          dataSource: content.url,
+          // autoPlay: true,
+        );
+      case FileType.file:
+        return const Center(
+          child: Icon(
+            Icons.description_outlined,
+          ),
+        );
+      case null:
+        return const Center(
+          child: Icon(Icons.error),
+        );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,22 +95,8 @@ class PostWidget extends StatelessWidget {
                       ).build(context, config),
                     ),
                   ),*/
-                  itemBuilder: (_, int index) => CachedNetworkImage(
-                    imageUrl: post.gallery[index].url,
-                    fit: BoxFit.fill,
-                    progressIndicatorBuilder: (BuildContext context, String url,
-                            DownloadProgress downloadProgress) =>
-                        SizedBox(
-                      height: 400.0,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          value: downloadProgress.progress,
-                        ),
-                      ),
-                    ),
-                    errorWidget: (BuildContext context, String url, _) =>
-                        const Icon(Icons.error),
-                  ),
+                  itemBuilder: (_, int index) =>
+                      _deliverContent(post.gallery[index]),
                 ),
               )
               /*CarouselSlider(

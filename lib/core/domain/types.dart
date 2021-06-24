@@ -8,6 +8,9 @@ enum ActivityType {
   NEW_RECOMMENDATION
 }
 
+///
+enum FileType { image, video, file }
+
 /// [Post] type.
 enum PostType { INFORMATION, TREATMENT, ACADEMY, SUCCESS_STORIES }
 
