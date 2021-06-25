@@ -10,6 +10,7 @@ import 'package:readmore/readmore.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/video_item.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
+import 'package:thesis_cancer/features/content/presentation/widgets/post_header.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
 
 /// Post Widget
@@ -49,6 +50,7 @@ class PostWidget extends StatelessWidget {
       case FileType.video:
         return CachedNetworkVideo(
           dataSource: content.url,
+          showControls: true,
           // autoPlay: true,
         );
       case FileType.file:
@@ -73,7 +75,9 @@ class PostWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          // PostHeader(),
+          PostHeader(
+            author: post.userProfile,
+          ),
           GestureDetector(
               // TODO: do like on post
               onDoubleTap: () => null,

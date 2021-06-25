@@ -14,6 +14,7 @@ class VideoItem extends HookWidget {
     required this.videoPlayerController,
     this.autoPlay = false,
     this.looping = false,
+    this.showControls = false,
   }) : super(key: key);
 
   ///
@@ -25,12 +26,16 @@ class VideoItem extends HookWidget {
   ///
   final bool autoPlay;
 
+  ///
+  final bool showControls;
+
   @override
   Widget build(BuildContext context) {
     final ChewieController _chewieController = useChewieController(
       videoPlayerController: videoPlayerController,
       looping: looping,
       autoPlay: autoPlay,
+      showControls: showControls,
       errorBuilder: (BuildContext context, String errorMessage) {
         return Center(
           child: Text(
@@ -53,6 +58,7 @@ class CachedNetworkVideo extends HookWidget {
     required this.dataSource,
     this.autoPlay = false,
     this.looping = false,
+    this.showControls = false,
     this.onFinished,
   }) : super(key: key);
 
@@ -64,6 +70,9 @@ class CachedNetworkVideo extends HookWidget {
 
   ///
   final bool autoPlay;
+
+  ///
+  final bool showControls;
 
   ///
   final Function? onFinished;
@@ -93,6 +102,7 @@ class CachedNetworkVideo extends HookWidget {
           videoPlayerController: videoPlayerController,
           autoPlay: autoPlay,
           looping: looping,
+          showControls: showControls,
         );
       },
       loading: () => const CircularProgressIndicator(),

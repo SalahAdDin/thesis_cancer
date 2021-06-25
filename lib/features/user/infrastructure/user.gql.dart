@@ -1,21 +1,16 @@
-/// GraphQL Fragment containing the fetching required attributes for our query/mutation.
-String graphQLFragmentBody = '''
-fragment UserFields on User {
+import 'package:thesis_cancer/features/user/infrastructure/profile.gql.dart'
+    as profile;
+
+/// GraphQL Fragment containing the fetching required attributes for [User] query/mutation.
+const String graphQLFragmentBody = '''
+${profile.graphQLFragmentBody}
+fragment UserFields on UsersPermissionsUser {
   id
+  createdAt
+  username
   email
-  displayName
-  role
-  phoneNumber
-  isConfirmed
-  isLoggedIn
-  hasSeenTutorial
-  hasSeenIntroductoryVideo
-  darkMode
-  bio
-  gallery
-  photo{
-    url
-    description
+  profile{
+    ...ProfileFields
   }
 }
 ''';

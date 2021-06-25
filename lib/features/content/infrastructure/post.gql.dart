@@ -1,20 +1,20 @@
-/// GraphQL Fragment containing the fetching required attributes for our query/mutation.
+import 'package:thesis_cancer/features/user/infrastructure/user.gql.dart'
+    as user_gql;
+
+/// GraphQL Fragment containing the fetching required attributes for [Post] query/mutation.
 const String graphQLFragmentBody = '''
+${user_gql.graphQLFragmentBody}
 fragment PostFields on Post {
   id
   createdAt
   type
-  description
+  author {
+    ...UserFields
+  }
   title
+  description
   gallery {
-    id
-    url
-    alternativeText
-    caption
-    width
-    height
-    previewUrl
-    mime
+    ...UploadFileFields
   }
 }
 ''';

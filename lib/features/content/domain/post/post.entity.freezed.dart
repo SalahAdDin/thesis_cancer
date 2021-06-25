@@ -25,6 +25,7 @@ class _$PostTearOff {
       required PostType type,
       required String description,
       required List<UploadFile> gallery,
+      User? author,
       String? title,
       DateTime? createdAt,
       List<Comment>? comments,
@@ -35,6 +36,7 @@ class _$PostTearOff {
       type: type,
       description: description,
       gallery: gallery,
+      author: author,
       title: title,
       createdAt: createdAt,
       comments: comments,
@@ -55,9 +57,9 @@ const $Post = _$PostTearOff();
 mixin _$Post {
   String get id => throw _privateConstructorUsedError;
   PostType get type => throw _privateConstructorUsedError;
-  String get description =>
-      throw _privateConstructorUsedError; // required String author,
+  String get description => throw _privateConstructorUsedError;
   List<UploadFile> get gallery => throw _privateConstructorUsedError;
+  User? get author => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   List<Comment>? get comments => throw _privateConstructorUsedError;
@@ -78,11 +80,14 @@ abstract class $PostCopyWith<$Res> {
       PostType type,
       String description,
       List<UploadFile> gallery,
+      User? author,
       String? title,
       DateTime? createdAt,
       List<Comment>? comments,
       List<Like>? likes,
       int likesCount});
+
+  $UserCopyWith<$Res>? get author;
 }
 
 /// @nodoc
@@ -99,6 +104,7 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
     Object? type = freezed,
     Object? description = freezed,
     Object? gallery = freezed,
+    Object? author = freezed,
     Object? title = freezed,
     Object? createdAt = freezed,
     Object? comments = freezed,
@@ -122,6 +128,10 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
           ? _value.gallery
           : gallery // ignore: cast_nullable_to_non_nullable
               as List<UploadFile>,
+      author: author == freezed
+          ? _value.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as User?,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -144,6 +154,17 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
               as int,
     ));
   }
+
+  @override
+  $UserCopyWith<$Res>? get author {
+    if (_value.author == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.author!, (value) {
+      return _then(_value.copyWith(author: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -156,11 +177,15 @@ abstract class _$PostCopyWith<$Res> implements $PostCopyWith<$Res> {
       PostType type,
       String description,
       List<UploadFile> gallery,
+      User? author,
       String? title,
       DateTime? createdAt,
       List<Comment>? comments,
       List<Like>? likes,
       int likesCount});
+
+  @override
+  $UserCopyWith<$Res>? get author;
 }
 
 /// @nodoc
@@ -178,6 +203,7 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
     Object? type = freezed,
     Object? description = freezed,
     Object? gallery = freezed,
+    Object? author = freezed,
     Object? title = freezed,
     Object? createdAt = freezed,
     Object? comments = freezed,
@@ -201,6 +227,10 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
           ? _value.gallery
           : gallery // ignore: cast_nullable_to_non_nullable
               as List<UploadFile>,
+      author: author == freezed
+          ? _value.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as User?,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -227,17 +257,19 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Post implements _Post {
+class _$_Post extends _Post {
   const _$_Post(
       {required this.id,
       required this.type,
       required this.description,
       required this.gallery,
+      this.author,
       this.title,
       this.createdAt,
       this.comments,
       this.likes,
-      this.likesCount = 0});
+      this.likesCount = 0})
+      : super._();
 
   factory _$_Post.fromJson(Map<String, dynamic> json) =>
       _$_$_PostFromJson(json);
@@ -248,8 +280,10 @@ class _$_Post implements _Post {
   final PostType type;
   @override
   final String description;
-  @override // required String author,
+  @override
   final List<UploadFile> gallery;
+  @override
+  final User? author;
   @override
   final String? title;
   @override
@@ -264,7 +298,7 @@ class _$_Post implements _Post {
 
   @override
   String toString() {
-    return 'Post(id: $id, type: $type, description: $description, gallery: $gallery, title: $title, createdAt: $createdAt, comments: $comments, likes: $likes, likesCount: $likesCount)';
+    return 'Post(id: $id, type: $type, description: $description, gallery: $gallery, author: $author, title: $title, createdAt: $createdAt, comments: $comments, likes: $likes, likesCount: $likesCount)';
   }
 
   @override
@@ -281,6 +315,8 @@ class _$_Post implements _Post {
             (identical(other.gallery, gallery) ||
                 const DeepCollectionEquality()
                     .equals(other.gallery, gallery)) &&
+            (identical(other.author, author) ||
+                const DeepCollectionEquality().equals(other.author, author)) &&
             (identical(other.title, title) ||
                 const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.createdAt, createdAt) ||
@@ -303,6 +339,7 @@ class _$_Post implements _Post {
       const DeepCollectionEquality().hash(type) ^
       const DeepCollectionEquality().hash(description) ^
       const DeepCollectionEquality().hash(gallery) ^
+      const DeepCollectionEquality().hash(author) ^
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(comments) ^
@@ -320,17 +357,19 @@ class _$_Post implements _Post {
   }
 }
 
-abstract class _Post implements Post {
+abstract class _Post extends Post {
   const factory _Post(
       {required String id,
       required PostType type,
       required String description,
       required List<UploadFile> gallery,
+      User? author,
       String? title,
       DateTime? createdAt,
       List<Comment>? comments,
       List<Like>? likes,
       int likesCount}) = _$_Post;
+  const _Post._() : super._();
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$_Post.fromJson;
 
@@ -340,8 +379,10 @@ abstract class _Post implements Post {
   PostType get type => throw _privateConstructorUsedError;
   @override
   String get description => throw _privateConstructorUsedError;
-  @override // required String author,
+  @override
   List<UploadFile> get gallery => throw _privateConstructorUsedError;
+  @override
+  User? get author => throw _privateConstructorUsedError;
   @override
   String? get title => throw _privateConstructorUsedError;
   @override
