@@ -23,9 +23,9 @@ final Provider<PostRepository> postRepositoryProvider =
   name: "Post Repository Provider",
 );
 
-final StateNotifierProviderFamily<PostNotifier, PostsState, PostType>
-    postsNotifierProvider =
-    StateNotifierProvider.family<PostNotifier, PostsState, PostType>(
+final AutoDisposeStateNotifierProviderFamily<PostNotifier, PostsState, PostType>
+    postsNotifierProvider = StateNotifierProvider.autoDispose
+        .family<PostNotifier, PostsState, PostType>(
   (ProviderReference ref, PostType type) => PostNotifier(
     reader: ref.read,
     type: type,

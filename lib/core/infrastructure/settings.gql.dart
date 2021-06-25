@@ -1,16 +1,13 @@
-///
+import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
+import 'package:thesis_cancer/features/media/infrastructure/upload_file.gql.dart';
+
+/// GraphQL Fragment containing the fetching required attributes for [Settings] query/mutation.
 const String graphQLDocumentGetSettings = '''
+$graphQLFragmentBody
 query Application{
   application{
     introductoryVideo{
-      id
-      url
-      alternativeText
-      caption
-      width
-      height
-      previewUrl
-      mime
+      ...UploadFileFields
     }
     registeringSurvey{
       id

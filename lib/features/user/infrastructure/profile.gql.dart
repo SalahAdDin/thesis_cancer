@@ -1,19 +1,16 @@
-/// GraphQL Fragment containing the fetching required attributes for our query/mutation.
+import 'package:thesis_cancer/features/media/infrastructure/upload_file.gql.dart'
+    as upload_file;
+
+/// GraphQL Fragment containing the fetching required attributes for [Profile] query/mutation.
 const String graphQLFragmentBody = '''
+${upload_file.graphQLFragmentBody}
 fragment ProfileFields on Profile {
   id
   createdAt
   firstName
   lastName
   profilePhoto {
-    id
-    alternativeText
-    caption
-    width
-    height
-    url
-    previewUrl
-    mime
+    ...UploadFileFields
   }
   role
   phoneNumber

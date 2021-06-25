@@ -14,6 +14,9 @@ _$_Post _$_$_PostFromJson(Map<String, dynamic> json) {
     gallery: (json['gallery'] as List<dynamic>)
         .map((e) => UploadFile.fromJson(e as Map<String, dynamic>))
         .toList(),
+    author: json['author'] == null
+        ? null
+        : User.fromJson(json['author'] as Map<String, dynamic>),
     title: json['title'] as String?,
     createdAt: json['createdAt'] == null
         ? null
@@ -42,6 +45,7 @@ Map<String, dynamic> _$_$_PostToJson(_$_Post instance) {
     }
   }
 
+  writeNotNull('author', instance.author?.toJson());
   writeNotNull('title', instance.title);
   writeNotNull('createdAt', instance.createdAt?.toIso8601String());
   writeNotNull('comments', instance.comments?.map((e) => e.toJson()).toList());

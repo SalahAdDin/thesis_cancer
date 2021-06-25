@@ -20,9 +20,9 @@ class PostHeader extends StatelessWidget {
       title: GestureDetector(
         // TODO: Go to profile
         onTap: () => null,
-        child: const Text(
-          'Dummy',
-          style: TextStyle(
+        child: Text(
+          author.fullName,
+          style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
