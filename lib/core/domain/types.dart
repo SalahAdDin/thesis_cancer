@@ -11,6 +11,15 @@ enum ActivityType {
 ///
 enum FileType { image, video, file }
 
+///
+enum TargetIdentifier {
+  informationTarget,
+  treatmentTarget,
+  academyTarget,
+  successStoriesTarget,
+  sideMenuTarget
+}
+
 /// [Post] type.
 enum PostType { INFORMATION, TREATMENT, ACADEMY, SUCCESS_STORIES }
 

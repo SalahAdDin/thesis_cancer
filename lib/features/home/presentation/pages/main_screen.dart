@@ -225,7 +225,43 @@ class MainLayout extends HookWidget {
       tabType.state = PostType.values[index];
     }
 
+    if (showTutorial) {
+      _initializeTargets();
+      tutorialCoachMark = TutorialCoachMark(
+        context,
+        targets: targets,
+        skipWidget: const Padding(
+          padding: EdgeInsets.only(bottom: 56, right: 8),
+          child: Text(
+            "Skip",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        focusAnimationDuration: const Duration(milliseconds: 1000),
+        onClickTarget: (TargetFocus target) {
+          switch (target.identify as TargetIdentifier) {
+            case TargetIdentifier.informationTarget:
+              _navigateOnTap(0);
+              break;
+            case TargetIdentifier.treatmentTarget:
+              _navigateOnTap(1);
+              break;
+            case TargetIdentifier.academyTarget:
+              _navigateOnTap(2);
+              break;
+            case TargetIdentifier.successStoriesTarget:
+              _navigateOnTap(4);
+              break;
+            case TargetIdentifier.sideMenuTarget:
+              // TODO: Handle this case.
+              break;
+          }
         },
+        onFinish: () async => userNotifierProvider.hasSeenTutorial(),
+        onSkip: () async => userNotifierProvider.hasSeenTutorial(),
+        paddingFocus: 7.5,
+      )..show();
+    }
 
     return Scaffold(
       appBar: Header(
@@ -274,7 +310,7 @@ class MainLayout extends HookWidget {
     targets.addAll(
       <TargetFocus>[
         TargetFocus(
-          identify: "InformationTarget",
+          identify: TargetIdentifier.informationTarget,
           keyTarget: _knowledgeButtonKey,
           shape: ShapeLightFocus.Circle,
           contents: <TargetContent>[
@@ -305,7 +341,7 @@ class MainLayout extends HookWidget {
           ],
         ),
         TargetFocus(
-          identify: "TreatmentTarget",
+          identify: TargetIdentifier.treatmentTarget,
           keyTarget: _treatmentButtonKey,
           shape: ShapeLightFocus.Circle,
           contents: <TargetContent>[
@@ -336,7 +372,7 @@ class MainLayout extends HookWidget {
           ],
         ),
         TargetFocus(
-          identify: "AcademyTarget",
+          identify: TargetIdentifier.academyTarget,
           keyTarget: _academyButtonKey,
           shape: ShapeLightFocus.Circle,
           contents: <TargetContent>[
@@ -367,7 +403,7 @@ class MainLayout extends HookWidget {
           ],
         ),
         TargetFocus(
-          identify: "SuccessStoriesTarget",
+          identify: TargetIdentifier.successStoriesTarget,
           keyTarget: _successStoriesButtonKey,
           shape: ShapeLightFocus.Circle,
           contents: <TargetContent>[
