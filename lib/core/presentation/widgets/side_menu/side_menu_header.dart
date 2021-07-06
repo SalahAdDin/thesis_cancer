@@ -57,8 +57,9 @@ class SideMenuHeader extends StatelessWidget {
                   children: <Widget>[
                     UserAvatar(userAvatarUrl: userAvatarUrl),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           // SizedBox(width: 10),
                           Text(

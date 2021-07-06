@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
+///
 typedef ConfirmSignInCallback = Future<dynamic>? Function(
     String, String, String);
 
+///
 class ResetPasswordWidget extends HookWidget {
+  ///
   ResetPasswordWidget({Key? key, required this.onConfirm}) : super(key: key);
 
+  ///
   final ConfirmSignInCallback onConfirm;
 
+  ///
   final MultiValidator passwordValidator = MultiValidator(
     <FieldValidator<dynamic>>[
       RequiredValidator(errorText: 'Password is required,'),
@@ -20,6 +25,7 @@ class ResetPasswordWidget extends HookWidget {
     ],
   );
 
+  ///
   final MultiValidator confirmationCodeValidator = MultiValidator(
     <FieldValidator<dynamic>>[
       RequiredValidator(errorText: 'Confirmation code is required'),
