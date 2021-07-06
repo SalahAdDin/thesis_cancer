@@ -48,8 +48,8 @@ class PostsList extends HookWidget {
             } else {
               body = const Text("No more Data");
             }
-            return SizedBox(
-              height: 55.0,
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 25),
               child: Center(child: body),
             );
           },

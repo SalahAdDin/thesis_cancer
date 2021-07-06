@@ -105,7 +105,9 @@ class CachedNetworkVideo extends HookWidget {
           showControls: showControls,
         );
       },
-      loading: () => const CircularProgressIndicator(),
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
       error: (Object err, StackTrace? stack) => const Icon(Icons.error),
     );
   }

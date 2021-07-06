@@ -40,15 +40,21 @@ class CompletedSurvey extends StatelessWidget {
                               .headline1!
                               .copyWith(fontSize: 40),
                           textAlign: TextAlign.center),
-                      const SizedBox(height: 15),
-                      Text(
-                        'Anketimize verdiğiniz yanıtları aldık, bu anketi doldururken ayırdığınız zaman için teşekkür ederiz.',
-                        style: Theme.of(context).textTheme.bodyText1,
-                        textAlign: TextAlign.center,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: Text(
+                          'Anketimize verdiğiniz yanıtları aldık, bu anketi doldururken ayırdığınız zaman için teşekkür ederiz.',
+                          style: Theme.of(context).textTheme.bodyText1,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                      const SizedBox(height: 30),
-                      Button.primary(
-                          buttonLabel: actionLabel, onPressed: onPressed)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 30),
+                        child: Button.primary(
+                          buttonLabel: actionLabel,
+                          onPressed: onPressed,
+                        ),
+                      ),
                     ],
                   ),
                 ),

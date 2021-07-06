@@ -13,7 +13,9 @@ class AppInfo extends HookWidget {
       data: (PackageInfo info) => Text(
           "${AppLiterals.title}( v${info.version}+${info.buildNumber})",
           style: const TextStyle(fontWeight: FontWeight.bold)),
-      loading: () => const CircularProgressIndicator(),
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
       error: (Object error, _) => Text(error.toString()),
     );
   }
