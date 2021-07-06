@@ -1,11 +1,8 @@
-import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:like_button/like_button.dart';
 import 'package:readmore/readmore.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/video_item.dart';
@@ -36,12 +33,9 @@ class PostWidget extends StatelessWidget {
           fit: BoxFit.fill,
           progressIndicatorBuilder: (BuildContext context, String url,
                   DownloadProgress downloadProgress) =>
-              SizedBox(
-            height: 400.0,
-            child: Center(
-              child: CircularProgressIndicator(
-                value: downloadProgress.progress,
-              ),
+              Center(
+            child: CircularProgressIndicator(
+              value: downloadProgress.progress,
             ),
           ),
           errorWidget: (BuildContext context, String url, _) =>
@@ -79,17 +73,18 @@ class PostWidget extends StatelessWidget {
             author: post.userProfile,
           ),
           GestureDetector(
-              // TODO: do like on post
-              onDoubleTap: () => null,
-              child: SizedBox(
-                height: swiperHeight,
-                child: Swiper(
-                  itemCount: post.gallery.length,
-                  itemHeight: swiperHeight,
-                  itemWidth: swiperWidth,
-                  pagination: const SwiperPagination(),
-                  indicatorLayout: PageIndicatorLayout.SCALE,
-                  /*pagination: SwiperPagination(
+            // TODO: do like on post
+            onDoubleTap: () => null,
+            child: SizedBox(
+              height: swiperHeight,
+              child: Swiper(
+                itemCount: post.gallery.length,
+                itemHeight: swiperHeight,
+                itemWidth: swiperWidth,
+                pagination: const SwiperPagination(),
+                indicatorLayout: PageIndicatorLayout.SCALE,
+                /*
+                pagination: SwiperPagination(
                     builder: SwiperCustomPagination(
                       builder:
                           (BuildContext context, SwiperPluginConfig? config) =>
@@ -98,34 +93,14 @@ class PostWidget extends StatelessWidget {
                         activeColor: Colors.black,
                       ).build(context, config),
                     ),
-                  ),*/
-                  itemBuilder: (_, int index) =>
-                      _deliverContent(post.gallery[index]),
-                ),
-              )
-              /*CarouselSlider(
-            items: post.gallery
-                .map(
-                  (element) => CachedNetworkImage(
-                    imageUrl: element.url,
-                    fit: BoxFit.fill,
-                    progressIndicatorBuilder:
-                        (context, url, downloadProgress) => SizedBox(
-                      height: 400.0,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          value: downloadProgress.progress,
-                        ),
-                      ),
-                    ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
                   ),
-                )
-                .toList(),
-            options: CarouselOptions(height: swiperHeight, aspectRatio: 4 / 3),
-          ),*/
+                  */
+                itemBuilder: (_, int index) =>
+                    _deliverContent(post.gallery[index]),
               ),
+            ),
+          ),
+          /*
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
@@ -158,6 +133,7 @@ class PostWidget extends StatelessWidget {
               ],
             ),
           ),
+          */
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: ReadMoreText(
