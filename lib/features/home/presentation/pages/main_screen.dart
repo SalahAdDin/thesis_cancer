@@ -130,87 +130,139 @@ class MainLayout extends HookWidget {
     final UserNotifier userNotifierProvider =
         useProvider(homeScreenNotifierProvider.notifier);
 
-    if (showTutorial) {
-      _initializeTargets();
-      tutorialCoachMark = TutorialCoachMark(
-        context,
-        targets: targets,
-        skipWidget: const Padding(
-          padding: EdgeInsets.only(bottom: 56, right: 8),
-          child: Text(
-            "Skip",
-            style: TextStyle(color: Colors.white),
-          ),
+    final List<BottomNavigationBarItem> _navigationButtons =
+        <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+        icon: Icon(
+          Icons.book_outlined,
+          key: _knowledgeButtonKey,
         ),
-        // onClickTarget: (TargetFocus target) => target.keyTarget.currentWidget.,
-        onFinish: () async => userNotifierProvider.hasSeenTutorial(),
-        onSkip: () async => userNotifierProvider.hasSeenTutorial(),
-        paddingFocus: 7.5,
-      )..show();
+        label: '',
+        tooltip: 'Bilgi',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(
+          Icons.self_improvement_outlined,
+          key: _treatmentButtonKey,
+        ),
+        label: '',
+        tooltip: 'Tedavi',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(
+          Icons.science_outlined,
+          key: _academyButtonKey,
+        ),
+        label: '',
+        tooltip: 'Geliştirmeler',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(
+          Icons.question_answer_outlined,
+          key: _successStoriesButtonKey,
+        ),
+        label: '',
+        tooltip: 'Hikayeler',
+      ),
+    ];
+
+    final List<Widget> pages = <Widget>[
+      KnowledgeScreen(),
+      TherapyScreen(),
+      ResearchScreen(),
+      StoriesScreen()
+    ];
+
+    final ValueNotifier<List<Widget>> visiblePages = useState(pages);
+
+    void _refreshPages(Duration duration) => visiblePages.value = pages;
+
+    void _swapChildren(int pageCurrent, int pageTarget) {
+      final List<Widget> newVisiblePageViews = <Widget>[...pages];
+
+      if (pageTarget > pageCurrent) {
+        newVisiblePageViews[pageCurrent + 1] = visiblePages.value[pageTarget];
+      } else if (pageTarget < pageCurrent) {
+        newVisiblePageViews[pageCurrent - 1] = visiblePages.value[pageTarget];
+      }
+
+      visiblePages.value = newVisiblePageViews;
     }
 
+    Future<void> _quickJump(int pageCurrent, int pageTarget) async {
+      late int quickJumpTarget;
+
+      if (pageTarget > pageCurrent) {
+        quickJumpTarget = pageCurrent + 1;
+      } else if (pageTarget < pageCurrent) {
+        quickJumpTarget = pageCurrent - 1;
+      }
+      await pageController.animateToPage(
+        quickJumpTarget,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+      pageController.jumpToPage(pageTarget);
+    }
+
+    Future<void> _navigateOnTap(int index) async {
+      final num nearByCoefficient = (pageController.page != null
+              ? index.toDouble() - pageController.page!
+              : 0)
+          .abs();
+      if (nearByCoefficient > 1) {
+        final int currentPage = pageController.page!.round();
+        _swapChildren(currentPage, index);
+        await _quickJump(currentPage, index);
+        WidgetsBinding.instance!.addPostFrameCallback(_refreshPages);
+      } else {
+        pageController.animateToPage(
+          index,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.ease,
+        );
+      }
+      tabType.state = PostType.values[index];
+    }
+
+        },
+
     return Scaffold(
-      appBar: Header(),
+      appBar: Header(
+        additionalActions: [
+          Badge(
+            animationType: BadgeAnimationType.scale,
+            position: BadgePosition.topEnd(top: 7.5, end: 0),
+            // TODO: watch the Messages stream controller for its list's length
+            // To change the content when the length change.
+            // badgeContent: BuildContext,
+            // TODO: same above, if length is 0, hide the badge.
+            // showBadge: ,
+            child: IconButton(
+              icon: const Icon(Icons.chat_outlined),
+              constraints: const BoxConstraints(minWidth: 10),
+              iconSize: 20,
+              tooltip: 'Mesajlar',
+              onPressed: () => pushToPage(context, RoomsPage()),
+            ),
+          ),
+        ],
+      ),
       endDrawer: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 300),
+        constraints: const BoxConstraints(maxWidth: 275),
         child: SideMenu(),
       ),
       body: SafeArea(
         child: PageView(
           controller: pageController,
           onPageChanged: (int index) => tabType.state = PostType.values[index],
-          children: <Widget>[
-            KnowledgeScreen(),
-            TherapyScreen(),
-            ResearchScreen(),
-            StoriesScreen()
-          ],
+          children: visiblePages.value,
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: tabType.state.index,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.book_outlined,
-              key: _knowledgeButtonKey,
-            ),
-            label: '',
-            tooltip: 'Bilgi',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.self_improvement_outlined,
-              key: _treatmentButtonKey,
-            ),
-            label: '',
-            tooltip: 'Tedavi',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.science_outlined,
-              key: _academyButtonKey,
-            ),
-            label: '',
-            tooltip: 'Geliştirmeler',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.question_answer_outlined,
-              key: _successStoriesButtonKey,
-            ),
-            label: '',
-            tooltip: 'Hikayeler',
-          ),
-        ],
-        onTap: (int index) {
-          tabType.state = PostType.values[index];
-          pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.ease,
-          );
-        },
+        items: _navigationButtons,
+        onTap: _navigateOnTap,
         selectedItemColor: Colors.black,
         type: BottomNavigationBarType.shifting,
         unselectedItemColor: Colors.grey,
