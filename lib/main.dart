@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +13,7 @@ import 'package:thesis_cancer/core/application/provider.logger.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/infrastructure/datastore.repository.dart';
+import 'package:thesis_cancer/core/presentation/themes.dart';
 import 'package:thesis_cancer/features/auth/presentation/pages/login_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
@@ -24,6 +26,7 @@ Future<void> main() async {
   final SembastDataStore dataStore = await SembastDataStore.makeDefault();
 
   await LocalNotificationService().init();
+  await Firebase.initializeApp();
 
   runApp(
     ProviderScope(
@@ -53,9 +56,9 @@ class CancerApp extends HookWidget {
     _configureDidReceiveLocalNotification();
 
     // final navigator = useProvider(navigatorProvider);
-    final Settings? appSettings = useProvider(settingsNotifierProvider);
-    final bool darkTheme = appSettings?.darkTheme ?? false;
-    final LauncherState launcherState = useProvider(launcherProvider);
+    final Settings? _appSettings = useProvider(settingsNotifierProvider);
+    final bool _darkTheme = _appSettings?.darkTheme ?? false;
+    final LauncherState _launcherState = useProvider(launcherProvider);
 
     SystemChrome.setEnabledSystemUIOverlays(
       <SystemUiOverlay>[SystemUiOverlay.bottom],
@@ -63,10 +66,13 @@ class CancerApp extends HookWidget {
 
     return MaterialApp(
       title: 'Thesis Cancer',
-      theme: darkTheme ? ThemeData.dark() : ThemeData.light(),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: _darkTheme ? ThemeMode.dark : ThemeMode.light,
       navigatorKey: _navigatorKey,
+      debugShowCheckedModeBanner: false,
       home: Builder(
-        builder: (BuildContext context) => launcherState.when(
+        builder: (BuildContext context) => _launcherState.when(
           loading: () => SplashScreen(),
           needsProfile: () => LoginScreen(),
           profileLoaded: () => MainScreen(),

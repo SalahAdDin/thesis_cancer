@@ -1,4 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/features/user/application/profile.notifier.dart';
+import 'package:thesis_cancer/features/user/application/profile.state.dart';
 import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.repository.dart';
@@ -20,4 +22,13 @@ final Provider<UserRepository> userRepositoryProvider =
 final StateProvider<User> userEntityProvider = StateProvider<User>(
   (ProviderReference ref) => User.empty,
   name: "User Entity Provider",
+);
+
+final AutoDisposeStateNotifierProviderFamily<ProfileNotifier, ProfileState,
+        User> profileNotifierProvider =
+    StateNotifierProvider.autoDispose
+        .family<ProfileNotifier, ProfileState, User>(
+  (AutoDisposeProviderReference ref, User user) =>
+      ProfileNotifier(user: user, reader: ref.read),
+  name: "Profile Notifier Provider",
 );

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/domain/constants.dart';
 import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
+import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/presentation/pages/profile_screen.dart';
 
 /// Side Menu's header
@@ -11,21 +12,13 @@ class SideMenuHeader extends StatelessWidget {
   ///
   const SideMenuHeader({
     Key? key,
-    required this.displayedUserName,
-    required this.displayedName,
-    this.userAvatarUrl,
+    required this.sessionUser,
     required this.darkMode,
     this.toggleDarkMode,
   }) : super(key: key);
 
   ///
-  final String displayedUserName;
-
-  ///
-  final String displayedName;
-
-  ///
-  final String? userAvatarUrl;
+  final User sessionUser;
 
   ///
   final bool darkMode;
@@ -51,38 +44,52 @@ class SideMenuHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             GestureDetector(
-                key: GlobalKeys().userNameButtonKey,
-                onTap: () => pushToPage(context, ProfileScreen()),
-                child: Row(
-                  children: <Widget>[
-                    UserAvatar(userAvatarUrl: userAvatarUrl),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          // SizedBox(width: 10),
-                          Text(
-                            displayedName,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline4!
-                                .copyWith(fontSize: 14),
-                          ),
-                          Text(
-                            displayedUserName,
-                            // TODO: Should be gray
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1!
-                                .copyWith(fontSize: 10),
-                          ),
-                          // SizedBox(width: 20)
-                        ],
-                      ),
-                    )
-                  ],
-                )),
+              key: GlobalKeys().userNameButtonKey,
+              onTap: () => pushToPage(
+                context,
+                ProfileScreen(
+                  user: sessionUser,
+                ),
+              ),
+              child: Row(
+                children: <Widget>[
+                  UserAvatar(
+                    userAvatarUrl: sessionUser.profile!.profilePhoto?.url,
+                  ),
+                  Container(
+                    /* Width
+                    * avatar: 30
+                    * right action buttons: 96
+                    * main row: 245
+                    * */
+                    width: 110,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        // SizedBox(width: 10),
+                        Text(
+                          sessionUser.profile!.fullName,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(fontSize: 14),
+                        ),
+                        Text(
+                          sessionUser.username,
+                          // TODO: Should be gray
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(fontSize: 10),
+                        ),
+                        // SizedBox(width: 20)
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
             Row(
               children: <Widget>[
                 Visibility(

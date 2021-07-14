@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/features/auth/application/auth.notifier.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
@@ -19,4 +20,16 @@ final StateNotifierProvider<AuthNotifier, AuthState> authNotifierProvider =
     StateNotifierProvider<AuthNotifier, AuthState>(
   (ProviderReference ref) => AuthNotifier(reader: ref.read),
   name: "Authentication Notifier Provider",
+);
+
+final Provider<FirebaseAuth> firebaseAuthProvider = Provider<FirebaseAuth>(
+  (_) => FirebaseAuth.instance,
+  name: "FirebaseAuth Instance Provider",
+);
+
+final StreamProvider<User?> authStateChangesProvider = StreamProvider<User?>(
+  (ProviderReference ref) {
+    return ref.watch(firebaseAuthProvider).authStateChanges();
+  },
+  name: " Firebase Auth Changes Provider",
 );

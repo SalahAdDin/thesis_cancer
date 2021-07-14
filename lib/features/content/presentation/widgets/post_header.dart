@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
-import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
+import 'package:thesis_cancer/features/user/domain/user.entity.dart';
+import 'package:thesis_cancer/features/user/presentation/pages/profile_screen.dart';
 
 /// [PostWidget]'s header.
 class PostHeader extends StatelessWidget {
@@ -11,17 +13,19 @@ class PostHeader extends StatelessWidget {
   }) : super(key: key);
 
   ///
-  final Profile author;
+  final User author;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: UserAvatar(userAvatarUrl: author.profilePhoto?.url),
+      leading: UserAvatar(userAvatarUrl: author.profile?.profilePhoto?.url),
       title: GestureDetector(
-        // TODO: Go to profile
-        onTap: () => null,
+        onTap: () => pushToPage(
+          context,
+          ProfileScreen(user: author),
+        ),
         child: Text(
-          author.fullName,
+          author.profile!.fullName,
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,

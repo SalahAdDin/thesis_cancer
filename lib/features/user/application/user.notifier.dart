@@ -7,7 +7,6 @@ import 'package:thesis_cancer/features/user/application/user.state.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
-import 'package:thesis_cancer/features/user/domain/user.repository.dart';
 
 /// User Notifier
 /// Handles business logic related to the application session's user.
@@ -25,8 +24,7 @@ class UserNotifier extends StateNotifier<UserState> {
   ///
   DataStoreRepository get dataStore => reader(dataStoreRepositoryProvider);
 
-  ///
-  UserRepository get userRepository => reader(userRepositoryProvider);
+  // UserRepository get _userRepository => reader(userRepositoryProvider);
 
   ///
   ProfileRepository get profileRepository => reader(profileRepositoryProvider);
@@ -131,12 +129,13 @@ class UserNotifier extends StateNotifier<UserState> {
   ///
   Future<void> init() async {
     final User sessionUser = userController.state!;
+    final String? firebaseUserUID = sessionUser.profile?.uid;
     if (sessionUser.confirmed == true) {
       final Profile sessionUserProfile =
           await profileRepository.findByUserId(sessionUser.id);
 
       final User sessionUserWithProfile = sessionUser.copyWith(
-        profile: sessionUserProfile,
+        profile: sessionUserProfile.copyWith(uid: firebaseUserUID),
       );
 
       await dataStore.writeUserProfile(sessionUserWithProfile);

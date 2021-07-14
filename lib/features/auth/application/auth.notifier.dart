@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
@@ -8,24 +9,28 @@ import 'package:thesis_cancer/features/auth/application/auth.state.dart';
 import 'package:thesis_cancer/features/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
-import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
+import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
+///
 class AuthNotifier extends StateNotifier<AuthState> {
+  ///
   AuthNotifier({required this.reader}) : super(const AuthState.loading());
 
+  /// [Reader] provider reader.
   final Reader reader;
 
-  AuthRepository get authRepository => reader(authRepositoryProvider);
+  AuthRepository get _authRepository => reader(authRepositoryProvider);
 
-  DataStoreRepository get dataStore => reader(dataStoreRepositoryProvider);
+  DataStoreRepository get _dataStore => reader(dataStoreRepositoryProvider);
 
-  ProfileRepository get profileRepository => reader(profileRepositoryProvider);
-
-  StateController<User?> get userController =>
+  StateController<User?> get _userController =>
       reader(userEntityProvider.notifier);
 
-  StateController<String> get tokenController => reader(tokenProvider.notifier);
+  StateController<String> get _tokenController =>
+      reader(tokenProvider.notifier);
+
+  fb.FirebaseAuth get _fireBaseAuth => reader(firebaseAuthProvider);
 
   // StreamSubscription? _subscription;
 
@@ -35,17 +40,23 @@ class AuthNotifier extends StateNotifier<AuthState> {
     super.dispose();
   }
 
+  ///
   Future<String?> registerUser({
     required String username,
     required String password,
   }) async {
     try {
-      final Map<String, dynamic> result = await authRepository.signUp(
-          username: username.split("@")[0],
-          email: username,
-          password: password) as Map<String, dynamic>;
+      final Map<String, dynamic> result = await _authRepository.signUp(
+        username: username.split("@")[0],
+        email: username,
+        password: password,
+      ) as Map<String, dynamic>;
+      await _fireBaseAuth.createUserWithEmailAndPassword(
+        email: username,
+        password: password,
+      );
       final User newUser = User.fromJson(result);
-      userController.state = newUser.copyWith(confirmed: false);
+      _userController.state = newUser.copyWith(confirmed: false);
       state = const AuthState.signedUp();
     } on SignUpFailure catch (error) {
       // state = AuthState.error(error.toString());
@@ -63,16 +74,24 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String password,
   }) async {
     try {
-      final Map<String, dynamic> rawUser = await authRepository.signIn(
+      final Map<String, dynamic> rawUser = await _authRepository.signIn(
         identifier: username,
         password: password,
       ) as Map<String, dynamic>;
-      final User sessionUser = User.fromJson(rawUser);
+      User sessionUser = User.fromJson(rawUser);
       if (sessionUser.confirmed != false) {
-        tokenController.state = sessionUser.token!;
+        final fb.UserCredential credentials =
+            await _fireBaseAuth.signInWithEmailAndPassword(
+          email: username,
+          password: password,
+        );
+        sessionUser = sessionUser.copyWith(
+          profile: Profile.empty.copyWith(uid: credentials.user?.uid),
+        );
+        _tokenController.state = sessionUser.token!;
       }
-      await dataStore.writeUserProfile(sessionUser);
-      userController.state = sessionUser;
+      await _dataStore.writeUserProfile(sessionUser);
+      _userController.state = sessionUser;
       state = const AuthState.loggedIn();
     } on LogInFailureByBadRequest {
       return "E-posta veya şifre geçersiz.";
@@ -94,6 +113,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }*/
   }
 
+  ///
   Future<String?> signInWithFacebook() async {
     /*try {
       bool result = await authRepository.signInWithSocialWebUI(
@@ -113,6 +133,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     throw UnimplementedError();
   }
 
+  ///
   Future<String?> signInWithGoogle() async {
     /*try {
       bool result = await authRepository.signInWithSocialWebUI(
@@ -131,6 +152,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     throw UnimplementedError();
   }
 
+  ///
   Future<String?> signInWithApple() async {
 /*    try {
       bool result = await authRepository.signInWithSocialWebUI(
@@ -149,10 +171,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
     throw UnimplementedError();
   }
 
+  ///
   Future<String?> requestPasswordRecovery({required String email}) async {
     try {
-      final bool isRequested =
-          await authRepository.forgotPassword(email: email) as bool;
+      final bool isRequested = await _authRepository.forgotPassword(
+        email: email,
+      ) as bool;
       if (isRequested) {
         state = const AuthState.resetPassword();
       } else {
@@ -163,13 +187,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  ///
   Future<String?> recoverPassword({
     required String password,
     required String passwordConfirmation,
     required String confirmationCode,
   }) async {
     try {
-      final Map<String, dynamic> rawUser = await authRepository.resetPassword(
+      final Map<String, dynamic> rawUser = await _authRepository.resetPassword(
         password: password,
         passwordConfirmation: passwordConfirmation,
         confirmationCode: confirmationCode,

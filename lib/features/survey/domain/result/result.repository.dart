@@ -17,7 +17,7 @@ abstract class UserSurveyResultRepository {
   Future<void> removeUserSurveyResult(String userSurveyResultId);
   */
 
-  /// Getting the number of results related to a [User] and [Survey].
+  /// Gets the number of results related to a [User] and [Survey].
   /// This value will be used to get the [UserSurveyResult]'s iteration.
   Future<int> countUserSurveyResults({
     required String userId,

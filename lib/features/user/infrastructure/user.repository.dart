@@ -1,8 +1,12 @@
+import 'package:colorize/colorize.dart';
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.repository.dart';
+import 'package:thesis_cancer/features/user/infrastructure/failure.dart';
+import 'package:thesis_cancer/features/user/infrastructure/user.gql.dart';
 
 /// **GraphQL** implementation for [UserRepository] interface
 class GraphQLUserRepository implements UserRepository {
@@ -12,8 +16,7 @@ class GraphQLUserRepository implements UserRepository {
   /// Provider reference [Reader].
   final Reader reader;
 
-  /// Injecting the required [GraphQLClient] by reading it from providers.
-  GraphQLClient get client => reader(graphQLClientProvider);
+  GraphQLClient get _client => reader(graphQLClientProvider);
 
   @override
   Future<User> createUser(User user) {
@@ -43,5 +46,31 @@ class GraphQLUserRepository implements UserRepository {
   Future<User> updateUser(User user) {
     // TODO: implement updateUser
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<User>>? findUserWithQuery({
+    required Map<String, dynamic> query,
+  }) async {
+    try {
+      final QueryOptions options = QueryOptions(
+        document: gql(graphQLDocumentFindUsers),
+        variables: <String, dynamic>{
+          "where": query,
+        },
+      );
+      final QueryResult response = await _client.query(options);
+
+      if (response.hasException) {
+        print(Colorize(response.exception.toString()).red());
+        throw GraphQLFailure(response.exception.toString());
+      }
+      final List<dynamic> users = response.data?["users"] as List<dynamic>;
+      return users
+          .map((dynamic user) => User.fromJson(user as Map<String, dynamic>))
+          .toList();
+    } on Exception catch (error) {
+      throw UserFailure();
+    }
   }
 }

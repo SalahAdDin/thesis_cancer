@@ -26,6 +26,7 @@ class _$ProfileTearOff {
       String? lastName,
       UploadFile? profilePhoto,
       UserRole role = UserRole.GUEST,
+      String? uid,
       String? phoneNumber,
       bool? hasSeenTutorial,
       bool? hasSeenIntroductoryVideo,
@@ -36,6 +37,7 @@ class _$ProfileTearOff {
       lastName: lastName,
       profilePhoto: profilePhoto,
       role: role,
+      uid: uid,
       phoneNumber: phoneNumber,
       hasSeenTutorial: hasSeenTutorial,
       hasSeenIntroductoryVideo: hasSeenIntroductoryVideo,
@@ -58,6 +60,7 @@ mixin _$Profile {
   String? get lastName => throw _privateConstructorUsedError;
   UploadFile? get profilePhoto => throw _privateConstructorUsedError;
   UserRole get role => throw _privateConstructorUsedError;
+  String? get uid => throw _privateConstructorUsedError; // Firebase user id
   String? get phoneNumber => throw _privateConstructorUsedError;
   bool? get hasSeenTutorial => throw _privateConstructorUsedError;
   bool? get hasSeenIntroductoryVideo => throw _privateConstructorUsedError;
@@ -78,6 +81,7 @@ abstract class $ProfileCopyWith<$Res> {
       String? lastName,
       UploadFile? profilePhoto,
       UserRole role,
+      String? uid,
       String? phoneNumber,
       bool? hasSeenTutorial,
       bool? hasSeenIntroductoryVideo,
@@ -101,6 +105,7 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
     Object? lastName = freezed,
     Object? profilePhoto = freezed,
     Object? role = freezed,
+    Object? uid = freezed,
     Object? phoneNumber = freezed,
     Object? hasSeenTutorial = freezed,
     Object? hasSeenIntroductoryVideo = freezed,
@@ -127,6 +132,10 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
+      uid: uid == freezed
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String?,
       phoneNumber: phoneNumber == freezed
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -169,6 +178,7 @@ abstract class _$ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       String? lastName,
       UploadFile? profilePhoto,
       UserRole role,
+      String? uid,
       String? phoneNumber,
       bool? hasSeenTutorial,
       bool? hasSeenIntroductoryVideo,
@@ -194,6 +204,7 @@ class __$ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
     Object? lastName = freezed,
     Object? profilePhoto = freezed,
     Object? role = freezed,
+    Object? uid = freezed,
     Object? phoneNumber = freezed,
     Object? hasSeenTutorial = freezed,
     Object? hasSeenIntroductoryVideo = freezed,
@@ -220,6 +231,10 @@ class __$ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as UserRole,
+      uid: uid == freezed
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String?,
       phoneNumber: phoneNumber == freezed
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -249,6 +264,7 @@ class _$_Profile extends _Profile {
       this.lastName,
       this.profilePhoto,
       this.role = UserRole.GUEST,
+      this.uid,
       this.phoneNumber,
       this.hasSeenTutorial,
       this.hasSeenIntroductoryVideo,
@@ -270,6 +286,8 @@ class _$_Profile extends _Profile {
   @override
   final UserRole role;
   @override
+  final String? uid;
+  @override // Firebase user id
   final String? phoneNumber;
   @override
   final bool? hasSeenTutorial;
@@ -280,7 +298,7 @@ class _$_Profile extends _Profile {
 
   @override
   String toString() {
-    return 'Profile(id: $id, firstName: $firstName, lastName: $lastName, profilePhoto: $profilePhoto, role: $role, phoneNumber: $phoneNumber, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, bio: $bio)';
+    return 'Profile(id: $id, firstName: $firstName, lastName: $lastName, profilePhoto: $profilePhoto, role: $role, uid: $uid, phoneNumber: $phoneNumber, hasSeenTutorial: $hasSeenTutorial, hasSeenIntroductoryVideo: $hasSeenIntroductoryVideo, bio: $bio)';
   }
 
   @override
@@ -300,6 +318,8 @@ class _$_Profile extends _Profile {
                     .equals(other.profilePhoto, profilePhoto)) &&
             (identical(other.role, role) ||
                 const DeepCollectionEquality().equals(other.role, role)) &&
+            (identical(other.uid, uid) ||
+                const DeepCollectionEquality().equals(other.uid, uid)) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 const DeepCollectionEquality()
                     .equals(other.phoneNumber, phoneNumber)) &&
@@ -323,6 +343,7 @@ class _$_Profile extends _Profile {
       const DeepCollectionEquality().hash(lastName) ^
       const DeepCollectionEquality().hash(profilePhoto) ^
       const DeepCollectionEquality().hash(role) ^
+      const DeepCollectionEquality().hash(uid) ^
       const DeepCollectionEquality().hash(phoneNumber) ^
       const DeepCollectionEquality().hash(hasSeenTutorial) ^
       const DeepCollectionEquality().hash(hasSeenIntroductoryVideo) ^
@@ -346,6 +367,7 @@ abstract class _Profile extends Profile {
       String? lastName,
       UploadFile? profilePhoto,
       UserRole role,
+      String? uid,
       String? phoneNumber,
       bool? hasSeenTutorial,
       bool? hasSeenIntroductoryVideo,
@@ -365,6 +387,8 @@ abstract class _Profile extends Profile {
   @override
   UserRole get role => throw _privateConstructorUsedError;
   @override
+  String? get uid => throw _privateConstructorUsedError;
+  @override // Firebase user id
   String? get phoneNumber => throw _privateConstructorUsedError;
   @override
   bool? get hasSeenTutorial => throw _privateConstructorUsedError;

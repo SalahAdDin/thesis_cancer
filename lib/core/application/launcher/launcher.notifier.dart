@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sembast/sembast.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
@@ -34,6 +35,8 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
   /// Token's [StateController] to manipulate the current auth token.
   StateController<String> get tokenController => reader(tokenProvider.notifier);
 
+  fb.FirebaseAuth get _auth => reader(firebaseAuthProvider);
+
   @override
   void dispose() {
     // _subscription?.cancel();
@@ -63,6 +66,7 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
     tokenController.state = '';
     userController.state = User.empty;
     await dataStore.removeUserProfile();
+    _auth.signOut();
     state = const LauncherState.needsProfile();
   }
 

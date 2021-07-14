@@ -11,3 +11,35 @@ fragment UploadFileFields on UploadFile {
   mime
 }
 ''';
+
+///
+const String graphQLDocumentDeleteFile = '''
+$graphQLFragmentBody
+mutation DeleteFile(\$fileId: ID!) {
+  deleteFile(input: { where: { id: \$fileId } }) {
+    file {
+      ...UploadFileFields
+    }
+  }
+}
+''';
+
+///
+const String graphQLDocumentUploadFile = '''
+$graphQLFragmentBody
+mutation UploadFile(\$file: Upload!, \$info: FileInfoInput) {
+  upload(file: \$file, info: \$info) {
+    ...UploadFileFields
+  }
+}
+''';
+
+///
+const String graphQLDocumentMultiUploadFile = '''
+$graphQLFragmentBody
+mutation MultiUploadFile(\$files: [Upload]!) {
+  multipleUpload(files: \$files) {
+    ...UploadFileFields
+  }
+}
+''';

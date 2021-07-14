@@ -1,0 +1,1 @@
+class FileFailure implements Exception {}
