@@ -8,7 +8,7 @@ import 'package:thesis_cancer/features/survey/domain/question/question.entity.da
 import 'package:thesis_cancer/features/survey/presentation/widgets/debounce_text_form_field.dart';
 
 ///
-typedef OnSelectedCallback = Function(String);
+typedef SingleStringCallback = Function(String);
 
 ///
 class QuestionWidget extends StatelessWidget {
@@ -30,7 +30,7 @@ class QuestionWidget extends StatelessWidget {
   final UserSurveyAnswer? userAnswer;
 
   ///
-  final OnSelectedCallback? onSelected;
+  final SingleStringCallback? onSelected;
 
   final MultiValidator _shortAnswerValidator =
       MultiValidator(<FieldValidator<dynamic>>[

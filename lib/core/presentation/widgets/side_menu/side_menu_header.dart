@@ -7,6 +7,9 @@ import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/presentation/pages/profile_screen.dart';
 
+///
+typedef DynamicCallback = Function(dynamic);
+
 /// Side Menu's header
 class SideMenuHeader extends StatelessWidget {
   ///
@@ -24,7 +27,7 @@ class SideMenuHeader extends StatelessWidget {
   final bool darkMode;
 
   ///
-  final VoidCallback? toggleDarkMode;
+  final DynamicCallback? toggleThemeMode;
 
   @override
   Widget build(BuildContext context) {

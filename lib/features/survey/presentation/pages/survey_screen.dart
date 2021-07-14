@@ -2,7 +2,6 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 import 'package:thesis_cancer/features/survey/application/survey.provider.dart';
@@ -11,10 +10,6 @@ import 'package:thesis_cancer/features/survey/domain/question/question.entity.da
 import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/survey/presentation/widgets/completed_survey.dart';
 import 'package:thesis_cancer/features/survey/presentation/widgets/question_widget.dart';
-
-// TODO: Redirect the user to a screen
-/// Function to trigger after finishing the survey.
-typedef FinishSurveyCallback = Future<void> Function();
 
 /// Survey Screen
 class SurveyScreen extends HookWidget {
@@ -25,7 +20,7 @@ class SurveyScreen extends HookWidget {
   });
 
   ///
-  final OnPressedButton onCompleteSurvey;
+  final VoidCallback onCompleteSurvey;
 
   ///
   final String surveyID;
@@ -38,6 +33,7 @@ class SurveyScreen extends HookWidget {
       loading: () => const Center(
         child: CircularProgressIndicator(),
       ),
+      // TODO: Redirect the user to a screen
       completed: () => CompletedSurvey(
         onPressed: onCompleteSurvey,
         actionLabel: 'Devam et',

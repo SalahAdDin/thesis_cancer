@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/video_item.dart';
 
 /// Introductory Screen
@@ -18,7 +17,7 @@ class IntroductoryScreen extends HookWidget {
   final String dataSource;
 
   ///
-  final OnPressedButton onDone;
+  final VoidCallback onDone;
 
   @override
   Widget build(BuildContext context) {

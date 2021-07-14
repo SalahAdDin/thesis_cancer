@@ -124,6 +124,7 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
         final User updatedUser =
             _currentUser!.copyWith(profile: fetchedUpdatedProfile);
         _userController.state = updatedUser;
+
         state = const ProfileState.data();
       } on Exception catch (error) {}
     } else {}

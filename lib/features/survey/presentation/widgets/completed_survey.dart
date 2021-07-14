@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 
 class CompletedSurvey extends StatelessWidget {
@@ -10,7 +9,7 @@ class CompletedSurvey extends StatelessWidget {
     required this.actionLabel,
   }) : super(key: key);
 
-  final OnPressedButton onPressed;
+  final VoidCallback onPressed;
   final String actionLabel;
 
   // TODO: Improve style

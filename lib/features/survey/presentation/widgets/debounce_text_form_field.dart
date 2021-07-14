@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 ///
-typedef OnAnswer = Function(String);
+typedef SingleStringCallback = Function(String);
 
 /// [TextFormField] which return a [String] value to a [OnAnswer]
 /// callback function when the user stops to write (for [int] debounce milliseconds.
@@ -29,7 +29,7 @@ class DebounceTextFormField extends HookWidget {
   final String? initialText;
 
   ///
-  final OnAnswer onAnswer;
+  final SingleStringCallback onAnswer;
 
   ///
   final int? debounceTime;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 
 class ErrorScreen extends StatelessWidget {
@@ -10,7 +9,7 @@ class ErrorScreen extends StatelessWidget {
     required this.actionLabel,
   });
 
-  final OnPressedButton onPressed;
+  final VoidCallback onPressed;
 
   // TODO: Handle the message and only the message from AmplifyException.
   final String? title;

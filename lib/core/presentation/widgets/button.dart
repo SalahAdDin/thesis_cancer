@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thesis_cancer/core/domain/types.dart';
 
 // TODO: Improve a disable button style(as in web).
 
@@ -15,7 +14,7 @@ class Button extends StatelessWidget {
   }) : isPrimary = false;
 
   final String buttonLabel;
-  final OnPressedButton? onPressed;
+  final VoidCallback? onPressed;
   final bool isPrimary;
 
   @override
