@@ -42,5 +42,5 @@ class Post with _$Post {
   );
 
   ///
-  Profile get userProfile => author?.profile ?? Profile.empty;
+  Profile get authorProfile => author?.profile ?? Profile.empty;
 }

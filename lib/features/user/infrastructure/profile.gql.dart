@@ -6,6 +6,7 @@ const String graphQLFragmentBody = '''
 ${upload_file.graphQLFragmentBody}
 fragment ProfileFields on Profile {
   id
+  uid
   createdAt
   firstName
   lastName
@@ -36,6 +37,25 @@ query GetProfileByUserId(\$userId: ID!) {
   profiles(where: { user: \$userId }) {
     ...ProfileFields
   }
+}
+''';
+
+///
+const String graphQLDocumentFindProfiles = '''
+$graphQLFragmentBody
+query FindProfiles(\$where: JSON) {
+  profiles(where: \$where) {
+    ...ProfileFields
+  }
+}
+''';
+
+///
+String graphQLDocumentCountPosts = '''
+query CountPosts(
+  \$userID: ID!
+){
+  postsCount(where: { author: \$userID })
 }
 ''';
 

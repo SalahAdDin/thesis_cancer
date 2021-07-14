@@ -15,6 +15,7 @@ class Profile with _$Profile {
     String? lastName,
     UploadFile? profilePhoto,
     @Default(UserRole.GUEST) UserRole role,
+    String? uid, // Firebase user id
     String? phoneNumber,
     bool? hasSeenTutorial,
     bool? hasSeenIntroductoryVideo,

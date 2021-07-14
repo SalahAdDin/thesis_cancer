@@ -16,6 +16,7 @@ _$_Profile _$_$_ProfileFromJson(Map<String, dynamic> json) {
         : UploadFile.fromJson(json['profilePhoto'] as Map<String, dynamic>),
     role:
         _$enumDecodeNullable(_$UserRoleEnumMap, json['role']) ?? UserRole.GUEST,
+    uid: json['uid'] as String?,
     phoneNumber: json['phoneNumber'] as String?,
     hasSeenTutorial: json['hasSeenTutorial'] as bool?,
     hasSeenIntroductoryVideo: json['hasSeenIntroductoryVideo'] as bool?,
@@ -37,6 +38,7 @@ Map<String, dynamic> _$_$_ProfileToJson(_$_Profile instance) {
   writeNotNull('lastName', instance.lastName);
   writeNotNull('profilePhoto', instance.profilePhoto?.toJson());
   val['role'] = _$UserRoleEnumMap[instance.role];
+  writeNotNull('uid', instance.uid);
   writeNotNull('phoneNumber', instance.phoneNumber);
   writeNotNull('hasSeenTutorial', instance.hasSeenTutorial);
   writeNotNull('hasSeenIntroductoryVideo', instance.hasSeenIntroductoryVideo);

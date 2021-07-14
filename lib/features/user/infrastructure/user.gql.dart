@@ -64,6 +64,16 @@ String graphQLDocumentGetUser = '''
     }
   }''';
 
+///
+const String graphQLDocumentFindUsers = '''
+$graphQLFragmentBody
+query FindUsers(\$where: JSON) {
+  users(where: \$where) {
+    ...UserFields
+  }
+}
+''';
+
 // photo url
 // comments count
 // posts count

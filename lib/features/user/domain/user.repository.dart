@@ -9,6 +9,11 @@ abstract class UserRepository {
   Future<User> findById(String id);
 
   ///
+  Future<List<User>>? findUserWithQuery({
+    required Map<String, dynamic> query,
+  });
+
+  ///
   Future<User> createUser(User user);
 
   ///

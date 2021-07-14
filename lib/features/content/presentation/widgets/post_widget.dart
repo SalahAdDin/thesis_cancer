@@ -70,7 +70,7 @@ class PostWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           PostHeader(
-            author: post.userProfile,
+            author: post.author!,
           ),
           GestureDetector(
             // TODO: do like on post

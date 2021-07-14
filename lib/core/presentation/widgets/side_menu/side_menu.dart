@@ -8,7 +8,6 @@ import 'package:thesis_cancer/core/presentation/widgets/side_menu/side_menu_foot
 import 'package:thesis_cancer/core/presentation/widgets/side_menu/side_menu_header.dart';
 import 'package:thesis_cancer/features/home/application/home.provider.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
-import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 /// Application's side menu.
@@ -18,7 +17,6 @@ class SideMenu extends HookWidget {
     final StateController<User> userEntityController =
         useProvider(userEntityProvider);
     final User sessionUser = userEntityController.state;
-    final Profile? sessionProfile = sessionUser.profile;
     final StateController<PostType> tabType = useProvider(tabTypeProvider);
     final PageController pageController =
         useProvider(homePageControllerProvider).state;
@@ -28,9 +26,7 @@ class SideMenu extends HookWidget {
         child: Column(
           children: <Widget>[
             SideMenuHeader(
-              displayedUserName: sessionUser.username,
-              displayedName: sessionProfile!.fullName,
-              userAvatarUrl: sessionProfile.profilePhoto?.url,
+              sessionUser: sessionUser,
               darkMode: context.read(settingsNotifierProvider).darkTheme,
               toggleDarkMode: () => context
                   .read(settingsNotifierProvider.notifier)
@@ -40,6 +36,7 @@ class SideMenu extends HookWidget {
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: <Widget>[
+                  /*
                   ExpansionTile(
                     title: const Text('Content'),
                     children: <Widget>[
@@ -80,20 +77,22 @@ class SideMenu extends HookWidget {
                         },
                       ),
                       ListTile(
-                          leading: const Icon(
-                            Icons.question_answer_outlined,
-                          ),
-                          title: const Text('Hikayeler'),
-                          onTap: () {
-                            tabType.state = PostType.SUCCESS_STORIES;
-                            pageController.animateToPage(
-                              3,
-                              duration: const Duration(milliseconds: 500),
-                              curve: Curves.ease,
-                            );
-                          }),
+                        leading: const Icon(
+                          Icons.question_answer_outlined,
+                        ),
+                        title: const Text('Hikayeler'),
+                        onTap: () {
+                          tabType.state = PostType.SUCCESS_STORIES;
+                          pageController.animateToPage(
+                            3,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.ease,
+                          );
+                        },
+                      ),
                     ],
                   ),
+                  */
                   const ListTile(
                     leading: Icon(Icons.settings),
                     title: Text('Ayarlar'),

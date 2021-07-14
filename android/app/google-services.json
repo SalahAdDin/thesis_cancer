@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "762294111629",
+    "project_id": "thesis-cancer",
+    "storage_bucket": "thesis-cancer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762294111629:android:c55b032c9da054d36ec1c4",
+        "android_client_info": {
+          "package_name": "com.cloudnesil.thesis_cancer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762294111629-c79e6ft9dnmdgq40m9a63huaifoo5rro.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cloudnesil.thesis_cancer",
+            "certificate_hash": "ff0d9b4d103a8675aed294f3f9c0c0bcfec2c637"
+          }
+        },
+        {
+          "client_id": "762294111629-b32evihho6404o1nq2tisap4kocopv6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC30MChhJ7V3QdyB_4-HKWbgKmEZIEwM9I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762294111629-b32evihho6404o1nq2tisap4kocopv6t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
