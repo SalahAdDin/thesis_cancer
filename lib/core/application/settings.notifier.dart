@@ -23,20 +23,20 @@ class SettingsNotifier extends StateNotifier<Settings> {
   final Reader reader;
 
   ///
-  DataStoreRepository get dataStore => reader(dataStoreRepositoryProvider);
+  DataStoreRepository get _dataStore => reader(dataStoreRepositoryProvider);
 
   CacheManager get _cacheManager => reader(cacheManagerProvider);
 
   ///
-  SettingsRepository get settingsRepository =>
+  SettingsRepository get _settingsRepository =>
       reader(settingsRepositoryProvider);
 
   ///
-  StateController<User?> get userController =>
+  StateController<User?> get _userController =>
       reader(userEntityProvider.notifier);
 
   ///
-  User? get currentUser => userController.state;
+  User? get _currentUser => _userController.state;
 
   ///
   Future<void> toggleDarkMode() async {
@@ -68,14 +68,14 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   ///
   Future<void> init() async {
-    final Settings settings = await dataStore.getSettings();
+    final Settings settings = await _dataStore.getSettings();
 
     if (settings == Settings.empty) {
       print('[Settings Notifier Provider]: Fetching settings from server.');
       final Map<String, dynamic> result =
-          await settingsRepository.fetchSettings() as Map<String, dynamic>;
+          await _settingsRepository.fetchSettings() as Map<String, dynamic>;
       final Settings fetchedSettings = Settings.fromJson(result);
-      await dataStore.writeSettings(settings);
+      await _dataStore.writeSettings(settings);
 
       if (fetchedSettings.introductoryVideo != null &&
           fetchedSettings.introductoryVideo?.url != null) {
@@ -89,7 +89,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
       */
       if (fetchedSettings.surveySchedules != null &&
           fetchedSettings.surveySchedules!.isNotEmpty) {
-        // && currentUser != User.empty) {
+        // && _currentUser != User.empty) {
         scheduleNotifications(fetchedSettings.surveySchedules!);
       }
 
