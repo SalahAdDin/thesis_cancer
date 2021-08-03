@@ -16,7 +16,7 @@ class QuestionWidget extends StatelessWidget {
   ///
   QuestionWidget({
     required this.surveyID,
-    this.question,
+    required this.question,
     this.onSelected,
     this.userAnswer,
   });
@@ -25,7 +25,7 @@ class QuestionWidget extends StatelessWidget {
   final String surveyID;
 
   ///
-  final Question? question;
+  final Question question;
 
   ///
   final UserSurveyAnswer? userAnswer;
@@ -154,33 +154,19 @@ class QuestionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (question == null) {
-      return Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 30.0, right: 8.0),
-            child: Text(
-              'Bu anketinin soruları hala yok!',
-              style:
-                  Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 25),
-            ),
-          ),
-        ],
-      );
-    }
     return Column(
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 30.0, right: 8.0),
           child: Text(
-            question!.statement,
+            question.statement,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
             textAlign: TextAlign.left,
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 30),
-          child: _renderInput(question: question!),
+          child: _renderInput(question: question),
         ),
       ],
     );
