@@ -81,36 +81,33 @@ class SurveyWidget extends HookWidget {
           questionId: currentSurvey.questions![index].id,
         );
 
-    // TODO: this is not real responsive now. (Bug on Mattermost).
-    final double questionZoneHeight = MediaQuery.of(context).size.height * 0.45;
-
     return Scaffold(
       appBar: Header(
         pageTitle: currentSurvey.title,
       ),
       resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20.0,
-                right: 20.0,
-                top: 50.0,
-                bottom: 20.0,
-              ),
-              child: Text(
-                currentSurvey.intro!,
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  color: Theme.of(context).accentColor,
-                ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 20.0,
+              right: 20.0,
+              top: 50.0,
+              bottom: 20.0,
+            ),
+            child: Text(
+              currentSurvey.intro!,
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).accentColor,
               ),
             ),
-            Padding(
+          ),
+          Expanded(
+            child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Card(
                 child: Column(
@@ -150,10 +147,10 @@ class SurveyWidget extends HookWidget {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 30.0),
-                            child: SizedBox(
-                              height: questionZoneHeight,
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 30.0),
                               child: PageView(
                                 controller: context
                                     .read(surveyNotifierProvider(surveyID)
@@ -235,9 +232,9 @@ class SurveyWidget extends HookWidget {
                         ],
                 ),
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
