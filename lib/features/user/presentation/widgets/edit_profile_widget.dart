@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
@@ -9,7 +11,7 @@ import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 ///
 class EditProfileWidget extends HookWidget {
   ///
-  const EditProfileWidget({
+  EditProfileWidget({
     Key? key,
     required this.formKey,
     required this.onEditPhoto,
@@ -20,6 +22,11 @@ class EditProfileWidget extends HookWidget {
 
   ///
   final VoidCallback onEditPhoto;
+
+  final MaskTextInputFormatter _phoneMaskFormatter = MaskTextInputFormatter(
+    mask: '+## (###) ### ## ##',
+    filter: <String, RegExp>{"#": RegExp('[0-9]')},
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -89,21 +96,26 @@ class EditProfileWidget extends HookWidget {
                 ),
                 FormBuilderTextField(
                   name: 'phoneNumber',
+                  inputFormatters: <TextInputFormatter>[_phoneMaskFormatter],
                   initialValue: userProfile.phoneNumber,
                   decoration: const InputDecoration(labelText: 'Phone Number'),
                   validator:
                       FormBuilderValidators.compose(<String? Function(String?)>[
                     FormBuilderValidators.minLength(
                       context,
-                      12,
+                      18,
                       errorText: "Phone number format invalid.",
                     ),
                     FormBuilderValidators.maxLength(
                       context,
-                      16,
+                      22,
                       errorText: "Phone number format invalid.",
                     ),
-                    FormBuilderValidators.match(context, r"\+\d{12}$"),
+                    FormBuilderValidators.match(
+                      context,
+                      r"^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$",
+                      errorText: "Phone number format invalid.",
+                    ),
                   ]),
                 ),
                 FormBuilderTextField(

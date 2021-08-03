@@ -42,6 +42,7 @@ class LoginScreen extends HookWidget {
         flushbarTitleSuccess: "Başarılı",
         signUpSuccess: "Bir aktivasyon linki gönderildi",
       ),
+      navigateBackAfterRecovery: true,
       /* TODO:
       loginProviders: <LoginProvider>[
         LoginProvider(

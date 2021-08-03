@@ -4,6 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
 import 'package:thesis_cancer/features/chat/presentation/pages/chat_page.dart';
@@ -57,7 +58,8 @@ class ProfileScreen extends HookWidget {
           Visibility(
             visible: user.profile!.fullName != '' &&
                 sessionUserFullName != '' &&
-                !profileNotifier.isOwnProfile,
+                !profileNotifier.isOwnProfile &&
+                user.profile!.role == UserRole.ADMIN,
             child: IconButton(
               onPressed: () async {
                 final fc_types.Room room = await profileNotifier.createRoom();

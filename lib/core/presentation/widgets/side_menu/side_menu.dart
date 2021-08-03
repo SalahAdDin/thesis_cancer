@@ -27,10 +27,10 @@ class SideMenu extends HookWidget {
           children: <Widget>[
             SideMenuHeader(
               sessionUser: sessionUser,
-              darkMode: context.read(settingsNotifierProvider).darkTheme,
-              toggleDarkMode: () => context
+              themeMode: context.read(settingsNotifierProvider).themeMode,
+              toggleThemeMode: (dynamic mode) => context
                   .read(settingsNotifierProvider.notifier)
-                  .toggleDarkMode(),
+                  .toggleThemeMode(mode as ThemeMode),
             ),
             Expanded(
               child: ListView(

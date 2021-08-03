@@ -19,24 +19,20 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: isPrimary
-            ? Theme.of(context).primaryColor
-            : Theme.of(context).accentColor,
-      ),
-      onPressed: onPressed,
-      child: Text(
-        buttonLabel,
-        style: isPrimary
-            ? TextStyle(
-                fontWeight: FontWeight.w700,
-                color: Theme.of(context).accentColor,
-              )
-            : const TextStyle(
-                fontWeight: FontWeight.w700,
+    return isPrimary
+        ? ElevatedButton(
+            onPressed: onPressed,
+            child: Text(buttonLabel),
+          )
+        : OutlinedButton(
+            onPressed: onPressed,
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(
+                color: Theme.of(context).primaryColor,
+                width: 1.5,
               ),
-      ),
-    );
+            ),
+            child: Text(buttonLabel),
+          );
   }
 }

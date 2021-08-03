@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:thesis_cancer/core/domain/settings/schedules.entity.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
@@ -13,7 +14,7 @@ class Settings with _$Settings {
     UploadFile? introductoryVideo,
     String? registeringSurvey, // Survey ID
     List<SurveySchedule>? surveySchedules,
-    @Default(false) bool darkTheme,
+    @Default(ThemeMode.system) ThemeMode themeMode,
   }) = _Settings;
 
   /// Builds a [Settings] from a given json [String].

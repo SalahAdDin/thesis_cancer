@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as fc_types;
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -6,6 +7,7 @@ import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
+import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
 import 'package:thesis_cancer/features/chat/application/chat.provider.dart';
 import 'package:thesis_cancer/features/chat/presentation/pages/chat_page.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
@@ -47,6 +49,7 @@ class RoomsPage extends HookWidget {
 
           return ListView.builder(
             itemCount: rooms.length,
+            padding: const EdgeInsets.symmetric(vertical: 8),
             itemBuilder: (
               BuildContext context,
               int index,
@@ -67,17 +70,10 @@ class RoomsPage extends HookWidget {
                   ),
                   child: Row(
                     children: <Widget>[
-                      Container(
-                        height: 40,
-                        margin: const EdgeInsets.only(
-                          right: 16,
-                        ),
-                        width: 40,
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                          child: Image.network(room.imageUrl ?? ''),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: UserAvatar(
+                          userAvatarUrl: room.imageUrl,
                         ),
                       ),
                       Text(room.name ?? 'Room'),

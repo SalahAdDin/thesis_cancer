@@ -5,10 +5,7 @@ import 'package:thesis_cancer/core/presentation/widgets/app_info.dart';
 class SideMenuFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: Theme.of(context).accentColor)),
-      ),
+    return SizedBox(
       width: double.infinity,
       child: Align(
         child: Container(

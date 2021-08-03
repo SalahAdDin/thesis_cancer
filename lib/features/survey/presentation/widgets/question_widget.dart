@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:group_button/group_button.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/core/presentation/themes.dart';
 import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
 import 'package:thesis_cancer/features/survey/presentation/widgets/debounce_text_form_field.dart';
@@ -46,6 +47,28 @@ class QuestionWidget extends StatelessWidget {
     MaxLengthValidator(500, errorText: 'Bu cevap çok uzun.')
   ]);
 
+  GroupButton _themedGroupButton({
+    required List<String> buttons,
+    required Function(int index, bool isSelected) onSelected,
+    int? selectedButton,
+    List<int>? selectedButtons,
+    bool isRadio = true,
+  }) =>
+      GroupButton(
+        buttons: buttons,
+        onSelected: onSelected,
+        selectedButton: selectedButton,
+        selectedButtons: selectedButtons,
+        isRadio: isRadio,
+        spacing: 10,
+        direction: Axis.vertical,
+        selectedColor: primary,
+        borderRadius: BorderRadius.circular(30.0),
+        unselectedBorderColor: primary,
+        unselectedTextStyle: const TextStyle(color: primary),
+        unselectedShadow: const <BoxShadow>[],
+      );
+
   Widget _renderInput({required Question question}) {
     Widget answerWidget;
     switch (question.type) {
@@ -71,12 +94,10 @@ class QuestionWidget extends StatelessWidget {
         final List<String> buttons = question.answer!.split(",");
         final String selectedButton = userAnswer?.answer ?? '';
 
-        answerWidget = GroupButton(
-          spacing: 10,
+        answerWidget = _themedGroupButton(
           buttons: buttons,
           onSelected: (int index, bool isSelected) =>
               onSelected!(buttons[index]),
-          direction: Axis.vertical,
           selectedButton: selectedButton != ''
               ? buttons.indexOf(selectedButton).toInt()
               : null,
@@ -86,8 +107,8 @@ class QuestionWidget extends StatelessWidget {
         final List<String> buttons = question.answer!.split(",");
         final String selectedButtons = userAnswer?.answer ?? '';
 
-        answerWidget = GroupButton(
-          spacing: 10,
+        answerWidget = _themedGroupButton(
+          isRadio: false,
           buttons: buttons,
           onSelected: (int index, bool isSelected) {
             final String rawCurrentAnswer = userAnswer?.answer ?? '';
@@ -102,8 +123,6 @@ class QuestionWidget extends StatelessWidget {
             }
             onSelected!(currentAnswer.join(","));
           },
-          direction: Axis.vertical,
-          isRadio: false,
           selectedButtons: selectedButtons != ''
               ? selectedButtons
                   .split(",")
@@ -116,15 +135,13 @@ class QuestionWidget extends StatelessWidget {
         final List<String> buttons = <String>['Yanlış', 'Doğru'];
         final String selectedButton = userAnswer?.answer ?? '';
 
-        answerWidget = GroupButton(
-          spacing: 10,
+        answerWidget = _themedGroupButton(
           buttons: buttons,
           selectedButton: selectedButton != ''
               ? buttons.indexOf(selectedButton).toInt()
               : null,
           onSelected: (int index, bool isSelected) =>
               onSelected!(buttons[index]),
-          direction: Axis.vertical,
         );
         break;
       default:

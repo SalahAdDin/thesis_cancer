@@ -24,12 +24,12 @@ class _$SettingsTearOff {
       {UploadFile? introductoryVideo,
       String? registeringSurvey,
       List<SurveySchedule>? surveySchedules,
-      bool darkTheme = false}) {
+      ThemeMode themeMode = ThemeMode.system}) {
     return _Settings(
       introductoryVideo: introductoryVideo,
       registeringSurvey: registeringSurvey,
       surveySchedules: surveySchedules,
-      darkTheme: darkTheme,
+      themeMode: themeMode,
     );
   }
 
@@ -48,7 +48,7 @@ mixin _$Settings {
       throw _privateConstructorUsedError; // Survey ID
   List<SurveySchedule>? get surveySchedules =>
       throw _privateConstructorUsedError;
-  bool get darkTheme => throw _privateConstructorUsedError;
+  ThemeMode get themeMode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -64,7 +64,7 @@ abstract class $SettingsCopyWith<$Res> {
       {UploadFile? introductoryVideo,
       String? registeringSurvey,
       List<SurveySchedule>? surveySchedules,
-      bool darkTheme});
+      ThemeMode themeMode});
 
   $UploadFileCopyWith<$Res>? get introductoryVideo;
 }
@@ -82,7 +82,7 @@ class _$SettingsCopyWithImpl<$Res> implements $SettingsCopyWith<$Res> {
     Object? introductoryVideo = freezed,
     Object? registeringSurvey = freezed,
     Object? surveySchedules = freezed,
-    Object? darkTheme = freezed,
+    Object? themeMode = freezed,
   }) {
     return _then(_value.copyWith(
       introductoryVideo: introductoryVideo == freezed
@@ -97,10 +97,10 @@ class _$SettingsCopyWithImpl<$Res> implements $SettingsCopyWith<$Res> {
           ? _value.surveySchedules
           : surveySchedules // ignore: cast_nullable_to_non_nullable
               as List<SurveySchedule>?,
-      darkTheme: darkTheme == freezed
-          ? _value.darkTheme
-          : darkTheme // ignore: cast_nullable_to_non_nullable
-              as bool,
+      themeMode: themeMode == freezed
+          ? _value.themeMode
+          : themeMode // ignore: cast_nullable_to_non_nullable
+              as ThemeMode,
     ));
   }
 
@@ -125,7 +125,7 @@ abstract class _$SettingsCopyWith<$Res> implements $SettingsCopyWith<$Res> {
       {UploadFile? introductoryVideo,
       String? registeringSurvey,
       List<SurveySchedule>? surveySchedules,
-      bool darkTheme});
+      ThemeMode themeMode});
 
   @override
   $UploadFileCopyWith<$Res>? get introductoryVideo;
@@ -145,7 +145,7 @@ class __$SettingsCopyWithImpl<$Res> extends _$SettingsCopyWithImpl<$Res>
     Object? introductoryVideo = freezed,
     Object? registeringSurvey = freezed,
     Object? surveySchedules = freezed,
-    Object? darkTheme = freezed,
+    Object? themeMode = freezed,
   }) {
     return _then(_Settings(
       introductoryVideo: introductoryVideo == freezed
@@ -160,10 +160,10 @@ class __$SettingsCopyWithImpl<$Res> extends _$SettingsCopyWithImpl<$Res>
           ? _value.surveySchedules
           : surveySchedules // ignore: cast_nullable_to_non_nullable
               as List<SurveySchedule>?,
-      darkTheme: darkTheme == freezed
-          ? _value.darkTheme
-          : darkTheme // ignore: cast_nullable_to_non_nullable
-              as bool,
+      themeMode: themeMode == freezed
+          ? _value.themeMode
+          : themeMode // ignore: cast_nullable_to_non_nullable
+              as ThemeMode,
     ));
   }
 }
@@ -175,7 +175,7 @@ class _$_Settings implements _Settings {
       {this.introductoryVideo,
       this.registeringSurvey,
       this.surveySchedules,
-      this.darkTheme = false});
+      this.themeMode = ThemeMode.system});
 
   factory _$_Settings.fromJson(Map<String, dynamic> json) =>
       _$_$_SettingsFromJson(json);
@@ -186,13 +186,13 @@ class _$_Settings implements _Settings {
   final String? registeringSurvey;
   @override // Survey ID
   final List<SurveySchedule>? surveySchedules;
-  @JsonKey(defaultValue: false)
+  @JsonKey(defaultValue: ThemeMode.system)
   @override
-  final bool darkTheme;
+  final ThemeMode themeMode;
 
   @override
   String toString() {
-    return 'Settings(introductoryVideo: $introductoryVideo, registeringSurvey: $registeringSurvey, surveySchedules: $surveySchedules, darkTheme: $darkTheme)';
+    return 'Settings(introductoryVideo: $introductoryVideo, registeringSurvey: $registeringSurvey, surveySchedules: $surveySchedules, themeMode: $themeMode)';
   }
 
   @override
@@ -208,9 +208,9 @@ class _$_Settings implements _Settings {
             (identical(other.surveySchedules, surveySchedules) ||
                 const DeepCollectionEquality()
                     .equals(other.surveySchedules, surveySchedules)) &&
-            (identical(other.darkTheme, darkTheme) ||
+            (identical(other.themeMode, themeMode) ||
                 const DeepCollectionEquality()
-                    .equals(other.darkTheme, darkTheme)));
+                    .equals(other.themeMode, themeMode)));
   }
 
   @override
@@ -219,7 +219,7 @@ class _$_Settings implements _Settings {
       const DeepCollectionEquality().hash(introductoryVideo) ^
       const DeepCollectionEquality().hash(registeringSurvey) ^
       const DeepCollectionEquality().hash(surveySchedules) ^
-      const DeepCollectionEquality().hash(darkTheme);
+      const DeepCollectionEquality().hash(themeMode);
 
   @JsonKey(ignore: true)
   @override
@@ -237,7 +237,7 @@ abstract class _Settings implements Settings {
       {UploadFile? introductoryVideo,
       String? registeringSurvey,
       List<SurveySchedule>? surveySchedules,
-      bool darkTheme}) = _$_Settings;
+      ThemeMode themeMode}) = _$_Settings;
 
   factory _Settings.fromJson(Map<String, dynamic> json) = _$_Settings.fromJson;
 
@@ -249,7 +249,7 @@ abstract class _Settings implements Settings {
   List<SurveySchedule>? get surveySchedules =>
       throw _privateConstructorUsedError;
   @override
-  bool get darkTheme => throw _privateConstructorUsedError;
+  ThemeMode get themeMode => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$SettingsCopyWith<_Settings> get copyWith =>

@@ -1,3 +1,4 @@
+import 'package:flutter/src/material/app.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
@@ -39,11 +40,9 @@ class SettingsNotifier extends StateNotifier<Settings> {
   User? get _currentUser => _userController.state;
 
   ///
-  Future<void> toggleDarkMode() async {
-    // final darkMode = currentSettings.state.darkMode;
-    final bool darkMode = state.darkTheme;
-    final Settings updatedState = state.copyWith(darkTheme: !darkMode);
-    dataStore.writeSettings(updatedState);
+  Future<void> toggleThemeMode(ThemeMode mode) async {
+    final Settings updatedState = state.copyWith(themeMode: mode);
+    _dataStore.writeSettings(updatedState);
     state = updatedState;
   }
 

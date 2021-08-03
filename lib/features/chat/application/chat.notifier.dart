@@ -131,7 +131,7 @@ class ChatNotifier extends StateNotifier<bool> {
 
   ///
   Future<void> showImagePicker() async {
-    final PickedFile? result = await ImagePicker().getImage(
+    final XFile? result = await ImagePicker().pickImage(
       imageQuality: 70,
       maxWidth: 1440,
       source: ImageSource.gallery,
@@ -143,7 +143,7 @@ class ChatNotifier extends StateNotifier<bool> {
       final int size = file.lengthSync();
       final Uint8List bytes = await result.readAsBytes();
       final Image image = await decodeImageFromList(bytes);
-      final String name = result.path.split('/').last;
+      final String name = result.name;
 
       try {
         final Reference reference = _storage.ref(name);
@@ -171,6 +171,8 @@ class ChatNotifier extends StateNotifier<bool> {
       // User canceled the picker
     }
   }
+
+  /// TODO: Video picker just for fun.
 
   ///
   fc_types.User getInterlocutor() {

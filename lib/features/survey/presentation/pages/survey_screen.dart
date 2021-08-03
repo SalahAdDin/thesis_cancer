@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
+import 'package:thesis_cancer/core/presentation/widgets/header.dart';
 import 'package:thesis_cancer/features/survey/application/survey.provider.dart';
 import 'package:thesis_cancer/features/survey/application/survey.state.dart';
 import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
@@ -80,13 +81,12 @@ class SurveyWidget extends HookWidget {
           questionId: currentSurvey.questions![index].id,
         );
 
-    final double questionZoneHeight = MediaQuery.of(context).size.height * 0.40;
+    // TODO: this is not real responsive now. (Bug on Mattermost).
+    final double questionZoneHeight = MediaQuery.of(context).size.height * 0.45;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(currentSurvey.title),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
+      appBar: Header(
+        pageTitle: currentSurvey.title,
       ),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -129,7 +129,10 @@ class SurveyWidget extends HookWidget {
                             size: const Size.square(15),
                             activeSize: const Size(18, 18),
                             activeColor: Theme.of(context).primaryColor,
-                            color: Theme.of(context).disabledColor,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(0.12),
                           ),
                           onTap: (double position) => answeredQuestion(
                                   position.toInt())

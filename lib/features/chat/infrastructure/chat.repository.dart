@@ -36,7 +36,9 @@ class FireBaseChatRepository implements ChatRepository {
         ),
       );
 
-  // TODO: Add to flyer documentation: It checks whether actually there is a room   for both users and returns it or creates a new room in other case.
+  // TODO: Add to flyer documentation:
+  //  It checks whether actually there is a room for both users and returns it
+  //  or creates a new room in other case.
 
   @override
   Future<fc_types.Room> getRoomByUser({
