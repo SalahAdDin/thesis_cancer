@@ -82,7 +82,7 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
 
   ///
   Future<void> updateProfilePhoto() async {
-    final PickedFile? result = await ImagePicker().getImage(
+    final XFile? result = await ImagePicker().pickImage(
       imageQuality: 70,
       maxWidth: 1440,
       // TODO: enable camera too, maybe show dialog, or its own widget

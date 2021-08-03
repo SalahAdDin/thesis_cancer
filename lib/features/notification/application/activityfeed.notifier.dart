@@ -21,9 +21,9 @@ class ActivityFeedNotifier extends StateNotifier<ActivityFeedState> {
   GraphQLSubscriptionOperation? _subscriptionOnCreatePostOperation;
   GraphQLSubscriptionOperation? _subscriptionOnCreateCommentOperation;
 
-  List<ActivityFeed> _notifications = [];
+  final List<ActivityFeed> _notifications = <ActivityFeed>[];
 
-  var uuid = Uuid();
+  Uuid uuid = const Uuid();
 
   @override
   void dispose() {
@@ -38,14 +38,16 @@ class ActivityFeedNotifier extends StateNotifier<ActivityFeedState> {
         request:
             GraphQLRequest<String>(document: graphQLDocumentOnCreateSurvey),
         onData: (event) {
-          final Map<String, dynamic> data = json.decode(event.data);
-          final Map<String, dynamic> result = data['onCreateSurvey'];
-          ActivityFeed activityFeed = ActivityFeed(
+          final Map<String, dynamic> data =
+              json.decode(event.data as String) as Map<String, dynamic>;
+          final Map<String, dynamic> result =
+              data['onCreateSurvey'] as Map<String, dynamic>;
+          final ActivityFeed activityFeed = ActivityFeed(
             description:
                 'A new survey ${result['title']} is available for you.',
             id: uuid.v4(),
             type: ActivityType.NEW_SURVEY_SCHEDULED,
-            issuerID: result['id'],
+            issuerID: result['id'] as String,
           );
           _notifications.add(activityFeed);
         },

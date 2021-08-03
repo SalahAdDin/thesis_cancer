@@ -26,10 +26,7 @@ class PostHeader extends StatelessWidget {
         ),
         child: Text(
           author.profile!.fullName,
-          style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 16),
         ),
       ),
       // subtitle: Text(this.location),

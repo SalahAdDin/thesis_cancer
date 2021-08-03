@@ -57,7 +57,7 @@ class CancerApp extends HookWidget {
 
     // final navigator = useProvider(navigatorProvider);
     final Settings? _appSettings = useProvider(settingsNotifierProvider);
-    final bool _darkTheme = _appSettings?.darkTheme ?? false;
+    final ThemeMode _darkTheme = _appSettings?.themeMode ?? ThemeMode.system;
     final LauncherState _launcherState = useProvider(launcherProvider);
 
     SystemChrome.setEnabledSystemUIOverlays(
@@ -68,7 +68,7 @@ class CancerApp extends HookWidget {
       title: 'Thesis Cancer',
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: _darkTheme ? ThemeMode.dark : ThemeMode.light,
+      themeMode: _darkTheme,
       navigatorKey: _navigatorKey,
       debugShowCheckedModeBanner: false,
       home: Builder(

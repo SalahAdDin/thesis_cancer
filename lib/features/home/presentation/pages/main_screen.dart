@@ -524,7 +524,7 @@ class MainLayout extends HookWidget {
         currentIndex: tabType.state.index,
         items: _navigationButtons,
         onTap: _navigateOnTap,
-        selectedItemColor: Colors.black,
+        selectedItemColor: Theme.of(context).primaryColor,
         type: BottomNavigationBarType.shifting,
         unselectedItemColor: Colors.grey,
       ),

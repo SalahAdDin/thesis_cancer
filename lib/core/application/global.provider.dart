@@ -1,6 +1,6 @@
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:thesis_cancer/core/application/launcher/launcher.notifier.dart';
 import 'package:thesis_cancer/core/application/launcher/launcher.state.dart';
 import 'package:thesis_cancer/core/application/settings.notifier.dart';

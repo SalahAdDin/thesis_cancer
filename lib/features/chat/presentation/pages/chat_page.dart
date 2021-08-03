@@ -27,6 +27,10 @@ class ChatPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DefaultChatTheme chatTheme = DefaultChatTheme(
+      primaryColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    );
     final ChatRepository _chatRepository = useProvider(chatRepositoryProvider);
     final AsyncValue<fc_types.Room> currentRoom =
         useProvider(roomProvider(room.id));
@@ -65,10 +69,7 @@ class ChatPage extends HookWidget {
             leading: UserAvatar(userAvatarUrl: interlocutor.imageUrl),
             title: Text(
               "${interlocutor.firstName} ${interlocutor.lastName}",
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.white
-                  // TODO: White or fitting to the app bar style
-                  ),
+              style: Theme.of(context).appBarTheme.titleTextStyle,
             ),
           ),
         ),
@@ -82,7 +83,7 @@ class ChatPage extends HookWidget {
           final ChatNotifier chatNotifier =
               useProvider(chatNotifierProvider(room).notifier);
 
-          void _handleAttachmentPress() {
+          void _handleAttachmentPressed() {
             showModalBottomSheet<void>(
               context: context,
               shape: const RoundedRectangleBorder(
@@ -132,13 +133,14 @@ class ChatPage extends HookWidget {
               isAttachmentUploading: _isAttachmentUploading,
               messages: messages,
               showUserAvatars: true,
-              onAttachmentPressed: _handleAttachmentPress,
+              onAttachmentPressed: _handleAttachmentPressed,
               onMessageTap: chatNotifier.handleMessageTap,
               onPreviewDataFetched: chatNotifier.handlePreviewDataFetched,
               onSendPressed: chatNotifier.handleSendPressed,
               user: fc_types.User(
                 id: chatNotifier.currentUser?.uid ?? '',
               ),
+              theme: chatTheme,
             ),
             loading: () => const Center(
               child: CircularProgressIndicator(),

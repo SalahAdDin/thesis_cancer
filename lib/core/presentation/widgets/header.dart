@@ -27,11 +27,14 @@ class Header extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: title ?? Text(pageTitle ?? AppLiterals.title),
+      title: title ??
+          Text(
+            pageTitle ?? AppLiterals.title,
+            style: Theme.of(context).appBarTheme.titleTextStyle,
+          ),
       centerTitle: true,
       leading: leading,
       // leading: const Icon(Icons.camera_alt),
-      // TODO: background color for light theme must be white.
       actions: <Widget>[
         ...?additionalActions,
       ],

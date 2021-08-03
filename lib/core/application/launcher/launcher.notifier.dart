@@ -63,11 +63,11 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
   /// Close the user's session by cleaning [tokenProvider], [userEntityProvider],
   /// [Database] and setting [LauncherState.needsProfile] as [LauncherState].
   Future<void> signOut() async {
+    state = const LauncherState.needsProfile();
     tokenController.state = '';
     userController.state = User.empty;
     await dataStore.removeUserProfile();
     _auth.signOut();
-    state = const LauncherState.needsProfile();
   }
 
   /// Re-render the application based on [User] is fetched and persisted on local storage,

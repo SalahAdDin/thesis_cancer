@@ -135,17 +135,23 @@ class PostWidget extends StatelessWidget {
           ),
           */
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 10.0,
+            ),
             child: ReadMoreText(
               post.description,
-              colorClickableText: Colors.pink,
               trimMode: TrimMode.Line,
-              trimCollapsedText: 'more',
+              delimiter: ' ',
+              trimCollapsedText: '...more',
               trimExpandedText: 'less',
               moreStyle: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey),
+                fontWeight: FontWeight.w900,
+              ),
+              lessStyle: const TextStyle(
+                fontWeight: FontWeight.w900,
+                color: Colors.pink,
+              ),
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),

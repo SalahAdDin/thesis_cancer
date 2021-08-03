@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/domain/constants.dart';
+import 'package:thesis_cancer/core/presentation/widgets/carousel_switcher_button.dart';
 import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/presentation/pages/profile_screen.dart';
@@ -16,15 +17,15 @@ class SideMenuHeader extends StatelessWidget {
   const SideMenuHeader({
     Key? key,
     required this.sessionUser,
-    required this.darkMode,
-    this.toggleDarkMode,
+    required this.themeMode,
+    this.toggleThemeMode,
   }) : super(key: key);
 
   ///
   final User sessionUser;
 
   ///
-  final bool darkMode;
+  final ThemeMode themeMode;
 
   ///
   final DynamicCallback? toggleThemeMode;
@@ -32,17 +33,15 @@ class SideMenuHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 70,
+      height: 64,
       child: DrawerHeader(
         decoration: BoxDecoration(
-          /*
-              border: Border(
-                  bottom: BorderSide(
-                      width: 1, color: Theme.of(context).accentColor)),
-              */
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).appBarTheme.color,
         ),
-        padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+        padding: const EdgeInsets.symmetric(
+          vertical: 12.5,
+          horizontal: 15.0,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -62,10 +61,10 @@ class SideMenuHeader extends StatelessWidget {
                   Container(
                     /* Width
                     * avatar: 30
-                    * right action buttons: 96
+                    * right action buttons: 68
                     * main row: 245
                     * */
-                    width: 110,
+                    width: 130,
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,12 +74,11 @@ class SideMenuHeader extends StatelessWidget {
                           sessionUser.profile!.fullName,
                           style: Theme.of(context)
                               .textTheme
-                              .headline4!
+                              .headline6!
                               .copyWith(fontSize: 14),
                         ),
                         Text(
                           sessionUser.username,
-                          // TODO: Should be gray
                           style: Theme.of(context)
                               .textTheme
                               .subtitle1!
@@ -96,19 +94,25 @@ class SideMenuHeader extends StatelessWidget {
             Row(
               children: <Widget>[
                 Visibility(
-                  visible: toggleDarkMode != null,
-                  child: IconButton(
-                    padding: const EdgeInsets.all(0),
-                    onPressed: toggleDarkMode,
-                    icon: darkMode
-                        ? const Icon(Icons.dark_mode)
-                        : const Icon(Icons.light_mode),
+                  visible: toggleThemeMode != null,
+                  child: CarouselSwitcherButton(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    constraints: const BoxConstraints(minWidth: 10),
+                    values: ThemeMode.values,
+                    icons: const <Icon>[
+                      Icon(Icons.settings_outlined),
+                      Icon(Icons.light_mode_outlined),
+                      Icon(Icons.dark_mode_outlined)
+                    ],
+                    onPressed: (dynamic value) => toggleThemeMode!(value),
+                    initialValue: themeMode,
                   ),
                 ),
                 Transform.rotate(
                   angle: 180 * pi / 180,
                   child: IconButton(
-                    padding: const EdgeInsets.all(0),
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    constraints: const BoxConstraints(minWidth: 10),
                     icon: const Icon(
                       Icons.menu_open_outlined,
                     ),
