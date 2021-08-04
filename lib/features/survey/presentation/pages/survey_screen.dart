@@ -10,7 +10,7 @@ import 'package:thesis_cancer/features/survey/application/survey.provider.dart';
 import 'package:thesis_cancer/features/survey/application/survey.state.dart';
 import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
-import 'package:thesis_cancer/features/survey/presentation/widgets/completed_survey.dart';
+import 'package:thesis_cancer/features/survey/presentation/pages/completed_survey_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/widgets/question_widget.dart';
 
 /// Survey Screen
@@ -37,7 +37,7 @@ class SurveyScreen extends HookWidget {
         child: CircularProgressIndicator(),
       ),
       // TODO: It could be custom or Navigator.of(context).pop() ?
-      completed: () => CompletedSurvey(
+      completed: () => CompletedSurveyScreen(
         onPressed: onCompleteSurvey,
         actionLabel: 'Devam et',
       ),
