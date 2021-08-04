@@ -14,10 +14,12 @@ typedef SingleStringCallback = Function(String);
 ///
 class QuestionWidget extends StatelessWidget {
   ///
+
   QuestionWidget({
     required this.surveyID,
     required this.question,
     this.onSelected,
+    this.onRemove,
     this.userAnswer,
   });
 
@@ -32,6 +34,9 @@ class QuestionWidget extends StatelessWidget {
 
   ///
   final SingleStringCallback? onSelected;
+
+  ///
+  final VoidCallback? onRemove;
 
   final MultiValidator _shortAnswerValidator =
       MultiValidator(<FieldValidator<dynamic>>[
@@ -75,7 +80,11 @@ class QuestionWidget extends StatelessWidget {
       case QuestionType.OPEN_SHORT:
         answerWidget = DebounceTextFormField(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          onAnswer: (String answer) => onSelected!(answer),
+          onAnswer: (String answer) {
+            if (answer.isNotEmpty) {
+              onSelected!(answer);
+            }
+          },
           validator: _shortAnswerValidator,
           initialText: userAnswer?.answer,
         );
@@ -83,7 +92,11 @@ class QuestionWidget extends StatelessWidget {
       case QuestionType.OPEN_LONG:
         answerWidget = DebounceTextFormField(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            onAnswer: (String answer) => onSelected!(answer),
+            onAnswer: (String answer) {
+              if (answer.isNotEmpty) {
+                onSelected!(answer);
+              }
+            },
             validator: _longAnswerValidator,
             keyboardType: TextInputType.multiline,
             maxLines: 8,
@@ -115,13 +128,16 @@ class QuestionWidget extends StatelessWidget {
             final List<String> currentAnswer = rawCurrentAnswer != ''
                 ? rawCurrentAnswer.split(",")
                 : <String>[];
-            // TODO: if currentAnswer left empty, remove the answer
             if (isSelected) {
               currentAnswer.add(buttons[index]);
             } else {
               currentAnswer.remove(buttons[index]);
             }
-            onSelected!(currentAnswer.join(","));
+            if (currentAnswer.isNotEmpty) {
+              onSelected!(currentAnswer.join(","));
+            } else {
+              onRemove!();
+            }
           },
           selectedButtons: selectedButtons != ''
               ? selectedButtons
@@ -143,10 +159,6 @@ class QuestionWidget extends StatelessWidget {
           onSelected: (int index, bool isSelected) =>
               onSelected!(buttons[index]),
         );
-        break;
-      default:
-        // TODO: any better option?
-        answerWidget = Container();
         break;
     }
     return answerWidget;

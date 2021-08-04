@@ -10,17 +10,17 @@ typedef SingleStringCallback = Function(String);
 /// callback function when the user stops to write (for [int] debounce milliseconds.
 class DebounceTextFormField extends HookWidget {
   ///
-  const DebounceTextFormField(
-      {Key? key,
-      required this.padding,
-      required this.onAnswer,
-      this.initialText,
-      this.debounceTime,
-      this.validator,
-      this.keyboardType,
-      this.maxLength,
-      this.maxLines})
-      : super(key: key);
+  const DebounceTextFormField({
+    Key? key,
+    required this.padding,
+    required this.onAnswer,
+    this.initialText,
+    this.debounceTime,
+    this.validator,
+    this.keyboardType,
+    this.maxLength,
+    this.maxLines,
+  }) : super(key: key);
 
   ///
   final EdgeInsets padding;

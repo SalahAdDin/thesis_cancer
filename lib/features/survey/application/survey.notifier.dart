@@ -118,6 +118,14 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   }
 
   ///
+  void removeAnswer({
+    required String questionId,
+  }) {
+    answers.remove(questionId);
+    state = const SurveyState.data();
+  }
+
+  ///
   bool isAnsweredQuestion({required String questionId}) =>
       answers[questionId] != null;
 

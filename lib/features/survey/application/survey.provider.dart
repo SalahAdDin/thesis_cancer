@@ -31,7 +31,6 @@ final AutoDisposeStateNotifierProviderFamily<SurveyNotifier, SurveyState,
         String> surveyNotifierProvider =
     StateNotifierProvider.autoDispose
         .family<SurveyNotifier, SurveyState, String>(
-  // TODO: It should be a general userProvider and not just related to MainScreen
   (ProviderReference ref, String surveyId) => SurveyNotifier(
     reader: ref.read,
     surveyID: surveyId,

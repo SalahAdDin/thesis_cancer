@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
+import 'package:thesis_cancer/features/survey/application/survey.notifier.dart';
 import 'package:thesis_cancer/features/survey/application/survey.provider.dart';
 import 'package:thesis_cancer/features/survey/application/survey.state.dart';
 import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
@@ -30,11 +31,12 @@ class SurveyScreen extends HookWidget {
   Widget build(BuildContext context) {
     final SurveyState currentSurveyState =
         useProvider(surveyNotifierProvider(surveyID));
+
     return currentSurveyState.when(
       loading: () => const Center(
         child: CircularProgressIndicator(),
       ),
-      // TODO: Redirect the user to a screen
+      // TODO: It could be custom or Navigator.of(context).pop() ?
       completed: () => CompletedSurvey(
         onPressed: onCompleteSurvey,
         actionLabel: 'Devam et',
@@ -43,8 +45,7 @@ class SurveyScreen extends HookWidget {
         surveyID: surveyID,
       ),
       error: (String error) => ErrorScreen(
-        // TODO: how to implement come back?
-        onPressed: () => Navigator.of(context).pop(),
+        onPressed: () => Navigator.of(context).maybePop(),
         message:
             'Maalesef, doldurmak istediğiniz ankette bir sorun var! $error',
         title: 'Ankette Hata',
@@ -74,11 +75,15 @@ class SurveyWidget extends HookWidget {
   Widget build(BuildContext context) {
     // We get the state(not the StateController).
     final Survey currentSurvey = useProvider(surveyEntityProvider).state;
+    final SurveyNotifier surveyNotifier =
+        context.read(surveyNotifierProvider(surveyID).notifier);
 
-    bool answeredQuestion(int index) => context
-        .read(surveyNotifierProvider(surveyID).notifier)
-        .isAnsweredQuestion(
-          questionId: currentSurvey.questions![index].id,
+    final List<Question>? surveyQuestions = currentSurvey.questions;
+    final int currentQuestionIndex = surveyNotifier.currentQuestionIndex;
+    bool answeredQuestion(int index) =>
+        surveyQuestions != null &&
+        surveyNotifier.isAnsweredQuestion(
+          questionId: surveyQuestions[index].id,
         );
 
     return Scaffold(
@@ -89,42 +94,41 @@ class SurveyWidget extends HookWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 20.0,
-              right: 20.0,
-              top: 50.0,
-              bottom: 20.0,
-            ),
-            child: Text(
-              currentSurvey.intro!,
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                color: Theme.of(context).accentColor,
+          if (currentSurvey.intro != null)
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20.0,
+                right: 20.0,
+                top: 50.0,
+                bottom: 20.0,
               ),
-            ),
-          ),
+              child: Text(
+                currentSurvey.intro!,
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+            )
+          else
+            Container(),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Card(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: currentSurvey.questions != null &&
-                          currentSurvey.questions!.isNotEmpty
+                  children: surveyQuestions != null &&
+                          surveyQuestions.isNotEmpty
                       ? <Widget>[
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 16.0),
                             child: Center(
                               child: DotsIndicator(
-                                dotsCount: currentSurvey.questions!.length,
-                                position: context
-                                    .read(surveyNotifierProvider(surveyID)
-                                        .notifier)
-                                    .currentQuestionIndex
-                                    .toDouble(),
+                                dotsCount: surveyQuestions.length,
+                                position: currentQuestionIndex.toDouble(),
                                 decorator: DotsDecorator(
                                   size: const Size.square(15),
                                   activeSize: const Size(18, 18),
@@ -136,11 +140,7 @@ class SurveyWidget extends HookWidget {
                                 ),
                                 onTap: (double position) =>
                                     answeredQuestion(position.toInt())
-                                        ? context
-                                            .read(
-                                                surveyNotifierProvider(surveyID)
-                                                    .notifier)
-                                            .goTo(position.toInt())
+                                        ? surveyNotifier.goTo(position.toInt())
                                         : null
                                 // print("Current index: $currentQuestion");
                                 ,
@@ -152,30 +152,25 @@ class SurveyWidget extends HookWidget {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 30.0),
                               child: PageView(
-                                controller: context
-                                    .read(surveyNotifierProvider(surveyID)
-                                        .notifier)
-                                    .pageController,
+                                controller: surveyNotifier.pageController,
                                 physics: const NeverScrollableScrollPhysics(),
-                                children: currentSurvey.questions!
+                                children: surveyQuestions
                                     .map(
                                       (Question question) => QuestionWidget(
                                         question: question,
                                         surveyID: surveyID,
-                                        userAnswer: context
-                                            .read(
-                                                surveyNotifierProvider(surveyID)
-                                                    .notifier)
-                                            .answers[question.id],
-                                        onSelected: (String answer) => context
-                                            .read(
-                                                surveyNotifierProvider(surveyID)
-                                                    .notifier)
-                                            .answerQuestion(
-                                              questionId: question.id,
-                                              answer: answer,
-                                              statement: question.statement,
-                                            ),
+                                        userAnswer:
+                                            surveyNotifier.answers[question.id],
+                                        onSelected: (String answer) =>
+                                            surveyNotifier.answerQuestion(
+                                          questionId: question.id,
+                                          answer: answer,
+                                          statement: question.statement,
+                                        ),
+                                        onRemove: () =>
+                                            surveyNotifier.removeAnswer(
+                                          questionId: question.id,
+                                        ),
                                       ),
                                     )
                                     .toList(),
@@ -188,30 +183,19 @@ class SurveyWidget extends HookWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 Visibility(
-                                  visible: context
-                                          .read(surveyNotifierProvider(surveyID)
-                                              .notifier)
-                                          .currentQuestionIndex !=
-                                      0,
+                                  visible: currentQuestionIndex != 0,
                                   child: Button.accent(
                                     buttonLabel: 'Back',
-                                    onPressed: () => context
-                                        .read(surveyNotifierProvider(surveyID)
-                                            .notifier)
-                                        .lastQuestion(),
+                                    onPressed: () =>
+                                        surveyNotifier.lastQuestion(),
                                   ),
                                 ),
                                 Button.primary(
                                   buttonLabel: 'Next',
-                                  onPressed: answeredQuestion(context
-                                          .read(surveyNotifierProvider(surveyID)
-                                              .notifier)
-                                          .currentQuestionIndex)
-                                      ? () => context
-                                          .read(surveyNotifierProvider(surveyID)
-                                              .notifier)
-                                          .nextQuestion()
-                                      : null,
+                                  onPressed:
+                                      answeredQuestion(currentQuestionIndex)
+                                          ? () => surveyNotifier.nextQuestion()
+                                          : null,
                                 )
                               ],
                             ),
