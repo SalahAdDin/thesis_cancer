@@ -47,7 +47,7 @@ class SurveyScreen extends HookWidget {
       error: (String error) => ErrorScreen(
         onPressed: () => Navigator.of(context).maybePop(),
         message:
-            'Maalesef, doldurmak istediğiniz ankette bir sorun var! $error',
+            'Maalesef, doldurmak istediğiniz ankette bir sorun var!\n$error',
         title: 'Ankette Hata',
         actionLabel: 'Dönüş',
       ),
