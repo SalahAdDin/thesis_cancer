@@ -34,7 +34,6 @@ abstract class DataStoreRepository {
 
   // Surveys
 
-  // TODO: this would require a cache provider for surveys.
   ///
   Future<List<Survey>> getSurveys();
 

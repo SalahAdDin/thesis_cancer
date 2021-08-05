@@ -102,8 +102,7 @@ class ProfileScreen extends HookWidget {
           child: CircularProgressIndicator(),
         ),
         error: (String? error) => ErrorScreen(
-          // TODO: Refresh
-          onPressed: () => null,
+          onPressed: () => Navigator.of(context).maybePop(),
           message: error.toString(),
           title: 'Profili Hata',
           actionLabel: 'Try again!',

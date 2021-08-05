@@ -1,4 +1,4 @@
-import 'package:flutter/src/material/app.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
@@ -10,8 +10,8 @@ import 'package:thesis_cancer/core/domain/settings/settings.repository.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/features/media/application/uploadfile.provider.dart';
 import 'package:thesis_cancer/features/notification/domain/activityfeed.entity.dart';
-import 'package:thesis_cancer/features/user/application/user.provider.dart';
-import 'package:thesis_cancer/features/user/domain/user.entity.dart';
+// import 'package:thesis_cancer/features/user/application/user.provider.dart';
+// import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 /// Settings Notifier
 class SettingsNotifier extends StateNotifier<Settings> {
@@ -33,11 +33,10 @@ class SettingsNotifier extends StateNotifier<Settings> {
       reader(settingsRepositoryProvider);
 
   ///
-  StateController<User?> get _userController =>
-      reader(userEntityProvider.notifier);
+  // StateController<User?> get _userController => reader(userEntityProvider.notifier);
 
   ///
-  User? get _currentUser => _userController.state;
+  // User? get _currentUser => _userController.state;
 
   ///
   Future<void> toggleThemeMode(ThemeMode mode) async {

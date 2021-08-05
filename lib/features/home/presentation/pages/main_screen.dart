@@ -6,6 +6,7 @@ import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/domain/constants.dart';
 import 'package:thesis_cancer/core/domain/settings/schedules.entity.dart';
+import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
@@ -40,13 +41,12 @@ class MainScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final UserState currentUserState = useProvider(homeScreenNotifierProvider);
+    final Settings settingsState = useProvider(settingsNotifierProvider);
     final UploadFile introductoryVideo =
-        useProvider(settingsNotifierProvider).introductoryVideo ??
-            UploadFile.empty;
+        settingsState.introductoryVideo ?? UploadFile.empty;
     final List<SurveySchedule> scheduledSurveys =
-        useProvider(settingsNotifierProvider).surveySchedules ??
-            <SurveySchedule>[];
-    final UserRole currentUser =
+        settingsState.surveySchedules ?? <SurveySchedule>[];
+    final UserRole currentUserRole =
         useProvider(userEntityProvider).state.profile?.role ?? UserRole.GUEST;
 
     return currentUserState.when(
@@ -56,7 +56,7 @@ class MainScreen extends HookWidget {
       mustSeeIntroduction: () => IntroductoryScreen(
         dataSource: introductoryVideo.url,
         onDone: () async {
-          if (currentUser == UserRole.PILOT) {
+          if (currentUserRole == UserRole.PILOT) {
             await context
                 .read(homeScreenNotifierProvider.notifier)
                 .hasSeenIntroductoryVideo();
