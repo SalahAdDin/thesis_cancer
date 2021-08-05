@@ -89,8 +89,9 @@ class CachedNetworkVideo extends HookWidget {
             if (videoPlayerController.value.isInitialized &&
                 videoPlayerController.value.position ==
                     videoPlayerController.value.duration) {
-              // TODO: how to code this properly?
-              onFinished!();
+              if (onFinished != null) {
+                onFinished?.call();
+              }
             }
           }
 

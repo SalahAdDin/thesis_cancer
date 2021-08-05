@@ -21,7 +21,6 @@ class ErrorScreen extends StatelessWidget {
   final String message;
   final String actionLabel;
 
-  // TODO: It must be a title, message and button in the lower part of the screen
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;

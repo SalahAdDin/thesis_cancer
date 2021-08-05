@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-// TODO: Improve a disable button style(as in web).
-
 class Button extends StatelessWidget {
   const Button.primary({
     required this.buttonLabel,

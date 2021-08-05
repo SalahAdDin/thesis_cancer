@@ -136,7 +136,9 @@ class QuestionWidget extends StatelessWidget {
             if (currentAnswer.isNotEmpty) {
               onSelected!(currentAnswer.join(","));
             } else {
-              onRemove!();
+              if (onRemove != null) {
+                onRemove?.call();
+              }
             }
           },
           selectedButtons: selectedButtons != ''
