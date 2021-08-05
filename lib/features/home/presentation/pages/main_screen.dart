@@ -233,48 +233,6 @@ class MainLayout extends HookWidget {
       targets.addAll(
         <TargetFocus>[
           TargetFocus(
-            identify: TargetIdentifier.sideMenuTarget,
-            targetPosition: TargetPosition(
-              const Size(20.0, 20.0),
-              Offset(_screenSize.width * 0.90, _screenSize.height * 0.5),
-            ),
-            shape: ShapeLightFocus.Circle,
-            contents: <TargetContent>[
-              TargetContent(
-                align: ContentAlign.left,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: const <Widget>[
-                    Text(
-                      "Side Menu",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Text(
-                        "Swipe left to open the side menu.",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Text(
-                        "You will find your user profile, the application settings, contact with us and many other sections there.",
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.right,
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-          TargetFocus(
             identify: TargetIdentifier.informationTarget,
             keyTarget: _knowledgeButtonKey,
             shape: ShapeLightFocus.Circle,
@@ -341,6 +299,7 @@ class MainLayout extends HookWidget {
             identify: TargetIdentifier.academyTarget,
             keyTarget: _academyButtonKey,
             shape: ShapeLightFocus.Circle,
+            alignSkip: Alignment.bottomLeft,
             contents: <TargetContent>[
               TargetContent(
                 align: ContentAlign.top,
@@ -372,6 +331,7 @@ class MainLayout extends HookWidget {
             identify: TargetIdentifier.successStoriesTarget,
             keyTarget: _successStoriesButtonKey,
             shape: ShapeLightFocus.Circle,
+            alignSkip: Alignment.bottomLeft,
             contents: <TargetContent>[
               TargetContent(
                 align: ContentAlign.top,
@@ -391,6 +351,52 @@ class MainLayout extends HookWidget {
                       padding: EdgeInsets.only(top: 10.0, bottom: 56, left: 56),
                       child: Text(
                         "Histories about patients which could defeat and overcome the cancer.",
+                        style: TextStyle(color: Colors.white),
+                        textAlign: TextAlign.right,
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+          TargetFocus(
+            identify: TargetIdentifier.sideMenuTarget,
+            targetPosition: TargetPosition(
+              const Size(20.0, 20.0),
+              Offset(_screenSize.width * 0.90, _screenSize.height * 0.5),
+            ),
+            shape: ShapeLightFocus.Circle,
+            contents: <TargetContent>[
+              TargetContent(
+                align: ContentAlign.custom,
+                customPosition: CustomTargetContentPosition(
+                  top: _screenSize.height * 0.42,
+                  left: -50,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: const <Widget>[
+                    Text(
+                      "Side Menu",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        "Swipe left to open the side menu.",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        "You will find your user profile, the application settings, contact with us and many other sections there.",
                         style: TextStyle(color: Colors.white),
                         textAlign: TextAlign.right,
                       ),
@@ -433,13 +439,6 @@ class MainLayout extends HookWidget {
       tutorialCoachMark = TutorialCoachMark(
         context,
         targets: targets,
-        skipWidget: const Padding(
-          padding: EdgeInsets.only(bottom: 56, right: 8),
-          child: Text(
-            "Skip",
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
         focusAnimationDuration: const Duration(milliseconds: 1000),
         /*
         onClickTarget: (TargetFocus target) {
