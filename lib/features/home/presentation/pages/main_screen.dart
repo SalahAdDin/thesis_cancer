@@ -369,14 +369,9 @@ class MainLayout extends HookWidget {
             shape: ShapeLightFocus.Circle,
             contents: <TargetContent>[
               TargetContent(
-                align: ContentAlign.custom,
-                customPosition: CustomTargetContentPosition(
-                  top: _screenSize.height * 0.42,
-                  left: -50,
-                ),
+                align: ContentAlign.left,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: const <Widget>[
                     Text(
                       "Side Menu",
