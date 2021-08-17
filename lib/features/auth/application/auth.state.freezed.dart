@@ -28,7 +28,7 @@ class _$AuthStateTearOff {
     return const _LoggedIn();
   }
 
-  _Error error(String error) {
+  _Error error([Failure? error]) {
     return _Error(
       error,
     );
@@ -49,7 +49,7 @@ mixin _$AuthState {
     required TResult Function() loading,
     required TResult Function() signedUp,
     required TResult Function() loggedIn,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() resetPassword,
   }) =>
       throw _privateConstructorUsedError;
@@ -58,7 +58,7 @@ mixin _$AuthState {
     TResult Function()? loading,
     TResult Function()? signedUp,
     TResult Function()? loggedIn,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? resetPassword,
     required TResult orElse(),
   }) =>
@@ -139,7 +139,7 @@ class _$_Loading implements _Loading {
     required TResult Function() loading,
     required TResult Function() signedUp,
     required TResult Function() loggedIn,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() resetPassword,
   }) {
     return loading();
@@ -151,7 +151,7 @@ class _$_Loading implements _Loading {
     TResult Function()? loading,
     TResult Function()? signedUp,
     TResult Function()? loggedIn,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? resetPassword,
     required TResult orElse(),
   }) {
@@ -234,7 +234,7 @@ class _$_SignedUp implements _SignedUp {
     required TResult Function() loading,
     required TResult Function() signedUp,
     required TResult Function() loggedIn,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() resetPassword,
   }) {
     return signedUp();
@@ -246,7 +246,7 @@ class _$_SignedUp implements _SignedUp {
     TResult Function()? loading,
     TResult Function()? signedUp,
     TResult Function()? loggedIn,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? resetPassword,
     required TResult orElse(),
   }) {
@@ -329,7 +329,7 @@ class _$_LoggedIn implements _LoggedIn {
     required TResult Function() loading,
     required TResult Function() signedUp,
     required TResult Function() loggedIn,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() resetPassword,
   }) {
     return loggedIn();
@@ -341,7 +341,7 @@ class _$_LoggedIn implements _LoggedIn {
     TResult Function()? loading,
     TResult Function()? signedUp,
     TResult Function()? loggedIn,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? resetPassword,
     required TResult orElse(),
   }) {
@@ -388,7 +388,7 @@ abstract class _LoggedIn implements AuthState {
 abstract class _$ErrorCopyWith<$Res> {
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
       __$ErrorCopyWithImpl<$Res>;
-  $Res call({String error});
+  $Res call({Failure? error});
 }
 
 /// @nodoc
@@ -408,7 +408,7 @@ class __$ErrorCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
       error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Failure?,
     ));
   }
 }
@@ -416,10 +416,10 @@ class __$ErrorCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error(this.error);
+  const _$_Error([this.error]);
 
   @override
-  final String error;
+  final Failure? error;
 
   @override
   String toString() {
@@ -449,7 +449,7 @@ class _$_Error implements _Error {
     required TResult Function() loading,
     required TResult Function() signedUp,
     required TResult Function() loggedIn,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() resetPassword,
   }) {
     return error(this.error);
@@ -461,7 +461,7 @@ class _$_Error implements _Error {
     TResult Function()? loading,
     TResult Function()? signedUp,
     TResult Function()? loggedIn,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? resetPassword,
     required TResult orElse(),
   }) {
@@ -501,9 +501,9 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements AuthState {
-  const factory _Error(String error) = _$_Error;
+  const factory _Error([Failure? error]) = _$_Error;
 
-  String get error => throw _privateConstructorUsedError;
+  Failure? get error => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
 }
@@ -550,7 +550,7 @@ class _$_ResetPassword implements _ResetPassword {
     required TResult Function() loading,
     required TResult Function() signedUp,
     required TResult Function() loggedIn,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() resetPassword,
   }) {
     return resetPassword();
@@ -562,7 +562,7 @@ class _$_ResetPassword implements _ResetPassword {
     TResult Function()? loading,
     TResult Function()? signedUp,
     TResult Function()? loggedIn,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? resetPassword,
     required TResult orElse(),
   }) {

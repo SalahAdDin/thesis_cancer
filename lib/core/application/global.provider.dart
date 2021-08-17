@@ -23,9 +23,15 @@ final FutureProvider<PackageInfo> packageInfoProvider =
 final Provider<GraphQLClient> graphQLClientProvider =
     Provider<GraphQLClient>((ProviderReference ref) {
   // String.fromEnvironment('API_URL'),
-  const String graphQLEndpoint = 'http://10.30.30.176:1337/graphql';
-  // const String graphQLEndpoint = 'http://172.16.0.111:1337/graphql';
+
+  /// Local development environment
+  const String graphQLEndpoint = 'http://192.168.1.42:1337/graphql';
+
+  /// Test environment
+  // const String graphQLEndpoint = "http://95.173.162.150:1337/graphql";
+
   // const String subscriptionEndpoint = "ws://10.30.30.176:3000/subscription";
+
   final HttpLink _httpLink = HttpLink(
     graphQLEndpoint,
   );
@@ -36,7 +42,7 @@ final Provider<GraphQLClient> graphQLClientProvider =
     getToken: () async => 'Bearer $token',
   );
 
-  Link _link = _authLink.concat(_httpLink);
+  final Link _link = _authLink.concat(_httpLink);
 
   /*
   if (subscriptionEndpoint != null) {
@@ -69,13 +75,7 @@ final Provider<SettingsRepository> settingsRepositoryProvider =
   name: 'Settings Repository Provider',
 );
 
-// TODO: May it require a notifier if we need to change local app settings
-/// Settings Provider
-/// It fetch the settings from datastore and
-/// - Returns the current settings if it is not empty.
-/// - Fetches the settings from the API, schedules local notifications for
-///   scheduled surveys and returns them.
-/// - Downloads the introductory video to cache.
+///
 final StateNotifierProvider<SettingsNotifier, Settings>
     settingsNotifierProvider =
     StateNotifierProvider<SettingsNotifier, Settings>(

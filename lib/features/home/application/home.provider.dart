@@ -4,17 +4,20 @@ import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/features/user/application/user.notifier.dart';
 import 'package:thesis_cancer/features/user/application/user.state.dart';
 
+/// Provide a [PageController], in this case, to the [HomePage].
 final StateProvider<PageController> homePageControllerProvider =
     StateProvider<PageController>(
   (_) => PageController(),
   name: 'Home Page Controller Provider',
 );
 
+/// Provide a [PostType] type.
 final StateProvider<PostType> tabTypeProvider = StateProvider<PostType>(
   (ProviderReference ref) => PostType.INFORMATION,
   name: "Bottom Navigator Index Provider",
 );
 
+/// Provide a controller for a [User] and its related [Profile].
 final AutoDisposeStateNotifierProvider<UserNotifier, UserState>
     homeScreenNotifierProvider =
     StateNotifierProvider.autoDispose<UserNotifier, UserState>(

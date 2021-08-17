@@ -1,7 +1,7 @@
-import 'package:colorize/colorize.dart';
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/domain/errors/extension.entity.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/application/user.state.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
@@ -30,15 +30,35 @@ class GraphQLProfileRepository implements ProfileRepository {
       final QueryResult response = await _client.query(options);
 
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw ProfileFailure();
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = extractException(response);
+        final int errorCode = extension.statusCode!;
+
+        if (errorCode == 403) {
+          throw ProfileFailure(reason: ProfileFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw ProfileFailure(reason: ProfileFailureReason.notFound);
+        } else {
+          throw ProfileFailure(reason: ProfileFailureReason.unknown);
+        }
       }
+
       final Map<String, dynamic> data =
           response.data?['profile'] as Map<String, dynamic>;
       return Profile.fromJson(data);
-    } on Exception catch (error) {
-      throw ProfileFailure();
+    } on Exception catch (_) {
+      throw ProfileFailure(reason: ProfileFailureReason.unknown);
     }
+  }
+
+  Extension extractException(QueryResult response) {
+    final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
+    final Extension extension = Extension.fromJson(
+      graphQLError.extensions!,
+    );
+    return extension;
   }
 
   @override
@@ -51,27 +71,29 @@ class GraphQLProfileRepository implements ProfileRepository {
       final QueryResult response = await _client.query(options);
 
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw ProfileFailure();
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = extractException(response);
+        final int errorCode = extension.statusCode!;
+        if (errorCode == 404) {
+          throw UserFailure(reason: UserFailureReason.notFound);
+        } else if (errorCode == 403) {
+          throw UserFailure(reason: UserFailureReason.unauthorized);
+        } else {
+          throw UserFailure(reason: UserFailureReason.unknown);
+        }
       }
+
+      if (response.data?['profiles'] == null) {
+        throw UserFailure(reason: UserFailureReason.notFound);
+      }
+
       final Map<String, dynamic> data =
           response.data?['profiles'][0] as Map<String, dynamic>;
       return Profile.fromJson(data);
-    } on OperationException catch (error) {
-      final String message = error.graphqlErrors[0].message;
-      /* TODO: the internal error/reason, could be "Unauthorized",
-        we need to get a solution about plain and direct
-        errors(from backend if we can).
-        */
-      if (message.contains("User Not Found")) {
-        throw UserNotFoundFailure();
-      } else if (message.contains("Forbidden")) {
-        throw UnauthorizedRequest();
-      } else {
-        throw ProfileFailure();
-      }
-    } on Exception catch (error) {
-      throw ProfileFailure();
+    } on Exception catch (_) {
+      throw GraphQLFailure(reason: FailureReason.unknown);
     }
   }
 
@@ -97,14 +119,26 @@ class GraphQLProfileRepository implements ProfileRepository {
       final QueryResult response = await _client.query(options);
 
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw ProfileFailure();
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = extractException(response);
+        final int errorCode = extension.statusCode!;
+
+        if (errorCode == 403) {
+          throw ProfileFailure(reason: ProfileFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw ProfileFailure(reason: ProfileFailureReason.notFound);
+        } else {
+          throw ProfileFailure(reason: ProfileFailureReason.unknown);
+        }
       }
+
       final Map<String, dynamic> data =
           response.data?['updateProfile']['profile'] as Map<String, dynamic>;
       return Profile.fromJson(data);
-    } on Exception catch (error) {
-      throw ProfileFailure();
+    } on Exception catch (_) {
+      throw GraphQLFailure(reason: FailureReason.unknown);
     }
   }
 
@@ -130,20 +164,32 @@ class GraphQLProfileRepository implements ProfileRepository {
       final QueryResult response = await _client.query(options);
 
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw ProfileFailure();
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = extractException(response);
+        final int errorCode = extension.statusCode!;
+
+        if (errorCode == 403) {
+          throw ProfileFailure(reason: ProfileFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw ProfileFailure(reason: ProfileFailureReason.notFound);
+        } else {
+          throw ProfileFailure(reason: ProfileFailureReason.unknown);
+        }
       }
+
       final Map<String, dynamic> data =
           response.data?['updateProfile']['profile'] as Map<String, dynamic>;
 
       return Profile.fromJson(data);
-    } on Exception catch (error) {
-      throw ProfileFailure();
+    } on Exception catch (_) {
+      throw GraphQLFailure(reason: FailureReason.unknown);
     }
   }
 
   @override
-  Future<int> countPotsByUser({required String userId}) async {
+  Future<int> countPostsByUser({required String userId}) async {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentCountPosts),
@@ -151,13 +197,24 @@ class GraphQLProfileRepository implements ProfileRepository {
       );
       final QueryResult response = await _client.query(options);
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw GraphQLFailure(response.exception.toString());
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = extractException(response);
+        final int errorCode = extension.statusCode!;
+
+        if (errorCode == 403) {
+          throw ProfileFailure(reason: ProfileFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw ProfileFailure(reason: ProfileFailureReason.notFound);
+        } else {
+          throw ProfileFailure(reason: ProfileFailureReason.unknown);
+        }
       }
       final int count = response.data?['postsCount'] as int;
       return count;
-    } on Exception catch (error) {
-      throw GraphQLFailure(error.toString());
+    } on Exception catch (_) {
+      throw GraphQLFailure(reason: FailureReason.unknown);
     }
   }
 
@@ -175,17 +232,29 @@ class GraphQLProfileRepository implements ProfileRepository {
       final QueryResult response = await _client.query(options);
 
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw GraphQLFailure(response.exception.toString());
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = extractException(response);
+        final int errorCode = extension.statusCode!;
+
+        if (errorCode == 403) {
+          throw ProfileFailure(reason: ProfileFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw ProfileFailure(reason: ProfileFailureReason.notFound);
+        } else {
+          throw ProfileFailure(reason: ProfileFailureReason.unknown);
+        }
       }
+
       final List<dynamic> profiles =
           response.data?["profiles"] as List<dynamic>;
       return profiles
           .map((dynamic profile) =>
               Profile.fromJson(profile as Map<String, dynamic>))
           .toList();
-    } on Exception catch (error) {
-      throw ProfileFailure();
+    } on Exception catch (_) {
+      throw GraphQLFailure(reason: FailureReason.unknown);
     }
   }
 }

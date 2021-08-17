@@ -1,12 +1,13 @@
-import 'package:colorize/colorize.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/domain/errors/extension.entity.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.repository.dart';
+import 'package:thesis_cancer/features/content/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/content/infrastructure/post.gql.dart';
 
 /// **GraphQL** implementation for [PostRepository] interface
@@ -18,7 +19,15 @@ class GraphQLPostRepository implements PostRepository {
   final Reader reader;
 
   /// Injecting the required [GraphQLClient] by reading it from providers.
-  GraphQLClient get client => reader(graphQLClientProvider);
+  GraphQLClient get _client => reader(graphQLClientProvider);
+
+  Extension _extractExtension(QueryResult response) {
+    final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
+    final Extension extension = Extension.fromJson(
+      graphQLError.extensions!,
+    );
+    return extension;
+  }
 
   @override
   Future<void> createPost(Post post) async {
@@ -27,18 +36,28 @@ class GraphQLPostRepository implements PostRepository {
         document: gql(graphQLDocumentCreatePost),
         variables: <String, dynamic>{"data": post},
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult response = await _client.query(options);
+
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw GraphQLFailure(response.exception.toString());
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = _extractExtension(response);
+        final int errorCode = extension.statusCode!;
+        if (errorCode == 403) {
+          throw PostFailure(reason: PostFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw PostFailure(reason: PostFailureReason.notFound);
+        } else {
+          throw PostFailure(reason: PostFailureReason.unknown);
+        }
       }
       /*
       final Map<String, dynamic> data =
           response.data?['createPost']['post'] as Map<String, dynamic>;
       */
-    } on Exception catch (error) {
-      print(Colorize(error.toString()).red());
-      throw GraphQLFailure(error.toString());
+    } on Exception catch (_) {
+      throw PostFailure(reason: PostFailureReason.unknown);
     }
   }
 
@@ -48,19 +67,30 @@ class GraphQLPostRepository implements PostRepository {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentListPosts),
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult response = await _client.query(options);
+
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw GraphQLFailure(response.exception.toString());
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = _extractExtension(response);
+        final int errorCode = extension.statusCode!;
+        if (errorCode == 403) {
+          throw SettingsFailure(reason: SettingsFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw SettingsFailure(reason: SettingsFailureReason.notFound);
+        } else {
+          throw SettingsFailure(reason: SettingsFailureReason.unknown);
+        }
       }
+
       final List<dynamic> data = response.data?['posts'] as List<dynamic>;
       final List<Post> result = data
           .map((dynamic item) => Post.fromJson(item as Map<String, dynamic>))
           .toList();
       return result;
-    } on Exception catch (error) {
-      print(Colorize(error.toString()).red());
-      throw GraphQLFailure(error.toString());
+    } on Exception catch (_) {
+      throw SettingsFailure(reason: SettingsFailureReason.unknown);
     }
   }
 
@@ -73,19 +103,30 @@ class GraphQLPostRepository implements PostRepository {
           "contentType": EnumToString.convertToString(contentType)
         },
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult response = await _client.query(options);
+
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw GraphQLFailure(response.exception.toString());
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = _extractExtension(response);
+        final int errorCode = extension.statusCode!;
+        if (errorCode == 403) {
+          throw SettingsFailure(reason: SettingsFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw SettingsFailure(reason: SettingsFailureReason.notFound);
+        } else {
+          throw SettingsFailure(reason: SettingsFailureReason.unknown);
+        }
       }
+
       final List<dynamic> data = response.data?['posts'] as List<dynamic>;
       final List<Post> result = data
           .map((dynamic item) => Post.fromJson(item as Map<String, dynamic>))
           .toList();
       return result;
-    } on Exception catch (error) {
-      print(Colorize(error.toString()).red());
-      throw GraphQLFailure(error.toString());
+    } on Exception catch (_) {
+      throw SettingsFailure(reason: SettingsFailureReason.unknown);
     }
   }
 
@@ -96,17 +137,28 @@ class GraphQLPostRepository implements PostRepository {
         document: gql(graphQLDocumentGetPost),
         variables: <String, dynamic>{"id": id},
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult response = await _client.query(options);
+
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw GraphQLFailure(response.exception.toString());
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = _extractExtension(response);
+        final int errorCode = extension.statusCode!;
+        if (errorCode == 403) {
+          throw SettingsFailure(reason: SettingsFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw SettingsFailure(reason: SettingsFailureReason.notFound);
+        } else {
+          throw SettingsFailure(reason: SettingsFailureReason.unknown);
+        }
       }
+
       final Map<String, dynamic> data =
           response.data?['post'] as Map<String, dynamic>;
       return Post.fromJson(data);
-    } on Exception catch (error) {
-      print(Colorize(error.toString()).red());
-      throw GraphQLFailure(error.toString());
+    } on Exception catch (_) {
+      throw SettingsFailure(reason: SettingsFailureReason.unknown);
     }
   }
 
@@ -117,19 +169,30 @@ class GraphQLPostRepository implements PostRepository {
         document: gql(graphQLDocumentListPostsByUserId),
         variables: <String, dynamic>{"id": id},
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult response = await _client.query(options);
+
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw GraphQLFailure(response.exception.toString());
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = _extractExtension(response);
+        final int errorCode = extension.statusCode!;
+        if (errorCode == 403) {
+          throw SettingsFailure(reason: SettingsFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw SettingsFailure(reason: SettingsFailureReason.notFound);
+        } else {
+          throw SettingsFailure(reason: SettingsFailureReason.unknown);
+        }
       }
+
       final List<dynamic> data = response.data?['posts'] as List<dynamic>;
       final List<Post> result = data
           .map((dynamic item) => Post.fromJson(item as Map<String, dynamic>))
           .toList();
       return result;
-    } on Exception catch (error) {
-      print(Colorize(error.toString()).red());
-      throw GraphQLFailure(error.toString());
+    } on Exception catch (_) {
+      throw SettingsFailure(reason: SettingsFailureReason.unknown);
     }
   }
 
@@ -140,20 +203,32 @@ class GraphQLPostRepository implements PostRepository {
         document: gql(graphQLDocumentDeletePost),
         variables: <String, dynamic>{"id": postId},
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult response = await _client.query(options);
+
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw GraphQLFailure(response.exception.toString());
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+
+        final Extension extension = _extractExtension(response);
+        final int errorCode = extension.statusCode!;
+        if (errorCode == 403) {
+          throw SettingsFailure(reason: SettingsFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw SettingsFailure(reason: SettingsFailureReason.notFound);
+        } else {
+          throw SettingsFailure(reason: SettingsFailureReason.unknown);
+        }
       }
+
       final Map<String, dynamic> data =
           response.data?['deletePost']['post'] as Map<String, dynamic>;
       final String id = data['id'] as String;
       if (postId != id) {
-        throw GraphQLFailure(response.exception.toString());
+        throw PostFailure(reason: PostFailureReason.unexpectedResult);
       }
-    } on Exception catch (error) {
-      print(Colorize(error.toString()).red());
-      throw GraphQLFailure(error.toString());
+    } on Exception catch (_) {
+      throw SettingsFailure(reason: SettingsFailureReason.unknown);
     }
   }
 
@@ -164,17 +239,28 @@ class GraphQLPostRepository implements PostRepository {
         document: gql(graphQLDocumentUpdatePost),
         variables: <String, dynamic>{"id": post.id, "data": post},
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult response = await _client.query(options);
+
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw GraphQLFailure(response.exception.toString());
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = _extractExtension(response);
+        final int errorCode = extension.statusCode!;
+        if (errorCode == 403) {
+          throw SettingsFailure(reason: SettingsFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw SettingsFailure(reason: SettingsFailureReason.notFound);
+        } else {
+          throw SettingsFailure(reason: SettingsFailureReason.unknown);
+        }
       }
+
       final Map<String, dynamic> data =
           response.data?['updatePost']['post'] as Map<String, dynamic>;
       return Post.fromJson(data);
-    } on Exception catch (error) {
-      print(Colorize(error.toString()).red());
-      throw GraphQLFailure(error.toString());
+    } on Exception catch (_) {
+      throw SettingsFailure(reason: SettingsFailureReason.unknown);
     }
   }
 }

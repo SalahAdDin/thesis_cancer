@@ -1,6 +1,7 @@
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/domain/errors/extension.entity.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.repository.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/infrastructure/settings.gql.dart';
@@ -22,10 +23,18 @@ class GraphQLSettingsRepository implements SettingsRepository {
       final QueryOptions options =
           QueryOptions(document: gql(graphQLDocumentGetSettings));
       final QueryResult response = await client.query(options);
+
       if (response.hasException) {
-        print("GetSettings Failure: ${response.exception}");
-        throw GetSettingsFailure(response.exception.toString());
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
       }
+
+      // It will return null or application always
+      if (response.data?['application'] == null) {
+        throw SettingsFailure(reason: SettingsFailureReason.notFound);
+      }
+
       final Map<String, dynamic> data =
           response.data?['application'] as Map<String, dynamic>;
 
@@ -44,8 +53,8 @@ class GraphQLSettingsRepository implements SettingsRepository {
       final Map<String, dynamic> result = flattenResult;
 
       return result;
-    } on Exception catch (error) {
-      throw GetSettingsFailure(error.toString());
+    } on Exception catch (_) {
+      throw SettingsFailure(reason: SettingsFailureReason.unknown);
     }
   }
 }

@@ -20,7 +20,7 @@ class _$ProfileStateTearOff {
     return const _Loading();
   }
 
-  _Error error([String? error]) {
+  _Error error([Failure? error]) {
     return _Error(
       error,
     );
@@ -43,7 +43,7 @@ mixin _$ProfileState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String? error) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() editing,
     required TResult Function() data,
   }) =>
@@ -51,7 +51,7 @@ mixin _$ProfileState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String? error)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? editing,
     TResult Function()? data,
     required TResult orElse(),
@@ -130,7 +130,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String? error) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() editing,
     required TResult Function() data,
   }) {
@@ -141,7 +141,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String? error)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? editing,
     TResult Function()? data,
     required TResult orElse(),
@@ -187,7 +187,7 @@ abstract class _Loading implements ProfileState {
 abstract class _$ErrorCopyWith<$Res> {
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
       __$ErrorCopyWithImpl<$Res>;
-  $Res call({String? error});
+  $Res call({Failure? error});
 }
 
 /// @nodoc
@@ -207,7 +207,7 @@ class __$ErrorCopyWithImpl<$Res> extends _$ProfileStateCopyWithImpl<$Res>
       error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Failure?,
     ));
   }
 }
@@ -218,7 +218,7 @@ class _$_Error implements _Error {
   const _$_Error([this.error]);
 
   @override
-  final String? error;
+  final Failure? error;
 
   @override
   String toString() {
@@ -246,7 +246,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String? error) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() editing,
     required TResult Function() data,
   }) {
@@ -257,7 +257,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String? error)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? editing,
     TResult Function()? data,
     required TResult orElse(),
@@ -296,9 +296,9 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements ProfileState {
-  const factory _Error([String? error]) = _$_Error;
+  const factory _Error([Failure? error]) = _$_Error;
 
-  String? get error => throw _privateConstructorUsedError;
+  Failure? get error => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
 }
@@ -341,7 +341,7 @@ class _$_Editing implements _Editing {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String? error) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() editing,
     required TResult Function() data,
   }) {
@@ -352,7 +352,7 @@ class _$_Editing implements _Editing {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String? error)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? editing,
     TResult Function()? data,
     required TResult orElse(),
@@ -432,7 +432,7 @@ class _$_Data implements _Data {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String? error) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() editing,
     required TResult Function() data,
   }) {
@@ -443,7 +443,7 @@ class _$_Data implements _Data {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String? error)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? editing,
     TResult Function()? data,
     required TResult orElse(),

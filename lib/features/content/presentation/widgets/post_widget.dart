@@ -74,7 +74,7 @@ class PostWidget extends StatelessWidget {
           ),
           GestureDetector(
             // TODO: do like on post
-            onDoubleTap: () => null,
+            // onDoubleTap: () => null,
             child: SizedBox(
               height: swiperHeight,
               child: Swiper(

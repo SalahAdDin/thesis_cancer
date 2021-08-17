@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/launcher/launcher.notifier.dart';
+import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 
 class LobbyScreen extends HookWidget {
   // TODO: Improve style
@@ -28,10 +29,10 @@ class LobbyScreen extends HookWidget {
                 children: <Widget>[
                   Text(
                     'Neredeyse oradasın!',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline1!
-                        .copyWith(fontSize: 40),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
                     textAlign: TextAlign.center,
                   ),
                   Padding(
@@ -40,7 +41,7 @@ class LobbyScreen extends HookWidget {
                       'Başvurunuzu gözden geçirmek için biraz daha zamana ihtiyacımız var.',
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyText2!
                           .copyWith(fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
@@ -52,7 +53,7 @@ class LobbyScreen extends HookWidget {
                       'Herkese açık bu uygulamalar için gereksinimleri karşılamanızı sağlamalıyız, bu nedenle hastalarımız için bir bekleme listemiz var.',
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyText2!
                           .copyWith(fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
@@ -63,7 +64,7 @@ class LobbyScreen extends HookWidget {
                       'Yakında size bir onay veya ret e-postası göndereceğiz! daha sonra uygulamaya girebilirsiniz.',
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyText2!
                           .copyWith(fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
@@ -71,15 +72,10 @@ class LobbyScreen extends HookWidget {
                   // TODO: Workaround, this should be done by a socket event.
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
-                    child: TextButton(
+                    child: Button.primary(
+                      buttonLabel: "Go back",
+                      // TODO: It does not work at the user's registering
                       onPressed: () => launchNotifier.signOut(),
-                      child: Text(
-                        "Go back",
-                        style: Theme.of(context)
-                            .textTheme
-                            .button!
-                            .copyWith(fontSize: 16),
-                      ),
                     ),
                   ),
                   // TODO: TextButton(link) to cancel my application as footer.

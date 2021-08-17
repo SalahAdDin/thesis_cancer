@@ -71,7 +71,7 @@ class SideMenuHeader extends StatelessWidget {
                       children: <Widget>[
                         // SizedBox(width: 10),
                         Text(
-                          sessionUser.profile!.fullName,
+                          sessionUser.profile!.shortName,
                           style: Theme.of(context)
                               .textTheme
                               .headline6!

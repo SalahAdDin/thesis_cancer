@@ -10,7 +10,7 @@ abstract class ProfileRepository {
   Future<Profile> findByUserId(String userId);
 
   /// Gets the number of posts related to a [User].
-  Future<int> countPotsByUser({required String userId});
+  Future<int> countPostsByUser({required String userId});
 
   /// Updates [Profile] information ignoring the profile photo,
   /// which will be handled in another function.

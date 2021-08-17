@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:thesis_cancer/core/presentation/helpers.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 
 const String accessDenied =
@@ -9,16 +10,17 @@ const String accessDenied =
 class ErrorScreen extends StatelessWidget {
   const ErrorScreen({
     required this.onPressed,
-    this.title,
-    required this.message,
+    this.reason,
     required this.actionLabel,
   });
 
+  ///
   final VoidCallback onPressed;
 
-  // TODO: Handle the message and only the message from Exceptions.
-  final String? title;
-  final String message;
+  /// Failure reason
+  final dynamic reason;
+
+  ///
   final String actionLabel;
 
   @override
@@ -30,6 +32,11 @@ class ErrorScreen extends StatelessWidget {
       fit: BoxFit.fitWidth,
       alignment: Alignment.topCenter,
     );
+
+    final List<String> failureLiterals = localizeFailure(reason);
+    final String title = failureLiterals[0];
+    final String message = failureLiterals[1];
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -46,17 +53,14 @@ class ErrorScreen extends StatelessWidget {
             right: screenSize.width * 0.3,
             child: Column(
               children: <Widget>[
-                if (title != null)
-                  Text(
-                    title!,
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 40,
-                          fontWeight: FontWeight.w400,
-                        ),
-                    textAlign: TextAlign.center,
-                  )
-                else
-                  Container(),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w400,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Text(

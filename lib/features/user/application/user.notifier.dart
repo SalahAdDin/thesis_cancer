@@ -7,6 +7,7 @@ import 'package:thesis_cancer/features/user/application/user.state.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
+import 'package:thesis_cancer/features/user/infrastructure/failure.dart';
 
 /// User Notifier
 /// Handles business logic related to the application session's user.
@@ -115,12 +116,18 @@ class UserNotifier extends StateNotifier<UserState> {
 
   ///
   Future<void> updateProfile(Profile updatedProfile) async {
-    final Profile fetchedUpdatedProfile = await profileRepository.updateProfile(
-      updatedProfile: updatedProfile,
-    );
-    final User updatedUser =
-        currentUser!.copyWith(profile: fetchedUpdatedProfile);
-    userController.state = updatedUser;
+    try {
+      final Profile fetchedUpdatedProfile =
+          await profileRepository.updateProfile(
+        updatedProfile: updatedProfile,
+      );
+      final User updatedUser =
+          currentUser!.copyWith(profile: fetchedUpdatedProfile);
+      await dataStore.writeUserProfile(updatedUser);
+      userController.state = updatedUser;
+    } on ProfileFailure catch (error) {
+      state = UserState.error(error);
+    }
   }
 
   ///
@@ -130,17 +137,22 @@ class UserNotifier extends StateNotifier<UserState> {
   Future<void> init() async {
     final User sessionUser = userController.state!;
     final String? firebaseUserUID = sessionUser.profile?.uid;
-    if (sessionUser.confirmed == true) {
-      final Profile sessionUserProfile =
-          await profileRepository.findByUserId(sessionUser.id);
+    if (sessionUser.confirmed == true &&
+        sessionUser.profile?.role == UserRole.GUEST) {
+      try {
+        final Profile sessionUserProfile =
+            await profileRepository.findByUserId(sessionUser.id);
 
-      final User sessionUserWithProfile = sessionUser.copyWith(
-        profile: sessionUserProfile.copyWith(uid: firebaseUserUID),
-      );
+        final User sessionUserWithProfile = sessionUser.copyWith(
+          profile: sessionUserProfile.copyWith(uid: firebaseUserUID),
+        );
 
-      await dataStore.writeUserProfile(sessionUserWithProfile);
+        await dataStore.writeUserProfile(sessionUserWithProfile);
 
-      userController.state = sessionUserWithProfile;
+        userController.state = sessionUserWithProfile;
+      } on ProfileFailure catch (error) {
+        state = UserState.error(error);
+      }
     }
 
     deliverUserScreen();

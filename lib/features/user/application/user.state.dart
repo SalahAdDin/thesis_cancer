@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 
 part 'user.state.freezed.dart';
 
@@ -24,5 +25,5 @@ class UserState with _$UserState {
   const factory UserState.completed() = _Completed;
 
   ///
-  const factory UserState.error(String error) = _Error;
+  const factory UserState.error([Failure? error]) = _Error;
 }

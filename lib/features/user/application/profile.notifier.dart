@@ -1,22 +1,21 @@
-import 'package:flutter_chat_types/flutter_chat_types.dart' as fc_types;
-import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import "package:http/http.dart";
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
-import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/features/chat/application/chat.provider.dart';
 import 'package:thesis_cancer/features/chat/domain/chat.repository.dart';
 import 'package:thesis_cancer/features/media/application/uploadfile.provider.dart';
 import 'package:thesis_cancer/features/media/domain/file_description.entity.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.repository.dart';
+import 'package:thesis_cancer/features/media/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/application/profile.state.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
+import 'package:thesis_cancer/features/user/infrastructure/failure.dart';
 
 ///
 class ProfileNotifier extends StateNotifier<ProfileState> {
@@ -35,8 +34,6 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
   final Reader reader;
 
   Profile get _profile => user.profile ?? Profile.empty;
-
-  FirebaseChatCore get _chatCore => FirebaseChatCore.instance;
 
   ChatRepository get _chatRepository => reader(chatRepositoryProvider);
 
@@ -58,27 +55,6 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
 
   ///
   void toEditMode() => state = const ProfileState.editing();
-
-  ///
-  Future<fc_types.Room> createRoom() async {
-    try {
-      final fc_types.User otherUser = fc_types.User(
-        id: _profile.uid!,
-        firstName: _profile.firstName,
-        lastName: _profile.lastName,
-        imageUrl: _profile.profilePhoto?.url,
-        role: _profile.role == UserRole.ADMIN
-            ? fc_types.Role.admin
-            : fc_types.Role.user,
-      );
-
-      final fc_types.Room room = await _chatCore.createRoom(otherUser);
-      return room;
-    } catch (error) {
-      // TODO
-      throw Error();
-    }
-  }
 
   ///
   Future<void> updateProfilePhoto() async {
@@ -126,7 +102,15 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
         _userController.state = updatedUser;
 
         state = const ProfileState.data();
-      } on Exception catch (error) {}
+      } on FileFailure catch (error) {
+        state = ProfileState.error(error);
+      } on ProfileFailure catch (error) {
+        state = ProfileState.error(error);
+      } on Exception catch (_) {
+        state = ProfileState.error(
+          ProfileFailure(reason: ProfileFailureReason.unknown),
+        );
+      }
     } else {}
   }
 
@@ -151,16 +135,26 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
       _userController.state = updatedUser;
 
       state = const ProfileState.data();
-    } catch (error) {}
+    } on ProfileFailure catch (error) {
+      state = ProfileState.error(error);
+    } on Exception catch (_) {
+      state = ProfileState.error(
+        ProfileFailure(reason: ProfileFailureReason.unknown),
+      );
+    }
   }
 
   ///
   Future<void> init() async {
-    postsCount = await _profileRepository.countPotsByUser(userId: user.id);
+    try {
+      postsCount = await _profileRepository.countPostsByUser(userId: user.id);
+    } on ProfileFailure catch (_) {}
     if (user.profile != null) {
       state = const ProfileState.data();
     } else {
-      state = const ProfileState.error("The user has no a valid profile");
+      state = ProfileState.error(
+        ProfileFailure(reason: ProfileFailureReason.notValidProfile),
+      );
     }
   }
 }

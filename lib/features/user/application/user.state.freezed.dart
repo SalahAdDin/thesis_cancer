@@ -40,7 +40,7 @@ class _$UserStateTearOff {
     return const _Completed();
   }
 
-  _Error error(String error) {
+  _Error error([Failure? error]) {
     return _Error(
       error,
     );
@@ -60,7 +60,7 @@ mixin _$UserState {
     required TResult Function() mustSeeIntroduction,
     required TResult Function() mustSeeTutorial,
     required TResult Function() completed,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -71,7 +71,7 @@ mixin _$UserState {
     TResult Function()? mustSeeIntroduction,
     TResult Function()? mustSeeTutorial,
     TResult Function()? completed,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -158,7 +158,7 @@ class _$_Loading implements _Loading {
     required TResult Function() mustSeeIntroduction,
     required TResult Function() mustSeeTutorial,
     required TResult Function() completed,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
   }) {
     return loading();
   }
@@ -172,7 +172,7 @@ class _$_Loading implements _Loading {
     TResult Function()? mustSeeIntroduction,
     TResult Function()? mustSeeTutorial,
     TResult Function()? completed,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -261,7 +261,7 @@ class _$_IsAdmin implements _IsAdmin {
     required TResult Function() mustSeeIntroduction,
     required TResult Function() mustSeeTutorial,
     required TResult Function() completed,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
   }) {
     return isAdmin();
   }
@@ -275,7 +275,7 @@ class _$_IsAdmin implements _IsAdmin {
     TResult Function()? mustSeeIntroduction,
     TResult Function()? mustSeeTutorial,
     TResult Function()? completed,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     required TResult orElse(),
   }) {
     if (isAdmin != null) {
@@ -366,7 +366,7 @@ class _$_UnConfirmed implements _UnConfirmed {
     required TResult Function() mustSeeIntroduction,
     required TResult Function() mustSeeTutorial,
     required TResult Function() completed,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
   }) {
     return unConfirmed();
   }
@@ -380,7 +380,7 @@ class _$_UnConfirmed implements _UnConfirmed {
     TResult Function()? mustSeeIntroduction,
     TResult Function()? mustSeeTutorial,
     TResult Function()? completed,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     required TResult orElse(),
   }) {
     if (unConfirmed != null) {
@@ -472,7 +472,7 @@ class _$_MustSeeIntroduction implements _MustSeeIntroduction {
     required TResult Function() mustSeeIntroduction,
     required TResult Function() mustSeeTutorial,
     required TResult Function() completed,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
   }) {
     return mustSeeIntroduction();
   }
@@ -486,7 +486,7 @@ class _$_MustSeeIntroduction implements _MustSeeIntroduction {
     TResult Function()? mustSeeIntroduction,
     TResult Function()? mustSeeTutorial,
     TResult Function()? completed,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     required TResult orElse(),
   }) {
     if (mustSeeIntroduction != null) {
@@ -577,7 +577,7 @@ class _$_MustSeeTutorial implements _MustSeeTutorial {
     required TResult Function() mustSeeIntroduction,
     required TResult Function() mustSeeTutorial,
     required TResult Function() completed,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
   }) {
     return mustSeeTutorial();
   }
@@ -591,7 +591,7 @@ class _$_MustSeeTutorial implements _MustSeeTutorial {
     TResult Function()? mustSeeIntroduction,
     TResult Function()? mustSeeTutorial,
     TResult Function()? completed,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     required TResult orElse(),
   }) {
     if (mustSeeTutorial != null) {
@@ -681,7 +681,7 @@ class _$_Completed implements _Completed {
     required TResult Function() mustSeeIntroduction,
     required TResult Function() mustSeeTutorial,
     required TResult Function() completed,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
   }) {
     return completed();
   }
@@ -695,7 +695,7 @@ class _$_Completed implements _Completed {
     TResult Function()? mustSeeIntroduction,
     TResult Function()? mustSeeTutorial,
     TResult Function()? completed,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     required TResult orElse(),
   }) {
     if (completed != null) {
@@ -745,7 +745,7 @@ abstract class _Completed implements UserState {
 abstract class _$ErrorCopyWith<$Res> {
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
       __$ErrorCopyWithImpl<$Res>;
-  $Res call({String error});
+  $Res call({Failure? error});
 }
 
 /// @nodoc
@@ -765,7 +765,7 @@ class __$ErrorCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
       error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Failure?,
     ));
   }
 }
@@ -773,10 +773,10 @@ class __$ErrorCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error(this.error);
+  const _$_Error([this.error]);
 
   @override
-  final String error;
+  final Failure? error;
 
   @override
   String toString() {
@@ -809,7 +809,7 @@ class _$_Error implements _Error {
     required TResult Function() mustSeeIntroduction,
     required TResult Function() mustSeeTutorial,
     required TResult Function() completed,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
   }) {
     return error(this.error);
   }
@@ -823,7 +823,7 @@ class _$_Error implements _Error {
     TResult Function()? mustSeeIntroduction,
     TResult Function()? mustSeeTutorial,
     TResult Function()? completed,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -866,9 +866,9 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements UserState {
-  const factory _Error(String error) = _$_Error;
+  const factory _Error([Failure? error]) = _$_Error;
 
-  String get error => throw _privateConstructorUsedError;
+  Failure? get error => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
 }
