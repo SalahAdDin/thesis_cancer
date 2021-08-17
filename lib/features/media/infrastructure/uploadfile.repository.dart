@@ -1,10 +1,11 @@
 import 'dart:io';
 
-import 'package:colorize/colorize.dart';
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import "package:http/http.dart";
 import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/domain/errors/extension.entity.dart';
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/media/domain/file_description.entity.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.repository.dart';
@@ -20,6 +21,15 @@ class GraphQLFileRepository implements UploadFileRepository {
   final Reader reader;
 
   GraphQLClient get _client => reader(graphQLClientProvider);
+
+  ///
+  Extension extractExtension(QueryResult response) {
+    final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
+    final Extension extension = Extension.fromJson(
+      graphQLError.extensions!,
+    );
+    return extension;
+  }
 
   @override
   Future<List<UploadFile>> findAll() {
@@ -56,8 +66,19 @@ class GraphQLFileRepository implements UploadFileRepository {
       );
       final QueryResult response = await _client.query(options);
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw FileFailure();
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+
+        final Extension extension = extractExtension(response);
+        final int errorCode = extension.statusCode!;
+        if (errorCode == 403) {
+          throw FileFailure(reason: FileFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw FileFailure(reason: FileFailureReason.notFound);
+        } else {
+          throw FileFailure(reason: FileFailureReason.unknown);
+        }
       }
 
       final List<Map<String, dynamic>> data =
@@ -68,8 +89,8 @@ class GraphQLFileRepository implements UploadFileRepository {
           .toList();
 
       return result;
-    } on Exception catch (error) {
-      throw FileFailure();
+    } on Exception catch (_) {
+      throw FileFailure(reason: FileFailureReason.unknown);
     }
   }
 
@@ -81,18 +102,31 @@ class GraphQLFileRepository implements UploadFileRepository {
         variables: <String, dynamic>{"fileId": fileId},
       );
       final QueryResult response = await _client.query(options);
+
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw FileFailure();
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+
+        final Extension extension = extractExtension(response);
+        final int errorCode = extension.statusCode!;
+        if (errorCode == 403) {
+          throw FileFailure(reason: FileFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw FileFailure(reason: FileFailureReason.notFound);
+        } else {
+          throw FileFailure(reason: FileFailureReason.unknown);
+        }
       }
+
       final Map<String, dynamic> data =
           response.data?['deleteFile']['file'] as Map<String, dynamic>;
       final UploadFile deletedFile = UploadFile.fromJson(data);
       if (deletedFile.id != fileId) {
-        throw FileFailure();
+        throw FileFailure(reason: FileFailureReason.unexpectedResult);
       }
-    } on Exception catch (error) {
-      throw FileFailure();
+    } on Exception catch (_) {
+      throw FileFailure(reason: FileFailureReason.unknown);
     }
   }
 
@@ -117,16 +151,27 @@ class GraphQLFileRepository implements UploadFileRepository {
       );
       final QueryResult response = await _client.query(options);
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw FileFailure();
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+
+        final Extension extension = extractExtension(response);
+        final int errorCode = extension.statusCode!;
+        if (errorCode == 403) {
+          throw FileFailure(reason: FileFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw FileFailure(reason: FileFailureReason.notFound);
+        } else {
+          throw FileFailure(reason: FileFailureReason.unknown);
+        }
       }
 
       final Map<String, dynamic> data =
           response.data?['upload'] as Map<String, dynamic>;
 
       return UploadFile.fromJson(data);
-    } on Exception catch (error) {
-      throw FileFailure();
+    } on Exception catch (_) {
+      throw FileFailure(reason: FileFailureReason.unknown);
     }
   }
 }

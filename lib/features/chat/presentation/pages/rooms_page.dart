@@ -5,14 +5,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
 import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
 import 'package:thesis_cancer/features/chat/application/chat.provider.dart';
 import 'package:thesis_cancer/features/chat/presentation/pages/chat_page.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
-
-// TODO: Solve this https://github.com/flyerhq/flutter_chat_ui/issues/59
 
 ///
 class RoomsPage extends HookWidget {
@@ -40,9 +39,6 @@ class RoomsPage extends HookWidget {
           if (rooms.isEmpty) {
             return Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.only(
-                bottom: 200,
-              ),
               child: const Text('No rooms'),
             );
           }
@@ -88,7 +84,8 @@ class RoomsPage extends HookWidget {
           child: CircularProgressIndicator(),
         ),
         error: (Object error, StackTrace? stack) => ErrorScreen(
-          message: error.toString(),
+          // TODO: implements reasons for Firebase
+          reason: FailureReason.unknown,
           actionLabel: 'Home',
           onPressed: () => Navigator.of(context).pop(),
         ),

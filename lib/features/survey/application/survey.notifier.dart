@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
-import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/survey/application/survey.provider.dart';
 import 'package:thesis_cancer/features/survey/application/survey.state.dart';
 import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
@@ -10,6 +9,7 @@ import 'package:thesis_cancer/features/survey/domain/result/result.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/result/result.repository.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/survey/survey.repository.dart';
+import 'package:thesis_cancer/features/survey/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
 
 /// Survey Notifier
@@ -58,8 +58,12 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
       final Survey result = await surveyRepository.findById(surveyID);
       surveyController.state = result;
       state = const SurveyState.data();
-    } on GraphQLFailure catch (error) {
-      state = SurveyState.error(error.toString());
+    } on SurveyFailure catch (error) {
+      state = SurveyState.error(error);
+    } on Exception catch (_) {
+      state = SurveyState.error(
+        SurveyFailure(reason: SurveyFailureReason.unknown),
+      );
     }
   }
 
@@ -79,8 +83,12 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
       await resultRepository.createUserSurveyResult(userSurveyResult);
 
       state = const SurveyState.completed();
-    } on Exception catch (error) {
-      state = SurveyState.error(error.toString());
+    } on ResultFailure catch (error) {
+      state = SurveyState.error(error);
+    } on Exception catch (_) {
+      state = SurveyState.error(
+        SurveyFailure(reason: SurveyFailureReason.unknown),
+      );
     }
   }
 

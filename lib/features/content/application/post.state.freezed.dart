@@ -20,9 +20,9 @@ class _$PostsStateTearOff {
     return const _Loading();
   }
 
-  _Error error([String? message]) {
+  _Error error([Failure? error]) {
     return _Error(
-      message,
+      error,
     );
   }
 
@@ -39,14 +39,14 @@ mixin _$PostsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String? message) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() data,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? data,
     required TResult orElse(),
   }) =>
@@ -122,7 +122,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String? message) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() data,
   }) {
     return loading();
@@ -132,7 +132,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? data,
     required TResult orElse(),
   }) {
@@ -175,7 +175,7 @@ abstract class _Loading implements PostsState {
 abstract class _$ErrorCopyWith<$Res> {
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
       __$ErrorCopyWithImpl<$Res>;
-  $Res call({String? message});
+  $Res call({Failure? error});
 }
 
 /// @nodoc
@@ -189,13 +189,13 @@ class __$ErrorCopyWithImpl<$Res> extends _$PostsStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? message = freezed,
+    Object? error = freezed,
   }) {
     return _then(_Error(
-      message == freezed
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
+      error == freezed
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as Failure?,
     ));
   }
 }
@@ -203,27 +203,27 @@ class __$ErrorCopyWithImpl<$Res> extends _$PostsStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error([this.message]);
+  const _$_Error([this.error]);
 
   @override
-  final String? message;
+  final Failure? error;
 
   @override
   String toString() {
-    return 'PostsState.error(message: $message)';
+    return 'PostsState.error(error: $error)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Error &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
+            (identical(other.error, error) ||
+                const DeepCollectionEquality().equals(other.error, error)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(error);
 
   @JsonKey(ignore: true)
   @override
@@ -234,22 +234,22 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String? message) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() data,
   }) {
-    return error(message);
+    return error(this.error);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? data,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(message);
+      return error(this.error);
     }
     return orElse();
   }
@@ -280,9 +280,9 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements PostsState {
-  const factory _Error([String? message]) = _$_Error;
+  const factory _Error([Failure? error]) = _$_Error;
 
-  String? get message => throw _privateConstructorUsedError;
+  Failure? get error => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
 }
@@ -325,7 +325,7 @@ class _$_Data implements _Data {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String? message) error,
+    required TResult Function(Failure? error) error,
     required TResult Function() data,
   }) {
     return data();
@@ -335,7 +335,7 @@ class _$_Data implements _Data {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String? message)? error,
+    TResult Function(Failure? error)? error,
     TResult Function()? data,
     required TResult orElse(),
   }) {

@@ -4,6 +4,7 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
@@ -96,8 +97,8 @@ class LoginScreen extends HookWidget {
                         pushAndReplaceToPage(context, SplashScreen())),*/
                 )),
         // TODO: block backward arrow button on this screen (LoginScreen breaks here).
-        error: (String error) => ErrorScreen(
-          message: error,
+        error: (Failure? error) => ErrorScreen(
+          reason: error?.reason,
           actionLabel: 'Home',
           onPressed: () => pushAndReplaceToPage(context, SplashScreen()),
         ),

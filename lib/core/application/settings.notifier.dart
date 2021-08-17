@@ -1,3 +1,4 @@
+import 'package:colorize/colorize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,8 +9,10 @@ import 'package:thesis_cancer/core/domain/settings/schedules.entity.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.repository.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/media/application/uploadfile.provider.dart';
 import 'package:thesis_cancer/features/notification/domain/activityfeed.entity.dart';
+
 // import 'package:thesis_cancer/features/user/application/user.provider.dart';
 // import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
@@ -69,29 +72,34 @@ class SettingsNotifier extends StateNotifier<Settings> {
     final Settings settings = await _dataStore.getSettings();
 
     if (settings == Settings.empty) {
-      print('[Settings Notifier Provider]: Fetching settings from server.');
-      final Map<String, dynamic> result =
-          await _settingsRepository.fetchSettings() as Map<String, dynamic>;
-      final Settings fetchedSettings = Settings.fromJson(result);
-      await _dataStore.writeSettings(settings);
+      try {
+        print('[Settings Notifier Provider]: Fetching settings from server.');
+        final Map<String, dynamic> result =
+            await _settingsRepository.fetchSettings() as Map<String, dynamic>;
+        final Settings fetchedSettings = Settings.fromJson(result);
+        await _dataStore.writeSettings(fetchedSettings);
 
-      if (fetchedSettings.introductoryVideo != null &&
-          fetchedSettings.introductoryVideo?.url != null) {
-        _cacheManager.downloadFile(fetchedSettings.introductoryVideo!.url);
-      }
+        if (fetchedSettings.introductoryVideo != null &&
+            fetchedSettings.introductoryVideo?.url != null) {
+          _cacheManager.downloadFile(fetchedSettings.introductoryVideo!.url);
+        }
 
-      // Local notifications will be scheduled at first app launch.
-      // At this moment there is no any settings on the storage.
-      /* TODO: Watch here if the user is logged,
+        // Local notifications will be scheduled at first app launch.
+        // At this moment there is no any settings on the storage.
+        /* TODO: Watch here if the user is logged,
           don't schedule till the user is logged in.
       */
-      if (fetchedSettings.surveySchedules != null &&
-          fetchedSettings.surveySchedules!.isNotEmpty) {
-        // && _currentUser != User.empty) {
-        scheduleNotifications(fetchedSettings.surveySchedules!);
-      }
+        if (fetchedSettings.surveySchedules != null &&
+            fetchedSettings.surveySchedules!.isNotEmpty) {
+          // && _currentUser != User.empty) {
+          scheduleNotifications(fetchedSettings.surveySchedules!);
+        }
 
-      state = fetchedSettings;
+        state = fetchedSettings;
+      } on SettingsFailure catch (error) {
+        print(Colorize(error.toString()).red());
+        state = Settings.empty;
+      }
     } else {
       print('[Settings Notifier Provider]: Fetching settings from storage.');
       state = settings;

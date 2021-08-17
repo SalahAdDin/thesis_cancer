@@ -6,6 +6,7 @@ import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
+import 'package:thesis_cancer/features/auth/application/helpers.dart';
 import 'package:thesis_cancer/features/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
@@ -60,7 +61,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = const AuthState.signedUp();
     } on SignUpFailure catch (error) {
       // state = AuthState.error(error.toString());
-      return error.toString();
+      return localizeAuthFailures(error.reason);
     }
     /*on SignUpFailure catch (error) {
       // state = AuthState.error(error.toString());
@@ -93,11 +94,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
       await _dataStore.writeUserProfile(sessionUser);
       _userController.state = sessionUser;
       state = const AuthState.loggedIn();
-    } on LogInFailureByBadRequest {
-      return "E-posta veya şifre geçersiz.";
     } on LogInFailure catch (error) {
       // state = AuthState.error(error.toString());
-      return error.toString();
+      // return "E-posta veya şifre geçersiz.";
+      return localizeAuthFailures(error.reason);
     }
     /*try {
     } on LogInUnconfirmedUserFailure {
@@ -183,7 +183,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         return 'Şifrenizi sıfırlamanız istenirken bir hata oluştu.';
       }
     } on ForgotPasswordFailure catch (error) {
-      return error.toString();
+      return localizeAuthFailures(error.reason);
     }
   }
 
@@ -204,7 +204,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       // state = const AuthState.loggedOut();
     } on ResetPasswordFailure catch (error) {
       // state = AuthState.error(error.toString());
-      return error.toString();
+      return localizeAuthFailures(error.reason);
     }
   }
 }

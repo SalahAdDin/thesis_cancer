@@ -5,8 +5,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
+import 'package:thesis_cancer/features/chat/application/chat.provider.dart';
 import 'package:thesis_cancer/features/chat/presentation/pages/chat_page.dart';
 import 'package:thesis_cancer/features/user/application/profile.notifier.dart';
 import 'package:thesis_cancer/features/user/application/profile.state.dart';
@@ -62,7 +64,9 @@ class ProfileScreen extends HookWidget {
                 user.profile!.role == UserRole.ADMIN,
             child: IconButton(
               onPressed: () async {
-                final fc_types.Room room = await profileNotifier.createRoom();
+                final fc_types.Room room = await context
+                    .read(chatRepositoryProvider)
+                    .createRoom(profile: user.profile!);
                 pushToPage(
                   context,
                   ChatPage(room: room),
@@ -77,7 +81,10 @@ class ProfileScreen extends HookWidget {
             visible: profileNotifier.isOwnProfile,
             child: profileState.when(
               loading: () => Container(),
-              error: (String? error) => Container(),
+              error: (_) => const IconButton(
+                onPressed: null,
+                icon: Icon(Icons.error_outline),
+              ),
               editing: () => IconButton(
                 onPressed: () => _onSubmit(
                   formKey: _formKey,
@@ -101,10 +108,9 @@ class ProfileScreen extends HookWidget {
         loading: () => const Center(
           child: CircularProgressIndicator(),
         ),
-        error: (String? error) => ErrorScreen(
+        error: (Failure? error) => ErrorScreen(
           onPressed: () => Navigator.of(context).maybePop(),
-          message: error.toString(),
-          title: 'Profili Hata',
+          reason: error?.reason,
           actionLabel: 'Try again!',
         ),
         editing: () => EditProfileWidget(

@@ -126,7 +126,7 @@ class ChatNotifier extends StateNotifier<bool> {
       } else {
         // User canceled the picker
       }
-    } on Error catch (error) {}
+    } on Exception catch (_) {} // TODO
   }
 
   ///

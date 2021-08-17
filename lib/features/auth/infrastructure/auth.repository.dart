@@ -1,7 +1,8 @@
-import 'package:colorize/colorize.dart';
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/domain/errors/extension.entity.dart';
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/auth.gql.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
@@ -28,6 +29,16 @@ class GraphQLAuthRepository implements AuthRepository {
     return result;
   }
 
+  Message extractMessage(GraphQLError graphQLError) {
+    final Extension extension = Extension.fromJson(
+      graphQLError.extensions!,
+    );
+    // As far as we understood, at Strapi, a formatted message always
+    // will return a data and message attributes,
+    // https://github.com/strapi/strapi/blob/master/packages/strapi-plugin-users-permissions/controllers/Auth.js
+    return extension.dataMessage!;
+  }
+
   @override
   Future<bool> forgotPassword({required String email}) async {
     try {
@@ -39,15 +50,32 @@ class GraphQLAuthRepository implements AuthRepository {
       final QueryResult response = await client.query(options);
 
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw ForgotPasswordFailure(response.exception.toString());
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
+        if (graphQLError.message.contains("Bad Request")) {
+          final String messageId = extractMessage(graphQLError).id;
+          if (messageId == "Auth.form.error.email.format") {
+            throw ForgotPasswordFailure(
+                reason: ForgotPasswordFailureReason.invalidEmail);
+          } else if (messageId == "Auth.form.error.user.not-exist") {
+            throw ForgotPasswordFailure(
+                reason: ForgotPasswordFailureReason.emailDoesNotExist);
+          } else {
+            throw ForgotPasswordFailure(
+                reason: ForgotPasswordFailureReason.unknown);
+          }
+        } else {
+          throw ResetPasswordFailure(
+              reason: ResetPasswordFailureReason.unknown);
+        }
       }
       final bool result = response.data?['forgotPassword']['ok'] as bool;
 
       return result;
-    } on Exception catch (error) {
-      print(Colorize(error.toString()).red());
-      throw ForgotPasswordFailure(error.toString());
+    } on Exception catch (_) {
+      throw ForgotPasswordFailure(reason: ForgotPasswordFailureReason.unknown);
     }
   }
 
@@ -69,16 +97,36 @@ class GraphQLAuthRepository implements AuthRepository {
       final QueryResult response = await client.query(options);
 
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw ResetPasswordFailure(response.exception.toString());
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
+        if (graphQLError.message.contains("Bad Request")) {
+          final String messageId = extractMessage(graphQLError).id;
+          if (messageId == "Auth.form.error.code.provide") {
+            throw ResetPasswordFailure(
+                reason: ResetPasswordFailureReason.incorrectCode);
+          } else if (messageId == "Auth.form.error.password.matching") {
+            throw ResetPasswordFailure(
+                reason: ResetPasswordFailureReason.passwordsNoMatch);
+          } else if (messageId == "Auth.form.error.params.provide") {
+            throw ResetPasswordFailure(
+                reason: ResetPasswordFailureReason.incorrectParams);
+          } else {
+            throw ResetPasswordFailure(
+                reason: ResetPasswordFailureReason.unknown);
+          }
+        } else {
+          throw ResetPasswordFailure(
+              reason: ResetPasswordFailureReason.unknown);
+        }
       }
       final Map<String, dynamic> data =
           response.data?['resetPassword'] as Map<String, dynamic>;
 
       return flatAuthResponse(data: data);
-    } on Exception catch (error) {
-      print(Colorize(error.toString()).red());
-      throw ResetPasswordFailure(error.toString());
+    } on Exception catch (_) {
+      throw ResetPasswordFailure(reason: ResetPasswordFailureReason.unknown);
     }
   }
 
@@ -100,38 +148,33 @@ class GraphQLAuthRepository implements AuthRepository {
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
-          // handle network issues, maybe
-          // TODO: Following code does not work here.
-          /*} else {
-          final String message = response.exception!.graphqlErrors[0].message;
-          */ /*response.exception?.graphqlErrors[0].extensions?['exception']
-                  ['data']['message'][0]["messages"][0]['id'] as String;*/ /*
-
-          print(Colorize("Error from if:  $message").red());
-          if (message.contains("Bad Request")) {
-            throw LogInFailureByBadRequest();
-          }*/
-          throw LogInFailure();
-        } else {
-          final String message = response.exception!.graphqlErrors[0].message;
-          if (message.contains("Bad Request")) {
-            throw LogInFailureByBadRequest();
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
+        if (graphQLError.message.contains("Bad Request")) {
+          final String messageId = extractMessage(graphQLError).id;
+          if (messageId == "Auth.form.error.invalid") {
+            throw LogInFailure(
+                reason: AuthFailureReason.invalidUsernamePassword);
+          } else if (messageId == "Auth.form.error.confirmed") {
+            throw LogInFailure(reason: AuthFailureReason.unconfirmedEmail);
+          } else if (messageId == "Auth.form.error.blocked") {
+            throw LogInFailure(reason: AuthFailureReason.blockedAccount);
+          } else if (messageId == "Auth.form.error.password.local") {
+            throw LogInFailure(reason: AuthFailureReason.localPassword);
           } else {
-            throw LogInFailure();
+            throw LogInFailure(reason: AuthFailureReason.badRequest);
           }
+        } else {
+          throw LogInFailure(reason: AuthFailureReason.unknown);
         }
       }
       final Map<String, dynamic> data =
           response.data?['login'] as Map<String, dynamic>;
 
       return flatAuthResponse(data: data);
-    } on OperationException catch (error) {
-      final String message = error.graphqlErrors[0].message;
-      if (message.contains("Bad Request")) {
-        throw LogInFailureByBadRequest();
-      } else {
-        throw LogInFailure();
-      }
+    } on Exception catch (_) {
+      throw LogInFailure(reason: AuthFailureReason.unknown);
     }
   }
 
@@ -151,9 +194,36 @@ class GraphQLAuthRepository implements AuthRepository {
         },
       );
       final QueryResult response = await client.query(options);
+
       if (response.hasException) {
-        throw SignUpFailure(response.exception.toString());
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
+        if (graphQLError.message.contains("Bad Request")) {
+          final String messageId = extractMessage(graphQLError).id;
+          if (messageId == "Auth.advanced.allow_register") {
+            throw SignUpFailure(
+                reason: RegisterFailureReason.registeringActionNotAllowed);
+          } else if (messageId == "Auth.form.error.password.format") {
+            throw SignUpFailure(
+                reason: RegisterFailureReason.moreThanThreeDollarSymbol);
+          } else if (messageId == "Auth.form.error.role.notFound") {
+            throw SignUpFailure(
+                reason: RegisterFailureReason.defaultRoleNotFound);
+          } else if (messageId == "Auth.form.error.email.format") {
+            throw SignUpFailure(reason: RegisterFailureReason.invalidEmail);
+          } else if (messageId == "Auth.form.error.email.taken") {
+            throw SignUpFailure(
+                reason: RegisterFailureReason.emailAlreadyTaken);
+          } else {
+            throw SignUpFailure(reason: RegisterFailureReason.unknown);
+          }
+        } else {
+          throw SignUpFailure(reason: RegisterFailureReason.unknown);
+        }
       }
+
       final Map<String, dynamic> data =
           response.data?['register'] as Map<String, dynamic>;
 
@@ -164,8 +234,8 @@ class GraphQLAuthRepository implements AuthRepository {
       final Map<String, dynamic> result = flattenResult;
 
       return result;
-    } on Exception catch (error) {
-      throw SignUpFailure(error.toString());
+    } on Exception catch (_) {
+      throw SignUpFailure(reason: RegisterFailureReason.unknown);
     }
   }
 }

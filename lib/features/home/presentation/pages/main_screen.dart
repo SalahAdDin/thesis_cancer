@@ -4,10 +4,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
-import 'package:thesis_cancer/core/domain/constants.dart';
+
+// import 'package:thesis_cancer/core/domain/constants.dart';
 import 'package:thesis_cancer/core/domain/settings/schedules.entity.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
 import 'package:thesis_cancer/core/presentation/widgets/side_menu/side_menu.dart';
@@ -21,7 +23,8 @@ import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dar
 import 'package:thesis_cancer/features/home/presentation/pages/stories_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/therapy_screen.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
-import 'package:thesis_cancer/features/notification/presentation/pages/notifications_screen.dart';
+
+// import 'package:thesis_cancer/features/notification/presentation/pages/notifications_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
 import 'package:thesis_cancer/features/user/application/user.notifier.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
@@ -83,8 +86,8 @@ class MainScreen extends HookWidget {
         showTutorial: true,
       ),
       completed: () => MainLayout(),
-      error: (String error) => ErrorScreen(
-        message: error,
+      error: (Failure? error) => ErrorScreen(
+        reason: error?.reason,
         actionLabel: 'Home',
         onPressed: () => pushAndReplaceToPage(context, SplashScreen()),
       ),
@@ -372,6 +375,7 @@ class MainLayout extends HookWidget {
                 align: ContentAlign.left,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: const <Widget>[
                     Text(
                       "Side Menu",
@@ -472,7 +476,7 @@ class MainLayout extends HookWidget {
             // To change the content when the length change.
             // badgeContent: BuildContext,
             // TODO: same above, if length is 0, hide the badge.
-            // showBadge: ,
+            showBadge: false,
             child: IconButton(
               icon: const Icon(Icons.chat_outlined),
               constraints: const BoxConstraints(minWidth: 10),
@@ -481,11 +485,12 @@ class MainLayout extends HookWidget {
               onPressed: () => pushToPage(context, RoomsPage()),
             ),
           ),
+          /*
           Padding(
             padding: const EdgeInsets.only(right: 10),
             child: Badge(
               animationType: BadgeAnimationType.scale,
-              position: BadgePosition.topEnd(top: 10, end: 5),
+              position: BadgePosition.topEnd(top: 7.5, end: 5),
               // TODO: watch the ActivityFeed stream controller for its list's length
               // To change the content when the length change.
               // badgeContent: BuildContext,
@@ -500,7 +505,8 @@ class MainLayout extends HookWidget {
                 onPressed: () => pushToPage(context, NotificationsScreen()),
               ),
             ),
-          )
+          ),
+          */
         ],
       ),
       endDrawer: ConstrainedBox(

@@ -1,31 +1,73 @@
-// TODO: We need to pass the message itself, not the exception in string format
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 
-class SignUpFailure implements Exception {
-  SignUpFailure(String string);
+/// Auth failure errors from:
+/// https://github.com/strapi/strapi/blob/master/packages/strapi-plugin-users-permissions/controllers/Auth.js
+enum AuthFailureReason {
+  ///
+  unknown,
+
+  ///
+  badRequest,
+
+  ///
+  /// Used also for connection problems.
+  disabledProvider,
+
+  ///
+  invalidUsernamePassword,
+
+  ///
+  unconfirmedEmail,
+
+  ///
+  blockedAccount,
+
+  ///
+  localPassword,
 }
 
-class LogInFailure implements Exception {}
-
-class LogInFailureByBadRequest implements Exception {}
-
-class ForgotPasswordFailure implements Exception {
-  ForgotPasswordFailure(String string);
+enum ResetPasswordFailureReason {
+  unknown,
+  incorrectCode,
+  passwordsNoMatch,
+  incorrectParams,
 }
 
-class ResetPasswordFailure implements Exception {
-  ResetPasswordFailure(String string);
+enum ForgotPasswordFailureReason { unknown, invalidEmail, emailDoesNotExist }
+
+enum RegisterFailureReason {
+  unknown,
+  registeringActionNotAllowed,
+  moreThanThreeDollarSymbol,
+  defaultRoleNotFound,
+  invalidEmail,
+  emailAlreadyTaken,
 }
 
-class SignUpWithInvalidPasswordFailure implements Exception {}
+class LogInFailure extends Failure {
+  LogInFailure({required this.reason});
 
-class LogInWithSocialProviderFailure implements Exception {}
+  @override
+  final AuthFailureReason reason;
+}
 
-class LogInWithEmailAndPasswordFailure implements Exception {}
+class ForgotPasswordFailure extends Failure {
+  ForgotPasswordFailure({required this.reason});
 
-class LogInUnconfirmedUserFailure implements Exception {}
+  @override
+  final ForgotPasswordFailureReason reason;
+}
 
-class FetchUserAttributesFailure implements Exception {}
+class ResetPasswordFailure extends Failure {
+  ResetPasswordFailure({required this.reason});
 
-class GettingCurrentUserFailure implements Exception {}
+  @override
+  final ResetPasswordFailureReason reason;
+}
 
-class ConfirmSignInFailure implements Exception {}
+class SignUpFailure extends Failure {
+  SignUpFailure({required this.reason});
+
+  @override
+  final RegisterFailureReason reason;
+}

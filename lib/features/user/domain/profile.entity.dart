@@ -35,6 +35,11 @@ class Profile with _$Profile {
   );
 
   ///
+  String get shortName => firstName != null && lastName != null
+      ? "${firstName!.split(" ")[0]} ${lastName!.split(" ")[0]}"
+      : '';
+
+  ///
   String get fullName =>
       firstName != null && lastName != null ? "$firstName $lastName" : '';
 }

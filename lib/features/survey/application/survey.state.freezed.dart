@@ -28,7 +28,7 @@ class _$SurveyStateTearOff {
     return const _Completed();
   }
 
-  _Error error(String error) {
+  _Error error([Failure? error]) {
     return _Error(
       error,
     );
@@ -45,7 +45,7 @@ mixin _$SurveyState {
     required TResult Function() loading,
     required TResult Function() data,
     required TResult Function() completed,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -53,7 +53,7 @@ mixin _$SurveyState {
     TResult Function()? loading,
     TResult Function()? data,
     TResult Function()? completed,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -132,7 +132,7 @@ class _$_Loading implements _Loading {
     required TResult Function() loading,
     required TResult Function() data,
     required TResult Function() completed,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
   }) {
     return loading();
   }
@@ -143,7 +143,7 @@ class _$_Loading implements _Loading {
     TResult Function()? loading,
     TResult Function()? data,
     TResult Function()? completed,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -223,7 +223,7 @@ class _$_Data implements _Data {
     required TResult Function() loading,
     required TResult Function() data,
     required TResult Function() completed,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
   }) {
     return data();
   }
@@ -234,7 +234,7 @@ class _$_Data implements _Data {
     TResult Function()? loading,
     TResult Function()? data,
     TResult Function()? completed,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     required TResult orElse(),
   }) {
     if (data != null) {
@@ -315,7 +315,7 @@ class _$_Completed implements _Completed {
     required TResult Function() loading,
     required TResult Function() data,
     required TResult Function() completed,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
   }) {
     return completed();
   }
@@ -326,7 +326,7 @@ class _$_Completed implements _Completed {
     TResult Function()? loading,
     TResult Function()? data,
     TResult Function()? completed,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     required TResult orElse(),
   }) {
     if (completed != null) {
@@ -370,7 +370,7 @@ abstract class _Completed implements SurveyState {
 abstract class _$ErrorCopyWith<$Res> {
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
       __$ErrorCopyWithImpl<$Res>;
-  $Res call({String error});
+  $Res call({Failure? error});
 }
 
 /// @nodoc
@@ -390,7 +390,7 @@ class __$ErrorCopyWithImpl<$Res> extends _$SurveyStateCopyWithImpl<$Res>
       error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Failure?,
     ));
   }
 }
@@ -398,10 +398,10 @@ class __$ErrorCopyWithImpl<$Res> extends _$SurveyStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error(this.error);
+  const _$_Error([this.error]);
 
   @override
-  final String error;
+  final Failure? error;
 
   @override
   String toString() {
@@ -431,7 +431,7 @@ class _$_Error implements _Error {
     required TResult Function() loading,
     required TResult Function() data,
     required TResult Function() completed,
-    required TResult Function(String error) error,
+    required TResult Function(Failure? error) error,
   }) {
     return error(this.error);
   }
@@ -442,7 +442,7 @@ class _$_Error implements _Error {
     TResult Function()? loading,
     TResult Function()? data,
     TResult Function()? completed,
-    TResult Function(String error)? error,
+    TResult Function(Failure? error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -479,9 +479,9 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements SurveyState {
-  const factory _Error(String error) = _$_Error;
+  const factory _Error([Failure? error]) = _$_Error;
 
-  String get error => throw _privateConstructorUsedError;
+  Failure? get error => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
 }

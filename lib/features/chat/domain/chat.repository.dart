@@ -10,8 +10,12 @@ abstract class ChatRepository {
   /// Transpile a [User] to a compatible Chat Service's user and registers it.
   Future<void> registerUser(Profile targetUser);
 
+  ///
+  Future<fc_types.Room> createRoom({required Profile profile});
+
   /// Returns the chat [Room] associated to a [User].
-  /// It finds the [Room] by its id, if the [Room] does not exist, it is created and returned.
+  /// It finds the [Room] by its id, if the [Room] does not exist,
+  /// it is created and returned.
   Future<dynamic> getRoomByUser({
     required fc_types.User otherUser,
   });

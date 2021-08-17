@@ -1,7 +1,7 @@
-import 'package:colorize/colorize.dart';
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/domain/errors/extension.entity.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.repository.dart';
@@ -17,6 +17,14 @@ class GraphQLUserRepository implements UserRepository {
   final Reader reader;
 
   GraphQLClient get _client => reader(graphQLClientProvider);
+
+  Extension extractException(QueryResult response) {
+    final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
+    final Extension extension = Extension.fromJson(
+      graphQLError.extensions!,
+    );
+    return extension;
+  }
 
   @override
   Future<User> createUser(User user) {
@@ -62,15 +70,25 @@ class GraphQLUserRepository implements UserRepository {
       final QueryResult response = await _client.query(options);
 
       if (response.hasException) {
-        print(Colorize(response.exception.toString()).red());
-        throw GraphQLFailure(response.exception.toString());
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = extractException(response);
+        final int errorCode = extension.statusCode!;
+        if (errorCode == 403) {
+          throw UserFailure(reason: UserFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw UserFailure(reason: UserFailureReason.notFound);
+        } else {
+          throw UserFailure(reason: UserFailureReason.unknown);
+        }
       }
       final List<dynamic> users = response.data?["users"] as List<dynamic>;
       return users
           .map((dynamic user) => User.fromJson(user as Map<String, dynamic>))
           .toList();
-    } on Exception catch (error) {
-      throw UserFailure();
+    } on Exception catch (_) {
+      throw GraphQLFailure(reason: FailureReason.unknown);
     }
   }
 }

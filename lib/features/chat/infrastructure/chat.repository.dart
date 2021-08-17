@@ -74,4 +74,25 @@ class FireBaseChatRepository implements ChatRepository {
       room.users.firstWhere(
         (fc_types.User user) => user.id != currentUser?.uid,
       );
+
+  ///
+  @override
+  Future<fc_types.Room> createRoom({required Profile profile}) async {
+    try {
+      final fc_types.User otherUser = fc_types.User(
+        id: profile.uid!,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        imageUrl: profile.profilePhoto?.url,
+        role: profile.role == UserRole.ADMIN
+            ? fc_types.Role.admin
+            : fc_types.Role.user,
+      );
+
+      final fc_types.Room room = await _chatCore.createRoom(otherUser);
+      return room;
+    } on Exception catch (_) {
+      rethrow;
+    }
+  }
 }
