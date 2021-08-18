@@ -138,8 +138,8 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
       answers[questionId] != null;
 
   /* Provisional
-  * TODO
-  * - first from data store.
+  * TODO:
+  *  - first from data store.
   * - second fetching from API.
   * - even getting from datastore, how can we know the survey is not outdated?
   *  */
