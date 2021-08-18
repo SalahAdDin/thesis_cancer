@@ -12,7 +12,7 @@ import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
-import 'package:thesis_cancer/core/presentation/widgets/side_menu/side_menu.dart';
+import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
 import 'package:thesis_cancer/features/chat/presentation/pages/rooms_page.dart';
 import 'package:thesis_cancer/features/home/application/home.provider.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/introductory_screen.dart';
@@ -29,6 +29,8 @@ import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.d
 import 'package:thesis_cancer/features/user/application/user.notifier.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/application/user.state.dart';
+import 'package:thesis_cancer/features/user/domain/user.entity.dart';
+import 'package:thesis_cancer/features/user/presentation/pages/profile_screen.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 /// Main Screen
@@ -123,19 +125,23 @@ class MainLayout extends HookWidget {
   ///
   late final TutorialCoachMark tutorialCoachMark;
 
+  final PageController _pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
     final Size _screenSize = MediaQuery.of(context).size;
 
     // [StateProvider] which handles the current screen's viewing tab.
-    final StateController<PostType> tabType = useProvider(tabTypeProvider);
-
-    // [Provider] for the screen's [PageView] controller.
-    final PageController pageController =
-        useProvider(homePageControllerProvider).state;
+    // TODO: make this local with useState
+    final ValueNotifier<PostType> tabType = useState(PostType.INFORMATION);
 
     final UserNotifier userNotifierProvider =
         useProvider(homeScreenNotifierProvider.notifier);
+
+    final StateController<User> userEntityController =
+        useProvider(userEntityProvider);
+
+    final User sessionUser = userEntityController.state;
 
     final List<BottomNavigationBarItem> _navigationButtons =
         <BottomNavigationBarItem>[
@@ -171,6 +177,13 @@ class MainLayout extends HookWidget {
         label: '',
         tooltip: 'Hikayeler',
       ),
+      BottomNavigationBarItem(
+        icon: UserAvatar(
+          userAvatarUrl: sessionUser.profile!.profilePhoto?.url,
+        ),
+        label: '',
+        tooltip: 'Profilim',
+      ),
     ];
 
     final List<Widget> pages = <Widget>[
@@ -204,32 +217,41 @@ class MainLayout extends HookWidget {
       } else if (pageTarget < pageCurrent) {
         quickJumpTarget = pageCurrent - 1;
       }
-      await pageController.animateToPage(
+      await _pageController.animateToPage(
         quickJumpTarget,
         duration: const Duration(milliseconds: 500),
         curve: Curves.ease,
       );
-      pageController.jumpToPage(pageTarget);
+      _pageController.jumpToPage(pageTarget);
     }
 
     Future<void> _navigateOnTap(int index) async {
-      final num nearByCoefficient = (pageController.page != null
-              ? index.toDouble() - pageController.page!
-              : 0)
-          .abs();
-      if (nearByCoefficient > 1) {
-        final int currentPage = pageController.page!.round();
-        _swapChildren(currentPage, index);
-        await _quickJump(currentPage, index);
-        WidgetsBinding.instance!.addPostFrameCallback(_refreshPages);
-      } else {
-        pageController.animateToPage(
-          index,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.ease,
+      if (index == 4) {
+        pushToPage(
+          context,
+          ProfileScreen(
+            user: sessionUser,
+          ),
         );
+      } else {
+        final num nearByCoefficient = (_pageController.page != null
+                ? index.toDouble() - _pageController.page!
+                : 0)
+            .abs();
+        if (nearByCoefficient > 1) {
+          final int currentPage = _pageController.page!.round();
+          _swapChildren(currentPage, index);
+          await _quickJump(currentPage, index);
+          WidgetsBinding.instance!.addPostFrameCallback(_refreshPages);
+        } else {
+          _pageController.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.ease,
+          );
+        }
+        tabType.value = PostType.values[index];
       }
-      tabType.state = PostType.values[index];
     }
 
     void _initializeTargets() {
@@ -509,19 +531,15 @@ class MainLayout extends HookWidget {
           */
         ],
       ),
-      endDrawer: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 275),
-        child: SideMenu(),
-      ),
       body: SafeArea(
         child: PageView(
-          controller: pageController,
-          onPageChanged: (int index) => tabType.state = PostType.values[index],
+          controller: _pageController,
+          onPageChanged: (int index) => tabType.value = PostType.values[index],
           children: visiblePages.value,
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: tabType.state.index,
+        currentIndex: tabType.value.index,
         items: _navigationButtons,
         onTap: _navigateOnTap,
         selectedItemColor: Theme.of(context).primaryColor,

@@ -28,12 +28,6 @@ class RoomsPage extends HookWidget {
         // leading: const BackButton(),
         // additionalActions: <Widget>[Container()],
       ),
-      /*
-      endDrawer: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 275),
-        child: SideMenu(),
-      ),
-      */
       body: rooms.when(
         data: (List<fc_types.Room> rooms) {
           if (rooms.isEmpty) {
