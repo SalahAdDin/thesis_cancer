@@ -83,18 +83,6 @@ class PostWidget extends StatelessWidget {
                 itemWidth: swiperWidth,
                 pagination: const SwiperPagination(),
                 indicatorLayout: PageIndicatorLayout.SCALE,
-                /*
-                pagination: SwiperPagination(
-                    builder: SwiperCustomPagination(
-                      builder:
-                          (BuildContext context, SwiperPluginConfig? config) =>
-                              const DotSwiperPaginationBuilder(
-                        color: Colors.black12,
-                        activeColor: Colors.black,
-                      ).build(context, config),
-                    ),
-                  ),
-                  */
                 itemBuilder: (_, int index) =>
                     _deliverContent(post.gallery[index]),
               ),

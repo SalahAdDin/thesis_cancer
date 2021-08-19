@@ -86,9 +86,10 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
         // Local notifications will be scheduled at first app launch.
         // At this moment there is no any settings on the storage.
-        /* TODO: Watch here if the user is logged,
-          don't schedule till the user is logged in.
-      */
+        /*
+        TODO: Watch here if the user is logged,
+         don't schedule till the user is logged in.
+        */
         if (fetchedSettings.surveySchedules != null &&
             fetchedSettings.surveySchedules!.isNotEmpty) {
           // && _currentUser != User.empty) {
