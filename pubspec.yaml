@@ -22,11 +22,11 @@ environment:
 
 dependencies:
   badges: ^2.0.1
+  better_player: ^0.0.73
   cached_network_image: ^3.1.0
   card_swiper: ^1.0.4
   # carousel_slider: ^4.0.0-nullsafety.0
-  chewie: ^1.2.2
-  cloud_firestore: ^2.4.0
+  cloud_firestore: ^2.5.0
   colorize: ^3.0.0
   # connectivity_plus: ^1.0.2
 
@@ -37,9 +37,9 @@ dependencies:
   dots_indicator: ^2.0.0
   enum_to_string: ^2.0.1
   file_picker: ^4.0.0
-  firebase_auth: ^3.0.1
-  firebase_core: ^1.4.0
-  firebase_storage: ^10.0.1
+  firebase_auth: ^3.0.2
+  firebase_core: ^1.5.0
+  firebase_storage: ^10.0.2
   # fluro: ^2.0.3
   flutter:
     sdk: flutter
@@ -67,7 +67,7 @@ dependencies:
   mask_text_input_formatter: ^2.0.0
   mime: ^1.0.0
   open_file: ^3.2.1
-  package_info_plus: ^1.0.4
+  package_info_plus: ^1.0.5
   path_provider: ^2.0.2
   # permission_handler: ^6.1.1
   # pin_code_fields: ^7.0.0
@@ -79,7 +79,6 @@ dependencies:
   timezone: ^0.7.0
   tutorial_coach_mark: ^1.1.1
   uuid: ^3.0.4
-  video_player: ^2.1.14
 
 dev_dependencies:
   build_runner: ^2.1.1
