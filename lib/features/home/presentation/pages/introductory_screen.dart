@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:thesis_cancer/core/presentation/widgets/video_item.dart';
+import 'package:thesis_cancer/core/presentation/widgets/cached_network_video.dart';
 
 /// Introductory Screen
 class IntroductoryScreen extends HookWidget {
@@ -29,10 +29,12 @@ class IntroductoryScreen extends HookWidget {
         pages: <PageViewModel>[
           PageViewModel(
             title: "",
-            image: CachedNetworkVideo(
-              dataSource: dataSource,
-              autoPlay: true,
-              onFinished: () => _isVideoFinished.value = true,
+            image: Center(
+              child: CachedNetworkVideo(
+                dataSource: dataSource,
+                autoPlay: true,
+                onFinished: () => _isVideoFinished.value = true,
+              ),
             ),
             body: "",
             decoration: const PageDecoration(fullScreen: true),

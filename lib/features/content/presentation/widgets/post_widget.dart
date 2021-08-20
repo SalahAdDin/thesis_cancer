@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
-import 'package:thesis_cancer/core/presentation/widgets/video_item.dart';
+import 'package:thesis_cancer/core/presentation/widgets/cached_network_video.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
 import 'package:thesis_cancer/features/content/presentation/widgets/post_header.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
@@ -44,8 +44,7 @@ class PostWidget extends StatelessWidget {
       case FileType.video:
         return CachedNetworkVideo(
           dataSource: content.url,
-          showControls: true,
-          // autoPlay: true,
+          enableControls: true,
         );
       case FileType.file:
         return const Center(
