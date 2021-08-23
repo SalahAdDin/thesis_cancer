@@ -31,9 +31,15 @@ enum ResetPasswordFailureReason {
   incorrectCode,
   passwordsNoMatch,
   incorrectParams,
+  errorAtSendingMessage,
 }
 
-enum ForgotPasswordFailureReason { unknown, invalidEmail, emailDoesNotExist }
+enum ForgotPasswordFailureReason {
+  unknown,
+  invalidEmail,
+  emailDoesNotExist,
+  errorAtSendingMessage,
+}
 
 enum RegisterFailureReason {
   unknown,

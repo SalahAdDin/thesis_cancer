@@ -29,6 +29,8 @@ String localizeAuthFailures(dynamic reason) {
         return "Passwords does not match.";
       case ResetPasswordFailureReason.incorrectParams:
         return "Incorrect params provided.";
+      case ResetPasswordFailureReason.errorAtSendingMessage:
+        return "Error at sending mail.";
     }
   } else if (reason is ForgotPasswordFailureReason) {
     switch (reason) {
@@ -38,6 +40,8 @@ String localizeAuthFailures(dynamic reason) {
         return "You provided a invalid e-mail.";
       case ForgotPasswordFailureReason.emailDoesNotExist:
         return "The provided e-mail does not exist.";
+      case ForgotPasswordFailureReason.errorAtSendingMessage:
+        return "Error at sending mail.";
     }
   } else if (reason is RegisterFailureReason) {
     switch (reason) {
