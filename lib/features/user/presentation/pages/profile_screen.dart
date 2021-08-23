@@ -87,7 +87,7 @@ class ProfileScreen extends HookWidget {
               constraints: const BoxConstraints(minWidth: 10),
               values: ThemeMode.values,
               icons: const <Icon>[
-                Icon(Icons.settings_outlined),
+                Icon(Icons.format_paint),
                 Icon(Icons.light_mode_outlined),
                 Icon(Icons.dark_mode_outlined)
               ],
