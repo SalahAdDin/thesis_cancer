@@ -6,6 +6,7 @@ import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/auth.gql.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
+import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 /// **GraphQL** implementation for [AuthRepository] interface
 class GraphQLAuthRepository implements AuthRepository {
@@ -80,7 +81,7 @@ class GraphQLAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> resetPassword({
+  Future<User> resetPassword({
     required String password,
     required String passwordConfirmation,
     required String confirmationCode,
@@ -124,14 +125,14 @@ class GraphQLAuthRepository implements AuthRepository {
       final Map<String, dynamic> data =
           response.data?['resetPassword'] as Map<String, dynamic>;
 
-      return flatAuthResponse(data: data);
+      return User.fromJson(flatAuthResponse(data: data));
     } on Exception catch (_) {
       throw ResetPasswordFailure(reason: ResetPasswordFailureReason.unknown);
     }
   }
 
   @override
-  Future<Map<String, dynamic>> signIn({
+  Future<User> signIn({
     required String identifier,
     required String password,
     String? provider,
@@ -172,14 +173,14 @@ class GraphQLAuthRepository implements AuthRepository {
       final Map<String, dynamic> data =
           response.data?['login'] as Map<String, dynamic>;
 
-      return flatAuthResponse(data: data);
+      return User.fromJson(flatAuthResponse(data: data));
     } on Exception catch (_) {
       throw LogInFailure(reason: AuthFailureReason.unknown);
     }
   }
 
   @override
-  Future<Map<String, dynamic>> signUp({
+  Future<User> signUp({
     required String username,
     required String email,
     required String password,
@@ -233,7 +234,7 @@ class GraphQLAuthRepository implements AuthRepository {
       flattenResult['token'] = data['jwt'];
       final Map<String, dynamic> result = flattenResult;
 
-      return result;
+      return User.fromJson(result);
     } on Exception catch (_) {
       throw SignUpFailure(reason: RegisterFailureReason.unknown);
     }

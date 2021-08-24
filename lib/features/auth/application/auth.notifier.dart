@@ -47,16 +47,15 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String password,
   }) async {
     try {
-      final Map<String, dynamic> result = await _authRepository.signUp(
+      final User newUser = await _authRepository.signUp(
         username: username.split("@")[0],
         email: username,
         password: password,
-      ) as Map<String, dynamic>;
+      );
       await _fireBaseAuth.createUserWithEmailAndPassword(
         email: username,
         password: password,
       );
-      final User newUser = User.fromJson(result);
       _userController.state = newUser.copyWith(confirmed: false);
       state = const AuthState.signedUp();
     } on SignUpFailure catch (error) {
@@ -75,11 +74,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String password,
   }) async {
     try {
-      final Map<String, dynamic> rawUser = await _authRepository.signIn(
+      User sessionUser = await _authRepository.signIn(
         identifier: username,
         password: password,
-      ) as Map<String, dynamic>;
-      User sessionUser = User.fromJson(rawUser);
+      );
       if (sessionUser.confirmed != false) {
         final fb.UserCredential credentials =
             await _fireBaseAuth.signInWithEmailAndPassword(
@@ -176,7 +174,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     try {
       final bool isRequested = await _authRepository.forgotPassword(
         email: email,
-      ) as bool;
+      );
       if (isRequested) {
         state = const AuthState.resetPassword();
       } else {
@@ -194,12 +192,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String confirmationCode,
   }) async {
     try {
-      final Map<String, dynamic> rawUser = await _authRepository.resetPassword(
+      final User sessionUser =  await _authRepository.resetPassword(
         password: password,
         passwordConfirmation: passwordConfirmation,
         confirmationCode: confirmationCode,
-      ) as Map<String, dynamic>;
-      final User sessionUser = User.fromJson(rawUser);
+      );
       // TODO: Redirect to login page again as with logout.
       // state = const AuthState.loggedOut();
     } on ResetPasswordFailure catch (error) {

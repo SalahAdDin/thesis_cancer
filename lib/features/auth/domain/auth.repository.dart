@@ -1,3 +1,5 @@
+import 'package:thesis_cancer/features/user/domain/user.entity.dart';
+
 /// Authentication Repository Interface
 abstract class AuthRepository {
 /*
@@ -24,24 +26,24 @@ abstract class AuthRepository {
 */
 
   ///
-  Future<dynamic> resetPassword({
+  Future<User> resetPassword({
     required String password,
     required String passwordConfirmation,
     required String confirmationCode,
   });
 
   ///
-  Future<dynamic> forgotPassword({required String email});
+  Future<bool> forgotPassword({required String email});
 
   ///
-  Future<dynamic> signIn({
+  Future<User> signIn({
     required String identifier,
     required String password,
     String? provider,
   });
 
   ///
-  Future<dynamic> signUp({
+  Future<User> signUp({
     required String username,
     required String email,
     required String password,
