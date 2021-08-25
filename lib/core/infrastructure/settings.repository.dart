@@ -2,6 +2,7 @@ import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/errors/extension.entity.dart';
+import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.repository.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/infrastructure/settings.gql.dart';
@@ -18,7 +19,7 @@ class GraphQLSettingsRepository implements SettingsRepository {
   GraphQLClient get client => reader(graphQLClientProvider);
 
   @override
-  Future<Map<String, dynamic>> fetchSettings() async {
+  Future<Settings> fetchSettings() async {
     try {
       final QueryOptions options =
           QueryOptions(document: gql(graphQLDocumentGetSettings));
@@ -52,7 +53,7 @@ class GraphQLSettingsRepository implements SettingsRepository {
       flattenResult['registeringSurvey'] = data['registeringSurvey']['id'];
       final Map<String, dynamic> result = flattenResult;
 
-      return result;
+      return Settings.fromJson(Map<String, Object?>.from(result));
     } on Exception catch (_) {
       throw SettingsFailure(reason: SettingsFailureReason.unknown);
     }

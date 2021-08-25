@@ -18,7 +18,7 @@ class Settings with _$Settings {
   }) = _Settings;
 
   /// Builds a [Settings] from a given json [String].
-  factory Settings.fromJson(Map<String, dynamic> json) =>
+  factory Settings.fromJson(Map<String, Object?> json) =>
       _$SettingsFromJson(json);
 
   /// Builds a empty(dummy) [Settings].

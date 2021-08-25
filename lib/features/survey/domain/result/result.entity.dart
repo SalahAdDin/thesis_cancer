@@ -15,6 +15,6 @@ class UserSurveyResult with _$UserSurveyResult {
     // DateTime? createdAt,
   }) = _UserSurveyResult;
 
-  factory UserSurveyResult.fromJson(Map<String, dynamic> json) =>
+  factory UserSurveyResult.fromJson(Map<String, Object?> json) =>
       _$UserSurveyResultFromJson(json);
 }

@@ -18,7 +18,7 @@ class UploadFile with _$UploadFile {
   }) = _UploadFile;
 
   /// Builds a [UploadFile] from a given json [String].
-  factory UploadFile.fromJson(Map<String, dynamic> json) =>
+  factory UploadFile.fromJson(Map<String, Object?> json) =>
       _$UploadFileFromJson(json);
 
   /// Builds a empty(dummy) [UploadFile].

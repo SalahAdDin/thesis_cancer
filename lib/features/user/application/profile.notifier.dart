@@ -115,7 +115,7 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
   }
 
   ///
-  Future<void> updateProfile(Map<String, dynamic> validFields) async {
+  Future<void> updateProfile(Map<String, Object?> validFields) async {
     try {
       final Profile updatedFields = Profile.fromJson(validFields);
 

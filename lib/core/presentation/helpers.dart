@@ -96,6 +96,8 @@ List<String> localizeFailure(dynamic reason) {
         return <String>[title, "Passwords does not match."];
       case ResetPasswordFailureReason.incorrectParams:
         return <String>[title, "Incorrect params provided."];
+      case ResetPasswordFailureReason.errorAtSendingMessage:
+        return <String>[title, "Error at sending mail."];
     }
   } else if (reason is ForgotPasswordFailureReason) {
     const String title = "Forgot Password Error";
@@ -106,6 +108,8 @@ List<String> localizeFailure(dynamic reason) {
         return <String>[title, "You provided a invalid e-mail."];
       case ForgotPasswordFailureReason.emailDoesNotExist:
         return <String>[title, "The provided e-mail does not exist."];
+      case ForgotPasswordFailureReason.errorAtSendingMessage:
+        return <String>[title, "Error at sending mail."];
     }
   } else if (reason is RegisterFailureReason) {
     const String title = "Register Error";

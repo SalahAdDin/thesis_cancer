@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'schedules.entity.freezed.dart';
+
 part 'schedules.entity.g.dart';
 
 /// Survey Schedule Entity
@@ -17,6 +18,6 @@ class SurveySchedule with _$SurveySchedule {
   }) = _SurveySchedule;
 
   /// Builds a [SurveySchedule] from a given json [String].
-  factory SurveySchedule.fromJson(Map<String, dynamic> json) =>
+  factory SurveySchedule.fromJson(Map<String, Object?> json) =>
       _$SurveyScheduleFromJson(json);
 }

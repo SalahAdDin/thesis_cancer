@@ -25,7 +25,7 @@ class Profile with _$Profile {
   const Profile._();
 
   ///Builds a [Profile] from a given json [String].
-  factory Profile.fromJson(Map<String, dynamic> json) =>
+  factory Profile.fromJson(Map<String, Object?> json) =>
       _$ProfileFromJson(json);
 
   /// Builds a empty(dummy) [Profile].

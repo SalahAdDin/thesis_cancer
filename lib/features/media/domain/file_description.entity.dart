@@ -14,7 +14,7 @@ class FileDescription with _$FileDescription {
   }) = _FileDescription;
 
   /// Builds a [FileDescription] from a given json [String].
-  factory FileDescription.fromJson(Map<String, dynamic> json) =>
+  factory FileDescription.fromJson(Map<String, Object?> json) =>
       _$FileDescriptionFromJson(json);
 
   /// Builds a empty(dummy) [FileDescription].

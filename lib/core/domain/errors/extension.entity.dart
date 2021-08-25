@@ -11,7 +11,7 @@ class Message with _$Message {
     required String message,
   }) = _Message;
 
-  factory Message.fromJson(Map<String, dynamic> json) =>
+  factory Message.fromJson(Map<String, Object?> json) =>
       _$MessageFromJson(json);
 }
 
@@ -19,7 +19,7 @@ class Message with _$Message {
 class Messages with _$Messages {
   const factory Messages({required List<Message> messages}) = _Messages;
 
-  factory Messages.fromJson(Map<String, dynamic> json) =>
+  factory Messages.fromJson(Map<String, Object?> json) =>
       _$MessagesFromJson(json);
 }
 
@@ -31,7 +31,7 @@ class Payload with _$Payload {
     required String message,
   }) = _Payload;
 
-  factory Payload.fromJson(Map<String, dynamic> json) =>
+  factory Payload.fromJson(Map<String, Object?> json) =>
       _$PayloadFromJson(json);
 }
 
@@ -43,7 +43,7 @@ class Output with _$Output {
     // required headers,
   }) = _Output;
 
-  factory Output.fromJson(Map<String, dynamic> json) => _$OutputFromJson(json);
+  factory Output.fromJson(Map<String, Object?> json) => _$OutputFromJson(json);
 }
 
 @freezed
@@ -54,7 +54,7 @@ class Data with _$Data {
     required List<Messages> data,
   }) = _Data;
 
-  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
+  factory Data.fromJson(Map<String, Object?> json) => _$DataFromJson(json);
 }
 
 @freezed
@@ -70,7 +70,7 @@ class Exception with _$Exception {
     required List<String> stacktrace,
   }) = _Exception;
 
-  factory Exception.fromJson(Map<String, dynamic> json) =>
+  factory Exception.fromJson(Map<String, Object?> json) =>
       _$ExceptionFromJson(json);
 }
 
@@ -83,7 +83,7 @@ class Extension with _$Extension {
 
   const Extension._();
 
-  factory Extension.fromJson(Map<String, dynamic> json) =>
+  factory Extension.fromJson(Map<String, Object?> json) =>
       _$ExtensionFromJson(json);
 
   /// As far we understood from Strapi, which uses [Boom](https://hapi.dev/module/boom/api/?v=9.1.2) to handle errors,

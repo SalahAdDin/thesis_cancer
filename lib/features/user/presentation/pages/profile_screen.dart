@@ -29,7 +29,7 @@ class ProfileScreen extends HookWidget {
 
   Future<void> _onSubmit({
     required GlobalKey<FormBuilderState> formKey,
-    required Future<dynamic> Function(Map<String, dynamic>) onSubmitCallback,
+    required Future<void> Function(Map<String, Object?>) onSubmitCallback,
   }) async {
     formKey.currentState!.save();
     final bool isValid = formKey.currentState!.validate();

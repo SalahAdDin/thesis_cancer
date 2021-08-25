@@ -11,7 +11,7 @@ class UserSurveyAnswer with _$UserSurveyAnswer {
     required String answer,
   }) = _UserSurveyAnswer;
 
-  factory UserSurveyAnswer.fromJson(Map<String, dynamic> json) =>
+  factory UserSurveyAnswer.fromJson(Map<String, Object?> json) =>
       _$UserSurveyAnswerFromJson(json);
   static const UserSurveyAnswer empty = UserSurveyAnswer(
     statement: '',
