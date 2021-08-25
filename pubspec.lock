@@ -699,7 +699,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.3+2"
+    version: "0.8.3+3"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -762,7 +762,7 @@ packages:
       name: like_button
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   linkify:
     dependency: transitive
     description:
@@ -853,7 +853,7 @@ packages:
       name: package_info_plus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.5"
+    version: "1.0.6"
   package_info_plus_linux:
     dependency: transitive
     description:
@@ -881,7 +881,7 @@ packages:
       name: package_info_plus_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   package_info_plus_windows:
     dependency: transitive
     description:
