@@ -60,14 +60,14 @@ dependencies:
   group_button: ^3.1.0
   hooks_riverpod: ^0.14.0+4
   http_parser: ^4.0.0
-  image_picker: ^0.8.3+2
+  image_picker: ^0.8.3+3
   introduction_screen: ^2.1.0
-  like_button: ^2.0.2
+  like_button: ^2.0.3
   # material_design_icons_flutter: ^5.0.5955-rc.1
   mask_text_input_formatter: ^2.0.0
   mime: ^1.0.0
   open_file: ^3.2.1
-  package_info_plus: ^1.0.5
+  package_info_plus: ^1.0.6
   path_provider: ^2.0.2
   # permission_handler: ^6.1.1
   # pin_code_fields: ^7.0.0
