@@ -11,6 +11,6 @@ class Like with _$Like {
     required String userID,
   }) = _Like;
 
-  factory Like.fromJson(Map<String, dynamic> json) => _$LikeFromJson(json);
+  factory Like.fromJson(Map<String, Object?> json) => _$LikeFromJson(json);
   static const Like empty = Like(id: '', postID: '', userID: '');
 }

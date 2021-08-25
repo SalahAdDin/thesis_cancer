@@ -14,6 +14,6 @@ class Survey with _$Survey {
     List<Question>? questions,
   }) = _Survey;
 
-  factory Survey.fromJson(Map<String, dynamic> json) => _$SurveyFromJson(json);
+  factory Survey.fromJson(Map<String, Object?> json) => _$SurveyFromJson(json);
   static const Survey empty = Survey(id: '', title: 'Mock Survey');
 }

@@ -74,9 +74,8 @@ class SettingsNotifier extends StateNotifier<Settings> {
     if (settings == Settings.empty) {
       try {
         print('[Settings Notifier Provider]: Fetching settings from server.');
-        final Map<String, dynamic> result =
-            await _settingsRepository.fetchSettings() as Map<String, dynamic>;
-        final Settings fetchedSettings = Settings.fromJson(result);
+        final Settings fetchedSettings =
+            await _settingsRepository.fetchSettings();
         await _dataStore.writeSettings(fetchedSettings);
 
         if (fetchedSettings.introductoryVideo != null &&

@@ -132,8 +132,10 @@ class SembastDataStore implements DataStoreRepository {
 
     final List<Post> result = postsJson != null
         ? postsJson
-            .map((dynamic element) =>
-                Post.fromJson(element as Map<String, dynamic>))
+            .map(
+              (dynamic element) =>
+                  Post.fromJson(element as Map<String, Object>),
+            )
             .toList()
         : <Post>[];
 

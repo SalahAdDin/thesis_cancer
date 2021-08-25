@@ -26,7 +26,7 @@ class User with _$User {
   }) = _User;
 
   /// Builds a [User] from a given json [String].
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
 
   /// Builds a empty(dummy) [User].
   static const User empty = User(

@@ -13,7 +13,7 @@ class Question with _$Question {
     String? answer,
   }) = _Question;
 
-  factory Question.fromJson(Map<String, dynamic> json) =>
+  factory Question.fromJson(Map<String, Object?> json) =>
       _$QuestionFromJson(json);
   static const Question empty = Question(
     id: '',

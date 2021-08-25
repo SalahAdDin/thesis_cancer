@@ -29,7 +29,7 @@ class Post with _$Post {
   const Post._();
 
   /// Builds a [Post] from a given json [String].
-  factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
+  factory Post.fromJson(Map<String, Object?> json) => _$PostFromJson(json);
 
   /// Builds a empty(dummy) [Post].
   static const Post empty = Post(

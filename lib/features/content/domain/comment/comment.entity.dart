@@ -12,7 +12,7 @@ class Comment with _$Comment {
     required String content,
   }) = _Comment;
 
-  factory Comment.fromJson(Map<String, dynamic> json) =>
+  factory Comment.fromJson(Map<String, Object?> json) =>
       _$CommentFromJson(json);
 
   static const Comment empty =
