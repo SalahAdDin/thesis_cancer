@@ -6,6 +6,9 @@ A new Cancer social and control application.
 
 This project is a starting point for a Flutter application.
 
+Before to run/build the project, build the related files:
+`flutter pub run build_runner build --delete-conflicting-outputs`
+
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
