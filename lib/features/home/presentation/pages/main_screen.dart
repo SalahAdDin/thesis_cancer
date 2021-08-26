@@ -120,6 +120,9 @@ class MainLayout extends HookWidget {
   final GlobalKey _successStoriesButtonKey = GlobalKey();
 
   ///
+  final GlobalKey _profileButtonKey = GlobalKey();
+
+  ///
   final List<TargetFocus> targets = <TargetFocus>[];
 
   ///
@@ -180,6 +183,7 @@ class MainLayout extends HookWidget {
       BottomNavigationBarItem(
         icon: UserAvatar(
           userAvatarUrl: sessionUser.profile!.profilePhoto?.url,
+          key: _profileButtonKey,
         ),
         label: '',
         tooltip: 'Profilim',
@@ -324,7 +328,7 @@ class MainLayout extends HookWidget {
             identify: TargetIdentifier.academyTarget,
             keyTarget: _academyButtonKey,
             shape: ShapeLightFocus.Circle,
-            alignSkip: Alignment.bottomLeft,
+            alignSkip: Alignment.center,
             contents: <TargetContent>[
               TargetContent(
                 align: ContentAlign.top,
@@ -387,31 +391,23 @@ class MainLayout extends HookWidget {
           ),
           TargetFocus(
             identify: TargetIdentifier.sideMenuTarget,
-            targetPosition: TargetPosition(
-              const Size(20.0, 20.0),
-              Offset(_screenSize.width * 0.90, _screenSize.height * 0.5),
-            ),
+            keyTarget: _profileButtonKey,
             shape: ShapeLightFocus.Circle,
+
+            alignSkip: Alignment.bottomLeft,
             contents: <TargetContent>[
               TargetContent(
-                align: ContentAlign.left,
+                align: ContentAlign.top,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: const <Widget>[
                     Text(
-                      "Side Menu",
+                      "My Profile",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 20.0,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Text(
-                        "Swipe left to open the side menu.",
-                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     Padding(
