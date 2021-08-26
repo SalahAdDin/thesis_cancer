@@ -87,21 +87,24 @@ class QuestionWidget extends StatelessWidget {
           },
           validator: _shortAnswerValidator,
           initialText: userAnswer?.answer,
+          hintText: "Cevabı buraya yazınız...",
         );
         break;
       case QuestionType.OPEN_LONG:
         answerWidget = DebounceTextFormField(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            onAnswer: (String answer) {
-              if (answer.isNotEmpty) {
-                onSelected!(answer);
-              }
-            },
-            validator: _longAnswerValidator,
-            keyboardType: TextInputType.multiline,
-            maxLines: 8,
-            maxLength: 500,
-            initialText: userAnswer?.answer);
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          onAnswer: (String answer) {
+            if (answer.isNotEmpty) {
+              onSelected!(answer);
+            }
+          },
+          validator: _longAnswerValidator,
+          keyboardType: TextInputType.multiline,
+          maxLines: 8,
+          maxLength: 500,
+          initialText: userAnswer?.answer,
+          hintText: "Cevabı buraya yazınız...",
+        );
         break;
       case QuestionType.SINGLE:
         final List<String> buttons = question.answer!.split(",");

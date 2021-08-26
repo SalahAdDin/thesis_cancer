@@ -20,6 +20,7 @@ class DebounceTextFormField extends HookWidget {
     this.keyboardType,
     this.maxLength,
     this.maxLines,
+    this.hintText,
   }) : super(key: key);
 
   ///
@@ -45,6 +46,9 @@ class DebounceTextFormField extends HookWidget {
 
   ///
   final int? maxLength;
+
+  ///
+  final String? hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +89,8 @@ class DebounceTextFormField extends HookWidget {
       child: TextFormField(
         controller: textController,
         validator: validator,
-        decoration: const InputDecoration(
-          hintText: "Cevabı buraya yazınız...",
+        decoration: InputDecoration(
+          hintText: hintText,
         ),
         keyboardType: keyboardType,
         maxLines: maxLines,
