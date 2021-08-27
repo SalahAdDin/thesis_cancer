@@ -80,7 +80,8 @@ class PostWidget extends StatelessWidget {
                 itemCount: post.gallery.length,
                 itemHeight: swiperHeight,
                 itemWidth: swiperWidth,
-                pagination: const SwiperPagination(),
+                pagination:
+                    post.gallery.length > 1 ? const SwiperPagination() : null,
                 indicatorLayout: PageIndicatorLayout.SCALE,
                 itemBuilder: (_, int index) =>
                     _deliverContent(post.gallery[index]),

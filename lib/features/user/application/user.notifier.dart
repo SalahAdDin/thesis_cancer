@@ -23,19 +23,19 @@ class UserNotifier extends StateNotifier<UserState> {
   final Reader reader;
 
   ///
-  DataStoreRepository get dataStore => reader(dataStoreRepositoryProvider);
+  DataStoreRepository get _dataStore => reader(dataStoreRepositoryProvider);
 
   // UserRepository get _userRepository => reader(userRepositoryProvider);
 
   ///
-  ProfileRepository get profileRepository => reader(profileRepositoryProvider);
+  ProfileRepository get _profileRepository => reader(profileRepositoryProvider);
 
   ///
-  StateController<User?> get userController =>
+  StateController<User?> get _userController =>
       reader(userEntityProvider.notifier);
 
   ///
-  User? get currentUser => userController.state;
+  User? get currentUser => _userController.state;
 
   ///
   Profile? get currentUserProfile => currentUser?.profile;
@@ -72,7 +72,7 @@ class UserNotifier extends StateNotifier<UserState> {
 
   /// Delivers a screen based on the [UserStatus] assigned.
   void deliverUserScreen() {
-    final UserStatus userStatus = assignUserStatus(userController.state!);
+    final UserStatus userStatus = assignUserStatus(_userController.state!);
     switch (userStatus) {
       case UserStatus.UNCONFIRMED:
         state = const UserState.unConfirmed();
@@ -118,13 +118,13 @@ class UserNotifier extends StateNotifier<UserState> {
   Future<void> updateProfile(Profile updatedProfile) async {
     try {
       final Profile fetchedUpdatedProfile =
-          await profileRepository.updateProfile(
+          await _profileRepository.updateProfile(
         updatedProfile: updatedProfile,
       );
       final User updatedUser =
           currentUser!.copyWith(profile: fetchedUpdatedProfile);
-      await dataStore.writeUserProfile(updatedUser);
-      userController.state = updatedUser;
+      await _dataStore.writeUserProfile(updatedUser);
+      _userController.state = updatedUser;
     } on ProfileFailure catch (error) {
       state = UserState.error(error);
     }
@@ -135,21 +135,21 @@ class UserNotifier extends StateNotifier<UserState> {
 
   ///
   Future<void> init() async {
-    final User sessionUser = userController.state!;
+    final User sessionUser = _userController.state!;
     final String? firebaseUserUID = sessionUser.profile?.uid;
     if (sessionUser.confirmed == true &&
         sessionUser.profile?.role == UserRole.GUEST) {
       try {
         final Profile sessionUserProfile =
-            await profileRepository.findByUserId(sessionUser.id);
+            await _profileRepository.findByUserId(sessionUser.id);
 
         final User sessionUserWithProfile = sessionUser.copyWith(
           profile: sessionUserProfile.copyWith(uid: firebaseUserUID),
         );
 
-        await dataStore.writeUserProfile(sessionUserWithProfile);
+        await _dataStore.writeUserProfile(sessionUserWithProfile);
 
-        userController.state = sessionUserWithProfile;
+        _userController.state = sessionUserWithProfile;
       } on ProfileFailure catch (error) {
         state = UserState.error(error);
       }

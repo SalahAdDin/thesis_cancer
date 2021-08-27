@@ -75,7 +75,10 @@ class LobbyScreen extends HookWidget {
                     child: Button.primary(
                       buttonLabel: "Go back",
                       // TODO: It does not work at the user's registering
-                      onPressed: () => launchNotifier.signOut(),
+                      onPressed: () {
+                        context.read(launcherProvider.notifier).signOut();
+                        Navigator.of(context).maybePop();
+                      },
                     ),
                   ),
                   // TODO: TextButton(link) to cancel my application as footer.

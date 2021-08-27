@@ -328,7 +328,7 @@ class MainLayout extends HookWidget {
             identify: TargetIdentifier.academyTarget,
             keyTarget: _academyButtonKey,
             shape: ShapeLightFocus.Circle,
-            alignSkip: Alignment.center,
+            alignSkip: Alignment.bottomRight,
             contents: <TargetContent>[
               TargetContent(
                 align: ContentAlign.top,
@@ -366,8 +366,7 @@ class MainLayout extends HookWidget {
                 align: ContentAlign.top,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text(
                       "Başarı Öyküleri",
                       style: TextStyle(
@@ -417,36 +416,12 @@ class MainLayout extends HookWidget {
                         style: TextStyle(color: Colors.white),
                         textAlign: TextAlign.right,
                       ),
-                    )
+                    ),
                   ],
                 ),
               )
             ],
           ),
-          /*
-        TargetFocus(
-      identify: "NotificationsTarget",
-      keyTarget: GlobalKeys().notificationButtonKey,
-      shape: ShapeLightFocus.Circle,
-      contents: <TargetContent>[
-        TargetContent(
-          align: ContentAlign.top,
-          child: Container(),
-        )
-      ],
-    ),
-    TargetFocus(
-      identify: "UserButtonTarget",
-      keyTarget: GlobalKeys().userNameButtonKey,
-      shape: ShapeLightFocus.RRect,
-      contents: <TargetContent>[
-        TargetContent(
-          align: ContentAlign.top,
-          child: Container(),
-        )
-      ],
-    ),
-    */
         ],
       );
     }
