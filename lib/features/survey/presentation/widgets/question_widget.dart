@@ -38,20 +38,6 @@ class QuestionWidget extends StatelessWidget {
   ///
   final VoidCallback? onRemove;
 
-  final MultiValidator _shortAnswerValidator =
-      MultiValidator(<FieldValidator<dynamic>>[
-    RequiredValidator(errorText: 'Bu soruya cevap vermelisiniz.'),
-    MinLengthValidator(15, errorText: 'Bu cevap çok kısa'),
-    MaxLengthValidator(50, errorText: 'Bu cevap çok uzun.')
-  ]);
-
-  final MultiValidator _longAnswerValidator =
-      MultiValidator(<FieldValidator<dynamic>>[
-    RequiredValidator(errorText: 'Bu soruya cevap vermelisiniz.'),
-    MinLengthValidator(50, errorText: 'Bu cevap çok kısa'),
-    MaxLengthValidator(500, errorText: 'Bu cevap çok uzun.')
-  ]);
-
   GroupButton _themedGroupButton({
     required List<String> buttons,
     required Function(int index, bool isSelected) onSelected,
@@ -74,7 +60,10 @@ class QuestionWidget extends StatelessWidget {
         unselectedShadow: const <BoxShadow>[],
       );
 
-  Widget _renderInput({required Question question}) {
+  Widget _renderInput({
+    required Question question,
+    required BuildContext context,
+  }) {
     Widget answerWidget;
     switch (question.type) {
       case QuestionType.OPEN_SHORT:
@@ -85,7 +74,13 @@ class QuestionWidget extends StatelessWidget {
               onSelected!(answer);
             }
           },
-          validator: _shortAnswerValidator,
+          validator: MultiValidator(
+            <TextFieldValidator>[
+              RequiredValidator(errorText: 'Bu soruya cevap vermelisiniz.'),
+              MinLengthValidator(15, errorText: 'Bu cevap çok kısa'),
+              MaxLengthValidator(50, errorText: 'Bu cevap çok uzun.')
+            ],
+          ),
           initialText: userAnswer?.answer,
           hintText: "Cevabı buraya yazınız...",
         );
@@ -98,7 +93,13 @@ class QuestionWidget extends StatelessWidget {
               onSelected!(answer);
             }
           },
-          validator: _longAnswerValidator,
+          validator: MultiValidator(
+            <TextFieldValidator>[
+              RequiredValidator(errorText: 'Bu soruya cevap vermelisiniz.'),
+              MinLengthValidator(50, errorText: 'Bu cevap çok kısa'),
+              MaxLengthValidator(500, errorText: 'Bu cevap çok uzun.')
+            ],
+          ),
           keyboardType: TextInputType.multiline,
           maxLines: 8,
           maxLength: 500,
@@ -183,7 +184,7 @@ class QuestionWidget extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(top: 30),
-          child: _renderInput(question: question),
+          child: _renderInput(question: question, context: context),
         ),
       ],
     );

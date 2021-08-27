@@ -9,31 +9,13 @@ typedef ConfirmSignInCallback = Future<dynamic>? Function(
 ///
 class ResetPasswordWidget extends HookWidget {
   ///
-  ResetPasswordWidget({Key? key, required this.onConfirm}) : super(key: key);
+  const ResetPasswordWidget({
+    Key? key,
+    required this.onConfirm,
+  }) : super(key: key);
 
   ///
   final ConfirmSignInCallback onConfirm;
-
-  ///
-  final MultiValidator passwordValidator = MultiValidator(
-    <FieldValidator<dynamic>>[
-      RequiredValidator(errorText: 'Password is required,'),
-      MinLengthValidator(8,
-          errorText: 'Password must be at least 8 digits long.'),
-      PatternValidator(r'(?=.*?[_#?!@$%^&*-])',
-          errorText: 'Passwords must have at least one special character.')
-    ],
-  );
-
-  ///
-  final MultiValidator confirmationCodeValidator = MultiValidator(
-    <FieldValidator<dynamic>>[
-      RequiredValidator(errorText: 'Confirmation code is required'),
-      PatternValidator(r'^[a-z0-9_]*$',
-          errorText: 'Just alphanumeric characters.')
-    ],
-  );
-
   // Future<bool> _submit(
   Future<void> _submit({
     required GlobalKey<FormState> formKey,
@@ -99,28 +81,59 @@ class ResetPasswordWidget extends HookWidget {
                       TextFormField(
                         controller: _newPasswordController,
                         obscureText: true,
-                        validator: passwordValidator,
+                        validator: MultiValidator(
+                          <TextFieldValidator>[
+                            RequiredValidator(
+                                errorText: "Password is required"),
+                            MinLengthValidator(
+                              8,
+                              errorText:
+                                  "Password must be at least 8 digits long.",
+                            ),
+                            PatternValidator(
+                              r'(?=.*?[_#?!@$%^&*-])',
+                              errorText:
+                                  "Password must have at least one special character.",
+                            )
+                          ],
+                        ),
                         decoration: const InputDecoration(
-                            icon: Icon(Icons.lock), labelText: 'New Password'),
+                          icon: Icon(Icons.lock),
+                          labelText: "New Password",
+                        ),
                       ),
                       TextFormField(
                         controller: _confirmNewPasswordController,
                         obscureText: true,
                         validator: (String? value) => MatchValidator(
-                                errorText: "Your password does not match.")
-                            .validateMatch(_newPasswordController.text,
-                                _confirmNewPasswordController.text),
+                          errorText: "Password did not match.",
+                        ).validateMatch(
+                          _newPasswordController.text,
+                          _confirmNewPasswordController.text,
+                        ),
                         decoration: const InputDecoration(
-                            icon: Icon(Icons.lock),
-                            labelText: 'Confirm New Password'),
+                          icon: Icon(Icons.lock),
+                          labelText: "Password did not match.",
+                        ),
                       ),
                       TextFormField(
                         controller: _confirmationCodePasswordController,
                         obscureText: true,
-                        validator: confirmationCodeValidator,
+                        validator: MultiValidator(
+                          <TextFieldValidator>[
+                            RequiredValidator(
+                              errorText: "Confirmation code is required",
+                            ),
+                            PatternValidator(
+                              r'^[a-z0-9_]*$',
+                              errorText: "Just alphanumeric characters.",
+                            )
+                          ],
+                        ),
                         decoration: const InputDecoration(
-                            icon: Icon(Icons.confirmation_number),
-                            labelText: 'Onay kodu'),
+                          icon: Icon(Icons.confirmation_number),
+                          labelText: "Confirmation code",
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
