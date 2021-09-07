@@ -125,7 +125,7 @@ class CancerApp extends HookWidget {
               CupertinoDialogAction(
                 isDefaultAction: true,
                 onPressed: () async => _onSelectNotification(jsonEncode(feed)),
-                child: Text(AppLocalizations.of(context)!.ok),
+                child: const Text("Ok"),
               )
             ],
           ),

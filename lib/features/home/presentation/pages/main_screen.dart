@@ -87,7 +87,7 @@ class MainScreen extends HookWidget {
       completed: () => MainLayout(),
       error: (Failure? error) => ErrorScreen(
         reason: error?.reason,
-        actionLabel: AppLocalizations.of(context)!.homeLabel,
+        actionLabel: "Home",
         onPressed: () {
           context.read(launcherProvider.notifier).signOut();
           Navigator.of(context).maybePop();
@@ -392,7 +392,6 @@ class MainLayout extends HookWidget {
             identify: TargetIdentifier.sideMenuTarget,
             keyTarget: _profileButtonKey,
             shape: ShapeLightFocus.Circle,
-
             alignSkip: Alignment.bottomLeft,
             contents: <TargetContent>[
               TargetContent(
