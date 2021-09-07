@@ -77,16 +77,16 @@ class GraphQLProfileRepository implements ProfileRepository {
         final Extension extension = extractException(response);
         final int errorCode = extension.statusCode!;
         if (errorCode == 404) {
-          throw UserFailure(reason: UserFailureReason.notFound);
+          throw ProfileFailure(reason: ProfileFailureReason.notFound);
         } else if (errorCode == 403) {
-          throw UserFailure(reason: UserFailureReason.unauthorized);
+          throw ProfileFailure(reason: ProfileFailureReason.unauthorized);
         } else {
-          throw UserFailure(reason: UserFailureReason.unknown);
+          throw ProfileFailure(reason: ProfileFailureReason.unknown);
         }
       }
 
-      if (response.data?['profiles'] == null) {
-        throw UserFailure(reason: UserFailureReason.notFound);
+      if ((response.data?['profiles'] as List<dynamic>).isEmpty) {
+        throw ProfileFailure(reason: ProfileFailureReason.notFound);
       }
 
       final Map<String, dynamic> data =

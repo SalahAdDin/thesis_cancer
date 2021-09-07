@@ -32,7 +32,7 @@ class GraphQLSettingsRepository implements SettingsRepository {
       }
 
       // It will return null or application always
-      if (response.data?['application'] == null) {
+      if ((response.data?['application'] as List<dynamic>).isEmpty) {
         throw SettingsFailure(reason: SettingsFailureReason.notFound);
       }
 

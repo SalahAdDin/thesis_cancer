@@ -2,6 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/application/user.state.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
@@ -150,11 +151,13 @@ class UserNotifier extends StateNotifier<UserState> {
         await _dataStore.writeUserProfile(sessionUserWithProfile);
 
         _userController.state = sessionUserWithProfile;
+
+        deliverUserScreen();
+      } on GraphQLFailure catch (error) {
+        state = UserState.error(error);
       } on ProfileFailure catch (error) {
         state = UserState.error(error);
       }
     }
-
-    deliverUserScreen();
   }
 }

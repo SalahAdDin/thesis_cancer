@@ -90,7 +90,7 @@ class GraphQLSurveyRepository implements SurveyRepository {
         }
       }
 
-      if (response.data?['survey'] == null) {
+      if ((response.data?['survey'] as List<dynamic>).isEmpty) {
         // throw SurveyNotFound("The poll with ID $id was not found.");
         throw SurveyFailure(reason: SurveyFailureReason.notFound);
       }
