@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
-
 // import 'package:thesis_cancer/core/domain/constants.dart';
 import 'package:thesis_cancer/core/domain/settings/schedules.entity.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
@@ -19,11 +18,9 @@ import 'package:thesis_cancer/features/home/presentation/pages/introductory_scre
 import 'package:thesis_cancer/features/home/presentation/pages/knowledge_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/research_screen.dart';
-import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/stories_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/therapy_screen.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
-
 // import 'package:thesis_cancer/features/notification/presentation/pages/notifications_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
 import 'package:thesis_cancer/features/user/application/user.notifier.dart';
@@ -90,8 +87,11 @@ class MainScreen extends HookWidget {
       completed: () => MainLayout(),
       error: (Failure? error) => ErrorScreen(
         reason: error?.reason,
-        actionLabel: 'Home',
-        onPressed: () => pushAndReplaceToPage(context, SplashScreen()),
+        actionLabel: AppLocalizations.of(context)!.homeLabel,
+        onPressed: () {
+          context.read(launcherProvider.notifier).signOut();
+          Navigator.of(context).maybePop();
+        },
       ),
     );
   }

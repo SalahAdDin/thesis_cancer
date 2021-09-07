@@ -151,13 +151,15 @@ class UserNotifier extends StateNotifier<UserState> {
         await _dataStore.writeUserProfile(sessionUserWithProfile);
 
         _userController.state = sessionUserWithProfile;
-
-        deliverUserScreen();
       } on GraphQLFailure catch (error) {
         state = UserState.error(error);
       } on ProfileFailure catch (error) {
         state = UserState.error(error);
       }
+    }
+
+    if (_userController.state!.profile?.role != UserRole.GUEST) {
+      deliverUserScreen();
     }
   }
 }

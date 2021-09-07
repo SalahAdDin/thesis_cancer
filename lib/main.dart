@@ -114,24 +114,23 @@ class CancerApp extends HookWidget {
   }
 
   Future<void> _configureDidReceiveLocalNotification() async {
-    LocalNotificationService()
-        .didReceiveLocalNotificationSubject
-        .stream
-        .listen((ActivityFeed feed) async {
-      await showDialog(
-        context: _navigatorKey.currentState!.context,
-        builder: (BuildContext context) => CupertinoAlertDialog(
-          title: Text(feed.title),
-          content: Text(feed.description),
-          actions: <Widget>[
-            CupertinoDialogAction(
-              isDefaultAction: true,
-              onPressed: () async => _onSelectNotification(jsonEncode(feed)),
-              child: const Text('Ok'),
-            )
-          ],
-        ),
-      );
-    });
+    LocalNotificationService().didReceiveLocalNotificationSubject.stream.listen(
+      (ActivityFeed feed) async {
+        await showDialog(
+          context: _navigatorKey.currentState!.context,
+          builder: (BuildContext context) => CupertinoAlertDialog(
+            title: Text(feed.title),
+            content: Text(feed.description),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                isDefaultAction: true,
+                onPressed: () async => _onSelectNotification(jsonEncode(feed)),
+                child: Text(AppLocalizations.of(context)!.ok),
+              )
+            ],
+          ),
+        );
+      },
+    );
   }
 }
