@@ -35,7 +35,7 @@ class ChatPage extends HookWidget {
     final AsyncValue<fc_types.Room> currentRoom =
         useProvider(roomProvider(room.id));
     final fc_types.User interlocutor =
-        _chatRepository.getInterlocutor(room: room) as fc_types.User;
+        _chatRepository.getInterlocutor(room: room);
     final UserRepository _userRepository = useProvider(userRepositoryProvider);
 
     Future<User> interlocutorUser() async {

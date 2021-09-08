@@ -28,7 +28,7 @@ final AutoDisposeStreamProviderFamily<fc_types.Room, String> roomProvider =
     final ChatRepository _chatRepository = ref.read(chatRepositoryProvider);
     return _chatRepository.findRoomById(
       roomId: roomId,
-    ) as Stream<fc_types.Room>;
+    );
   },
   name: "Room Provider",
 );
