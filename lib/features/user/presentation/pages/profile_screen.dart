@@ -100,7 +100,9 @@ class ProfileScreen extends HookWidget {
           Visibility(
             visible: profileNotifier.isOwnProfile,
             child: profileState.when(
-              loading: () => Container(),
+              loading: () => const Center(
+                child: CircularProgressIndicator(),
+              ),
               error: (_) => const IconButton(
                 onPressed: null,
                 icon: Icon(Icons.error_outline),

@@ -39,7 +39,7 @@ class PostWidget extends StatelessWidget {
             ),
           ),
           errorWidget: (BuildContext context, String url, _) =>
-              const Icon(Icons.error),
+              const Icon(Icons.error_outline),
         );
       case FileType.video:
         return CachedNetworkVideo(
@@ -54,7 +54,7 @@ class PostWidget extends StatelessWidget {
         );
       case null:
         return const Center(
-          child: Icon(Icons.error),
+          child: Icon(Icons.error_outline),
         );
     }
   }

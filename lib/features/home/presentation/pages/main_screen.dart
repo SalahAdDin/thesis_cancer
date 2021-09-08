@@ -366,7 +366,7 @@ class MainLayout extends HookWidget {
                 align: ContentAlign.top,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
+                  children: const <Widget>[
                     Text(
                       "Başarı Öyküleri",
                       style: TextStyle(

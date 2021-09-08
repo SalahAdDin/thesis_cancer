@@ -153,6 +153,7 @@ class ChatPage extends HookWidget {
         loading: () => const Center(
           child: CircularProgressIndicator(),
         ),
+        // TODO: Error screen with refresh as callback
         error: (Object error, StackTrace? stack) => Center(
           child: Text(error.toString()),
         ),
