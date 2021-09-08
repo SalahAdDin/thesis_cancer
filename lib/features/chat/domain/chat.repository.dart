@@ -16,17 +16,17 @@ abstract class ChatRepository {
   /// Returns the chat [Room] associated to a [User].
   /// It finds the [Room] by its id, if the [Room] does not exist,
   /// it is created and returned.
-  Future<dynamic> getRoomByUser({
+  Future<fc_types.Room> getRoomByUser({
     required fc_types.User otherUser,
   });
 
   ///
-  Stream<dynamic> findRoomById({
+  Stream<fc_types.Room> findRoomById({
     required String roomId,
   });
 
   ///
-  dynamic getInterlocutor({required fc_types.Room room});
+  fc_types.User getInterlocutor({required fc_types.Room room});
 
   ///
   void sendMessage({

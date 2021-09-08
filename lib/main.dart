@@ -100,12 +100,14 @@ class CancerApp extends HookWidget {
         // TODO: Handle this case.
         break;
       case ActivityType.NEW_SURVEY_SCHEDULED:
-        _navigatorKey.currentState!.push(MaterialPageRoute<Widget>(
-          builder: (_) => SurveyScreen(
-            onCompleteSurvey: () => _navigatorKey.currentState!.pop(),
-            surveyID: feed.issuerID,
+        _navigatorKey.currentState!.push(
+          MaterialPageRoute<Widget>(
+            builder: (_) => SurveyScreen(
+              onCompleteSurvey: () => _navigatorKey.currentState!.pop(),
+              surveyID: feed.issuerID,
+            ),
           ),
-        ));
+        );
         break;
       case ActivityType.NEW_RECOMMENDATION:
         // TODO: Handle this case.

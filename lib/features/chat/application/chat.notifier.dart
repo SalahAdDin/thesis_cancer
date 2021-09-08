@@ -49,7 +49,7 @@ class ChatNotifier extends StateNotifier<bool> {
   }) async* {
     final Stream<fc_types.Room> room = _chatRepository.findRoomById(
       roomId: roomId,
-    ) as Stream<fc_types.Room>;
+    );
     await for (final fc_types.Room value in room) {
       yield value;
     }
@@ -102,8 +102,8 @@ class ChatNotifier extends StateNotifier<bool> {
       if (result != null) {
         state = true;
         final String name = result.files.single.name;
-        final String? filePath = result.files.single.path;
-        final File file = File(filePath ?? '');
+        final String filePath = result.files.single.path;
+        final File file = File(filePath);
 
         try {
           final Reference reference = _storage.ref(name);
@@ -111,7 +111,7 @@ class ChatNotifier extends StateNotifier<bool> {
           final String uri = await reference.getDownloadURL();
 
           final fc_types.PartialFile message = fc_types.PartialFile(
-            mimeType: lookupMimeType(filePath ?? ''),
+            mimeType: lookupMimeType(filePath),
             name: name,
             size: result.files.single.size,
             uri: uri,
@@ -173,12 +173,4 @@ class ChatNotifier extends StateNotifier<bool> {
   }
 
   /// TODO: Video picker just for fun.
-
-  ///
-  fc_types.User getInterlocutor() {
-    final fc_types.User interlocutor = currentRoom.users.firstWhere(
-      (fc_types.User user) => user.id != currentUser?.uid,
-    );
-    return interlocutor;
-  }
 }
