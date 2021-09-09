@@ -46,28 +46,18 @@ class RoomsPage extends HookWidget {
             ) {
               final fc_types.Room room = rooms[index];
 
-              return GestureDetector(
+              return ListTile(
+                title: Text(room.name ?? 'Room'),
                 onTap: () => pushToPage(
                   context,
                   ChatPage(
                     room: room,
                   ),
                 ),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: UserAvatar(
-                          userAvatarUrl: room.imageUrl,
-                        ),
-                      ),
-                      Text(room.name ?? 'Room'),
-                    ],
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: UserAvatar(
+                    userAvatarUrl: room.imageUrl,
                   ),
                 ),
               );
