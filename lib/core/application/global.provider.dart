@@ -4,6 +4,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:thesis_cancer/core/application/launcher/launcher.notifier.dart';
 import 'package:thesis_cancer/core/application/launcher/launcher.state.dart';
 import 'package:thesis_cancer/core/application/settings.notifier.dart';
+import 'package:thesis_cancer/core/domain/constants.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.repository.dart';
@@ -25,7 +26,7 @@ final Provider<GraphQLClient> graphQLClientProvider =
   // String.fromEnvironment('API_URL'),
 
   /// Local development environment
-  const String graphQLEndpoint = 'http://192.168.1.42:1337/graphql';
+  const String graphQLEndpoint = '${BackendURL.devURL}graphql';
 
   /// Test environment
   // const String graphQLEndpoint = "http://95.173.162.150:1337/graphql";

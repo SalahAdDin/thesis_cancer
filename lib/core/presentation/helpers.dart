@@ -44,6 +44,8 @@ List<String> localizeFailure(dynamic reason) {
         return <String>[title, "Requested content was not found."];
       case FailureReason.unableToConnect:
         return <String>[title, "We are unable to connect you in this moment."];
+      case FailureReason.unableToParse:
+        return <String>[title, "Unable to parse the server response."];
     }
   } else if (reason is SettingsFailureReason) {
     const String title = "Settings Error";

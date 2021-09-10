@@ -108,6 +108,9 @@ class GraphQLPostRepository implements PostRepository {
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
           throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        } else if (response.exception?.linkException
+            is HttpLinkParserException) {
+          throw GraphQLFailure(reason: FailureReason.unableToParse);
         }
         final Extension extension = _extractExtension(response);
         final int errorCode = extension.statusCode!;

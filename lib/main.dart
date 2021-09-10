@@ -112,6 +112,9 @@ class CancerApp extends HookWidget {
       case ActivityType.NEW_RECOMMENDATION:
         // TODO: Handle this case.
         break;
+      case ActivityType.NEW_REGISTERED_USER:
+        // TODO: Handle this case.
+        break;
     }
   }
 
