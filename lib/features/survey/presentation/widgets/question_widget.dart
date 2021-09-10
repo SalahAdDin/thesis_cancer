@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:group_button/group_button.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
@@ -15,7 +16,7 @@ typedef SingleStringCallback = Function(String);
 class QuestionWidget extends StatelessWidget {
   ///
 
-  QuestionWidget({
+  const QuestionWidget({
     required this.surveyID,
     required this.question,
     this.onSelected,
@@ -76,9 +77,20 @@ class QuestionWidget extends StatelessWidget {
           },
           validator: MultiValidator(
             <TextFieldValidator>[
-              RequiredValidator(errorText: 'Bu soruya cevap vermelisiniz.'),
-              MinLengthValidator(15, errorText: 'Bu cevap çok kısa'),
-              MaxLengthValidator(50, errorText: 'Bu cevap çok uzun.')
+              RequiredValidator(
+                errorText:
+                    AppLocalizations.of(context)!.validationAnswerRequired,
+              ),
+              MinLengthValidator(
+                15,
+                errorText:
+                    AppLocalizations.of(context)!.validationAnswerMinLength,
+              ),
+              MaxLengthValidator(
+                50,
+                errorText:
+                    AppLocalizations.of(context)!.validationAnswerMaxLength,
+              )
             ],
           ),
           initialText: userAnswer?.answer,
@@ -95,16 +107,26 @@ class QuestionWidget extends StatelessWidget {
           },
           validator: MultiValidator(
             <TextFieldValidator>[
-              RequiredValidator(errorText: 'Bu soruya cevap vermelisiniz.'),
-              MinLengthValidator(50, errorText: 'Bu cevap çok kısa'),
-              MaxLengthValidator(500, errorText: 'Bu cevap çok uzun.')
+              RequiredValidator(
+                errorText:
+                    AppLocalizations.of(context)!.validationAnswerRequired,
+              ),
+              MinLengthValidator(
+                50,
+                errorText:
+                    AppLocalizations.of(context)!.validationAnswerMinLength,
+              ),
+              MaxLengthValidator(
+                500,
+                errorText:
+                    AppLocalizations.of(context)!.validationAnswerMaxLength,
+              )
             ],
           ),
           keyboardType: TextInputType.multiline,
           maxLines: 8,
           maxLength: 500,
           initialText: userAnswer?.answer,
-          hintText: "Cevabı buraya yazınız...",
         );
         break;
       case QuestionType.SINGLE:
@@ -154,7 +176,10 @@ class QuestionWidget extends StatelessWidget {
         );
         break;
       case QuestionType.BOOL:
-        final List<String> buttons = <String>['Yanlış', 'Doğru'];
+        final List<String> buttons = <String>[
+          AppLocalizations.of(context)!.incorrect,
+          AppLocalizations.of(context)!.correct
+        ];
         final String selectedButton = userAnswer?.answer ?? '';
 
         answerWidget = _themedGroupButton(

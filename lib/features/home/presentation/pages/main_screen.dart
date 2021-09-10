@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
@@ -87,7 +88,7 @@ class MainScreen extends HookWidget {
       completed: () => MainLayout(),
       error: (Failure? error) => ErrorScreen(
         reason: error?.reason,
-        actionLabel: "Home",
+        actionLabel: AppLocalizations.of(context)!.homeLabel,
         onPressed: () {
           context.read(launcherProvider.notifier).signOut();
           Navigator.of(context).maybePop();
@@ -154,7 +155,7 @@ class MainLayout extends HookWidget {
           key: _knowledgeButtonKey,
         ),
         label: '',
-        tooltip: 'Bilgi',
+        tooltip: AppLocalizations.of(context)!.knowledge,
       ),
       BottomNavigationBarItem(
         icon: Icon(
@@ -162,7 +163,7 @@ class MainLayout extends HookWidget {
           key: _treatmentButtonKey,
         ),
         label: '',
-        tooltip: 'Tedavi',
+        tooltip: AppLocalizations.of(context)!.therapy,
       ),
       BottomNavigationBarItem(
         icon: Icon(
@@ -170,7 +171,7 @@ class MainLayout extends HookWidget {
           key: _academyButtonKey,
         ),
         label: '',
-        tooltip: 'Geliştirmeler',
+        tooltip: AppLocalizations.of(context)!.developments,
       ),
       BottomNavigationBarItem(
         icon: Icon(
@@ -178,7 +179,7 @@ class MainLayout extends HookWidget {
           key: _successStoriesButtonKey,
         ),
         label: '',
-        tooltip: 'Hikayeler',
+        tooltip: AppLocalizations.of(context)!.successStories,
       ),
       BottomNavigationBarItem(
         icon: UserAvatar(
@@ -186,7 +187,7 @@ class MainLayout extends HookWidget {
           key: _profileButtonKey,
         ),
         label: '',
-        tooltip: 'Profilim',
+        tooltip: AppLocalizations.of(context)!.myProfile,
       ),
     ];
 
@@ -271,21 +272,21 @@ class MainLayout extends HookWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text(
-                      "Bilgi",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.knowledge,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 20.0,
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsets.only(top: 10.0, right: 56, bottom: 56),
+                      padding: const EdgeInsets.only(
+                          top: 10.0, right: 56, bottom: 56),
                       child: Text(
-                        "You will find here information about cancer, treatments, side effects and advices to overcome this illness.",
-                        style: TextStyle(color: Colors.white),
+                        AppLocalizations.of(context)!.knowledgeDescription,
+                        style: const TextStyle(color: Colors.white),
                       ),
                     )
                   ],
@@ -302,20 +303,20 @@ class MainLayout extends HookWidget {
                 align: ContentAlign.top,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text(
-                      "Geliştirmeler",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.therapy,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 20.0,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 10.0, bottom: 56),
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 56),
                       child: Text(
-                        "New researches and discoveries about cancer; myths and truths about cancer.",
-                        style: TextStyle(color: Colors.white),
+                        AppLocalizations.of(context)!.therapyDescription,
+                        style: const TextStyle(color: Colors.white),
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -334,20 +335,20 @@ class MainLayout extends HookWidget {
                 align: ContentAlign.top,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text(
-                      "Tedavi",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.developments,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 20.0,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 10.0, bottom: 56),
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 56),
                       child: Text(
-                        "All about treatments: description, aim, etc.",
-                        style: TextStyle(color: Colors.white),
+                        AppLocalizations.of(context)!.developmentsDescription,
+                        style: const TextStyle(color: Colors.white),
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -368,18 +369,19 @@ class MainLayout extends HookWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: const <Widget>[
                     Text(
-                      "Başarı Öyküleri",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.successStories,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 20.0,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 10.0, bottom: 56, left: 56),
+                      padding: const EdgeInsets.only(
+                          top: 10.0, bottom: 56, left: 56),
                       child: Text(
-                        "Histories about patients which could defeat and overcome the cancer.",
-                        style: TextStyle(color: Colors.white),
+                        AppLocalizations.of(context)!.successStoriesDescription,
+                        style: const TextStyle(color: Colors.white),
                         textAlign: TextAlign.right,
                       ),
                     )
@@ -399,20 +401,20 @@ class MainLayout extends HookWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text(
-                      "My Profile",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.myProfile,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 20.0,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Text(
-                        "You will find your user profile, the application settings, contact with us and many other sections there.",
-                        style: TextStyle(color: Colors.white),
+                        AppLocalizations.of(context)!.myProfileDescription,
+                        style: const TextStyle(color: Colors.white),
                         textAlign: TextAlign.right,
                       ),
                     ),
@@ -473,7 +475,7 @@ class MainLayout extends HookWidget {
               icon: const Icon(Icons.chat_outlined),
               constraints: const BoxConstraints(minWidth: 10),
               iconSize: 20,
-              tooltip: 'Mesajlar',
+              tooltip: AppLocalizations.of(context)!.messages,
               onPressed: () => pushToPage(context, RoomsPage()),
             ),
           ),

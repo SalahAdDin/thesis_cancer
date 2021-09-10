@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 
 ///
@@ -35,7 +36,7 @@ class CompletedSurveyScreen extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Text(
-                    'Teşekkür ederiz',
+                    AppLocalizations.of(context)!.completedSurveyTitle,
                     style: Theme.of(context).textTheme.headline1!.copyWith(
                           fontSize: 40,
                           fontWeight: FontWeight.w400,
@@ -45,7 +46,7 @@ class CompletedSurveyScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24),
                     child: Text(
-                      'Anketimize verdiğiniz yanıtları aldık, bu anketi doldururken ayırdığınız zaman için teşekkür ederiz.',
+                      AppLocalizations.of(context)!.completedSurveyParagraph,
                       style: Theme.of(context).textTheme.bodyText1,
                       textAlign: TextAlign.center,
                     ),

@@ -50,6 +50,8 @@ dependencies:
   flutter_form_builder: ^6.1.0+1
   flutter_hooks: ^0.17.0
   flutter_local_notifications: ^8.1.1+2
+  flutter_localizations:
+    sdk: flutter
   flutter_login: ^2.2.1
   flutter_native_timezone: ^2.0.0
   flutter_svg: ^0.22.0
@@ -61,6 +63,7 @@ dependencies:
   hooks_riverpod: ^0.14.0+4
   http_parser: ^4.0.0
   image_picker: ^0.8.4
+  intl: ^0.17.0
   introduction_screen: ^2.1.0
   like_button: ^2.0.3
   # material_design_icons_flutter: ^5.0.5955-rc.1
@@ -98,6 +101,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
@@ -130,3 +134,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true

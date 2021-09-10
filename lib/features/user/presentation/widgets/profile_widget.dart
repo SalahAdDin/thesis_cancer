@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:readmore/readmore.dart';
@@ -58,7 +59,10 @@ class ProfileWidget extends HookWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        StatsColumn(label: "posts", number: postsCount),
+                        StatsColumn(
+                          label: AppLocalizations.of(context)!.postNumberLabel,
+                          number: postsCount,
+                        ),
                       ],
                     ),
                   ],
@@ -74,8 +78,8 @@ class ProfileWidget extends HookWidget {
                   widgetProfile.bio!,
                   trimMode: TrimMode.Line,
                   delimiter: ' ',
-                  trimCollapsedText: '...more',
-                  trimExpandedText: 'less',
+                  trimCollapsedText: AppLocalizations.of(context)!.more,
+                  trimExpandedText: AppLocalizations.of(context)!.less,
                   moreStyle: const TextStyle(
                     fontWeight: FontWeight.w900,
                   ),

@@ -1,5 +1,6 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
@@ -40,7 +41,7 @@ class SurveyScreen extends HookWidget {
       // TODO: It could be custom or Navigator.of(context).pop() ?
       completed: () => CompletedSurveyScreen(
         onPressed: onCompleteSurvey,
-        actionLabel: 'Devam et',
+        actionLabel: AppLocalizations.of(context)!.next,
       ),
       data: () => SurveyWidget(
         surveyID: surveyID,
@@ -48,7 +49,7 @@ class SurveyScreen extends HookWidget {
       error: (Failure? error) => ErrorScreen(
         onPressed: () => Navigator.of(context).maybePop(),
         reason: error?.reason,
-        actionLabel: 'Dönüş',
+        actionLabel: AppLocalizations.of(context)!.back,
       ),
     );
   }
@@ -184,13 +185,13 @@ class SurveyWidget extends HookWidget {
                                 Visibility(
                                   visible: currentQuestionIndex != 0,
                                   child: Button.accent(
-                                    buttonLabel: 'Back',
+                                    buttonLabel: AppLocalizations.of(context)!.back,
                                     onPressed: () =>
                                         surveyNotifier.lastQuestion(),
                                   ),
                                 ),
                                 Button.primary(
-                                  buttonLabel: 'Next',
+                                  buttonLabel: AppLocalizations.of(context)!.next,
                                   onPressed:
                                       answeredQuestion(currentQuestionIndex)
                                           ? () => surveyNotifier.nextQuestion()
@@ -205,7 +206,7 @@ class SurveyWidget extends HookWidget {
                             padding:
                                 const EdgeInsets.only(left: 30.0, right: 8.0),
                             child: Text(
-                              'Bu anketinin soruları hala yok!',
+                              AppLocalizations.of(context)!.noQuestionsSurvey,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!

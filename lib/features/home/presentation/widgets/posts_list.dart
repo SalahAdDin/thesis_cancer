@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -29,7 +30,7 @@ class PostsList extends HookWidget {
         // TODO: Refresh
         onPressed: () => Navigator.of(context).maybePop(),
         reason: error?.reason,
-        actionLabel: 'Try again!',
+        actionLabel: AppLocalizations.of(context)!.tryAgain,
       ),
       data: () => SmartRefresher(
         enablePullUp: true,
@@ -38,15 +39,15 @@ class PostsList extends HookWidget {
           builder: (BuildContext context, LoadStatus? mode) {
             Widget body;
             if (mode == LoadStatus.idle) {
-              body = const Text("pull up load...");
+              body = Text(AppLocalizations.of(context)!.pullUpLoad);
             } else if (mode == LoadStatus.loading) {
               body = const CupertinoActivityIndicator();
             } else if (mode == LoadStatus.failed) {
-              body = const Text("Load Failed!\nClick retry!");
+              body = Text(AppLocalizations.of(context)!.loadFile);
             } else if (mode == LoadStatus.canLoading) {
-              body = const Text("release to load more...");
+              body = Text(AppLocalizations.of(context)!.releaseToLoadMore);
             } else {
-              body = const Text("No more Data.");
+              body = Text(AppLocalizations.of(context)!.noMoreData);
             }
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 25),

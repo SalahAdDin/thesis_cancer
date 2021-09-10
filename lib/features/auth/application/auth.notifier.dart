@@ -6,7 +6,6 @@ import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
-import 'package:thesis_cancer/features/auth/application/helpers.dart';
 import 'package:thesis_cancer/features/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
@@ -42,7 +41,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   ///
-  Future<String?> registerUser({
+  Future<void> registerUser({
     required String username,
     required String password,
   }) async {
@@ -58,18 +57,17 @@ class AuthNotifier extends StateNotifier<AuthState> {
       );
       _userController.state = newUser.copyWith(confirmed: false);
       state = const AuthState.signedUp();
-    } on SignUpFailure catch (error) {
-      // state = AuthState.error(error.toString());
-      return localizeAuthFailures(error.reason);
+    } on SignUpFailure catch (_) {
+      rethrow;
     }
-    /*on SignUpFailure catch (error) {
+    /*on SignUpFailure catch (_) {
       // state = AuthState.error(error.toString());
       return error.toString();
     }*/
   }
 
   ///
-  Future<String?> signIn({
+  Future<void> signIn({
     required String username,
     required String password,
   }) async {
@@ -92,10 +90,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
       await _dataStore.writeUserProfile(sessionUser);
       _userController.state = sessionUser;
       state = const AuthState.loggedIn();
-    } on LogInFailure catch (error) {
+    } on LogInFailure catch (_) {
       // state = AuthState.error(error.toString());
       // return "E-posta veya şifre geçersiz.";
-      return localizeAuthFailures(error.reason);
+      rethrow;
     }
     /*try {
     } on LogInUnconfirmedUserFailure {
@@ -107,12 +105,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
           confirmed: false);
       this.userController.state = newProfile;
       state = AuthState.loggedIn(newProfile);
-    } on LogInWithEmailAndPasswordFailure catch (error) {
+    } on LogInWithEmailAndPasswordFailure catch (_) {
     }*/
   }
 
   ///
-  Future<String?> signInWithFacebook() async {
+  Future<void> signInWithFacebook() async {
     /*try {
       bool result = await authRepository.signInWithSocialWebUI(
           provider: authRepository.facebookProvider);
@@ -123,7 +121,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         // state = AuthState.error('It was not possible to log in with Facebook.');
         return 'It was not possible to log in with Facebook.';
       }
-    } on LogInWithSocialProviderFailure catch (error) {
+    } on LogInWithSocialProviderFailure catch (_) {
       // state = AuthState.error(error.toString());
       return error.toString();
     }*/
@@ -132,7 +130,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   ///
-  Future<String?> signInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     /*try {
       bool result = await authRepository.signInWithSocialWebUI(
           provider: authRepository.googleProvider);
@@ -142,7 +140,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       else
         // state = AuthState.error('It was not possible to log in with Google.');
         return 'It was not possible to log in with Google.';
-    } on LogInWithSocialProviderFailure catch (error) {
+    } on LogInWithSocialProviderFailure catch (_) {
       // state = AuthState.error(error.toString());
       return error.toString();
     }*/
@@ -151,7 +149,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   ///
-  Future<String?> signInWithApple() async {
+  Future<void> signInWithApple() async {
 /*    try {
       bool result = await authRepository.signInWithSocialWebUI(
           provider: authRepository.appleProvider);
@@ -161,7 +159,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       else
         // state = AuthState.error('It was not possible to log in with Apple.');
         return 'It was not possible to log in with Apple.';
-    } on LogInWithSocialProviderFailure catch (error) {
+    } on LogInWithSocialProviderFailure catch (_) {
       // state = AuthState.error(error.toString());
       return error.toString();
     }*/
@@ -170,7 +168,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   ///
-  Future<String?> requestPasswordRecovery({required String email}) async {
+  Future<void> requestPasswordRecovery({required String email}) async {
     try {
       final bool isRequested = await _authRepository.forgotPassword(
         email: email,
@@ -178,30 +176,30 @@ class AuthNotifier extends StateNotifier<AuthState> {
       if (isRequested) {
         state = const AuthState.resetPassword();
       } else {
-        return 'Şifrenizi sıfırlamanız istenirken bir hata oluştu.';
+        throw ForgotPasswordFailure(
+            reason: ForgotPasswordFailureReason.unknown);
       }
-    } on ForgotPasswordFailure catch (error) {
-      return localizeAuthFailures(error.reason);
+    } on ForgotPasswordFailure catch (_) {
+      rethrow;
     }
   }
 
   ///
-  Future<String?> recoverPassword({
+  Future<void> recoverPassword({
     required String password,
     required String passwordConfirmation,
     required String confirmationCode,
   }) async {
     try {
-      final User sessionUser =  await _authRepository.resetPassword(
+      final User sessionUser = await _authRepository.resetPassword(
         password: password,
         passwordConfirmation: passwordConfirmation,
         confirmationCode: confirmationCode,
       );
       // TODO: Redirect to login page again as with logout.
       // state = const AuthState.loggedOut();
-    } on ResetPasswordFailure catch (error) {
-      // state = AuthState.error(error.toString());
-      return localizeAuthFailures(error.reason);
+    } on ResetPasswordFailure catch (_) {
+      rethrow;
     }
   }
 }

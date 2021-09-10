@@ -4,7 +4,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/launcher/launcher.state.dart';
@@ -65,6 +67,16 @@ class CancerApp extends HookWidget {
     );
 
     return MaterialApp(
+      localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const <Locale>[
+        Locale('en', ''), // English, no country code
+        Locale('tr', ''), // Turkish, no country code
+      ],
       title: 'Thesis Cancer',
       theme: lightTheme,
       darkTheme: darkTheme,
@@ -130,7 +142,7 @@ class CancerApp extends HookWidget {
               CupertinoDialogAction(
                 isDefaultAction: true,
                 onPressed: () async => _onSelectNotification(jsonEncode(feed)),
-                child: const Text("Ok"),
+                child: Text(AppLocalizations.of(context)!.ok),
               )
             ],
           ),

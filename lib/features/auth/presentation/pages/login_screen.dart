@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
+import 'package:thesis_cancer/core/presentation/helpers.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
@@ -27,21 +29,28 @@ class LoginScreen extends HookWidget {
       //footer: AppLiterals.copyRight,
       // TODO: logo: '',
       messages: LoginMessages(
-        userHint: "E-posta",
-        passwordHint: "Şifre",
-        confirmPasswordHint: "Şifreyi Onayla",
-        forgotPasswordButton: "Şifremi unuttum",
-        loginButton: "Giriş yap",
-        signupButton: "Kaydol",
-        recoverPasswordButton: "Gönder",
-        recoverPasswordIntro: "Bu kısımdan şifrenizi yenileyebilirsiniz",
-        recoverPasswordDescription: "Bu email'e yeni şifrenizi yollayacağız",
-        goBackButton: "Geri",
-        confirmPasswordError: "Şifre eşleşmedi",
-        recoverPasswordSuccess: "Email gönderildi",
-        flushbarTitleError: "Hata",
-        flushbarTitleSuccess: "Başarılı",
-        signUpSuccess: "Bir aktivasyon linki gönderildi",
+        userHint: AppLocalizations.of(context)!.userHint,
+        passwordHint: AppLocalizations.of(context)!.passwordHint,
+        confirmPasswordHint: AppLocalizations.of(context)!.confirmPasswordHint,
+        forgotPasswordButton:
+            AppLocalizations.of(context)!.forgotPasswordButton,
+        loginButton: AppLocalizations.of(context)!.loginButton,
+        signupButton: AppLocalizations.of(context)!.signupButton,
+        recoverPasswordButton:
+            AppLocalizations.of(context)!.recoverPasswordButton,
+        recoverPasswordIntro:
+            AppLocalizations.of(context)!.recoverPasswordIntro,
+        recoverPasswordDescription:
+            AppLocalizations.of(context)!.recoverPasswordDescription,
+        goBackButton: AppLocalizations.of(context)!.back,
+        confirmPasswordError:
+            AppLocalizations.of(context)!.confirmPasswordError,
+        recoverPasswordSuccess:
+            AppLocalizations.of(context)!.recoverPasswordSuccess,
+        flushbarTitleError: AppLocalizations.of(context)!.errorLabel,
+        flushbarTitleSuccess:
+            AppLocalizations.of(context)!.flushBarTitleSuccess,
+        signUpSuccess: AppLocalizations.of(context)!.signUpSuccess,
       ),
       navigateBackAfterRecovery: true,
       /* TODO:
@@ -57,19 +66,35 @@ class LoginScreen extends HookWidget {
             callback: () => authNotifier.signInWithApple()),
       ],
       */
-      onSignup: (LoginData data) =>
-          context.read(authNotifierProvider.notifier).registerUser(
+      onSignup: (LoginData data) async {
+        try {
+          await context.read(authNotifierProvider.notifier).registerUser(
                 username: data.name,
                 password: data.password,
-              ),
-      onLogin: (LoginData data) =>
-          context.read(authNotifierProvider.notifier).signIn(
+              );
+        } on Failure catch (error) {
+          return localizeFailure(error.reason, context).last;
+        }
+      },
+      onLogin: (LoginData data) async {
+        try {
+          await context.read(authNotifierProvider.notifier).signIn(
                 username: data.name,
                 password: data.password,
-              ),
-      onRecoverPassword: (String name) => context
-          .read(authNotifierProvider.notifier)
-          .requestPasswordRecovery(email: name),
+              );
+        } on Failure catch (error) {
+          return localizeFailure(error.reason, context).last;
+        }
+      },
+      onRecoverPassword: (String identifier) async {
+        try {
+          await context
+              .read(authNotifierProvider.notifier)
+              .requestPasswordRecovery(email: identifier);
+        } on Failure catch (error) {
+          return localizeFailure(error.reason, context).last;
+        }
+      },
       onSubmitAnimationCompleted: () => authScreenState.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         signedUp: () => pushToPage(
@@ -84,22 +109,25 @@ class LoginScreen extends HookWidget {
         ),
         loggedIn: () => context.read(launcherProvider.notifier).singIn(),
         // TODO:
-        resetPassword: () => pushToPage(
-            context,
-            ResetPasswordWidget(
-                onConfirm: (String password, String passwordConfirmation,
-                        String confirmationCode) =>
-                    context.read(authNotifierProvider.notifier).recoverPassword(
-                        password: password,
-                        passwordConfirmation: passwordConfirmation,
-                        confirmationCode: confirmationCode)
+        resetPassword: () => pushToPage(context, ResetPasswordWidget(onConfirm:
+                (String password, String passwordConfirmation,
+                    String confirmationCode) async {
+          try {
+            await context.read(authNotifierProvider.notifier).recoverPassword(
+                password: password,
+                passwordConfirmation: passwordConfirmation,
+                confirmationCode: confirmationCode);
+          } on Failure catch (error) {
+            return localizeFailure(error.reason, context).last;
+          }
+        }
 /*                    .then((value) =>
                         pushAndReplaceToPage(context, SplashScreen())),*/
-                )),
+            )),
         // TODO: block backward arrow button on this screen (LoginScreen breaks here).
         error: (Failure? error) => ErrorScreen(
           reason: error?.reason,
-          actionLabel: 'Home',
+          actionLabel: AppLocalizations.of(context)!.homeLabel,
           onPressed: () => pushAndReplaceToPage(context, SplashScreen()),
         ),
       ),
