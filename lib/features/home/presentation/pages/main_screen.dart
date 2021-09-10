@@ -367,7 +367,7 @@ class MainLayout extends HookWidget {
                 align: ContentAlign.top,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text(
                       AppLocalizations.of(context)!.successStories,
                       style: const TextStyle(
