@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as fc_types;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
@@ -24,7 +25,9 @@ class RoomsPage extends HookWidget {
 
     return Scaffold(
       appBar: Header(
-        pageTitle: sessionUser == UserRole.ADMIN ? "Hastalar" : "Uzmanlar",
+        pageTitle: sessionUser == UserRole.ADMIN
+            ? AppLocalizations.of(context)!.patientsLabel
+            : AppLocalizations.of(context)!.specialistsLabel,
         // leading: const BackButton(),
         // additionalActions: <Widget>[Container()],
       ),
@@ -33,7 +36,7 @@ class RoomsPage extends HookWidget {
           if (rooms.isEmpty) {
             return Container(
               alignment: Alignment.center,
-              child: const Text('No rooms'),
+              child: Text(AppLocalizations.of(context)!.noRoomsLabel),
             );
           }
 
@@ -70,7 +73,7 @@ class RoomsPage extends HookWidget {
         error: (Object error, StackTrace? stack) => ErrorScreen(
           // TODO: implements reasons for Firebase
           reason: FailureReason.unknown,
-          actionLabel: 'Home',
+          actionLabel: AppLocalizations.of(context)!.homeLabel,
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),

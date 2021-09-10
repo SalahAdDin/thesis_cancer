@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -44,8 +45,8 @@ class EditProfileWidget extends HookWidget {
         ),
         TextButton(
           onPressed: onEditPhoto,
-          child: const Text(
-            "Change Photo",
+          child: Text(
+            AppLocalizations.of(context)!.changePhotoLabel,
           ),
         ),
         Padding(
@@ -56,7 +57,8 @@ class EditProfileWidget extends HookWidget {
               children: <Widget>[
                 FormBuilderTextField(
                   name: 'firstName',
-                  decoration: const InputDecoration(labelText: 'First Name'),
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.firstNameLabel),
                   initialValue: userProfile.firstName,
                   validator:
                       FormBuilderValidators.compose(<String? Function(String?)>[
@@ -64,33 +66,34 @@ class EditProfileWidget extends HookWidget {
                       context,
                       3,
                       errorText:
-                          "First name must have at least three characters",
+                          AppLocalizations.of(context)!.validationNameMinLength,
                     ),
                     FormBuilderValidators.maxLength(
                       context,
                       15,
                       errorText:
-                          "First name must have at most fifteen characters",
+                          AppLocalizations.of(context)!.validationNameMaxLength,
                     )
                   ]),
                 ),
                 FormBuilderTextField(
                   name: 'lastName',
                   initialValue: userProfile.lastName,
-                  decoration: const InputDecoration(labelText: 'Last Name'),
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.lastNameLabel),
                   validator:
                       FormBuilderValidators.compose(<String? Function(String?)>[
                     FormBuilderValidators.minLength(
                       context,
                       3,
                       errorText:
-                          "First name must have at least three characters",
+                          AppLocalizations.of(context)!.validationNameMinLength,
                     ),
                     FormBuilderValidators.maxLength(
                       context,
                       15,
                       errorText:
-                          "First name must have at most fifteen characters",
+                          AppLocalizations.of(context)!.validationNameMaxLength,
                     )
                   ]),
                 ),
@@ -98,23 +101,28 @@ class EditProfileWidget extends HookWidget {
                   name: 'phoneNumber',
                   inputFormatters: <TextInputFormatter>[_phoneMaskFormatter],
                   initialValue: userProfile.phoneNumber,
-                  decoration: const InputDecoration(labelText: 'Phone Number'),
+                  decoration: InputDecoration(
+                      labelText:
+                          AppLocalizations.of(context)!.phoneNumberLabel),
                   validator:
                       FormBuilderValidators.compose(<String? Function(String?)>[
                     FormBuilderValidators.minLength(
                       context,
                       18,
-                      errorText: "Phone number format invalid.",
+                      errorText: AppLocalizations.of(context)!
+                          .validationPhoneNumberWrongFormat,
                     ),
                     FormBuilderValidators.maxLength(
                       context,
                       22,
-                      errorText: "Phone number format invalid.",
+                      errorText: AppLocalizations.of(context)!
+                          .validationPhoneNumberWrongFormat,
                     ),
                     FormBuilderValidators.match(
                       context,
                       r"^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$",
-                      errorText: "Phone number format invalid.",
+                      errorText: AppLocalizations.of(context)!
+                          .validationPhoneNumberWrongFormat,
                     ),
                   ]),
                 ),
@@ -122,18 +130,21 @@ class EditProfileWidget extends HookWidget {
                   name: 'bio',
                   initialValue: userProfile.bio,
                   maxLines: 5,
-                  decoration: const InputDecoration(labelText: 'About me'),
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.bioLabel),
                   validator:
                       FormBuilderValidators.compose(<String? Function(String?)>[
                     FormBuilderValidators.minLength(
                       context,
                       125,
-                      errorText: "Your description is too short.",
+                      errorText:
+                          AppLocalizations.of(context)!.validationBioMinLength,
                     ),
                     FormBuilderValidators.maxLength(
                       context,
                       350,
-                      errorText: "Your description is too long.",
+                      errorText:
+                          AppLocalizations.of(context)!.validationBioMaxLength,
                     )
                   ]),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/cached_network_video.dart';
@@ -40,7 +41,10 @@ class IntroductoryScreen extends HookWidget {
             decoration: const PageDecoration(fullScreen: true),
           ),
         ],
-        done: const Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
+        done: Text(
+          AppLocalizations.of(context)!.done,
+          style: const TextStyle(fontWeight: FontWeight.w600),
+        ),
         showDoneButton: _isVideoFinished.value,
         isProgress: false,
         onDone: onDone,

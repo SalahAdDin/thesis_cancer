@@ -3,6 +3,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:readmore/readmore.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/cached_network_video.dart';
@@ -131,8 +132,8 @@ class PostWidget extends StatelessWidget {
               post.description,
               trimMode: TrimMode.Line,
               delimiter: ' ',
-              trimCollapsedText: '...more',
-              trimExpandedText: 'less',
+              trimCollapsedText: AppLocalizations.of(context)!.more,
+              trimExpandedText: AppLocalizations.of(context)!.less,
               moreStyle: const TextStyle(
                 fontWeight: FontWeight.w900,
               ),

@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/content/infrastructure/failure.dart';
@@ -31,211 +33,325 @@ Color getUserAvatarNameColor(String url) {
 }
 
 // Can be replaced by proper i18n
-List<String> localizeFailure(dynamic reason) {
+List<String> localizeFailure(dynamic reason, BuildContext context) {
   if (reason is FailureReason) {
     // Describes a GraphQL error.
-    const String title = "Server Error";
+    final String title = AppLocalizations.of(context)!.serverErrorTitle;
     switch (reason) {
       case FailureReason.unknown:
-        return <String>[title, "Failure's reason unknown."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.failureUnknownLabel
+        ];
       case FailureReason.unauthorized:
-        return <String>[title, "You have no authorization."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.failureUnauthorizedLabel
+        ];
       case FailureReason.notFound:
-        return <String>[title, "Requested content was not found."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.failureNotFoundLabel
+        ];
       case FailureReason.unableToConnect:
-        return <String>[title, "We are unable to connect you in this moment."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.failureUnableToConnectLabel
+        ];
       case FailureReason.unableToParse:
-        return <String>[title, "Unable to parse the server response."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.failureUnableToParseLabel
+        ];
     }
   } else if (reason is SettingsFailureReason) {
-    const String title = "Settings Error";
+    final String title = AppLocalizations.of(context)!.settingsErrorTitle;
     switch (reason) {
       case SettingsFailureReason.unknown:
         return <String>[
           title,
-          "Unknown error at application remote settings service."
+          AppLocalizations.of(context)!.settingsFailureUnknown
         ];
       case SettingsFailureReason.unauthorized:
         return <String>[
           title,
-          "You have no authorization to get remote settings."
+          AppLocalizations.of(context)!.settingsFailureUnauthorized
         ];
       case SettingsFailureReason.notFound:
-        return <String>[title, "Requested remote settings were not found"];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.settingsFailureNotFound
+        ];
     }
   } else if (reason is AuthFailureReason) {
-    const String title = "Authentication Error";
+    final String title = AppLocalizations.of(context)!.authenticationErrorTitle;
     switch (reason) {
       case AuthFailureReason.unknown:
-        return <String>[title, "Unknown error at authentication service."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.authFailureUnknown
+        ];
       case AuthFailureReason.badRequest:
-        return <String>[title, "Bad request to the authentication service."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.authFailureBadRequest
+        ];
       case AuthFailureReason.disabledProvider:
         return <String>[
           title,
-          "The current authentication provider is disabled.",
+          AppLocalizations.of(context)!.authFailureDisabledProvider
         ];
       case AuthFailureReason.invalidUsernamePassword:
-        return <String>[title, "Invalid username or password."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.authFailureInvalidUsernamePassword
+        ];
       case AuthFailureReason.unconfirmedEmail:
-        return <String>[title, "Your mail is not confirmed yet."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.authFailureUnconfirmedEmail
+        ];
       case AuthFailureReason.blockedAccount:
-        return <String>[title, "Your account is blocked."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.authFailureBlockedAccount
+        ];
       case AuthFailureReason.localPassword:
         return <String>[
           title,
-          "This user never set a local password.\n Sign in with the provider you created your account.",
+          AppLocalizations.of(context)!.authFailureLocalPassword
         ];
     }
   } else if (reason is ResetPasswordFailureReason) {
-    const String title = "Reset Password Error";
+    final String title = AppLocalizations.of(context)!.resetPasswordErrorTItle;
     switch (reason) {
       case ResetPasswordFailureReason.unknown:
-        return <String>[title, "Unknown error at resetting password."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.resetPasswordFailureUnknown
+        ];
       case ResetPasswordFailureReason.incorrectCode:
-        return <String>[title, "You provided an incorrect code."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.resetPasswordFailureIncorrectCode
+        ];
       case ResetPasswordFailureReason.passwordsNoMatch:
-        return <String>[title, "Passwords does not match."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.resetPasswordFailureNotMatch
+        ];
       case ResetPasswordFailureReason.incorrectParams:
-        return <String>[title, "Incorrect params provided."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.resetPasswordFailureIncorrectParams
+        ];
       case ResetPasswordFailureReason.errorAtSendingMessage:
-        return <String>[title, "Error at sending mail."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.resetPasswordFailureAtSendingMessage
+        ];
     }
   } else if (reason is ForgotPasswordFailureReason) {
-    const String title = "Forgot Password Error";
+    final String title = AppLocalizations.of(context)!.forgotPasswordErrorTitle;
     switch (reason) {
       case ForgotPasswordFailureReason.unknown:
-        return <String>[title, "Unknown error at asking reset password code."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.forgotPasswordFailureUnknown
+        ];
       case ForgotPasswordFailureReason.invalidEmail:
-        return <String>[title, "You provided a invalid e-mail."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.forgotPasswordFailureInvalidEmail
+        ];
       case ForgotPasswordFailureReason.emailDoesNotExist:
-        return <String>[title, "The provided e-mail does not exist."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.forgotPasswordFailureEmailDoesNotExist
+        ];
       case ForgotPasswordFailureReason.errorAtSendingMessage:
-        return <String>[title, "Error at sending mail."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.forgotPasswordFailureAtSendingMessage
+        ];
     }
   } else if (reason is RegisterFailureReason) {
-    const String title = "Register Error";
+    final String title = AppLocalizations.of(context)!.registerErrorTitle;
     switch (reason) {
       case RegisterFailureReason.unknown:
-        return <String>[title, "Unknown error at registering user."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.registerFailureUnknown
+        ];
       case RegisterFailureReason.registeringActionNotAllowed:
-        return <String>[title, "Registering is not allowed in this moment."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.registerFailureActionNotAllowed
+        ];
       case RegisterFailureReason.moreThanThreeDollarSymbol:
         return <String>[
           title,
-          r"You are using $ symbol more than three times."
+          AppLocalizations.of(context)!.registerFailureMoreThanThreeDollarSymbol
         ];
       case RegisterFailureReason.defaultRoleNotFound:
-        return <String>[title, "Default role was not found."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.registerFailureDefaultRoleNotFound
+        ];
       case RegisterFailureReason.invalidEmail:
-        return <String>[title, "You provided an invalid e-mail."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.registerFailureInvalidEmail
+        ];
       case RegisterFailureReason.emailAlreadyTaken:
         return <String>[
           title,
-          "An account with the provided e-mail already does exist."
+          AppLocalizations.of(context)!.registerFailureEmailAlreadyTaken
         ];
     }
   } else if (reason is PostFailureReason) {
-    const String title = "Post Error";
+    final String title = AppLocalizations.of(context)!.postErrorTitle;
     switch (reason) {
       case PostFailureReason.unknown:
-        return <String>[title, "Unknown error at Post service."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.postFailureUnknown
+        ];
       case PostFailureReason.unauthorized:
         return <String>[
           title,
-          "You have no authorization to access to the Post service."
+          AppLocalizations.of(context)!.postFailureUnauthorized
         ];
       case PostFailureReason.notFound:
-        return <String>[title, "Requested post or posts was not found."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.postFailureNotFound
+        ];
       case PostFailureReason.unexpectedResult:
         return <String>[
           title,
-          "Unexpected result at querying to Post service."
+          AppLocalizations.of(context)!.postFailureUnexpectedResult
         ];
     }
   } else if (reason is FileFailureReason) {
-    const String title = "File Error";
+    final String title = AppLocalizations.of(context)!.fileErrorTitle;
     switch (reason) {
       case FileFailureReason.unknown:
-        return <String>[title, "Unknown error at File service."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.fileFailureUnknown
+        ];
       case FileFailureReason.unauthorized:
         return <String>[
           title,
-          "You have no authorization to access to the File service."
+          AppLocalizations.of(context)!.fileFailureUnauthorized
         ];
       case FileFailureReason.notFound:
-        return <String>[title, "Requested file was not found."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.fileFailureNotFound
+        ];
       case FileFailureReason.unexpectedResult:
         return <String>[
           title,
-          "Unexpected result at querying to File service."
+          AppLocalizations.of(context)!.fileFailureUnexpectedResult
         ];
     }
   } else if (reason is ResultFailureReason) {
-    const String title = "Survey Result Error";
+    final String title = AppLocalizations.of(context)!.surveyResultErrorTitle;
     switch (reason) {
       case ResultFailureReason.unknown:
-        return <String>[title, "Unknown error at Survey service."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.resultFailureUnknown
+        ];
       case ResultFailureReason.unauthorized:
         return <String>[
           title,
-          "You have no authorization to access to the Survey service."
+          AppLocalizations.of(context)!.resultFailureUnauthorized
         ];
       case ResultFailureReason.notFound:
-        return <String>[title, "Requested survey's result was not found."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.resultFailureNotFound
+        ];
       case ResultFailureReason.unexpectedResult:
         return <String>[
           title,
-          "Unexpected result at querying te survey's result to Survey service."
+          AppLocalizations.of(context)!.resultFailureUnexpectedResult
         ];
     }
   } else if (reason is SurveyFailureReason) {
-    const String title = "Survey Error";
+    final String title = AppLocalizations.of(context)!.surveyErrorTitle;
     switch (reason) {
       case SurveyFailureReason.unknown:
-        return <String>[title, "Unknown error at Survey service."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.surveyFailureUnknown
+        ];
       case SurveyFailureReason.unauthorized:
         return <String>[
           title,
-          "You have no authorization to access to the Survey service."
+          AppLocalizations.of(context)!.surveyFailureUnauthorized
         ];
       case SurveyFailureReason.notFound:
-        return <String>[title, "Requested survey was not found."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.surveyFailureNotFound
+        ];
       case SurveyFailureReason.unexpectedResult:
         return <String>[
           title,
-          "Unexpected result at querying the Survey service."
+          AppLocalizations.of(context)!.surveyFailureUnexpectedResult
         ];
     }
   } else if (reason is ProfileFailureReason) {
-    const String title = "Profile Error";
+    final String title = AppLocalizations.of(context)!.profileErrorTitle;
     switch (reason) {
       case ProfileFailureReason.unknown:
-        return <String>[title, "Unknown error at Account service."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.profileFailureUnknown
+        ];
       case ProfileFailureReason.unauthorized:
         return <String>[
           title,
-          "You have no authorization to access to the Account service."
+          AppLocalizations.of(context)!.profileFailureUnauthorized
         ];
       case ProfileFailureReason.notFound:
-        return <String>[title, "Requested profile was not found."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.profileFailureNotFound
+        ];
       case ProfileFailureReason.notValidProfile:
-        return <String>[title, "The user has no a valid profile"];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.profileFailureNotValidProfile
+        ];
     }
   } else if (reason is UserFailureReason) {
-    const String title = "User Error";
+    final String title = AppLocalizations.of(context)!.userErrorTitle;
     switch (reason) {
       case UserFailureReason.unknown:
-        return <String>[title, "Unknown error at Account service."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.userFailureUnknown
+        ];
       case UserFailureReason.unauthorized:
         return <String>[
           title,
-          "You have no authorization to access to the Account service."
+          AppLocalizations.of(context)!.userFailureUnauthorized
         ];
       case UserFailureReason.notFound:
-        return <String>[title, "Requested user was not found."];
+        return <String>[
+          title,
+          AppLocalizations.of(context)!.userFailureNotFound
+        ];
     }
   } else {
-    return <String>["Error", "An error was found."];
+    return <String>[
+      AppLocalizations.of(context)!.errorLabel,
+      AppLocalizations.of(context)!.defaultErrorMessage
+    ];
   }
 }
