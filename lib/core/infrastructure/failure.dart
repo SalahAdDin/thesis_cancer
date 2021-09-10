@@ -3,6 +3,7 @@ enum FailureReason {
   unauthorized,
   notFound,
   unableToConnect,
+  unableToParse,
 }
 
 enum SettingsFailureReason {

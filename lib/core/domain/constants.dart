@@ -12,6 +12,11 @@ class AppLiterals {
   static const String copyRight = 'TODO: Make better with link';
 }
 
+class BackendURL {
+  static const String devURL = "http://10.30.30.213:1337/";
+  static const String testURL = "http://95.173.162.150:1337/";
+}
+
 /// Global key to identify UI elements
 class GlobalKeys {
   ///
