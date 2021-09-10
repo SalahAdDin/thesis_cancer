@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
@@ -16,6 +17,7 @@ class ResetPasswordWidget extends HookWidget {
 
   ///
   final ConfirmSignInCallback onConfirm;
+
   // Future<bool> _submit(
   Future<void> _submit({
     required GlobalKey<FormState> formKey,
@@ -76,44 +78,46 @@ class ResetPasswordWidget extends HookWidget {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
-                      const Text(
-                          "Please, provide a new password and confirm it:"),
+                      Text(AppLocalizations.of(context)!.newPasswordHint),
                       TextFormField(
                         controller: _newPasswordController,
                         obscureText: true,
                         validator: MultiValidator(
                           <TextFieldValidator>[
                             RequiredValidator(
-                                errorText: "Password is required"),
+                                errorText: AppLocalizations.of(context)!
+                                    .validationPasswordRequired),
                             MinLengthValidator(
                               8,
-                              errorText:
-                                  "Password must be at least 8 digits long.",
+                              errorText: AppLocalizations.of(context)!
+                                  .validationPasswordLength,
                             ),
                             PatternValidator(
                               r'(?=.*?[_#?!@$%^&*-])',
-                              errorText:
-                                  "Password must have at least one special character.",
+                              errorText: AppLocalizations.of(context)!
+                                  .validationPasswordSpecialCharacter,
                             )
                           ],
                         ),
-                        decoration: const InputDecoration(
-                          icon: Icon(Icons.lock),
-                          labelText: "New Password",
+                        decoration: InputDecoration(
+                          icon: const Icon(Icons.lock),
+                          labelText: AppLocalizations.of(context)!.newPassword,
                         ),
                       ),
                       TextFormField(
                         controller: _confirmNewPasswordController,
                         obscureText: true,
                         validator: (String? value) => MatchValidator(
-                          errorText: "Password did not match.",
+                          errorText: AppLocalizations.of(context)!
+                              .confirmPasswordError,
                         ).validateMatch(
                           _newPasswordController.text,
                           _confirmNewPasswordController.text,
                         ),
-                        decoration: const InputDecoration(
-                          icon: Icon(Icons.lock),
-                          labelText: "Password did not match.",
+                        decoration: InputDecoration(
+                          icon: const Icon(Icons.lock),
+                          labelText:
+                              AppLocalizations.of(context)!.confirmNewPassword,
                         ),
                       ),
                       TextFormField(
@@ -122,17 +126,20 @@ class ResetPasswordWidget extends HookWidget {
                         validator: MultiValidator(
                           <TextFieldValidator>[
                             RequiredValidator(
-                              errorText: "Confirmation code is required",
+                              errorText: AppLocalizations.of(context)!
+                                  .validationConfirmationCodeRequired,
                             ),
                             PatternValidator(
                               r'^[a-z0-9_]*$',
-                              errorText: "Just alphanumeric characters.",
+                              errorText: AppLocalizations.of(context)!
+                                  .validationConfirmationCodeAlphaNumeric,
                             )
                           ],
                         ),
-                        decoration: const InputDecoration(
-                          icon: Icon(Icons.confirmation_number),
-                          labelText: "Confirmation code",
+                        decoration: InputDecoration(
+                          icon: const Icon(Icons.confirmation_number),
+                          labelText:
+                              AppLocalizations.of(context)!.confirmationCode,
                         ),
                       ),
                       Padding(
@@ -146,7 +153,7 @@ class ResetPasswordWidget extends HookWidget {
                             confirmationCode:
                                 _confirmationCodePasswordController.text,
                           ),
-                          child: const Text("Confirm"),
+                          child: Text(AppLocalizations.of(context)!.confirm),
                         ),
                       )
                     ],

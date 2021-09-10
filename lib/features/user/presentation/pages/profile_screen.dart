@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as fc_types;
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
@@ -133,7 +134,7 @@ class ProfileScreen extends HookWidget {
         error: (Failure? error) => ErrorScreen(
           onPressed: () => Navigator.of(context).maybePop(),
           reason: error?.reason,
-          actionLabel: 'Try again!',
+          actionLabel: AppLocalizations.of(context)!.tryAgain,
         ),
         editing: () => EditProfileWidget(
           formKey: _formKey,

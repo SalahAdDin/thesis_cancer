@@ -48,6 +48,8 @@ class ActivityFeed with _$ActivityFeed {
         return "Scheduled survey";
       case ActivityType.NEW_RECOMMENDATION:
         return "New recommendation";
+      case ActivityType.NEW_REGISTERED_USER:
+        return "New registered user";
     }
   }
 }

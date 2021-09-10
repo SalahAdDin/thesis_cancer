@@ -33,9 +33,9 @@ class ErrorScreen extends StatelessWidget {
       alignment: Alignment.topCenter,
     );
 
-    final List<String> failureLiterals = localizeFailure(reason);
-    final String title = failureLiterals[0];
-    final String message = failureLiterals[1];
+    final List<String> failureLiterals = localizeFailure(reason, context);
+    final String title = failureLiterals.first;
+    final String message = failureLiterals.last;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
