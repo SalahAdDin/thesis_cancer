@@ -1,7 +1,3 @@
-import 'dart:convert';
-
-import 'package:amplify_api/amplify_api.dart';
-import 'package:amplify_flutter/categories/amplify_categories.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/features/notification/application/activityfeed.state.dart';
@@ -10,12 +6,10 @@ import 'package:thesis_cancer/features/survey/infrastructure/survey.gql.dart';
 import 'package:uuid/uuid.dart';
 
 class ActivityFeedNotifier extends StateNotifier<ActivityFeedState> {
-  ActivityFeedNotifier({required this.apiCategory})
+  ActivityFeedNotifier({})
       : super(const ActivityFeedState.loading()) {
     init();
   }
-
-  final APICategory apiCategory;
 
   GraphQLSubscriptionOperation? _subscriptionOnCreateSurveyOperation;
   GraphQLSubscriptionOperation? _subscriptionOnCreatePostOperation;
