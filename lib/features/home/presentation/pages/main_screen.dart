@@ -429,6 +429,7 @@ class MainLayout extends HookWidget {
 
     if (showTutorial) {
       _initializeTargets();
+      context.read(firebaseAnalyticsProvider).logTutorialBegin();
       tutorialCoachMark = TutorialCoachMark(
         context,
         targets: targets,
@@ -454,7 +455,10 @@ class MainLayout extends HookWidget {
           }
         },
         */
-        onFinish: () async => userNotifierProvider.hasSeenTutorial(),
+        onFinish: () async {
+          userNotifierProvider.hasSeenTutorial();
+          context.read(firebaseAnalyticsProvider).logTutorialComplete();
+        },
         onSkip: () async => userNotifierProvider.hasSeenTutorial(),
         paddingFocus: 7.5,
       )..show();

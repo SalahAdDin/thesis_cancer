@@ -1,9 +1,11 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
@@ -22,6 +24,19 @@ class PostsList extends HookWidget {
   Widget build(BuildContext context) {
     final PostsState screenNotifier = useProvider(postsNotifierProvider(type));
     final List<Post> postList = useProvider(postListProvider(type)).state;
+    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+
+    Future<void> _setScreenAnalytics() async {
+      await _analytics.setCurrentScreen(
+        screenName: "Post List ${type.toString()}",
+      );
+      await _analytics.logViewItemList(itemCategory: type.toString());
+    }
+
+    useEffect(() {
+      _setScreenAnalytics();
+    }, const <Object>[]);
+
     return screenNotifier.when(
       loading: () => const Center(
         child: CircularProgressIndicator(),

@@ -1,10 +1,14 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 
 ///
-class CompletedSurveyScreen extends StatelessWidget {
+class CompletedSurveyScreen extends HookWidget {
   ///
   const CompletedSurveyScreen({
     Key? key,
@@ -20,6 +24,17 @@ class CompletedSurveyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+
+    Future<void> _setScreenAnalytics() async {
+      await _analytics.setCurrentScreen(
+        screenName: "Completed Survey Screen",
+      );
+    }
+
+    useEffect(() {
+      _setScreenAnalytics();
+    }, const <Object>[]);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
