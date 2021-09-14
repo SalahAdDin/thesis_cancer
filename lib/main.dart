@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/launcher/launcher.state.dart';
 import 'package:thesis_cancer/core/application/local_notification_service.dart';
@@ -63,6 +65,8 @@ class CancerApp extends HookWidget {
     final Settings? _appSettings = useProvider(settingsNotifierProvider);
     final ThemeMode _darkTheme = _appSettings?.themeMode ?? ThemeMode.system;
     final LauncherState _launcherState = useProvider(launcherProvider);
+    final PackageInfo _deviceInfo =
+        useProvider(packageInfoProvider).data!.value;
 
     final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
     final FirebaseAnalyticsObserver _observer =
@@ -76,8 +80,28 @@ class CancerApp extends HookWidget {
       await _analytics.logAppOpen();
     }
 
+    Future<void> _setDeviceProperties() async {
+      await _analytics.setUserProperty(
+        name: "platform",
+        value: Platform.operatingSystem,
+      );
+      await _analytics.setUserProperty(
+        name: "appVersion",
+        value: _deviceInfo.version,
+      );
+      await _analytics.setUserProperty(
+        name: "appBuild",
+        value: "${_deviceInfo.buildNumber} ${_deviceInfo.buildSignature}",
+      );
+      await _analytics.setUserProperty(
+        name: "osVersion",
+        value: Platform.operatingSystemVersion,
+      );
+    }
+
     useEffect(() {
       _logAppOpen();
+      _setDeviceProperties();
     }, const <Object>[]);
 
     return MaterialApp(
