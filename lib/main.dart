@@ -64,9 +64,21 @@ class CancerApp extends HookWidget {
     final ThemeMode _darkTheme = _appSettings?.themeMode ?? ThemeMode.system;
     final LauncherState _launcherState = useProvider(launcherProvider);
 
+    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+    final FirebaseAnalyticsObserver _observer =
+        FirebaseAnalyticsObserver(analytics: _analytics);
+
     SystemChrome.setEnabledSystemUIOverlays(
       <SystemUiOverlay>[SystemUiOverlay.bottom],
     );
+
+    Future<void> _logAppOpen() async {
+      await _analytics.logAppOpen();
+    }
+
+    useEffect(() {
+      _logAppOpen();
+    }, const <Object>[]);
 
     return MaterialApp(
       localizationsDelegates: const <LocalizationsDelegate<dynamic>>[

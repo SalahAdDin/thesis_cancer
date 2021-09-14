@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
@@ -32,6 +33,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   fb.FirebaseAuth get _fireBaseAuth => reader(firebaseAuthProvider);
 
+  FirebaseAnalytics get _firebaseAnalytics => reader(firebaseAnalyticsProvider);
+
   // StreamSubscription? _subscription;
 
   @override
@@ -54,6 +57,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
       await _fireBaseAuth.createUserWithEmailAndPassword(
         email: username,
         password: password,
+      );
+      await _firebaseAnalytics.logSignUp(signUpMethod: "email");
+      await _firebaseAnalytics.setUserId(_userController.state!.profile!.uid);
+      await _firebaseAnalytics.setUserProperty(
+        name: 'backend_user_id',
+        value: _userController.state!.id,
       );
       _userController.state = newUser.copyWith(confirmed: false);
       state = const AuthState.signedUp();
@@ -87,6 +96,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         );
         _tokenController.state = sessionUser.token!;
       }
+      await _firebaseAnalytics.logLogin(loginMethod: 'email/password');
       await _dataStore.writeUserProfile(sessionUser);
       _userController.state = sessionUser;
       state = const AuthState.loggedIn();
