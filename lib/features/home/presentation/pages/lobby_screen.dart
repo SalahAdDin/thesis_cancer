@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -10,6 +11,17 @@ class LobbyScreen extends HookWidget {
   // TODO: Improve style
   @override
   Widget build(BuildContext context) {
+    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+
+    Future<void> _setScreenAnalytics() async {
+      await _analytics.setCurrentScreen(
+        screenName: "Lobby Screen",
+      );
+    }
+
+    useEffect(() {
+      _setScreenAnalytics();
+    }, const <Object>[]);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(

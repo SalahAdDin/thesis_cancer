@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as fc_types;
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -55,6 +56,17 @@ class ProfileScreen extends HookWidget {
         useProvider(profileProvider.notifier);
     final String sessionUserFullName =
         useProvider(userEntityProvider).state.profile?.fullName ?? '';
+    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+
+    Future<void> _setScreenAnalytics() async {
+      await _analytics.setCurrentScreen(
+        screenName: "User Profile Screen: ${user.username}",
+      );
+    }
+
+    useEffect(() {
+      _setScreenAnalytics();
+    }, const <Object>[]);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

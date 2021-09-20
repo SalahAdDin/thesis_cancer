@@ -17,6 +17,9 @@ import 'package:open_file/open_file.dart';
 import 'package:thesis_cancer/features/chat/application/chat.provider.dart';
 import 'package:thesis_cancer/features/chat/domain/chat.repository.dart';
 import 'package:thesis_cancer/features/media/application/uploadfile.provider.dart';
+import 'package:thesis_cancer/features/user/application/user.provider.dart';
+import 'package:thesis_cancer/features/user/domain/user.entity.dart';
+import 'package:thesis_cancer/features/user/domain/user.repository.dart';
 
 /// Chat Notifier
 class ChatNotifier extends StateNotifier<bool> {
@@ -39,6 +42,8 @@ class ChatNotifier extends StateNotifier<bool> {
   ChatRepository get _chatRepository => reader(chatRepositoryProvider);
 
   CacheManager get _cacheManager => reader(cacheManagerProvider);
+
+  UserRepository get _userRepository => reader(userRepositoryProvider);
 
   ///
   fb.User? get currentUser => _chatCore.firebaseUser;
@@ -102,8 +107,8 @@ class ChatNotifier extends StateNotifier<bool> {
       if (result != null) {
         state = true;
         final String name = result.files.single.name;
-        final String filePath = result.files.single.path;
-        final File file = File(filePath);
+        final String? filePath = result.files.single.path;
+        final File file = File(filePath ?? '');
 
         try {
           final Reference reference = _storage.ref(name);
@@ -111,7 +116,7 @@ class ChatNotifier extends StateNotifier<bool> {
           final String uri = await reference.getDownloadURL();
 
           final fc_types.PartialFile message = fc_types.PartialFile(
-            mimeType: lookupMimeType(filePath),
+            mimeType: lookupMimeType(filePath ?? ''),
             name: name,
             size: result.files.single.size,
             uri: uri,
@@ -173,4 +178,24 @@ class ChatNotifier extends StateNotifier<bool> {
   }
 
   /// TODO: Video picker just for fun.
+
+  ///
+  Future<User> getInterlocutor() async {
+    final fc_types.User interlocutor =
+        _chatRepository.getInterlocutor(room: currentRoom);
+    try {
+      final List<User>? fetchedUsers = await _userRepository.findUserWithQuery(
+        query: <String, dynamic>{
+          "profile": <String, dynamic>{"uid": interlocutor.id}
+        },
+      );
+      if (fetchedUsers != null && fetchedUsers.isNotEmpty) {
+        return fetchedUsers[0];
+      } else {
+        return User.empty;
+      }
+    } on Exception catch (error) {
+      throw Exception();
+    }
+  }
 }
