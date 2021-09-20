@@ -14,7 +14,7 @@ First, you need to provide all required package and code to make this applicatio
 
    > Note: It also generates the Application Localization Delegate (step two [here](https://flutter.dev/docs/development/accessibility-and-localization/internationalization#adding-your-own-localized-messages)).
 
-   > Note: You will find all unstraslated strings on `l10n/untrasnlated_strings.txt` file, don't forget use `flutter pub get`after translating them on its proper localization file (steps four and five [here](https://flutter.dev/docs/development/accessibility-and-localization/internationalization#adding-your-own-localized-messages)).
+   > Note: You will find all untranslated strings on `l10n/untrasnlated_strings.txt` file, don't forget use `flutter pub get`after translating them on its proper localization file (steps four and five [here](https://flutter.dev/docs/development/accessibility-and-localization/internationalization#adding-your-own-localized-messages)).
 
 2. Build generated files:`flutter pub run build_runner build --delete-conflicting-outputs`
 

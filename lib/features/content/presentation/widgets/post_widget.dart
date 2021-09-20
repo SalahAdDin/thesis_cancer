@@ -1,10 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:enum_to_string/enum_to_string.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:readmore/readmore.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/cached_network_video.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
@@ -12,7 +16,7 @@ import 'package:thesis_cancer/features/content/presentation/widgets/post_header.
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
 
 /// Post Widget
-class PostWidget extends StatelessWidget {
+class PostWidget extends HookWidget {
   ///
   const PostWidget({
     Key? key,
@@ -64,6 +68,20 @@ class PostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final double swiperWidth = MediaQuery.of(context).size.width - 60;
     final double swiperHeight = swiperWidth * 3 / 4;
+
+    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+
+    Future<void> _setItemAnalytics() async {
+      await _analytics.logViewItem(
+        itemId: post.id,
+        itemName: post.title ?? "${post.author!.username} - ${post.id}",
+        itemCategory: post.type.toString(),
+      );
+    }
+
+    useEffect(() {
+      _setItemAnalytics();
+    }, const <Object>[]);
 
     return SingleChildScrollView(
       child: Column(

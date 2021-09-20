@@ -1,8 +1,10 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as fc_types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
 import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
@@ -37,6 +39,19 @@ class ChatPage extends HookWidget {
     final fc_types.User interlocutor =
         _chatRepository.getInterlocutor(room: room);
     final UserRepository _userRepository = useProvider(userRepositoryProvider);
+
+    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+
+    Future<void> _setScreenAnalytics() async {
+      await _analytics.setCurrentScreen(
+        screenName:
+            "Chat Screen: ${room.users.first.id} - ${room.users.last.id}",
+      );
+    }
+
+    useEffect(() {
+      _setScreenAnalytics();
+    }, const <Object>[]);
 
     Future<User> interlocutorUser() async {
       try {

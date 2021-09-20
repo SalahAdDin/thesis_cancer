@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -17,6 +18,12 @@ final FutureProvider<PackageInfo> packageInfoProvider =
     FutureProvider<PackageInfo>(
   (_) async => PackageInfo.fromPlatform(),
   name: "Package Info Provider",
+);
+
+final Provider<FirebaseAnalytics> firebaseAnalyticsProvider =
+    Provider<FirebaseAnalytics>(
+  (_) => FirebaseAnalytics(),
+  name: "Firebase Analytics Instance Provider",
 );
 
 /// GraphQL Client Provider

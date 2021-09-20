@@ -1,8 +1,10 @@
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
@@ -33,6 +35,17 @@ class SurveyScreen extends HookWidget {
   Widget build(BuildContext context) {
     final SurveyState currentSurveyState =
         useProvider(surveyNotifierProvider(surveyID));
+    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+
+    Future<void> _setScreenAnalytics() async {
+      await _analytics.setCurrentScreen(
+        screenName: "Survey Screen: $surveyID",
+      );
+    }
+
+    useEffect(() {
+      _setScreenAnalytics();
+    }, const <Object>[]);
 
     return currentSurveyState.when(
       loading: () => const Center(
@@ -185,13 +198,15 @@ class SurveyWidget extends HookWidget {
                                 Visibility(
                                   visible: currentQuestionIndex != 0,
                                   child: Button.accent(
-                                    buttonLabel: AppLocalizations.of(context)!.back,
+                                    buttonLabel:
+                                        AppLocalizations.of(context)!.back,
                                     onPressed: () =>
                                         surveyNotifier.lastQuestion(),
                                   ),
                                 ),
                                 Button.primary(
-                                  buttonLabel: AppLocalizations.of(context)!.next,
+                                  buttonLabel:
+                                      AppLocalizations.of(context)!.next,
                                   onPressed:
                                       answeredQuestion(currentQuestionIndex)
                                           ? () => surveyNotifier.nextQuestion()

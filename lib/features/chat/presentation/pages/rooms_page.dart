@@ -1,9 +1,11 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as fc_types;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
@@ -13,6 +15,7 @@ import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
 import 'package:thesis_cancer/features/chat/application/chat.provider.dart';
 import 'package:thesis_cancer/features/chat/presentation/pages/chat_page.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
+import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 ///
 class RoomsPage extends HookWidget {
@@ -20,12 +23,24 @@ class RoomsPage extends HookWidget {
   Widget build(BuildContext context) {
     final AsyncValue<List<fc_types.Room>> rooms =
         useProvider(roomsListProvider);
-    final UserRole? sessionUser =
-        useProvider(userEntityProvider).state.profile?.role;
+    final User _sessionUser = useProvider(userEntityProvider).state;
+    final UserRole? _sessionUserRole = _sessionUser.profile?.role;
+
+    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+
+    Future<void> _setScreenAnalytics() async {
+      await _analytics.setCurrentScreen(
+        screenName: "${_sessionUser.username} Room Screen",
+      );
+    }
+
+    useEffect(() {
+      _setScreenAnalytics();
+    }, const <Object>[]);
 
     return Scaffold(
       appBar: Header(
-        pageTitle: sessionUser == UserRole.ADMIN
+        pageTitle: _sessionUserRole == UserRole.ADMIN
             ? AppLocalizations.of(context)!.patientsLabel
             : AppLocalizations.of(context)!.specialistsLabel,
         // leading: const BackButton(),
