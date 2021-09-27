@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
@@ -30,6 +31,8 @@ class UserNotifier extends StateNotifier<UserState> {
 
   ///
   ProfileRepository get _profileRepository => reader(profileRepositoryProvider);
+
+  FirebaseAnalytics get _firebaseAnalytics => reader(firebaseAnalyticsProvider);
 
   ///
   StateController<User?> get _userController =>
@@ -159,6 +162,11 @@ class UserNotifier extends StateNotifier<UserState> {
     }
 
     if (_userController.state!.profile?.role != UserRole.GUEST) {
+      await _firebaseAnalytics.setUserId(_userController.state!.profile!.uid);
+      await _firebaseAnalytics.setUserProperty(
+        name: 'backend_user_id',
+        value: _userController.state!.id,
+      );
       deliverUserScreen();
     }
   }

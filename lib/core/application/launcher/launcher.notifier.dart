@@ -78,11 +78,6 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
   /// Re-render the application based on [User] is fetched and persisted on local storage,
   /// the application needs to render the [MainScreen].
   Future<void> singIn() async {
-    await _firebaseAnalytics.setUserId(_userController.state!.profile!.uid);
-    await _firebaseAnalytics.setUserProperty(
-      name: 'backend_user_id',
-      value: _userController.state!.id,
-    );
     state = const LauncherState.profileLoaded();
   }
 }
