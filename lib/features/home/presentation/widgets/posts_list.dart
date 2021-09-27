@@ -17,7 +17,9 @@ import 'package:thesis_cancer/features/content/presentation/widgets/post_widget.
 class PostsList extends HookWidget {
   PostsList({required this.type});
 
+  ///
   final PostType type;
+
   final RefreshController _refreshController = RefreshController();
 
   @override
@@ -33,17 +35,28 @@ class PostsList extends HookWidget {
       await _analytics.logViewItemList(itemCategory: type.toString());
     }
 
-    useEffect(() {
-      _setScreenAnalytics();
-    }, const <Object>[]);
+    Future<void> _refreshProvider() async {
+      try {
+        context.refresh(postListProvider(type));
+        _refreshController.refreshCompleted();
+      } on Exception {
+        _refreshController.refreshFailed();
+      }
+    }
+
+    useEffect(
+      () {
+        _setScreenAnalytics();
+      },
+      const <Object>[],
+    );
 
     return screenNotifier.when(
       loading: () => const Center(
         child: CircularProgressIndicator(),
       ),
       error: (Failure? error) => ErrorScreen(
-        // TODO: Refresh
-        onPressed: () => Navigator.of(context).maybePop(),
+        onPressed: _refreshProvider,
         reason: error?.reason,
         actionLabel: AppLocalizations.of(context)!.tryAgain,
       ),
@@ -71,6 +84,7 @@ class PostsList extends HookWidget {
           },
         ),
         controller: _refreshController,
+        onRefresh: _refreshProvider,
         child: ListView.builder(
           shrinkWrap: true,
           padding: const EdgeInsets.all(10),
