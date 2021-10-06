@@ -36,8 +36,11 @@ class PostWidget extends HookWidget {
         return CachedNetworkImage(
           imageUrl: content.url,
           fit: BoxFit.fill,
-          progressIndicatorBuilder: (BuildContext context, String url,
-                  DownloadProgress downloadProgress) =>
+          progressIndicatorBuilder: (
+            BuildContext context,
+            String url,
+            DownloadProgress downloadProgress,
+          ) =>
               Center(
             child: CircularProgressIndicator(
               value: downloadProgress.progress,
@@ -73,15 +76,18 @@ class PostWidget extends HookWidget {
 
     Future<void> _setItemAnalytics() async {
       await _analytics.logViewItem(
-        itemId: post.id,
+        itemId: post.id ?? '',
         itemName: post.title ?? "${post.author!.username} - ${post.id}",
         itemCategory: post.type.toString(),
       );
     }
 
-    useEffect(() {
-      _setItemAnalytics();
-    }, const <Object>[]);
+    useEffect(
+      () {
+        _setItemAnalytics();
+      },
+      const <Object>[],
+    );
 
     return SingleChildScrollView(
       child: Column(

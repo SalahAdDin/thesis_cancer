@@ -37,7 +37,7 @@ class LocalNotificationService {
       AndroidNotificationDetails(
     channelId,
     'User',
-    "User's social life related notifications.",
+    channelDescription: "User's social life related notifications.",
     importance: Importance.high,
     priority: Priority.high,
   );
@@ -47,7 +47,7 @@ class LocalNotificationService {
       AndroidNotificationDetails(
     channelId,
     'Content',
-    "Application's content notifications.",
+    channelDescription: "Application's content notifications.",
     importance: Importance.max,
     priority: Priority.max,
   );
@@ -182,7 +182,8 @@ class LocalNotificationService {
 
   /// Set's the function to do when the app is launched at clicking notifications.
   Future<void> handleApplicationWasLaunchedFromNotification(
-      Function onSelectNotification) async {
+    Function onSelectNotification,
+  ) async {
     final NotificationAppLaunchDetails? notificationAppLaunchDetails =
         await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
