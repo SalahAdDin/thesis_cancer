@@ -32,9 +32,12 @@ class LoginScreen extends HookWidget {
       );
     }
 
-    useEffect(() {
-      _setScreenAnalytics();
-    }, const <Object>[]);
+    useEffect(
+      () {
+        _setScreenAnalytics();
+      },
+      const <Object>[],
+    );
 
     return FlutterLogin(
       //title: AppLiterals.title,

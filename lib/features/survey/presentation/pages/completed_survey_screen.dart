@@ -32,9 +32,13 @@ class CompletedSurveyScreen extends HookWidget {
       );
     }
 
-    useEffect(() {
-      _setScreenAnalytics();
-    }, const <Object>[]);
+    useEffect(
+      () {
+        _setScreenAnalytics();
+      },
+      const <Object>[],
+    );
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(

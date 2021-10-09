@@ -19,9 +19,13 @@ class LobbyScreen extends HookWidget {
       );
     }
 
-    useEffect(() {
-      _setScreenAnalytics();
-    }, const <Object>[]);
+    useEffect(
+      () {
+        _setScreenAnalytics();
+      },
+      const <Object>[],
+    );
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(

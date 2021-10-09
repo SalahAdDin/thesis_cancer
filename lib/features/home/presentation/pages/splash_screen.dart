@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 
+// TODO: Create a Splash Screen in the native way
 class SplashScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
@@ -15,9 +16,13 @@ class SplashScreen extends HookWidget {
       );
     }
 
-    useEffect(() {
-      _setScreenAnalytics();
-    }, const <Object>[]);
+    useEffect(
+      () {
+        _setScreenAnalytics();
+      },
+      const <Object>[],
+    );
+
     return const Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(

@@ -43,9 +43,12 @@ class SurveyScreen extends HookWidget {
       );
     }
 
-    useEffect(() {
-      _setScreenAnalytics();
-    }, const <Object>[]);
+    useEffect(
+      () {
+        _setScreenAnalytics();
+      },
+      const <Object>[],
+    );
 
     return currentSurveyState.when(
       loading: () => const Center(

@@ -49,9 +49,12 @@ class ChatPage extends HookWidget {
       );
     }
 
-    useEffect(() {
-      _setScreenAnalytics();
-    }, const <Object>[]);
+    useEffect(
+      () {
+        _setScreenAnalytics();
+      },
+      const <Object>[],
+    );
 
     Future<User> interlocutorUser() async {
       try {
