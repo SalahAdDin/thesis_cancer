@@ -37,7 +37,7 @@ class PostsList extends HookWidget {
 
     Future<void> _refreshProvider() async {
       try {
-        context.refresh(postListProvider(type));
+        context.refresh(postsNotifierProvider(type).notifier);
         _refreshController.refreshCompleted();
       } on Exception {
         _refreshController.refreshFailed();
