@@ -160,14 +160,12 @@ class UserNotifier extends StateNotifier<UserState> {
         state = UserState.error(error);
       }
     }
-
-    if (_userController.state!.profile?.role != UserRole.GUEST) {
-      await _firebaseAnalytics.setUserId(_userController.state!.profile!.uid);
-      await _firebaseAnalytics.setUserProperty(
-        name: 'backend_user_id',
-        value: _userController.state!.id,
-      );
-      deliverUserScreen();
-    }
+    await _firebaseAnalytics
+        .setUserId(_userController.state!.profile?.uid ?? 'guest_user');
+    await _firebaseAnalytics.setUserProperty(
+      name: 'backend_user_id',
+      value: _userController.state!.id,
+    );
+    deliverUserScreen();
   }
 }

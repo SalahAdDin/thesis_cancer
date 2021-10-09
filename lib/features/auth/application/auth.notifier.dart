@@ -54,25 +54,28 @@ class AuthNotifier extends StateNotifier<AuthState> {
         email: username,
         password: password,
       );
-      await _fireBaseAuth.createUserWithEmailAndPassword(
+      final fb.UserCredential credentials =
+          await _fireBaseAuth.createUserWithEmailAndPassword(
         email: username,
         password: password,
       );
-      await _firebaseAnalytics.logSignUp(signUpMethod: "email");
-      await _firebaseAnalytics.setUserId(_userController.state!.profile!.uid);
+      await _firebaseAnalytics.setUserId(credentials.user?.uid);
       await _firebaseAnalytics.setUserProperty(
         name: 'backend_user_id',
         value: _userController.state!.id,
       );
+      await _firebaseAnalytics.logSignUp(signUpMethod: "email");
       _userController.state = newUser.copyWith(confirmed: false);
       state = const AuthState.signedUp();
     } on SignUpFailure catch (_) {
       rethrow;
     }
-    /*on SignUpFailure catch (_) {
+    /*
+    on SignUpFailure catch (_) {
       // state = AuthState.error(error.toString());
       return error.toString();
-    }*/
+    }
+    */
   }
 
   ///
@@ -105,7 +108,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
       // return "E-posta veya şifre geçersiz.";
       rethrow;
     }
-    /*try {
+    /*
+    try {
     } on LogInUnconfirmedUserFailure {
       User newProfile = User(
           id: uuid.v4(),
@@ -116,12 +120,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
       this.userController.state = newProfile;
       state = AuthState.loggedIn(newProfile);
     } on LogInWithEmailAndPasswordFailure catch (_) {
-    }*/
+    }
+    */
   }
 
   ///
   Future<void> signInWithFacebook() async {
-    /*try {
+    /*
+    try {
       bool result = await authRepository.signInWithSocialWebUI(
           provider: authRepository.facebookProvider);
       User storedUser = await dataStore.getUserProfileData();
@@ -134,7 +140,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
     } on LogInWithSocialProviderFailure catch (_) {
       // state = AuthState.error(error.toString());
       return error.toString();
-    }*/
+    }
+    */
 
     throw UnimplementedError();
   }
@@ -187,7 +194,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
         state = const AuthState.resetPassword();
       } else {
         throw ForgotPasswordFailure(
-            reason: ForgotPasswordFailureReason.unknown);
+          reason: ForgotPasswordFailureReason.unknown,
+        );
       }
     } on ForgotPasswordFailure catch (_) {
       rethrow;
