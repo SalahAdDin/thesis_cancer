@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:form_field_validator/form_field_validator.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:group_button/group_button.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/themes.dart';
@@ -75,24 +75,24 @@ class QuestionWidget extends StatelessWidget {
               onSelected!(answer);
             }
           },
-          validator: MultiValidator(
-            <TextFieldValidator>[
-              RequiredValidator(
-                errorText:
-                    AppLocalizations.of(context)!.validationAnswerRequired,
-              ),
-              MinLengthValidator(
-                15,
-                errorText:
-                    AppLocalizations.of(context)!.validationAnswerMinLength,
-              ),
-              MaxLengthValidator(
-                50,
-                errorText:
-                    AppLocalizations.of(context)!.validationAnswerMaxLength,
-              )
-            ],
-          ),
+          validator: FormBuilderValidators.compose(<String? Function(String?)>[
+            FormBuilderValidators.required(
+              context,
+              errorText: AppLocalizations.of(context)!.validationAnswerRequired,
+            ),
+            FormBuilderValidators.minLength(
+              context,
+              15,
+              errorText:
+                  AppLocalizations.of(context)!.validationAnswerMinLength,
+            ),
+            FormBuilderValidators.maxLength(
+              context,
+              50,
+              errorText:
+                  AppLocalizations.of(context)!.validationAnswerMaxLength,
+            ),
+          ]),
           initialText: userAnswer?.answer,
           hintText: "Cevabı buraya yazınız...",
         );
@@ -105,24 +105,24 @@ class QuestionWidget extends StatelessWidget {
               onSelected!(answer);
             }
           },
-          validator: MultiValidator(
-            <TextFieldValidator>[
-              RequiredValidator(
-                errorText:
-                    AppLocalizations.of(context)!.validationAnswerRequired,
-              ),
-              MinLengthValidator(
-                50,
-                errorText:
-                    AppLocalizations.of(context)!.validationAnswerMinLength,
-              ),
-              MaxLengthValidator(
-                500,
-                errorText:
-                    AppLocalizations.of(context)!.validationAnswerMaxLength,
-              )
-            ],
-          ),
+          validator: FormBuilderValidators.compose(<String? Function(String?)>[
+            FormBuilderValidators.required(
+              context,
+              errorText: AppLocalizations.of(context)!.validationAnswerRequired,
+            ),
+            FormBuilderValidators.minLength(
+              context,
+              50,
+              errorText:
+                  AppLocalizations.of(context)!.validationAnswerMinLength,
+            ),
+            FormBuilderValidators.maxLength(
+              context,
+              500,
+              errorText:
+                  AppLocalizations.of(context)!.validationAnswerMaxLength,
+            ),
+          ]),
           keyboardType: TextInputType.multiline,
           maxLines: 8,
           maxLength: 500,

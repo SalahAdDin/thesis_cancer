@@ -58,7 +58,7 @@ dependencies:
   flutter_native_timezone: ^2.0.0
   flutter_svg: ^0.22.0
   # flutter_whatsnew: ^1.0.3
-  form_field_validator: ^1.1.0
+  form_builder_validators: ^7.2.0
   freezed_annotation: ^0.14.3
   graphql: ^5.0.0
   group_button: ^3.3.0
