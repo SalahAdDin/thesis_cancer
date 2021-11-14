@@ -190,9 +190,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final bool isRequested = await _authRepository.forgotPassword(
         email: email,
       );
-      if (isRequested) {
-        state = const AuthState.resetPassword();
-      } else {
+      if (!isRequested) {
         throw ForgotPasswordFailure(
           reason: ForgotPasswordFailureReason.unknown,
         );

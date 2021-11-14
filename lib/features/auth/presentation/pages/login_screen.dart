@@ -11,7 +11,6 @@ import 'package:thesis_cancer/core/presentation/helpers.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
-import 'package:thesis_cancer/features/auth/presentation/widgets/reset_password.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
@@ -21,7 +20,6 @@ class LoginScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final AuthState authScreenState = useProvider(authNotifierProvider);
-
     final String registerSurveyID =
         useProvider(settingsNotifierProvider).registeringSurvey ?? '';
     final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
@@ -60,6 +58,8 @@ class LoginScreen extends HookWidget {
         goBackButton: AppLocalizations.of(context)!.back,
         confirmPasswordError:
             AppLocalizations.of(context)!.confirmPasswordError,
+        recoverCodePasswordDescription:
+            AppLocalizations.of(context)!.recoverCodePasswordDescription,
         recoverPasswordSuccess:
             AppLocalizations.of(context)!.recoverPasswordSuccess,
         flushbarTitleError: AppLocalizations.of(context)!.errorLabel,
@@ -81,11 +81,11 @@ class LoginScreen extends HookWidget {
             callback: () => authNotifier.signInWithApple()),
       ],
       */
-      onSignup: (LoginData data) async {
+      onSignup: (SignupData data) async {
         try {
           await context.read(authNotifierProvider.notifier).registerUser(
-                username: data.name,
-                password: data.password,
+                username: data.name!,
+                password: data.password!,
               );
         } on Failure catch (error) {
           return localizeFailure(error.reason, context).last;
@@ -110,6 +110,17 @@ class LoginScreen extends HookWidget {
           return localizeFailure(error.reason, context).last;
         }
       },
+      onConfirmRecover: (String confirmationCode, LoginData data) async {
+        try {
+          await context.read(authNotifierProvider.notifier).recoverPassword(
+                password: data.name,
+                passwordConfirmation: data.password,
+                confirmationCode: confirmationCode,
+              );
+        } on Failure catch (error) {
+          return localizeFailure(error.reason, context).last;
+        }
+      },
       onSubmitAnimationCompleted: () => authScreenState.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         signedUp: () => pushToPage(
@@ -123,22 +134,6 @@ class LoginScreen extends HookWidget {
           ),
         ),
         loggedIn: () => context.read(launcherProvider.notifier).singIn(),
-        // TODO:
-        resetPassword: () => pushToPage(context, ResetPasswordWidget(onConfirm:
-                (String password, String passwordConfirmation,
-                    String confirmationCode) async {
-          try {
-            await context.read(authNotifierProvider.notifier).recoverPassword(
-                password: password,
-                passwordConfirmation: passwordConfirmation,
-                confirmationCode: confirmationCode);
-          } on Failure catch (error) {
-            return localizeFailure(error.reason, context).last;
-          }
-        }
-/*                    .then((value) =>
-                        pushAndReplaceToPage(context, SplashScreen())),*/
-            )),
         // TODO: block backward arrow button on this screen (LoginScreen breaks here).
         error: (Failure? error) => ErrorScreen(
           reason: error?.reason,

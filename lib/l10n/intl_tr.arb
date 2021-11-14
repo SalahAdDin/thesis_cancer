@@ -36,6 +36,7 @@
   "recoverPasswordButton": "Gönder",
   "recoverPasswordIntro": "Buradan şifrenizi yenileyebilirsiniz.",
   "recoverPasswordDescription": "Bu email'e yeni şifrenizi yollayacağız.",
+  "recoverCodePasswordDescription": "E-postanıza gönderdiğimiz kurtarma kodu.",
   "confirmPasswordError": "Şifre eşleşmedi.",
   "recoverPasswordSuccess": "Email gönderildi.",
   "flushBarTitleSuccess": "Başarılı",

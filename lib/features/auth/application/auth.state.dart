@@ -12,6 +12,4 @@ class AuthState with _$AuthState {
   const factory AuthState.loggedIn() = _LoggedIn;
 
   const factory AuthState.error([Failure? error]) = _Error;
-
-  const factory AuthState.resetPassword() = _ResetPassword;
 }

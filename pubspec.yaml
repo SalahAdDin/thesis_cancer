@@ -54,7 +54,7 @@ dependencies:
   flutter_local_notifications: ^9.0.0
   flutter_localizations:
     sdk: flutter
-  flutter_login: ^2.2.1
+  flutter_login: ^3.0.0
   flutter_native_timezone: ^2.0.0
   flutter_svg: ^0.22.0
   # flutter_whatsnew: ^1.0.3
