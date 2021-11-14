@@ -6,6 +6,7 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
+import 'package:thesis_cancer/core/domain/constants.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/presentation/helpers.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
@@ -38,8 +39,8 @@ class LoginScreen extends HookWidget {
     );
 
     return FlutterLogin(
-      //title: AppLiterals.title,
-      //footer: AppLiterals.copyRight,
+      title: AppLiterals.title,
+      footer: AppLiterals.copyRight,
       // TODO: logo: '',
       messages: LoginMessages(
         userHint: AppLocalizations.of(context)!.userHint,

@@ -3,13 +3,14 @@ import 'package:flutter/widgets.dart';
 /// Application's relation literals
 class AppLiterals {
   /// Application's title
-  static const String title = 'TODO: Make me better';
+  static const String title = 'JineOnkDes';
 
   /// Application's Logo
   static const String logo = 'assets/images/TODO:';
 
   /// Application's Copy Right text.
-  static const String copyRight = 'TODO: Make better with link';
+  static const String copyRight =
+      'Copyright ©2021 CloudNesil – Cloud Computing, Development Consulting, Cutting The Edge Technology.';
 }
 
 class BackendURL {
