@@ -69,6 +69,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = const AuthState.signedUp();
     } on SignUpFailure catch (_) {
       rethrow;
+    } on fb.FirebaseAuthException catch (e) {
+      if (e.code == "email-already-in-use") {
+        throw SignUpFailure(reason: RegisterFailureReason.emailAlreadyTaken);
+      }
     }
     /*
     on SignUpFailure catch (_) {
