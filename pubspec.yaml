@@ -54,6 +54,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_login: ^3.0.0
+  flutter_markdown: ^0.6.8
   flutter_native_timezone: ^2.0.0
   flutter_svg: ^0.23.0+1
   # flutter_whatsnew: ^1.0.3
@@ -76,7 +77,6 @@ dependencies:
   # permission_handler: ^6.1.1
   # pin_code_fields: ^7.0.0
   pull_to_refresh: ^2.0.0
-  readmore: ^2.1.0
   rxdart: ^0.26.0
   sembast: ^3.1.1
   timezone: ^0.8.0
