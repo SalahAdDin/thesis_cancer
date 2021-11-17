@@ -59,7 +59,8 @@ class EditProfileWidget extends HookWidget {
                 FormBuilderTextField(
                   name: 'firstName',
                   decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.firstNameLabel),
+                    labelText: AppLocalizations.of(context)!.firstNameLabel,
+                  ),
                   initialValue: userProfile.firstName,
                   validator:
                       FormBuilderValidators.compose(<String? Function(String?)>[
@@ -81,7 +82,8 @@ class EditProfileWidget extends HookWidget {
                   name: 'lastName',
                   initialValue: userProfile.lastName,
                   decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.lastNameLabel),
+                    labelText: AppLocalizations.of(context)!.lastNameLabel,
+                  ),
                   validator:
                       FormBuilderValidators.compose(<String? Function(String?)>[
                     FormBuilderValidators.minLength(
@@ -103,8 +105,8 @@ class EditProfileWidget extends HookWidget {
                   inputFormatters: <TextInputFormatter>[_phoneMaskFormatter],
                   initialValue: userProfile.phoneNumber,
                   decoration: InputDecoration(
-                      labelText:
-                          AppLocalizations.of(context)!.phoneNumberLabel),
+                    labelText: AppLocalizations.of(context)!.phoneNumberLabel,
+                  ),
                   validator:
                       FormBuilderValidators.compose(<String? Function(String?)>[
                     FormBuilderValidators.minLength(
@@ -131,8 +133,6 @@ class EditProfileWidget extends HookWidget {
                   name: 'bio',
                   initialValue: userProfile.bio,
                   maxLines: 5,
-                  decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.bioLabel),
                   validator:
                       FormBuilderValidators.compose(<String? Function(String?)>[
                     FormBuilderValidators.minLength(
@@ -148,6 +148,9 @@ class EditProfileWidget extends HookWidget {
                           AppLocalizations.of(context)!.validationBioMaxLength,
                     )
                   ]),
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.bioLabel,
+                  ),
                 ),
               ],
             ),
