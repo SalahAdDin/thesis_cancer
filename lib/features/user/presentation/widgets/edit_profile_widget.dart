@@ -35,128 +35,141 @@ class EditProfileWidget extends HookWidget {
     final Profile userProfile =
         useProvider(userEntityProvider).state.profile ?? Profile.empty;
 
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
-          child: UserAvatar(
-            userAvatarUrl: userProfile.profilePhoto?.url,
-            radius: 50.0,
-          ),
-        ),
-        TextButton(
-          onPressed: onEditPhoto,
-          child: Text(
-            AppLocalizations.of(context)!.changePhotoLabel,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: FormBuilder(
-            key: formKey,
-            child: Column(
-              children: <Widget>[
-                FormBuilderTextField(
-                  name: 'firstName',
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.firstNameLabel,
-                  ),
-                  initialValue: userProfile.firstName,
-                  validator:
-                      FormBuilderValidators.compose(<String? Function(String?)>[
-                    FormBuilderValidators.minLength(
-                      context,
-                      3,
-                      errorText:
-                          AppLocalizations.of(context)!.validationNameMinLength,
-                    ),
-                    FormBuilderValidators.maxLength(
-                      context,
-                      15,
-                      errorText:
-                          AppLocalizations.of(context)!.validationNameMaxLength,
-                    )
-                  ]),
-                ),
-                FormBuilderTextField(
-                  name: 'lastName',
-                  initialValue: userProfile.lastName,
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.lastNameLabel,
-                  ),
-                  validator:
-                      FormBuilderValidators.compose(<String? Function(String?)>[
-                    FormBuilderValidators.minLength(
-                      context,
-                      3,
-                      errorText:
-                          AppLocalizations.of(context)!.validationNameMinLength,
-                    ),
-                    FormBuilderValidators.maxLength(
-                      context,
-                      15,
-                      errorText:
-                          AppLocalizations.of(context)!.validationNameMaxLength,
-                    )
-                  ]),
-                ),
-                FormBuilderTextField(
-                  name: 'phoneNumber',
-                  inputFormatters: <TextInputFormatter>[_phoneMaskFormatter],
-                  initialValue: userProfile.phoneNumber,
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.phoneNumberLabel,
-                  ),
-                  validator:
-                      FormBuilderValidators.compose(<String? Function(String?)>[
-                    FormBuilderValidators.minLength(
-                      context,
-                      18,
-                      errorText: AppLocalizations.of(context)!
-                          .validationPhoneNumberWrongFormat,
-                    ),
-                    FormBuilderValidators.maxLength(
-                      context,
-                      22,
-                      errorText: AppLocalizations.of(context)!
-                          .validationPhoneNumberWrongFormat,
-                    ),
-                    FormBuilderValidators.match(
-                      context,
-                      r"^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$",
-                      errorText: AppLocalizations.of(context)!
-                          .validationPhoneNumberWrongFormat,
-                    ),
-                  ]),
-                ),
-                FormBuilderTextField(
-                  name: 'bio',
-                  initialValue: userProfile.bio,
-                  maxLines: 5,
-                  validator:
-                      FormBuilderValidators.compose(<String? Function(String?)>[
-                    FormBuilderValidators.minLength(
-                      context,
-                      125,
-                      errorText:
-                          AppLocalizations.of(context)!.validationBioMinLength,
-                    ),
-                    FormBuilderValidators.maxLength(
-                      context,
-                      350,
-                      errorText:
-                          AppLocalizations.of(context)!.validationBioMaxLength,
-                    )
-                  ]),
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.bioLabel,
-                  ),
-                ),
-              ],
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
+            child: UserAvatar(
+              userAvatarUrl: userProfile.profilePhoto?.url,
+              radius: 50.0,
             ),
           ),
-        ),
-      ],
+          TextButton(
+            onPressed: onEditPhoto,
+            child: Text(
+              AppLocalizations.of(context)!.changePhotoLabel,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: FormBuilder(
+              key: formKey,
+              child: Column(
+                children: <Widget>[
+                  FormBuilderTextField(
+                    name: 'firstName',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.firstNameLabel,
+                    ),
+                    initialValue: userProfile.firstName,
+                    validator: FormBuilderValidators
+                        .compose(<String? Function(String?)>[
+                      FormBuilderValidators.minLength(
+                        context,
+                        3,
+                        errorText: AppLocalizations.of(context)!
+                            .validationNameMinLength,
+                      ),
+                      FormBuilderValidators.maxLength(
+                        context,
+                        15,
+                        errorText: AppLocalizations.of(context)!
+                            .validationNameMaxLength,
+                      )
+                    ]),
+                  ),
+                  FormBuilderTextField(
+                    name: 'lastName',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    initialValue: userProfile.lastName,
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.lastNameLabel,
+                    ),
+                    validator: FormBuilderValidators
+                        .compose(<String? Function(String?)>[
+                      FormBuilderValidators.minLength(
+                        context,
+                        3,
+                        errorText: AppLocalizations.of(context)!
+                            .validationNameMinLength,
+                      ),
+                      FormBuilderValidators.maxLength(
+                        context,
+                        15,
+                        errorText: AppLocalizations.of(context)!
+                            .validationNameMaxLength,
+                      )
+                    ]),
+                  ),
+                  FormBuilderTextField(
+                    name: 'phoneNumber',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    inputFormatters: <TextInputFormatter>[_phoneMaskFormatter],
+                    initialValue: userProfile.phoneNumber,
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.phoneNumberLabel,
+                    ),
+
+                    /// TODO: Get a wait to validate only if the field is not empty or null
+                    /*validator: FormBuilderValidators
+                        .compose(<String? Function(String?)>[
+                      FormBuilderValidators.minLength(
+                        context,
+                        18,
+                        errorText: AppLocalizations.of(context)!
+                            .validationPhoneNumberWrongFormat,
+                      ),
+                      FormBuilderValidators.maxLength(
+                        context,
+                        22,
+                        errorText: AppLocalizations.of(context)!
+                            .validationPhoneNumberWrongFormat,
+                      ),
+                      FormBuilderValidators.match(
+                        context,
+                        r"^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$",
+                        errorText: AppLocalizations.of(context)!
+                            .validationPhoneNumberWrongFormat,
+                      ),
+                      (String? val) {
+                        if (val == '' || val == null) return null;
+                      },
+                    ]),*/
+                  ),
+                  FormBuilderTextField(
+                    name: 'bio',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    initialValue: userProfile.bio,
+                    maxLines: 5,
+
+                    /// TODO: Get a wait to validate only if the field is not empty or null
+                    /*validator: FormBuilderValidators
+                        .compose(<String? Function(String?)>[
+                      FormBuilderValidators.minLength(
+                        context,
+                        125,
+                        errorText: AppLocalizations.of(context)!
+                            .validationBioMinLength,
+                      ),
+                      FormBuilderValidators.maxLength(
+                        context,
+                        350,
+                        errorText: AppLocalizations.of(context)!
+                            .validationBioMaxLength,
+                      )
+                    ]),*/
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.bioLabel,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
