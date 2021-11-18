@@ -33,7 +33,7 @@ class GraphQLProfileRepository implements ProfileRepository {
         if (response.exception?.linkException is NetworkException) {
           throw GraphQLFailure(reason: FailureReason.unableToConnect);
         }
-        final Extension extension = extractException(response);
+        final Extension extension = _extractException(response);
         final int errorCode = extension.statusCode!;
 
         if (errorCode == 403) {
@@ -53,7 +53,7 @@ class GraphQLProfileRepository implements ProfileRepository {
     }
   }
 
-  Extension extractException(QueryResult response) {
+  Extension _extractException(QueryResult response) {
     final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,
@@ -74,7 +74,7 @@ class GraphQLProfileRepository implements ProfileRepository {
         if (response.exception?.linkException is NetworkException) {
           throw GraphQLFailure(reason: FailureReason.unableToConnect);
         }
-        final Extension extension = extractException(response);
+        final Extension extension = _extractException(response);
         final int errorCode = extension.statusCode!;
         if (errorCode == 404) {
           throw ProfileFailure(reason: ProfileFailureReason.notFound);
@@ -122,7 +122,7 @@ class GraphQLProfileRepository implements ProfileRepository {
         if (response.exception?.linkException is NetworkException) {
           throw GraphQLFailure(reason: FailureReason.unableToConnect);
         }
-        final Extension extension = extractException(response);
+        final Extension extension = _extractException(response);
         final int errorCode = extension.statusCode!;
 
         if (errorCode == 403) {
@@ -167,7 +167,7 @@ class GraphQLProfileRepository implements ProfileRepository {
         if (response.exception?.linkException is NetworkException) {
           throw GraphQLFailure(reason: FailureReason.unableToConnect);
         }
-        final Extension extension = extractException(response);
+        final Extension extension = _extractException(response);
         final int errorCode = extension.statusCode!;
 
         if (errorCode == 403) {
@@ -200,7 +200,7 @@ class GraphQLProfileRepository implements ProfileRepository {
         if (response.exception?.linkException is NetworkException) {
           throw GraphQLFailure(reason: FailureReason.unableToConnect);
         }
-        final Extension extension = extractException(response);
+        final Extension extension = _extractException(response);
         final int errorCode = extension.statusCode!;
 
         if (errorCode == 403) {
@@ -235,7 +235,7 @@ class GraphQLProfileRepository implements ProfileRepository {
         if (response.exception?.linkException is NetworkException) {
           throw GraphQLFailure(reason: FailureReason.unableToConnect);
         }
-        final Extension extension = extractException(response);
+        final Extension extension = _extractException(response);
         final int errorCode = extension.statusCode!;
 
         if (errorCode == 403) {
@@ -250,8 +250,10 @@ class GraphQLProfileRepository implements ProfileRepository {
       final List<dynamic> profiles =
           response.data?["profiles"] as List<dynamic>;
       return profiles
-          .map((dynamic profile) =>
-              Profile.fromJson(profile as Map<String, dynamic>))
+          .map(
+            (dynamic profile) =>
+                Profile.fromJson(profile as Map<String, dynamic>),
+          )
           .toList();
     } on Exception catch (_) {
       throw GraphQLFailure(reason: FailureReason.unknown);

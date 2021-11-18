@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 /// Application's relation literals
 class AppLiterals {
   /// Application's title
-  static const String title = 'JineOnkDes';
+  static const String title = 'JineOnkolojik Destek';
 
   /// Application's Logo
   static const String logo = 'assets/images/TODO:';

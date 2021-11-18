@@ -23,10 +23,11 @@ class UploadFile with _$UploadFile {
 
   /// Builds a empty(dummy) [UploadFile].
   static const UploadFile empty = UploadFile(
-      alternativeText: 'Dummy alternative text.',
-      caption: 'Dummy caption.',
-      mime: 'image/png',
-      url: '',
-      width: 150,
-      height: 150);
+    alternativeText: 'Dummy alternative text.',
+    caption: 'Dummy caption.',
+    mime: 'image/png',
+    url: '',
+    width: 150,
+    height: 150,
+  );
 }

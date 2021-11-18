@@ -75,7 +75,8 @@ class MainScreen extends HookWidget {
                 },
                 surveyID: scheduledSurveys
                     .firstWhere(
-                        (SurveySchedule element) => element.label == "control")
+                      (SurveySchedule element) => element.label == "control",
+                    )
                     .survey,
               ),
             );
@@ -283,7 +284,10 @@ class MainLayout extends HookWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          top: 10.0, right: 56, bottom: 56),
+                        top: 10.0,
+                        right: 56,
+                        bottom: 56,
+                      ),
                       child: Text(
                         AppLocalizations.of(context)!.knowledgeDescription,
                         style: const TextStyle(color: Colors.white),
@@ -378,7 +382,10 @@ class MainLayout extends HookWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          top: 10.0, bottom: 56, left: 56),
+                        top: 10.0,
+                        bottom: 56,
+                        left: 56,
+                      ),
                       child: Text(
                         AppLocalizations.of(context)!.successStoriesDescription,
                         style: const TextStyle(color: Colors.white),

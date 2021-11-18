@@ -17,8 +17,9 @@ class Failure implements Exception {
 
   final dynamic reason;
 
+  @override
   String toString() {
-    Object? reason = this.reason;
+    final Object? reason = this.reason;
     if (reason == null) return "Unexpected reason";
     return "$reason";
   }

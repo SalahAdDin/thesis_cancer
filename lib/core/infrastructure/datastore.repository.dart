@@ -54,7 +54,8 @@ class SembastDataStore implements DataStoreRepository {
   static Future<SembastDataStore> makeDefault() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     return SembastDataStore(
-        await databaseFactory.openDatabase('${appDocDir.path}/default.db'));
+      await databaseFactory.openDatabase('${appDocDir.path}/default.db'),
+    );
   }
 
   ///
@@ -161,8 +162,10 @@ class SembastDataStore implements DataStoreRepository {
 
     final List<Survey> result = surveysJson != null
         ? surveysJson
-            .map((dynamic element) =>
-                Survey.fromJson(element as Map<String, dynamic>))
+            .map(
+              (dynamic element) =>
+                  Survey.fromJson(element as Map<String, dynamic>),
+            )
             .toList()
         : <Survey>[];
 

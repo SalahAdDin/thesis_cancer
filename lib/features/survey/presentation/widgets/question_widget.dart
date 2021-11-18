@@ -137,9 +137,8 @@ class QuestionWidget extends StatelessWidget {
           buttons: buttons,
           onSelected: (int index, bool isSelected) =>
               onSelected!(buttons[index]),
-          selectedButton: selectedButton != ''
-              ? buttons.indexOf(selectedButton).toInt()
-              : null,
+          selectedButton:
+              selectedButton != '' ? buttons.indexOf(selectedButton) : null,
         );
         break;
       case QuestionType.MULTIPLE:
@@ -170,7 +169,7 @@ class QuestionWidget extends StatelessWidget {
           selectedButtons: selectedButtons != ''
               ? selectedButtons
                   .split(",")
-                  .map((String value) => buttons.indexOf(value).toInt())
+                  .map((String value) => buttons.indexOf(value))
                   .toList()
               : null,
         );
@@ -184,9 +183,8 @@ class QuestionWidget extends StatelessWidget {
 
         answerWidget = _themedGroupButton(
           buttons: buttons,
-          selectedButton: selectedButton != ''
-              ? buttons.indexOf(selectedButton).toInt()
-              : null,
+          selectedButton:
+              selectedButton != '' ? buttons.indexOf(selectedButton) : null,
           onSelected: (int index, bool isSelected) =>
               onSelected!(buttons[index]),
         );

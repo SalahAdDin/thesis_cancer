@@ -69,7 +69,7 @@ class ChatPage extends HookWidget {
         } else {
           return User.empty;
         }
-      } on Exception catch (error) {
+      } on Exception catch (_) {
         throw Exception();
       }
     }

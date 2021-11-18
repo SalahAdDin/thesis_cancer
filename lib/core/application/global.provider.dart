@@ -28,28 +28,28 @@ final Provider<FirebaseAnalytics> firebaseAnalyticsProvider =
 
 /// GraphQL Client Provider
 /// Provides a [GraphQLClient] with/without an authentication token.
-final Provider<GraphQLClient> graphQLClientProvider =
-    Provider<GraphQLClient>((ProviderReference ref) {
-  // String.fromEnvironment('API_URL'),
+final Provider<GraphQLClient> graphQLClientProvider = Provider<GraphQLClient>(
+  (ProviderReference ref) {
+    // String.fromEnvironment('API_URL'),
 
-  /// Local development environment
-  const String graphQLEndpoint = '${BackendURL.testURL}graphql';
+    /// Local development environment
+    const String graphQLEndpoint = '${BackendURL.testURL}graphql';
 
-  // const String subscriptionEndpoint = "ws://10.30.30.176:3000/subscription";
+    // const String subscriptionEndpoint = "ws://10.30.30.176:3000/subscription";
 
-  final HttpLink _httpLink = HttpLink(
-    graphQLEndpoint,
-  );
+    final HttpLink _httpLink = HttpLink(
+      graphQLEndpoint,
+    );
 
-  final String token = ref.watch(tokenProvider).state;
+    final String token = ref.watch(tokenProvider).state;
 
-  final AuthLink _authLink = AuthLink(
-    getToken: () async => 'Bearer $token',
-  );
+    final AuthLink _authLink = AuthLink(
+      getToken: () async => 'Bearer $token',
+    );
 
-  final Link _link = _authLink.concat(_httpLink);
+    final Link _link = _authLink.concat(_httpLink);
 
-  /*
+    /*
   if (subscriptionEndpoint != null) {
     final WebSocketLink _wsLink = WebSocketLink(subscriptionEndpoint);
     _link =
@@ -57,12 +57,14 @@ final Provider<GraphQLClient> graphQLClientProvider =
   }
   */
 
-  return GraphQLClient(
-    /// **NOTE** The default store is the InMemoryStore, which does NOT persist to disk
-    cache: GraphQLCache(),
-    link: token != '' ? _link : _httpLink,
-  );
-}, name: "GraphQL Client Provider");
+    return GraphQLClient(
+      /// **NOTE** The default store is the InMemoryStore, which does NOT persist to disk
+      cache: GraphQLCache(),
+      link: token != '' ? _link : _httpLink,
+    );
+  },
+  name: "GraphQL Client Provider",
+);
 
 /// Data Store Provider
 /// Throws an error as we don't want to provide any repository till
