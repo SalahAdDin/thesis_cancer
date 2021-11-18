@@ -1,4 +1,5 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as fc_types;
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -17,6 +18,7 @@ import 'package:thesis_cancer/features/chat/presentation/pages/chat_page.dart';
 import 'package:thesis_cancer/features/user/application/profile.notifier.dart';
 import 'package:thesis_cancer/features/user/application/profile.state.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
+import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/presentation/widgets/edit_profile_widget.dart';
 import 'package:thesis_cancer/features/user/presentation/widgets/profile_widget.dart';
@@ -32,15 +34,36 @@ class ProfileScreen extends HookWidget {
   Future<void> _onSubmit({
     required GlobalKey<FormBuilderState> formKey,
     required Future<void> Function(Map<String, Object?>) onSubmitCallback,
+    required void Function() onEmptyChangesCallback,
   }) async {
     formKey.currentState!.save();
-    final bool isValid = formKey.currentState!.validate();
-    if (isValid) {
-      final Map<String, dynamic> updatedFields = formKey.currentState!.value;
-      onSubmitCallback(updatedFields);
+
+    final Profile _userProfileInitialValues = user.profile ?? Profile.empty;
+    final Map<String, dynamic> _profileInitialValuesMap =
+        _userProfileInitialValues.toJson()
+          ..removeWhere(
+            (String key, _) =>
+                formKey.currentState!.value.containsKey(key) == false,
+          );
+
+    if (mapEquals(
+          <String, dynamic>{
+            ...formKey.currentState!.value,
+            ..._profileInitialValuesMap
+          },
+          formKey.currentState!.value,
+        ) ==
+        false) {
+      final bool isValid = formKey.currentState!.validate();
+      if (isValid) {
+        final Map<String, dynamic> updatedFields = formKey.currentState!.value;
+        onSubmitCallback(updatedFields);
+      } else {
+        // raise and error (snack bar way)
+        // return false;
+      }
     } else {
-      // raise and error (snack bar way)
-      // return false;
+      onEmptyChangesCallback();
     }
   }
 
@@ -127,6 +150,7 @@ class ProfileScreen extends HookWidget {
                 onPressed: () => _onSubmit(
                   formKey: _formKey,
                   onSubmitCallback: profileNotifier.updateProfile,
+                  onEmptyChangesCallback: profileNotifier.toProfileMode,
                 ),
                 icon: const Icon(
                   Icons.done_outlined,

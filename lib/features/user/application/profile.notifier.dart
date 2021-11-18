@@ -57,6 +57,9 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
   void toEditMode() => state = const ProfileState.editing();
 
   ///
+  void toProfileMode() => state = const ProfileState.data();
+
+  ///
   Future<void> updateProfilePhoto() async {
     final XFile? result = await ImagePicker().pickImage(
       imageQuality: 70,

@@ -31,53 +31,56 @@ class ProfileWidget extends HookWidget {
         ? sessionUserProfile
         : userProfile;
 
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: <Widget>[
-              UserAvatar(
-                userAvatarUrl: widgetProfile.profilePhoto?.url,
-                radius: 40,
-              ),
-              Expanded(
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
-                      child: Row(
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: <Widget>[
+                UserAvatar(
+                  userAvatarUrl: widgetProfile.profilePhoto?.url,
+                  radius: 40,
+                ),
+                Expanded(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Text(
+                              widgetProfile.fullName,
+                              style: Theme.of(context).textTheme.headline6,
+                            )
+                          ],
+                        ),
+                      ),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text(
-                            widgetProfile.fullName,
-                            style: Theme.of(context).textTheme.headline6,
-                          )
+                          StatsColumn(
+                            label:
+                                AppLocalizations.of(context)!.postNumberLabel,
+                            number: postsCount,
+                          ),
                         ],
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        StatsColumn(
-                          label: AppLocalizations.of(context)!.postNumberLabel,
-                          number: postsCount,
-                        ),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: widgetProfile.bio != null
-              ? MarkdownBody(data: widgetProfile.bio!)
-              : Container(),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: widgetProfile.bio != null
+                ? MarkdownBody(data: widgetProfile.bio!)
+                : Container(),
+          ),
+        ],
+      ),
     );
   }
 }
