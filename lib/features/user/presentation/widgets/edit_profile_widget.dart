@@ -111,13 +111,12 @@ class EditProfileWidget extends HookWidget {
                     decoration: InputDecoration(
                       labelText: AppLocalizations.of(context)!.phoneNumberLabel,
                     ),
-
-                    /// TODO: Get a wait to validate only if the field is not empty or null
-                    /*validator: FormBuilderValidators
+                    validator: FormBuilderValidators
                         .compose(<String? Function(String?)>[
                       FormBuilderValidators.minLength(
                         context,
                         18,
+                        allowEmpty: true,
                         errorText: AppLocalizations.of(context)!
                             .validationPhoneNumberWrongFormat,
                       ),
@@ -133,23 +132,19 @@ class EditProfileWidget extends HookWidget {
                         errorText: AppLocalizations.of(context)!
                             .validationPhoneNumberWrongFormat,
                       ),
-                      (String? val) {
-                        if (val == '' || val == null) return null;
-                      },
-                    ]),*/
+                    ]),
                   ),
                   FormBuilderTextField(
                     name: 'bio',
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     initialValue: userProfile.bio,
                     maxLines: 5,
-
-                    /// TODO: Get a wait to validate only if the field is not empty or null
-                    /*validator: FormBuilderValidators
+                    validator: FormBuilderValidators
                         .compose(<String? Function(String?)>[
                       FormBuilderValidators.minLength(
                         context,
                         125,
+                        allowEmpty: true,
                         errorText: AppLocalizations.of(context)!
                             .validationBioMinLength,
                       ),
@@ -159,7 +154,7 @@ class EditProfileWidget extends HookWidget {
                         errorText: AppLocalizations.of(context)!
                             .validationBioMaxLength,
                       )
-                    ]),*/
+                    ]),
                     decoration: InputDecoration(
                       labelText: AppLocalizations.of(context)!.bioLabel,
                     ),
