@@ -61,7 +61,12 @@ class PostsList extends HookWidget {
         actionLabel: AppLocalizations.of(context)!.tryAgain,
       ),
       data: () => SmartRefresher(
+        /*
         enablePullUp: true,
+        TODO:
+         1. It is not working well right now with Flutter >= 2.5.0.
+         2. It is useful when using pagination, what we don't have now.
+        */
         header: const WaterDropMaterialHeader(),
         footer: CustomFooter(
           builder: (BuildContext context, LoadStatus? mode) {

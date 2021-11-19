@@ -98,6 +98,7 @@ class GraphQLPostRepository implements PostRepository {
   Future<List<Post>> findByContentType(PostType contentType) async {
     try {
       final QueryOptions options = QueryOptions(
+        fetchPolicy: FetchPolicy.networkOnly,
         document: gql(graphQLDocumentListPostsByContentType),
         variables: <String, dynamic>{
           "contentType": EnumToString.convertToString(contentType)
