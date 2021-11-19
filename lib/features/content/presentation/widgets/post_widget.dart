@@ -27,7 +27,7 @@ class PostWidget extends HookWidget {
   final Post post;
 
   Future<void> _launchURL(String url) async =>
-      await canLaunch(url) ? _launchURL(url) : throw 'Could not launch $url';
+      await canLaunch(url) ? launch(url) : throw 'Could not launch $url';
 
   Widget _deliverContent(UploadFile content) {
     final String contentType = content.mime.split("/")[0];
@@ -157,8 +157,9 @@ class PostWidget extends HookWidget {
             ),
             child: MarkdownBody(
               data: post.description,
-              onTapLink: (String text, String? href, String title) {
-                if (href != null) _launchURL(href);
+              selectable: true,
+              onTapLink: (String text, String? href, String title) async {
+                if (href != null) await _launchURL(href);
               },
             ),
           ),
