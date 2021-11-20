@@ -69,7 +69,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
           (PendingNotificationRequest notification) =>
               notification.id == iterationFeed.hashCode,
         );
-        if (existingLocalNotification != false) {
+        if (existingLocalNotification == false) {
           LocalNotificationService().scheduleNotificationByWeeks(
             feed: iterationFeed,
             notificationDetails:
@@ -87,7 +87,11 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
     if (settings == Settings.empty) {
       try {
-        print('[Settings Notifier Provider]: Fetching settings from server.');
+        print(
+          Colorize(
+            '[Settings Notifier Provider]: Fetching settings from server.',
+          ).blue(),
+        );
         final Settings fetchedSettings =
             await _settingsRepository.fetchSettings();
         await _dataStore.writeSettings(fetchedSettings);
@@ -107,8 +111,8 @@ class SettingsNotifier extends StateNotifier<Settings> {
     } else {
       print(
         Colorize(
-                '[Settings Notifier Provider]: Fetching settings from storage.')
-            .blue(),
+          '[Settings Notifier Provider]: Fetching settings from storage.',
+        ).blue(),
       );
       state = settings;
     }

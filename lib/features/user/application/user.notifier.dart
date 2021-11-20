@@ -162,8 +162,6 @@ class UserNotifier extends StateNotifier<UserState> {
 
         await _dataStore.writeUserProfile(sessionUserWithProfile);
 
-        _userController.state = sessionUserWithProfile;
-
         if (_settings != null && _settings!.surveySchedules != null) {
           final List<SurveySchedule> userRelatedSurveys = _settings!
               .surveySchedules!
@@ -176,6 +174,8 @@ class UserNotifier extends StateNotifier<UserState> {
               .toList();
           _settingsController.scheduleNotifications(userRelatedSurveys);
         }
+
+        _userController.state = sessionUserWithProfile;
       } on GraphQLFailure catch (error) {
         state = UserState.error(error);
       } on ProfileFailure catch (error) {
