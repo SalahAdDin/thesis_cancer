@@ -229,12 +229,12 @@ class LocalNotificationService {
 
   ///
   Future<void> updateBadgeCount() async {
-    final int notificationsCount = await getPendingNotificationCount();
+    final int notificationsCount = await getPendingNotificationsCount();
     final bool supportBadgesCount =
         await FlutterAppBadger.isAppBadgeSupported();
     if (supportBadgesCount) {
       if (notificationsCount > 0) {
-        FlutterAppBadger.updateBadgeCount(await getPendingNotificationCount());
+        FlutterAppBadger.updateBadgeCount(await getPendingNotificationsCount());
       } else {
         FlutterAppBadger.removeBadge();
       }
@@ -242,9 +242,13 @@ class LocalNotificationService {
   }
 
   ///
-  Future<int> getPendingNotificationCount() async {
+  Future<List<PendingNotificationRequest>> getPendingNotifications() async =>
+      flutterLocalNotificationsPlugin.pendingNotificationRequests();
+
+  ///
+  Future<int> getPendingNotificationsCount() async {
     final List<PendingNotificationRequest> pendingNotificationRequests =
-        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+        await getPendingNotifications();
     return pendingNotificationRequests.length;
   }
 }

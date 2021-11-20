@@ -1,7 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'schedules.entity.freezed.dart';
+import '../types.dart';
 
+part 'schedules.entity.freezed.dart';
 part 'schedules.entity.g.dart';
 
 /// Survey Schedule Entity
@@ -9,10 +10,9 @@ part 'schedules.entity.g.dart';
 class SurveySchedule with _$SurveySchedule {
   /// Default builder.
   const factory SurveySchedule({
+    required RoleOptions role,
     required int iterations,
-
-    /// Amount of weeks between each iteration.
-    required int step,
+    required int step, // Amount of weeks between each iteration.
     required String survey, // Survey ID
     required String label,
   }) = _SurveySchedule;

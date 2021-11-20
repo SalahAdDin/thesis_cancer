@@ -1,10 +1,12 @@
 import 'package:badges/badges.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
+import 'package:thesis_cancer/core/domain/settings/introvideo.entity.dart';
 // import 'package:thesis_cancer/core/domain/constants.dart';
 import 'package:thesis_cancer/core/domain/settings/schedules.entity.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
@@ -45,12 +47,16 @@ class MainScreen extends HookWidget {
   Widget build(BuildContext context) {
     final UserState currentUserState = useProvider(homeScreenNotifierProvider);
     final Settings settingsState = useProvider(settingsNotifierProvider);
-    final UploadFile introductoryVideo =
-        settingsState.introductoryVideo ?? UploadFile.empty;
-    final List<SurveySchedule> scheduledSurveys =
-        settingsState.surveySchedules ?? <SurveySchedule>[];
     final UserRole currentUserRole =
         useProvider(userEntityProvider).state.profile?.role ?? UserRole.GUEST;
+    final UploadFile introductoryVideo = settingsState.introductoryVideo
+        .firstWhere(
+          (IntroductoryVideo video) => video.role == currentUserRole,
+          orElse: () => IntroductoryVideo.empty,
+        )
+        .video;
+    final List<SurveySchedule> scheduledSurveys =
+        settingsState.surveySchedules ?? <SurveySchedule>[];
 
     return currentUserState.when(
       loading: () => const Center(child: CircularProgressIndicator()),
@@ -75,7 +81,10 @@ class MainScreen extends HookWidget {
                 },
                 surveyID: scheduledSurveys
                     .firstWhere(
-                      (SurveySchedule element) => element.label == "control",
+                      (SurveySchedule survey) =>
+                          EnumToString.convertToString(survey.role) ==
+                              EnumToString.convertToString(currentUserRole) ||
+                          survey.role == RoleOptions.ALL,
                     )
                     .survey,
               ),
