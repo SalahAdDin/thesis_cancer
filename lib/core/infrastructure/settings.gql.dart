@@ -7,7 +7,10 @@ $graphQLFragmentBody
 query Application{
   application{
     introductoryVideo{
-      ...UploadFileFields
+      role
+      video{
+        ...UploadFileFields
+      }
     }
     registeringSurvey{
       id

@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/local_notification_service.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
+import 'package:thesis_cancer/core/domain/settings/introvideo.entity.dart';
 import 'package:thesis_cancer/core/domain/settings/schedules.entity.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.repository.dart';
@@ -78,9 +79,11 @@ class SettingsNotifier extends StateNotifier<Settings> {
             await _settingsRepository.fetchSettings();
         await _dataStore.writeSettings(fetchedSettings);
 
-        if (fetchedSettings.introductoryVideo != null &&
-            fetchedSettings.introductoryVideo?.url != null) {
-          _cacheManager.downloadFile(fetchedSettings.introductoryVideo!.url);
+        for (final IntroductoryVideo item
+            in fetchedSettings.introductoryVideo) {
+          if (item.video.url != '') {
+            _cacheManager.downloadFile(item.video.url);
+          }
         }
 
         // Local notifications will be scheduled at first app launch.

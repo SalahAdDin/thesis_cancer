@@ -10,7 +10,7 @@ part 'introvideo.entity.g.dart';
 class IntroductoryVideo with _$IntroductoryVideo {
   /// Default builder
   const factory IntroductoryVideo({
-    required RoleOptions role,
+    required UserRole role,
     required UploadFile video,
   }) = _IntroductoryVideo;
 
