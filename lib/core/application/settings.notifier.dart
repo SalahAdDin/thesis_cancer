@@ -105,7 +105,11 @@ class SettingsNotifier extends StateNotifier<Settings> {
         state = Settings.empty;
       }
     } else {
-      print('[Settings Notifier Provider]: Fetching settings from storage.');
+      print(
+        Colorize(
+                '[Settings Notifier Provider]: Fetching settings from storage.')
+            .blue(),
+      );
       state = settings;
     }
   }
