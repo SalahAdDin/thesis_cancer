@@ -20,7 +20,7 @@ class IntroductoryVideo with _$IntroductoryVideo {
 
   /// Builds a empty(dummy) [IntroductoryVideo].
   static const IntroductoryVideo empty = IntroductoryVideo(
-    role: RoleOptions.ALL,
+    role: UserRole.GUEST,
     video: UploadFile.empty,
   );
 }
