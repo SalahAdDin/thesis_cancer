@@ -22,5 +22,6 @@ class Settings with _$Settings {
       _$SettingsFromJson(json);
 
   /// Builds a empty(dummy) [Settings].
-  static const Settings empty = Settings();
+  static const Settings empty =
+      Settings(introductoryVideo: <IntroductoryVideo>[IntroductoryVideo.empty]);
 }

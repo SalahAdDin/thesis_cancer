@@ -17,4 +17,10 @@ class IntroductoryVideo with _$IntroductoryVideo {
   /// Builds a [IntroductoryVideo] from a given json [String].
   factory IntroductoryVideo.fromJson(Map<String, dynamic> json) =>
       _$IntroductoryVideoFromJson(json);
+
+  /// Builds a empty(dummy) [IntroductoryVideo].
+  static const IntroductoryVideo empty = IntroductoryVideo(
+    role: RoleOptions.ALL,
+    video: UploadFile.empty,
+  );
 }
