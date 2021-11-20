@@ -1,6 +1,7 @@
 import 'package:colorize/colorize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_local_notifications_platform_interface/src/types.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/local_notification_service.dart';
@@ -50,7 +51,11 @@ class SettingsNotifier extends StateNotifier<Settings> {
   }
 
   ///
-  void scheduleNotifications(List<SurveySchedule> surveySchedules) {
+  Future<void> scheduleNotifications(
+    List<SurveySchedule> surveySchedules,
+  ) async {
+    final List<PendingNotificationRequest> pendingLocalNotifications =
+        await LocalNotificationService().getPendingNotifications();
     for (final SurveySchedule element in surveySchedules) {
       final ActivityFeed feed = ActivityFeed(
         type: ActivityType.NEW_SURVEY_SCHEDULED,
@@ -58,12 +63,20 @@ class SettingsNotifier extends StateNotifier<Settings> {
         description: "A new ${element.label} survey is waiting for you.",
       );
       for (int i = 1; i < element.iterations; i++) {
-        LocalNotificationService().scheduleNotificationByWeeks(
-          feed: feed.copyWith(id: "SS_$i"),
-          notificationDetails:
-              LocalNotificationService().contentNotificationDetails,
-          step: element.step * i,
+        final ActivityFeed iterationFeed =
+            feed.copyWith(id: "SS_${element.label}_${element.role}_$i");
+        final bool existingLocalNotification = pendingLocalNotifications.any(
+          (PendingNotificationRequest notification) =>
+              notification.id == iterationFeed.hashCode,
         );
+        if (existingLocalNotification != false) {
+          LocalNotificationService().scheduleNotificationByWeeks(
+            feed: iterationFeed,
+            notificationDetails:
+                LocalNotificationService().contentNotificationDetails,
+            step: element.step * i,
+          );
+        }
       }
     }
   }
@@ -84,18 +97,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
           if (item.video.url != '') {
             _cacheManager.downloadFile(item.video.url);
           }
-        }
-
-        // Local notifications will be scheduled at first app launch.
-        // At this moment there is no any settings on the storage.
-        /*
-        TODO: Watch here if the user is logged,
-         don't schedule till the user is logged in.
-        */
-        if (fetchedSettings.surveySchedules != null &&
-            fetchedSettings.surveySchedules!.isNotEmpty) {
-          // && _currentUser != User.empty) {
-          scheduleNotifications(fetchedSettings.surveySchedules!);
         }
 
         state = fetchedSettings;

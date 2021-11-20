@@ -1,7 +1,10 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/application/settings.notifier.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
+import 'package:thesis_cancer/core/domain/settings/schedules.entity.dart';
+import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
@@ -37,6 +40,11 @@ class UserNotifier extends StateNotifier<UserState> {
   ///
   StateController<User?> get _userController =>
       reader(userEntityProvider.notifier);
+
+  SettingsNotifier get _settingsController =>
+      reader(settingsNotifierProvider.notifier);
+
+  Settings? get _settings => _settingsController.state;
 
   ///
   User? get currentUser => _userController.state;
@@ -154,6 +162,19 @@ class UserNotifier extends StateNotifier<UserState> {
         await _dataStore.writeUserProfile(sessionUserWithProfile);
 
         _userController.state = sessionUserWithProfile;
+
+        if (_settings != null && _settings!.surveySchedules != null) {
+          final List<SurveySchedule> userRelatedSurveys =
+              _settings!.surveySchedules!
+                  .where(
+                    (SurveySchedule schedule) =>
+                        schedule.role.toString() ==
+                            sessionUserProfile.role.toString() ||
+                        schedule.role == RoleOptions.ALL,
+                  )
+                  .toList();
+          _settingsController.scheduleNotifications(userRelatedSurveys);
+        }
       } on GraphQLFailure catch (error) {
         state = UserState.error(error);
       } on ProfileFailure catch (error) {

@@ -80,7 +80,10 @@ class MainScreen extends HookWidget {
                 },
                 surveyID: scheduledSurveys
                     .firstWhere(
-                      (SurveySchedule element) => element.label == "control",
+                      (SurveySchedule survey) =>
+                          survey.role.toString() ==
+                              currentUserRole.toString() ||
+                          survey.role == RoleOptions.ALL,
                     )
                     .survey,
               ),

@@ -16,6 +16,7 @@ query Application{
       id
     }
     surveySchedules{
+      role
       label
       survey{
         id
