@@ -1,3 +1,4 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
@@ -164,15 +165,15 @@ class UserNotifier extends StateNotifier<UserState> {
         _userController.state = sessionUserWithProfile;
 
         if (_settings != null && _settings!.surveySchedules != null) {
-          final List<SurveySchedule> userRelatedSurveys =
-              _settings!.surveySchedules!
-                  .where(
-                    (SurveySchedule schedule) =>
-                        schedule.role.toString() ==
-                            sessionUserProfile.role.toString() ||
-                        schedule.role == RoleOptions.ALL,
-                  )
-                  .toList();
+          final List<SurveySchedule> userRelatedSurveys = _settings!
+              .surveySchedules!
+              .where(
+                (SurveySchedule schedule) =>
+                    EnumToString.convertToString(schedule.role) ==
+                        EnumToString.convertToString(sessionUserProfile.role) ||
+                    schedule.role == RoleOptions.ALL,
+              )
+              .toList();
           _settingsController.scheduleNotifications(userRelatedSurveys);
         }
       } on GraphQLFailure catch (error) {

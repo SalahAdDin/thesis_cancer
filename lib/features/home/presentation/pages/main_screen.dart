@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -49,10 +50,10 @@ class MainScreen extends HookWidget {
     final UserRole currentUserRole =
         useProvider(userEntityProvider).state.profile?.role ?? UserRole.GUEST;
     final UploadFile introductoryVideo = settingsState.introductoryVideo
-        .where(
+        .firstWhere(
           (IntroductoryVideo video) => video.role == currentUserRole,
+          orElse: () => IntroductoryVideo.empty,
         )
-        .first
         .video;
     final List<SurveySchedule> scheduledSurveys =
         settingsState.surveySchedules ?? <SurveySchedule>[];
@@ -81,8 +82,8 @@ class MainScreen extends HookWidget {
                 surveyID: scheduledSurveys
                     .firstWhere(
                       (SurveySchedule survey) =>
-                          survey.role.toString() ==
-                              currentUserRole.toString() ||
+                          EnumToString.convertToString(survey.role) ==
+                              EnumToString.convertToString(currentUserRole) ||
                           survey.role == RoleOptions.ALL,
                     )
                     .survey,
