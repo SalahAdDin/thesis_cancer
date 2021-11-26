@@ -20,6 +20,14 @@ class GraphQLProfileRepository implements ProfileRepository {
   /// Injecting the required [GraphQLClient] by reading it from providers.
   GraphQLClient get _client => reader(graphQLClientProvider);
 
+  Extension _extractException(QueryResult response) {
+    final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
+    final Extension extension = Extension.fromJson(
+      graphQLError.extensions!,
+    );
+    return extension;
+  }
+
   @override
   Future<Profile> findById(String profileId) async {
     try {
@@ -51,14 +59,6 @@ class GraphQLProfileRepository implements ProfileRepository {
     } on Exception catch (_) {
       throw ProfileFailure(reason: ProfileFailureReason.unknown);
     }
-  }
-
-  Extension _extractException(QueryResult response) {
-    final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
-    final Extension extension = Extension.fromJson(
-      graphQLError.extensions!,
-    );
-    return extension;
   }
 
   @override

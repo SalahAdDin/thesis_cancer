@@ -81,7 +81,7 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
         await result.readAsBytes(),
         contentType: MediaType(mimeType[0], mimeType[1]),
       );
-      * */
+      */
       final FileDescription info = FileDescription(
         name: "${user.username}_profile_photo",
         alternativeText: "${user.username} profile's photo.",

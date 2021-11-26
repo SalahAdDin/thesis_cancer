@@ -13,7 +13,7 @@ import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart';
-import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
+import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
 
 /// Login Screen
@@ -139,7 +139,7 @@ class LoginScreen extends HookWidget {
         error: (Failure? error) => ErrorScreen(
           reason: error?.reason,
           actionLabel: AppLocalizations.of(context)!.homeLabel,
-          onPressed: () => pushAndReplaceToPage(context, SplashScreen()),
+          onPressed: () => pushAndReplaceToPage(context, MainScreen()),
         ),
       ),
     );
