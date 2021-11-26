@@ -37,8 +37,20 @@ mutation UploadFile(\$file: Upload!, \$info: FileInfoInput) {
 ///
 const String graphQLDocumentMultiUploadFile = '''
 $graphQLFragmentBody
-mutation MultiUploadFile(\$files: [Upload]!) {
-  multipleUpload(files: \$files) {
+mutation MultiUploadFile(
+  \$refId: ID
+  \$ref: String
+  \$field: String
+  \$source: String
+  \$files: [Upload]!
+) {
+  multipleUpload(
+    refId: \$refId
+    ref: \$ref
+    field: \$field
+    source: \$source
+    files: \$files
+  ) {
     ...UploadFileFields
   }
 }

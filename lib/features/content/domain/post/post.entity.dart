@@ -14,7 +14,7 @@ part 'post.entity.g.dart';
 class Post with _$Post {
   ///
   const factory Post({
-    required String id,
+    String? id,
     required PostType type,
     required String description,
     required List<UploadFile> gallery,

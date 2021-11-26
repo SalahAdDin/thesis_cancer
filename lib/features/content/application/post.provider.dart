@@ -33,6 +33,7 @@ final AutoDisposeStateNotifierProviderFamily<PostNotifier, PostsState, PostType>
         .family<PostNotifier, PostsState, PostType>(
   (ProviderReference ref, PostType type) => PostNotifier(
     reader: ref.read,
+    container: ref.container,
     type: type,
   )..init(),
   name: "Posts List Notifier Provider",

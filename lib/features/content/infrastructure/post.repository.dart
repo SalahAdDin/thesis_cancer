@@ -30,11 +30,15 @@ class GraphQLPostRepository implements PostRepository {
   }
 
   @override
-  Future<void> createPost(Post post) async {
+  Future<Post> createPost(Post post) async {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentCreatePost),
-        variables: <String, dynamic>{"data": post},
+        variables: <String, dynamic>{
+          "data": post.copyWith(
+            id: null,
+          )
+        },
       );
       final QueryResult response = await _client.query(options);
 
@@ -52,10 +56,9 @@ class GraphQLPostRepository implements PostRepository {
           throw PostFailure(reason: PostFailureReason.unknown);
         }
       }
-      /*
       final Map<String, dynamic> data =
           response.data?['createPost']['post'] as Map<String, dynamic>;
-      */
+      return Post.fromJson(data);
     } on Exception catch (_) {
       throw PostFailure(reason: PostFailureReason.unknown);
     }

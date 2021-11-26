@@ -56,11 +56,19 @@ class GraphQLFileRepository implements UploadFileRepository {
   }
 
   @override
-  Future<List<UploadFile>> multiUploadFile(List<File> files) async {
+  Future<List<UploadFile>> multiUploadFile({
+    required String refId,
+    required String ref,
+    required String field,
+    required List<File> files,
+  }) async {
     try {
       final QueryOptions options = QueryOptions(
         document: gql(graphQLDocumentMultiUploadFile),
         variables: <String, dynamic>{
+          "refId": refId,
+          "ref": ref,
+          "field": field,
           "files": files,
         },
       );

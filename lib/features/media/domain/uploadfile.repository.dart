@@ -25,7 +25,12 @@ abstract class UploadFileRepository {
   });
 
   ///
-  Future<List<UploadFile>> multiUploadFile(List<File> files);
+  Future<List<UploadFile>> multiUploadFile({
+    required String refId,
+    required String ref,
+    required String field,
+    required List<File> files,
+  });
 
   ///
   Future<void> removeFile(String fileId);
