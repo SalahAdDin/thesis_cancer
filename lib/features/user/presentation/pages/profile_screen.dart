@@ -11,6 +11,7 @@ import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
+import 'package:thesis_cancer/core/presentation/pages/settings_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/carousel_switcher_button.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
 import 'package:thesis_cancer/features/chat/application/chat.provider.dart';
@@ -191,7 +192,10 @@ class ProfileScreen extends HookWidget {
           children: <Widget>[
             IconButton(
               color: Colors.grey,
-              onPressed: () {},
+              onPressed: () => pushToPage(
+                context,
+                const SettingsScreen(),
+              ),
               icon: const Icon(Icons.settings),
             ),
             IconButton(
