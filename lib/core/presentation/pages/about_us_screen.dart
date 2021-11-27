@@ -2,6 +2,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 
@@ -37,9 +38,6 @@ class AboutUsScreen extends HookWidget {
               AppLocalizations.of(context)!.aboutUsParagraphTwo,
             ),
           ),
-          Text(
-            AppLocalizations.of(context)!.aboutUsParagraphThree,
-          ),
           Align(
             alignment: Alignment.centerRight,
             child: Padding(
@@ -49,6 +47,9 @@ class AboutUsScreen extends HookWidget {
                 textAlign: TextAlign.right,
               ),
             ),
+          ),
+          MarkdownBody(
+            data: AppLocalizations.of(context)!.aboutUsParagraphThree,
           ),
         ],
       ),
