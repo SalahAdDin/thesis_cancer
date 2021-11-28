@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:colorize/colorize.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/core/presentation/widgets/audio_player.dart';
 import 'package:thesis_cancer/core/presentation/widgets/cached_network_video.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
 import 'package:thesis_cancer/features/content/presentation/widgets/post_header.dart';
@@ -34,6 +36,8 @@ class PostWidget extends HookWidget {
     final FileType? fileType =
         EnumToString.fromString(FileType.values, contentType);
 
+    print(Colorize(content.url).red());
+
     switch (fileType) {
       case FileType.image:
         return CachedNetworkImage(
@@ -56,6 +60,10 @@ class PostWidget extends HookWidget {
         return CachedNetworkVideo(
           dataSource: content.url,
           enableControls: true,
+        );
+      case FileType.audio:
+        return AudioPlayer(
+          dataSource: content.url,
         );
       case FileType.file:
         return const Center(

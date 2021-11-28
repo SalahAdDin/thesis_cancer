@@ -10,7 +10,7 @@ enum ActivityType {
 }
 
 ///
-enum FileType { image, video, file }
+enum FileType { image, video, audio, file }
 
 ///
 enum TargetIdentifier {
