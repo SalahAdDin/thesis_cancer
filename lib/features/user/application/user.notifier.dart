@@ -111,6 +111,10 @@ class UserNotifier extends StateNotifier<UserState> {
       final Profile updatedProfile =
           currentUserProfile!.copyWith(hasSeenIntroductoryVideo: true);
       await updateProfile(updatedProfile);
+
+      if (updatedProfile.role == UserRole.CONTROL) {
+        state = const UserState.unConfirmed();
+      }
       state = const UserState.mustSeeTutorial();
     }
   }
