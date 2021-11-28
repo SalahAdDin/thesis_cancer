@@ -36,8 +36,6 @@ class PostWidget extends HookWidget {
     final FileType? fileType =
         EnumToString.fromString(FileType.values, contentType);
 
-    print(Colorize(content.url).red());
-
     switch (fileType) {
       case FileType.image:
         return CachedNetworkImage(
