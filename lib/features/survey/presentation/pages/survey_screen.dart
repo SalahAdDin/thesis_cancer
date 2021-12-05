@@ -139,28 +139,37 @@ class SurveyWidget extends HookWidget {
                   children: surveyQuestions != null &&
                           surveyQuestions.isNotEmpty
                       ? <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: Center(
-                              child: DotsIndicator(
-                                dotsCount: surveyQuestions.length,
-                                position: currentQuestionIndex.toDouble(),
-                                decorator: DotsDecorator(
-                                  size: const Size.square(15),
-                                  activeSize: const Size(18, 18),
-                                  activeColor: Theme.of(context).primaryColor,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurface
-                                      .withOpacity(0.12),
-                                ),
-                                onTap: (double position) =>
-                                    answeredQuestion(position.toInt())
-                                        ? surveyNotifier.goTo(position.toInt())
-                                        : null
-                                // print("Current index: $currentQuestion");
-                                ,
+                          SizedBox(
+                            height: 60,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16.0,
+                                horizontal: 20.0,
                               ),
+                              children: <Widget>[
+                                DotsIndicator(
+                                  dotsCount: surveyQuestions.length,
+                                  position: currentQuestionIndex.toDouble(),
+                                  decorator: DotsDecorator(
+                                    size: const Size.square(15),
+                                    activeSize: const Size(18, 18),
+                                    activeColor: Theme.of(context).primaryColor,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface
+                                        .withOpacity(0.12),
+                                  ),
+                                  onTap: (double position) =>
+                                      answeredQuestion(position.toInt())
+                                          ? surveyNotifier
+                                              .goTo(position.toInt())
+                                          : null
+                                  // print("Current index: $currentQuestion");
+                                  ,
+                                ),
+                              ],
                             ),
                           ),
                           Expanded(

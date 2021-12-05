@@ -195,7 +195,7 @@ class QuestionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 30.0, right: 8.0),
