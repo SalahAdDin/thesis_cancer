@@ -85,10 +85,15 @@ class UserNotifier extends StateNotifier<UserState> {
 
   /// Delivers a screen based on the [UserStatus] assigned.
   void deliverUserScreen() {
-    final UserStatus userStatus = assignUserStatus(_userController.state!);
+    final User targetUser = _userController.state!;
+    final UserStatus userStatus = assignUserStatus(targetUser);
     switch (userStatus) {
       case UserStatus.UNCONFIRMED:
-        state = const UserState.unConfirmed();
+        if (targetUser.profile?.role == UserRole.CONTROL) {
+          state = const UserState.unConfirmed(mode: LobbyMode.CONTROL);
+        } else {
+          state = const UserState.unConfirmed();
+        }
         break;
       case UserStatus.ADMIN:
         state = const UserState.isAdmin();

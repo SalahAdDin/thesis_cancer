@@ -61,7 +61,9 @@ class MainScreen extends HookWidget {
     return currentUserState.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       isAdmin: () => MainLayout(),
-      unConfirmed: () => LobbyScreen(),
+      unConfirmed: (LobbyMode mode) => LobbyScreen(
+        mode: mode,
+      ),
       mustSeeIntroduction: () => IntroductoryScreen(
         dataSource: introductoryVideo.url,
         onDone: () async {

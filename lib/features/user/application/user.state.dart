@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 
 part 'user.state.freezed.dart';
@@ -13,7 +14,9 @@ class UserState with _$UserState {
   const factory UserState.isAdmin() = _IsAdmin;
 
   /// [User] is not confirmed by the admin yet.
-  const factory UserState.unConfirmed() = _UnConfirmed;
+  const factory UserState.unConfirmed({
+    @Default(LobbyMode.NEW) LobbyMode mode,
+  }) = _UnConfirmed;
 
   /// [User] didn't see the introductory video yet.
   const factory UserState.mustSeeIntroduction() = _MustSeeIntroduction;

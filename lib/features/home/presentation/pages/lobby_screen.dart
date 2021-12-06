@@ -5,9 +5,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 
 class LobbyScreen extends HookWidget {
+  LobbyScreen({this.mode = LobbyMode.NEW});
+
+  final LobbyMode mode;
+
   // TODO: Improve style
   @override
   Widget build(BuildContext context) {
@@ -25,6 +30,26 @@ class LobbyScreen extends HookWidget {
       },
       const <Object>[],
     );
+
+    List<String> _getParagraphsText() {
+      switch (mode) {
+        case LobbyMode.NEW:
+          return <String>[
+            AppLocalizations.of(context)!.lobbyParagraphOne,
+            AppLocalizations.of(context)!.lobbyParagraphTwo,
+            AppLocalizations.of(context)!.lobbyParagraphThree
+          ];
+          break;
+        case LobbyMode.CONTROL:
+          return <String>[
+            AppLocalizations.of(context)!.lobbyParagraphControlOne,
+            AppLocalizations.of(context)!.lobbyParagraphControlTwo,
+            AppLocalizations.of(context)!.lobbyParagraphControlThree
+          ];
+      }
+    }
+
+    final List<String> literals = _getParagraphsText();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -51,7 +76,7 @@ class LobbyScreen extends HookWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 30),
                       child: Text(
-                        AppLocalizations.of(context)!.lobbyParagraphOne,
+                        literals[0],
                         style: Theme.of(context)
                             .textTheme
                             .bodyText2!
@@ -63,7 +88,7 @@ class LobbyScreen extends HookWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 30),
                       child: Text(
-                        AppLocalizations.of(context)!.lobbyParagraphTwo,
+                        literals[1],
                         style: Theme.of(context)
                             .textTheme
                             .bodyText2!
@@ -74,7 +99,7 @@ class LobbyScreen extends HookWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 30),
                       child: Text(
-                        AppLocalizations.of(context)!.lobbyParagraphThree,
+                        literals[2],
                         style: Theme.of(context)
                             .textTheme
                             .bodyText2!
