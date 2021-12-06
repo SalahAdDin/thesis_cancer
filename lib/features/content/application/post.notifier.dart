@@ -1,5 +1,4 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 // import 'package:thesis_cancer/core/application/global.provider.dart';
 // import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
@@ -40,6 +39,7 @@ class PostNotifier extends StateNotifier<PostsState> {
     try {
       final List<Post> result = await _postRepository.findByContentType(type);
       _postListController.state = result;
+      if (!mounted) return;
       state = const PostsState.data();
     } on PostFailure catch (error) {
       state = PostsState.error(error);
