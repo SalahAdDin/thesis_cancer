@@ -36,7 +36,7 @@ class LobbyScreen extends HookWidget {
             Align(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 100, horizontal: 30),
+                    const EdgeInsets.symmetric(vertical: 70, horizontal: 30),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[

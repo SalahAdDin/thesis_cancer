@@ -114,8 +114,9 @@ class UserNotifier extends StateNotifier<UserState> {
 
       if (updatedProfile.role == UserRole.CONTROL) {
         state = const UserState.unConfirmed();
+      } else {
+        state = const UserState.mustSeeTutorial();
       }
-      state = const UserState.mustSeeTutorial();
     }
   }
 
