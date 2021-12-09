@@ -37,8 +37,6 @@ class ProfileScreen extends HookWidget {
     required Future<void> Function(Map<String, Object?>) onSubmitCallback,
     required void Function() onEmptyChangesCallback,
   }) async {
-    formKey.currentState!.save();
-
     final Profile _userProfileInitialValues = user.profile ?? Profile.empty;
     final Map<String, dynamic> _profileInitialValuesMap =
         _userProfileInitialValues.toJson()
@@ -46,12 +44,14 @@ class ProfileScreen extends HookWidget {
             (String key, _) =>
                 formKey.currentState!.value.containsKey(key) == false,
           );
+    final Map<String, dynamic> initialStatus = <String, dynamic>{
+      ...formKey.currentState!.value,
+      ..._profileInitialValuesMap
+    };
 
+    formKey.currentState!.save();
     if (mapEquals(
-          <String, dynamic>{
-            ...formKey.currentState!.value,
-            ..._profileInitialValuesMap
-          },
+          initialStatus,
           formKey.currentState!.value,
         ) ==
         false) {
