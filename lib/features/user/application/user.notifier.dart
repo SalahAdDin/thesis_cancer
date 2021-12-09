@@ -63,13 +63,14 @@ class UserNotifier extends StateNotifier<UserState> {
 
   /// Assigns a user status based on user and user profile conditions
   UserStatus assignUserStatus(User targetUser) {
-    if (targetUser.confirmed == true &&
-        targetUser.profile?.role != UserRole.CONTROL) {
+    if (targetUser.confirmed == true) {
       if (targetUser.profile?.role == UserRole.ADMIN) {
         return UserStatus.ADMIN;
       } else {
         if (targetUser.profile?.hasSeenIntroductoryVideo == true) {
-          if (targetUser.profile?.hasSeenTutorial == true) {
+          if (targetUser.profile?.role == UserRole.CONTROL) {
+            return UserStatus.UNCONFIRMED;
+          } else if (targetUser.profile?.hasSeenTutorial == true) {
             return UserStatus.FINAL;
           } else {
             return UserStatus.TUTORIAL;
