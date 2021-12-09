@@ -3,7 +3,8 @@ import 'package:flutter/widgets.dart';
 /// Application's relation literals
 class AppLiterals {
   /// Application's title
-  static const String title = 'JineOnkolojik\nDestek';
+  // TODO: This must be handle by App Bar Title and Flutter Login
+  static const String title = 'JineOnkolojik\n\t\t\t\t\t\t\tDestek';
 
   /// Application's Logo
   static const String logo = 'assets/images/TODO:';

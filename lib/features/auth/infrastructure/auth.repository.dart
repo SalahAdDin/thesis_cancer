@@ -149,6 +149,7 @@ class GraphQLAuthRepository implements AuthRepository {
   }) async {
     try {
       final QueryOptions options = QueryOptions(
+        fetchPolicy: FetchPolicy.networkOnly,
         document: gql(graphQLDocumentLoginUser),
         variables: <String, dynamic>{
           "identifier": identifier,
