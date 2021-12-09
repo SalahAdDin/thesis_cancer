@@ -45,6 +45,7 @@ class QuestionWidget extends StatelessWidget {
     int? selectedButton,
     List<int>? selectedButtons,
     bool isRadio = true,
+    double? buttonWidth,
   }) =>
       GroupButton(
         buttons: buttons,
@@ -57,14 +58,23 @@ class QuestionWidget extends StatelessWidget {
         selectedColor: primary,
         borderRadius: BorderRadius.circular(30.0),
         unselectedBorderColor: primary,
-        unselectedTextStyle: const TextStyle(color: primary),
+        unselectedTextStyle: const TextStyle(color: primary, fontSize: 16),
         unselectedShadow: const <BoxShadow>[],
+        selectedTextStyle: const TextStyle(fontSize: 16),
+        buttonWidth: buttonWidth,
+        textPadding: const EdgeInsets.only(
+          left: 20.0,
+          top: 5.0,
+          right: 20.0,
+          bottom: 20.0,
+        ),
       );
 
   Widget _renderInput({
     required Question question,
     required BuildContext context,
   }) {
+    final double buttonWidth = MediaQuery.of(context).size.width - 120;
     Widget answerWidget;
     switch (question.type) {
       case QuestionType.OPEN_SHORT:
@@ -139,6 +149,7 @@ class QuestionWidget extends StatelessWidget {
               onSelected!(buttons[index]),
           selectedButton:
               selectedButton != '' ? buttons.indexOf(selectedButton) : null,
+          buttonWidth: buttonWidth,
         );
         break;
       case QuestionType.MULTIPLE:
@@ -172,6 +183,7 @@ class QuestionWidget extends StatelessWidget {
                   .map((String value) => buttons.indexOf(value))
                   .toList()
               : null,
+          buttonWidth: buttonWidth,
         );
         break;
       case QuestionType.BOOL:
@@ -187,6 +199,7 @@ class QuestionWidget extends StatelessWidget {
               selectedButton != '' ? buttons.indexOf(selectedButton) : null,
           onSelected: (int index, bool isSelected) =>
               onSelected!(buttons[index]),
+          buttonWidth: buttonWidth,
         );
         break;
     }
