@@ -193,8 +193,9 @@ class UserNotifier extends StateNotifier<UserState> {
         state = UserState.error(error);
       }
     }
-    await _firebaseAnalytics
-        .setUserId(_userController.state!.profile?.uid ?? 'guest_user');
+    await _firebaseAnalytics.setUserId(
+      id: _userController.state!.profile?.uid ?? 'guest_user',
+    );
     await _firebaseAnalytics.setUserProperty(
       name: 'backend_user_id',
       value: _userController.state!.id,

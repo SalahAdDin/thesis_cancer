@@ -59,7 +59,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         email: username,
         password: password,
       );
-      await _firebaseAnalytics.setUserId(credentials.user?.uid);
+      await _firebaseAnalytics.setUserId(id: credentials.user?.uid);
       await _firebaseAnalytics.setUserProperty(
         name: 'backend_user_id',
         value: _userController.state!.id,

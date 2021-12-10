@@ -32,7 +32,11 @@ class PostsList extends HookWidget {
       await _analytics.setCurrentScreen(
         screenName: "Post List ${type.toString()}",
       );
-      await _analytics.logViewItemList(itemCategory: type.toString());
+      await _analytics.logViewItem(
+        items: <AnalyticsEventItem>[
+          AnalyticsEventItem(itemCategory: type.toString())
+        ],
+      );
     }
 
     Future<void> _refreshProvider() async {

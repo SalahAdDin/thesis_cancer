@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,8 +70,6 @@ class CancerApp extends HookWidget {
     late String _osVersion;
 
     final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
-    final FirebaseAnalyticsObserver _observer =
-        FirebaseAnalyticsObserver(analytics: _analytics);
 
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
@@ -142,7 +139,7 @@ class CancerApp extends HookWidget {
       darkTheme: darkTheme,
       themeMode: _darkTheme,
       navigatorKey: _navigatorKey,
-      navigatorObservers: <NavigatorObserver>[_observer],
+      // navigatorObservers: <NavigatorObserver>[_observer],
       debugShowCheckedModeBanner: false,
       home: Builder(
         builder: (BuildContext context) => _launcherState.when(

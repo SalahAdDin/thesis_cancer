@@ -85,9 +85,13 @@ class PostWidget extends HookWidget {
 
     Future<void> _setItemAnalytics() async {
       await _analytics.logViewItem(
-        itemId: post.id ?? '',
-        itemName: post.title ?? "${post.author!.username} - ${post.id}",
-        itemCategory: post.type.toString(),
+        items: <AnalyticsEventItem>[
+          AnalyticsEventItem(
+            itemId: post.id ?? '',
+            itemName: post.title ?? "${post.author!.username} - ${post.id}",
+            itemCategory: post.type.toString(),
+          )
+        ],
       );
     }
 

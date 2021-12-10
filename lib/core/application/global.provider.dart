@@ -22,7 +22,7 @@ final FutureProvider<PackageInfo> packageInfoProvider =
 
 final Provider<FirebaseAnalytics> firebaseAnalyticsProvider =
     Provider<FirebaseAnalytics>(
-  (_) => FirebaseAnalytics(),
+  (_) => FirebaseAnalytics.instance,
   name: "Firebase Analytics Instance Provider",
 );
 
