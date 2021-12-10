@@ -119,7 +119,7 @@ class UserNotifier extends StateNotifier<UserState> {
       await updateProfile(updatedProfile);
 
       if (updatedProfile.role == UserRole.CONTROL) {
-        state = const UserState.unConfirmed();
+        state = const UserState.unConfirmed(mode: LobbyMode.CONTROL);
       } else {
         state = const UserState.mustSeeTutorial();
       }
