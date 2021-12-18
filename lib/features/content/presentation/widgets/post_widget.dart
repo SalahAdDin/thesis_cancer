@@ -5,17 +5,17 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/audio_player.dart';
 import 'package:thesis_cancer/core/presentation/widgets/cached_network_video.dart';
+import 'package:thesis_cancer/core/presentation/widgets/read_more_markdown.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
 import 'package:thesis_cancer/features/content/presentation/widgets/post_header.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// Post Widget
 class PostWidget extends HookWidget {
@@ -27,9 +27,6 @@ class PostWidget extends HookWidget {
 
   ///
   final Post post;
-
-  Future<void> _launchURL(String url) async =>
-      await canLaunch(url) ? launch(url) : throw 'Could not launch $url';
 
   Widget _deliverContent(UploadFile content) {
     final String contentType = content.mime.split("/")[0];
@@ -169,12 +166,10 @@ class PostWidget extends HookWidget {
               horizontal: 16.0,
               vertical: 10.0,
             ),
-            child: MarkdownBody(
+            child: ReadMoreMarkdown(
               data: post.description,
-              selectable: true,
-              onTapLink: (String text, String? href, String title) async {
-                if (href != null) await _launchURL(href);
-              },
+              trimCollapsedText: AppLocalizations.of(context)!.more,
+              trimExpandedText: AppLocalizations.of(context)!.less,
             ),
           ),
         ],
