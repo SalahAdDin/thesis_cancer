@@ -117,6 +117,7 @@ class PostWidget extends HookWidget {
               child: SizedBox(
                 height: swiperHeight,
                 child: Swiper(
+                  loop: false,
                   itemCount: post.gallery.length,
                   itemHeight: swiperHeight,
                   itemWidth: swiperWidth,
