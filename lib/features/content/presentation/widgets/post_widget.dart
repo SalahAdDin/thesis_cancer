@@ -109,20 +109,23 @@ class PostWidget extends HookWidget {
           PostHeader(
             author: post.author!,
           ),
-          GestureDetector(
-            // TODO: do like on post
-            // onDoubleTap: () => null,
-            child: SizedBox(
-              height: swiperHeight,
-              child: Swiper(
-                itemCount: post.gallery.length,
-                itemHeight: swiperHeight,
-                itemWidth: swiperWidth,
-                pagination:
-                    post.gallery.length > 1 ? const SwiperPagination() : null,
-                indicatorLayout: PageIndicatorLayout.SCALE,
-                itemBuilder: (_, int index) =>
-                    _deliverContent(post.gallery[index]),
+          Visibility(
+            visible: post.gallery.isNotEmpty,
+            child: GestureDetector(
+              // TODO: do like on post
+              // onDoubleTap: () => null,
+              child: SizedBox(
+                height: swiperHeight,
+                child: Swiper(
+                  itemCount: post.gallery.length,
+                  itemHeight: swiperHeight,
+                  itemWidth: swiperWidth,
+                  pagination:
+                      post.gallery.length > 1 ? const SwiperPagination() : null,
+                  indicatorLayout: PageIndicatorLayout.SCALE,
+                  itemBuilder: (_, int index) =>
+                      _deliverContent(post.gallery[index]),
+                ),
               ),
             ),
           ),

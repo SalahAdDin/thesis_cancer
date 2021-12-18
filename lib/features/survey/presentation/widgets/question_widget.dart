@@ -62,12 +62,14 @@ class QuestionWidget extends StatelessWidget {
         unselectedShadow: const <BoxShadow>[],
         selectedTextStyle: const TextStyle(fontSize: 16),
         buttonWidth: buttonWidth,
+        /*
         textPadding: const EdgeInsets.only(
           left: 20.0,
           top: 5.0,
           right: 20.0,
           bottom: 20.0,
         ),
+        */
       );
 
   Widget _renderInput({
@@ -139,12 +141,28 @@ class QuestionWidget extends StatelessWidget {
           initialText: userAnswer?.answer,
         );
         break;
+      case QuestionType.BOOL:
+        final List<String> buttons = <String>[
+          AppLocalizations.of(context)!.incorrect,
+          AppLocalizations.of(context)!.correct
+        ];
+        final String selectedButton = userAnswer?.answer ?? '';
+
+        answerWidget = _themedGroupButton(
+          buttons: buttons,
+          selectedButton:
+              selectedButton != '' ? buttons.indexOf(selectedButton) : null,
+          onSelected: (int index, bool isSelected) =>
+              onSelected!(buttons[index]),
+          buttonWidth: buttonWidth,
+        );
+        break;
       case QuestionType.SINGLE:
         final List<String> buttons = question.answer!.split(",");
         final String selectedButton = userAnswer?.answer ?? '';
 
         answerWidget = _themedGroupButton(
-          buttons: buttons,
+          buttons: buttons.map((String label) => label.trim()).toList(),
           onSelected: (int index, bool isSelected) =>
               onSelected!(buttons[index]),
           selectedButton:
@@ -158,7 +176,7 @@ class QuestionWidget extends StatelessWidget {
 
         answerWidget = _themedGroupButton(
           isRadio: false,
-          buttons: buttons,
+          buttons: buttons.map((String label) => label.trim()).toList(),
           onSelected: (int index, bool isSelected) {
             final String rawCurrentAnswer = userAnswer?.answer ?? '';
             final List<String> currentAnswer = rawCurrentAnswer != ''
@@ -183,22 +201,6 @@ class QuestionWidget extends StatelessWidget {
                   .map((String value) => buttons.indexOf(value))
                   .toList()
               : null,
-          buttonWidth: buttonWidth,
-        );
-        break;
-      case QuestionType.BOOL:
-        final List<String> buttons = <String>[
-          AppLocalizations.of(context)!.incorrect,
-          AppLocalizations.of(context)!.correct
-        ];
-        final String selectedButton = userAnswer?.answer ?? '';
-
-        answerWidget = _themedGroupButton(
-          buttons: buttons,
-          selectedButton:
-              selectedButton != '' ? buttons.indexOf(selectedButton) : null,
-          onSelected: (int index, bool isSelected) =>
-              onSelected!(buttons[index]),
           buttonWidth: buttonWidth,
         );
         break;

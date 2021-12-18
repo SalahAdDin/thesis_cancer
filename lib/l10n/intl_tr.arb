@@ -15,6 +15,7 @@
   "more": "...daha",
   "less": "az",
   "postNumberLabel": "gönderiler",
+  "profileNoNameWarning": "Uzmanlarımızla konuşmanız için Adınızı ve Soyadınızı ayarlamayı unutmayın.",
   "tryAgain": "Tekrar deneyin!",
   "pullUpLoad": "yük kaldır...",
   "loadFile": "Yükleme başarısız!\nYeniden denemek için tıklayın.",

@@ -3,6 +3,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
@@ -118,14 +119,8 @@ class SurveyWidget extends HookWidget {
                 top: 50.0,
                 bottom: 20.0,
               ),
-              child: Text(
-                currentSurvey.intro!,
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
+              child: MarkdownBody(
+                data: currentSurvey.intro!,
               ),
             )
           else

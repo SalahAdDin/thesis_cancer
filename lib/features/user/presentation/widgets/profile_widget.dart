@@ -34,6 +34,27 @@ class ProfileWidget extends HookWidget {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
+          Visibility(
+            visible: widgetProfile.fullName == '',
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 16.0),
+              child: Row(
+                children: <Widget>[
+                  const Icon(
+                    Icons.warning_outlined,
+                  ),
+                  Text(
+                    AppLocalizations.of(context)!.profileNoNameWarning,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                      fontSize: 14.0,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(

@@ -15,6 +15,7 @@
   "more": "...more",
   "less": "less",
   "postNumberLabel": "posts",
+  "profileNoNameWarning": "Don't forget to set your First and Last Name so that you can talk to our experts.",
   "tryAgain": "Try again!",
   "pullUpLoad": "pull up load...",
   "loadFile": "Load Failed!\nClick to retry.",
