@@ -3,7 +3,7 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="JineOnkolojikDestek"
+        android:label="JineOnkolojik Destek"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"

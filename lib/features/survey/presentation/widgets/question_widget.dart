@@ -62,14 +62,10 @@ class QuestionWidget extends StatelessWidget {
         unselectedShadow: const <BoxShadow>[],
         selectedTextStyle: const TextStyle(fontSize: 16),
         buttonWidth: buttonWidth,
-        /*
-        textPadding: const EdgeInsets.only(
-          left: 20.0,
-          top: 5.0,
-          right: 20.0,
-          bottom: 20.0,
+        textPadding: const EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 16.0,
         ),
-        */
       );
 
   Widget _renderInput({
