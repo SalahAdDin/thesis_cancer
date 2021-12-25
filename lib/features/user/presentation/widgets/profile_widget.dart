@@ -37,20 +37,28 @@ class ProfileWidget extends HookWidget {
           Visibility(
             visible: widgetProfile.fullName == '',
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(
+                vertical: 10.0,
+                horizontal: 16.0,
+              ),
               child: Row(
                 children: <Widget>[
                   const Icon(
                     Icons.warning_outlined,
                   ),
-                  Text(
-                    AppLocalizations.of(context)!.profileNoNameWarning,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.error,
-                      fontSize: 14.0,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Expanded(
+                      child: Text(
+                        AppLocalizations.of(context)!.profileNoNameWarning,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                          fontSize: 14.0,
+                        ),
+                        overflow: TextOverflow.clip,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
