@@ -61,7 +61,7 @@ class ChatNotifier extends StateNotifier<bool> {
   }
 
   ///
-  Future<void> handleMessageTap(fc_types.Message message) async {
+  void handleMessageTap(_, fc_types.Message message) async {
     if (message is fc_types.FileMessage) {
       String localPath = message.uri;
       if (message.uri.startsWith('http')) {

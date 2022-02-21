@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:colorize/colorize.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
@@ -84,7 +83,7 @@ class PostWidget extends HookWidget {
       await _analytics.logViewItem(
         items: <AnalyticsEventItem>[
           AnalyticsEventItem(
-            itemId: post.id ?? '',
+            itemId: post.id,
             itemName: post.title ?? "${post.author!.username} - ${post.id}",
             itemCategory: post.type.toString(),
           )
