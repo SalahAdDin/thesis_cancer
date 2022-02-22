@@ -50,22 +50,25 @@ class QuestionWidget extends StatelessWidget {
       GroupButton(
         buttons: buttons,
         onSelected: onSelected,
-        selectedButton: selectedButton,
-        selectedButtons: selectedButtons,
-        isRadio: isRadio,
-        spacing: 10,
-        direction: Axis.vertical,
-        selectedColor: primary,
-        borderRadius: BorderRadius.circular(30.0),
-        unselectedBorderColor: primary,
-        unselectedTextStyle: const TextStyle(color: primary, fontSize: 16),
-        unselectedShadow: const <BoxShadow>[],
-        selectedTextStyle: const TextStyle(fontSize: 16),
-        buttonWidth: buttonWidth,
-        textPadding: const EdgeInsets.symmetric(
-          vertical: 10.0,
-          horizontal: 16.0,
+        controller: GroupButtonController(
+          selectedIndex: selectedButton,
+          selectedIndexes: selectedButtons ?? <int>[],
         ),
+        options: GroupButtonOptions(
+          direction: Axis.vertical,
+          selectedColor: primary,
+          borderRadius: BorderRadius.circular(30.0),
+          unselectedBorderColor: primary,
+          unselectedTextStyle: const TextStyle(color: primary, fontSize: 16),
+          unselectedShadow: const <BoxShadow>[],
+          selectedTextStyle: const TextStyle(fontSize: 16),
+          buttonWidth: buttonWidth,
+          textPadding: const EdgeInsets.symmetric(
+            vertical: 10.0,
+            horizontal: 16.0,
+          ),
+        ),
+        isRadio: isRadio,
       );
 
   Widget _renderInput({

@@ -63,6 +63,12 @@ class SurveyScreen extends HookWidget {
       data: () => SurveyWidget(
         surveyID: surveyID,
       ),
+      answered: () => SurveyWidget(
+        surveyID: surveyID,
+      ),
+      fresh: (_) => SurveyWidget(
+        surveyID: surveyID,
+      ),
       error: (Failure? error) => ErrorScreen(
         onPressed: () => Navigator.of(context).maybePop(),
         reason: error?.reason,
@@ -156,11 +162,17 @@ class SurveyWidget extends HookWidget {
                                         .onSurface
                                         .withOpacity(0.12),
                                   ),
-                                  onTap: (double position) =>
-                                      answeredQuestion(position.toInt())
-                                          ? surveyNotifier
-                                              .goTo(position.toInt())
-                                          : null
+                                  onTap: (double position) => (position >
+                                                  currentQuestionIndex &&
+                                              answeredQuestion(
+                                                currentQuestionIndex,
+                                              )) ||
+                                          (position < currentQuestionIndex &&
+                                              answeredQuestion(
+                                                position.toInt(),
+                                              ))
+                                      ? surveyNotifier.goTo(position.toInt())
+                                      : null
                                   // print("Current index: $currentQuestion");
                                   ,
                                 ),

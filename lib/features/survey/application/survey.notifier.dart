@@ -71,14 +71,17 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   Future<void> completeSurvey() async {
     try {
       final int iteration = await resultRepository.countUserSurveyResults(
-          surveyId: surveyController.state.id, userId: currentUserId);
+        surveyId: surveyController.state.id,
+        userId: currentUserId,
+      );
 
       final UserSurveyResult userSurveyResult = UserSurveyResult(
-          user: currentUserId,
-          survey: surveyController.state.id,
-          answers: answers.values.toList(),
-          iteration: iteration + 1);
-      // TODO: persists answer on locale/ cache.
+        user: currentUserId,
+        survey: surveyController.state.id,
+        answers: answers.values.toList(),
+        iteration: iteration + 1,
+      );
+      // TODO: persists answer on locale/cache.
 
       await resultRepository.createUserSurveyResult(userSurveyResult);
 
@@ -100,7 +103,7 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
       duration: const Duration(milliseconds: 500),
       curve: Curves.ease,
     );
-    state = const SurveyState.data();
+    state = SurveyState.fresh(step);
   }
 
   ///
@@ -122,7 +125,7 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   }) {
     answers[questionId] =
         UserSurveyAnswer(answer: answer, statement: statement);
-    state = const SurveyState.data();
+    state = const SurveyState.answered();
   }
 
   ///
@@ -130,7 +133,7 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
     required String questionId,
   }) {
     answers.remove(questionId);
-    state = const SurveyState.data();
+    state = SurveyState.fresh(int.parse(questionId));
   }
 
   ///

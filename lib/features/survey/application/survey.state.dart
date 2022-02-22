@@ -14,6 +14,10 @@ class SurveyState with _$SurveyState {
 
   const factory SurveyState.data() = _Data;
 
+  const factory SurveyState.fresh([int? index]) = _Fresh;
+
+  const factory SurveyState.answered() = _Answered;
+
   const factory SurveyState.completed() = _Completed;
 
   const factory SurveyState.error([Failure? error]) = _Error;
