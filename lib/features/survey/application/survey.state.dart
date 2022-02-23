@@ -12,11 +12,7 @@ class SurveyState with _$SurveyState {
       _CurrentQuestion;
   */
 
-  const factory SurveyState.data() = _Data;
-
-  const factory SurveyState.fresh([int? index]) = _Fresh;
-
-  const factory SurveyState.answered() = _Answered;
+  const factory SurveyState.data([int? index]) = _Data;
 
   const factory SurveyState.completed() = _Completed;
 

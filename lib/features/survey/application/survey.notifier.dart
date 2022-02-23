@@ -103,7 +103,7 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
       duration: const Duration(milliseconds: 500),
       curve: Curves.ease,
     );
-    state = SurveyState.fresh(step);
+    state = SurveyState.data(step);
   }
 
   ///
@@ -125,7 +125,7 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   }) {
     answers[questionId] =
         UserSurveyAnswer(answer: answer, statement: statement);
-    state = const SurveyState.answered();
+    state = SurveyState.data(int.parse(questionId));
   }
 
   ///
@@ -133,7 +133,7 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
     required String questionId,
   }) {
     answers.remove(questionId);
-    state = SurveyState.fresh(int.parse(questionId));
+    state = SurveyState.data(int.parse(questionId));
   }
 
   ///

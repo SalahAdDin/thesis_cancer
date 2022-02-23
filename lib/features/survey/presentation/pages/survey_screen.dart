@@ -60,13 +60,7 @@ class SurveyScreen extends HookWidget {
         onPressed: onCompleteSurvey,
         actionLabel: AppLocalizations.of(context)!.next,
       ),
-      data: () => SurveyWidget(
-        surveyID: surveyID,
-      ),
-      answered: () => SurveyWidget(
-        surveyID: surveyID,
-      ),
-      fresh: (_) => SurveyWidget(
+      data: (_) => SurveyWidget(
         surveyID: surveyID,
       ),
       error: (Failure? error) => ErrorScreen(
