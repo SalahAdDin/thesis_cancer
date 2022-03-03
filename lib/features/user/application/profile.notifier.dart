@@ -3,6 +3,8 @@ import "package:http/http.dart";
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/features/chat/application/chat.provider.dart';
 import 'package:thesis_cancer/features/chat/domain/chat.repository.dart';
 import 'package:thesis_cancer/features/media/application/uploadfile.provider.dart';
@@ -34,6 +36,8 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
   final Reader reader;
 
   Profile get _profile => user.profile ?? Profile.empty;
+
+  DataStoreRepository get _dataStore => reader(dataStoreRepositoryProvider);
 
   ChatRepository get _chatRepository => reader(chatRepositoryProvider);
 
@@ -118,13 +122,11 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
   }
 
   ///
-  Future<void> updateProfile(Map<String, Object?> validFields) async {
+  Future<void> updateProfile(Profile updatedProfile) async {
     try {
-      final Profile updatedFields = Profile.fromJson(validFields);
-
       final Profile fetchedUpdatedProfile =
           await _profileRepository.updateProfile(
-        updatedProfile: updatedFields.copyWith(
+        updatedProfile: updatedProfile.copyWith(
           id: _profile.id,
           role: _profile.role,
           uid: _profile.uid,
@@ -135,6 +137,8 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
 
       final User updatedUser =
           _currentUser!.copyWith(profile: fetchedUpdatedProfile);
+
+      await _dataStore.writeUserProfile(updatedUser);
       _userController.state = updatedUser;
 
       state = const ProfileState.data();

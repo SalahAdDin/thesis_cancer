@@ -34,7 +34,7 @@ class ProfileScreen extends HookWidget {
 
   Future<void> _onSubmit({
     required GlobalKey<FormBuilderState> formKey,
-    required Future<void> Function(Map<String, Object?>) onSubmitCallback,
+    required Future<void> Function(Profile) onSubmitCallback,
     required void Function() onEmptyChangesCallback,
   }) async {
     final Profile _userProfileInitialValues = user.profile ?? Profile.empty;
@@ -58,7 +58,8 @@ class ProfileScreen extends HookWidget {
       final bool isValid = formKey.currentState!.validate();
       if (isValid) {
         final Map<String, dynamic> updatedFields = formKey.currentState!.value;
-        onSubmitCallback(updatedFields);
+        final Profile updatedProfile = Profile.fromJson(updatedFields);
+        onSubmitCallback(updatedProfile);
       } else {
         // raise and error (snack bar way)
         // return false;

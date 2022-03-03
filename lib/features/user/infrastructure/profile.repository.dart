@@ -31,7 +31,8 @@ class GraphQLProfileRepository implements ProfileRepository {
   @override
   Future<Profile> findById(String profileId) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentGetProfile),
         variables: <String, dynamic>{"id": profileId},
       );
@@ -64,7 +65,8 @@ class GraphQLProfileRepository implements ProfileRepository {
   @override
   Future<Profile> findByUserId(String userId) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentGetProfileByUserId),
         variables: <String, dynamic>{"userId": userId},
       );
@@ -104,7 +106,8 @@ class GraphQLProfileRepository implements ProfileRepository {
     required Profile updatedProfile,
   }) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentUpdateProfile),
         variables: <String, dynamic>{
           "id": updatedProfile.id,
@@ -150,7 +153,8 @@ class GraphQLProfileRepository implements ProfileRepository {
     required String photoId,
   }) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentUpdateProfile),
         variables: <String, dynamic>{
           "id": profileId,
@@ -191,7 +195,8 @@ class GraphQLProfileRepository implements ProfileRepository {
   @override
   Future<int> countPostsByUser({required String userId}) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentCountPosts),
         variables: <String, dynamic>{"userID": userId},
       );
@@ -223,7 +228,8 @@ class GraphQLProfileRepository implements ProfileRepository {
     required Map<String, dynamic> query,
   }) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentFindProfiles),
         variables: <String, dynamic>{
           "where": query,
