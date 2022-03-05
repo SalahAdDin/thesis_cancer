@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 /// Navigate to Page.
-Future<void> pushToPage(BuildContext context, Widget widget) async =>
-    Navigator.of(context).push(
+Future<void> pushToPage(NavigatorState navigator, Widget widget) async =>
+    navigator.push(
       MaterialPageRoute<Widget>(builder: (_) => widget),
     );
 

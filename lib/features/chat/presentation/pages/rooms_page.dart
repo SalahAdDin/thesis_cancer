@@ -1,5 +1,4 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as fc_types;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -37,6 +36,7 @@ class RoomsPage extends HookWidget {
     useEffect(
       () {
         _setScreenAnalytics();
+        return null;
       },
       const <Object>[],
     );
@@ -70,7 +70,7 @@ class RoomsPage extends HookWidget {
               return ListTile(
                 title: Text(room.name ?? 'Room'),
                 onTap: () => pushToPage(
-                  context,
+                  Navigator.of(context),
                   ChatPage(
                     room: room,
                   ),

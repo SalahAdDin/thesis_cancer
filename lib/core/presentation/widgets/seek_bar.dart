@@ -2,9 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+///
 class SeekBar extends StatefulWidget {
   ///
-  SeekBar({
+  const SeekBar({
     required this.duration,
     required this.position,
     required this.bufferedPosition,
@@ -12,11 +13,19 @@ class SeekBar extends StatefulWidget {
     this.onChangeEnd,
   });
 
+  ///
   final Duration duration;
+
+  ///
   final Duration position;
+
+  ///
   final Duration bufferedPosition;
+
+  ///
   final ValueChanged<Duration>? onChanged;
 
+  ///
   final ValueChanged<Duration>? onChangeEnd;
 
   @override
@@ -114,6 +123,7 @@ class _SeekBarState extends State<SeekBar> {
   Duration get _remaining => widget.duration - widget.position;
 }
 
+///
 class HiddenThumbComponentShape extends SliderComponentShape {
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) => Size.zero;
@@ -135,14 +145,22 @@ class HiddenThumbComponentShape extends SliderComponentShape {
   }) {}
 }
 
+///
 class PositionData {
+  ///
   PositionData(this.position, this.bufferedPosition, this.duration);
 
+  ///
   final Duration position;
+
+  ///
   final Duration bufferedPosition;
+
+  ///
   final Duration duration;
 }
 
+///
 void showSliderDialog({
   required BuildContext context,
   required String title,

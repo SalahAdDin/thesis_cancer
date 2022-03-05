@@ -92,6 +92,7 @@ class ProfileScreen extends HookWidget {
     useEffect(
       () {
         _setScreenAnalytics();
+        return null;
       },
       const <Object>[],
     );
@@ -108,11 +109,12 @@ class ProfileScreen extends HookWidget {
                 user.profile!.role == UserRole.ADMIN,
             child: IconButton(
               onPressed: () async {
+                final NavigatorState navigator = Navigator.of(context);
                 final fc_types.Room room = await context
                     .read(chatRepositoryProvider)
                     .createRoom(profile: user.profile!);
                 pushToPage(
-                  context,
+                  navigator,
                   ChatPage(room: room),
                 );
               },
@@ -194,7 +196,7 @@ class ProfileScreen extends HookWidget {
             IconButton(
               color: Colors.grey,
               onPressed: () => pushToPage(
-                context,
+                Navigator.of(context),
                 const SettingsScreen(),
               ),
               icon: const Icon(Icons.settings),

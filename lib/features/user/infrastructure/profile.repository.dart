@@ -119,7 +119,8 @@ class GraphQLProfileRepository implements ProfileRepository {
           ),
         },
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -165,7 +166,8 @@ class GraphQLProfileRepository implements ProfileRepository {
           },
         },
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -200,7 +202,8 @@ class GraphQLProfileRepository implements ProfileRepository {
         document: gql(graphQLDocumentCountPosts),
         variables: <String, dynamic>{"userID": userId},
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
           throw GraphQLFailure(reason: FailureReason.unableToConnect);
@@ -235,7 +238,8 @@ class GraphQLProfileRepository implements ProfileRepository {
           "where": query,
         },
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {

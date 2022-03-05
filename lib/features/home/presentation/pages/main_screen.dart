@@ -73,7 +73,7 @@ class MainScreen extends HookWidget {
                 .hasSeenIntroductoryVideo();
           } else {
             pushToPage(
-              context,
+              Navigator.of(context),
               SurveyScreen(
                 onCompleteSurvey: () async {
                   Navigator.of(context).pop();
@@ -145,8 +145,6 @@ class MainLayout extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size _screenSize = MediaQuery.of(context).size;
-
     // [StateProvider] which handles the current screen's viewing tab.
     // TODO: make this local with useState
     final ValueNotifier<PostType> tabType = useState(PostType.INFORMATION);
@@ -245,7 +243,7 @@ class MainLayout extends HookWidget {
     Future<void> _navigateOnTap(int index) async {
       if (index == 4) {
         pushToPage(
-          context,
+          Navigator.of(context),
           ProfileScreen(
             user: sessionUser,
           ),
@@ -498,7 +496,7 @@ class MainLayout extends HookWidget {
               constraints: const BoxConstraints(minWidth: 10),
               iconSize: 20,
               tooltip: AppLocalizations.of(context)!.messages,
-              onPressed: () => pushToPage(context, RoomsPage()),
+              onPressed: () => pushToPage(Navigator.of(context), RoomsPage()),
             ),
           ),
           /*

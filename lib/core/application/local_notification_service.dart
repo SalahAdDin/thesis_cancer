@@ -162,7 +162,9 @@ class LocalNotificationService {
   }
 
   /// On notification click callback function.
-  Future<void> setOnSelectNotification(Function onSelectNotification) async =>
+  Future<void> setOnSelectNotification(
+    Function(String payload) onSelectNotification,
+  ) async =>
       flutterLocalNotificationsPlugin.initialize(
         initializationSettings,
         onSelectNotification: (String? payload) async {
@@ -182,7 +184,7 @@ class LocalNotificationService {
 
   /// Set's the function to do when the app is launched at clicking notifications.
   Future<void> handleApplicationWasLaunchedFromNotification(
-    Function onSelectNotification,
+    Function(String payload) onSelectNotification,
   ) async {
     final NotificationAppLaunchDetails? notificationAppLaunchDetails =
         await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();

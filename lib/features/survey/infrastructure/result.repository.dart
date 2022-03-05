@@ -19,7 +19,8 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
   /// Injecting the required [GraphQLClient] by reading it from providers.
   GraphQLClient get client => reader(graphQLClientProvider);
 
-  Extension extractException(QueryResult response) {
+  ///
+  Extension extractException(QueryResult<Map<String, dynamic>> response) {
     final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,

@@ -15,6 +15,8 @@ import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 /// Store Path literals
 class StorePath {
+  StorePath._();
+
   /// Path for [Profile]
   static const String profile = 'profile';
 

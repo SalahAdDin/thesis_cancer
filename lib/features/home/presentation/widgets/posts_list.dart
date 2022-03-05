@@ -51,6 +51,7 @@ class PostsList extends HookWidget {
     useEffect(
       () {
         _setScreenAnalytics();
+        return null;
       },
       const <Object>[],
     );

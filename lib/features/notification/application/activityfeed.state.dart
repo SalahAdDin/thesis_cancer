@@ -7,8 +7,9 @@ part 'activityfeed.state.freezed.dart';
 class ActivityFeedState with _$ActivityFeedState {
   const factory ActivityFeedState.loading() = _Loading;
 
-  const factory ActivityFeedState.data(
-      {required List<ActivityFeed> notifications}) = _Data;
+  const factory ActivityFeedState.data({
+    required List<ActivityFeed> notifications,
+  }) = _Data;
 
   const factory ActivityFeedState.completed() = _Completed;
 

@@ -7,7 +7,9 @@ enum FileFailureReason {
   unexpectedResult,
 }
 
+///
 class FileFailure extends Failure {
+  ///
   FileFailure({required this.reason});
 
   @override

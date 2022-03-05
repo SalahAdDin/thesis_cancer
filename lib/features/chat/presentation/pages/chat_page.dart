@@ -52,6 +52,7 @@ class ChatPage extends HookWidget {
     useEffect(
       () {
         _setScreenAnalytics();
+        return null;
       },
       const <Object>[],
     );
@@ -78,8 +79,9 @@ class ChatPage extends HookWidget {
       appBar: Header(
         title: GestureDetector(
           onTap: () async {
+            final NavigatorState navigator = Navigator.of(context);
             final User user = await interlocutorUser();
-            pushToPage(context, ProfileScreen(user: user));
+            pushToPage(navigator, ProfileScreen(user: user));
           },
           child: ListTile(
             contentPadding: EdgeInsets.zero,

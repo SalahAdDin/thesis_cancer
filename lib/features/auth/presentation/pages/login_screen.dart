@@ -34,6 +34,7 @@ class LoginScreen extends HookWidget {
     useEffect(
       () {
         _setScreenAnalytics();
+        return null;
       },
       const <Object>[],
     );
@@ -129,7 +130,7 @@ class LoginScreen extends HookWidget {
       onSubmitAnimationCompleted: () => authScreenState.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         signedUp: () => pushToPage(
-          context,
+          Navigator.of(context),
           SurveyScreen(
             onCompleteSurvey: () => pushAndReplaceToPage(
               context,
