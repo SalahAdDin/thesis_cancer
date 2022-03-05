@@ -20,6 +20,7 @@ final FutureProvider<PackageInfo> packageInfoProvider =
   name: "Package Info Provider",
 );
 
+///
 final Provider<FirebaseAnalytics> firebaseAnalyticsProvider =
     Provider<FirebaseAnalytics>(
   (_) => FirebaseAnalytics.instance,

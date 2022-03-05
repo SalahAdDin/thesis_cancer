@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+///
 const Color primary = Color(0xff00a478);
 
 // Which is the default value for this?
 // It affects the disabled button style.
+///
 const Color onSurface = primary; // Color(0xffb4e4d7);
 
+///
 MaterialColor materialJadeColor = const MaterialColor(
   0xff00a478,
   <int, Color>{
@@ -22,9 +25,11 @@ MaterialColor materialJadeColor = const MaterialColor(
   },
 );
 
+///
 ColorScheme lightColorScheme =
     ColorScheme.fromSwatch(primarySwatch: materialJadeColor);
 
+///
 final ThemeData lightTheme = ThemeData(
   primarySwatch: materialJadeColor,
   brightness: Brightness.light,
@@ -47,6 +52,7 @@ final ThemeData lightTheme = ThemeData(
       ),
 );
 
+///
 final ThemeData darkTheme = ThemeData.dark().copyWith(
   primaryColor: primary,
   // accentColor: primary,
