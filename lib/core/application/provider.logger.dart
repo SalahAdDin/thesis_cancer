@@ -1,4 +1,5 @@
 import 'package:colorize/colorize.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// Logger
@@ -15,6 +16,8 @@ class Logger extends ProviderObserver {
       title = Colorize('[${provider.name ?? provider.runtimeType}]\n');
       value = Colorize('\tValue: $newValue');
     }
-    print('${title.yellow()}${value.green()}');
+    if (kDebugMode) {
+      print('${title.yellow()}${value.green()}');
+    }
   }
 }

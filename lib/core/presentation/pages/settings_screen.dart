@@ -3,7 +3,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:thesis_cancer/core/presentation/pages/about_us_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
 
+///
 class SettingsScreen extends StatelessWidget {
+  ///
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override

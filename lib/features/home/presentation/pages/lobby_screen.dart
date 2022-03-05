@@ -1,6 +1,5 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,9 +7,12 @@ import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 
+///
 class LobbyScreen extends HookWidget {
-  LobbyScreen({this.mode = LobbyMode.NEW});
+  ///
+  const LobbyScreen({this.mode = LobbyMode.NEW});
 
+  ///
   final LobbyMode mode;
 
   // TODO: Improve style
@@ -27,6 +29,7 @@ class LobbyScreen extends HookWidget {
     useEffect(
       () {
         _setScreenAnalytics();
+        return null;
       },
       const <Object>[],
     );
@@ -39,7 +42,6 @@ class LobbyScreen extends HookWidget {
             AppLocalizations.of(context)!.lobbyParagraphTwo,
             AppLocalizations.of(context)!.lobbyParagraphThree
           ];
-          break;
         case LobbyMode.CONTROL:
           return <String>[
             AppLocalizations.of(context)!.lobbyParagraphControlOne,

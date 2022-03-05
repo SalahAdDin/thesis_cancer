@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../types.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
 
 part 'schedules.entity.freezed.dart';
 part 'schedules.entity.g.dart';

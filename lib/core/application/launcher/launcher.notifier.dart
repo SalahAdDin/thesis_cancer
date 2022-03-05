@@ -1,6 +1,7 @@
 import 'package:colorize/colorize.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sembast/sembast.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
@@ -53,20 +54,24 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
     final User profileData = await _dataStore.getUserProfileData();
     // This does mean a dummy user was created.
     if (profileData.email == 'name@dummy.com') {
-      print(
-        Colorize('[Launcher Notifier Provider]: There is no user on storage.')
-            .blue(),
-      );
+      if (kDebugMode) {
+        print(
+          Colorize('[Launcher Notifier Provider]: There is no user on storage.')
+              .blue(),
+        );
+      }
       state = const LauncherState.needsProfile();
     } else {
       // Updates the current user.
       _userController.state = profileData;
       // Updates the current auth token.
       _tokenController.state = profileData.token!;
-      print(
-        Colorize('[Launcher Notifier Provider]: Loading user from storage.')
-            .blue(),
-      );
+      if (kDebugMode) {
+        print(
+          Colorize('[Launcher Notifier Provider]: Loading user from storage.')
+              .blue(),
+        );
+      }
       state = const LauncherState.profileLoaded();
     }
   }

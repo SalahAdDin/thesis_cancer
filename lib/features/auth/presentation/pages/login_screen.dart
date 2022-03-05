@@ -88,6 +88,7 @@ class LoginScreen extends HookWidget {
                 username: data.name!,
                 password: data.password!,
               );
+          return null;
         } on Failure catch (error) {
           return localizeFailure(error.reason, context).last;
         }
@@ -98,6 +99,7 @@ class LoginScreen extends HookWidget {
                 username: data.name,
                 password: data.password,
               );
+          return null;
         } on Failure catch (error) {
           return localizeFailure(error.reason, context).last;
         }
@@ -107,6 +109,7 @@ class LoginScreen extends HookWidget {
           await context
               .read(authNotifierProvider.notifier)
               .requestPasswordRecovery(email: identifier);
+          return null;
         } on Failure catch (error) {
           return localizeFailure(error.reason, context).last;
         }
@@ -118,6 +121,7 @@ class LoginScreen extends HookWidget {
                 passwordConfirmation: data.password,
                 confirmationCode: confirmationCode,
               );
+          return null;
         } on Failure catch (error) {
           return localizeFailure(error.reason, context).last;
         }

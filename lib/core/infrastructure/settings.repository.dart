@@ -21,9 +21,12 @@ class GraphQLSettingsRepository implements SettingsRepository {
   @override
   Future<Settings> fetchSettings() async {
     try {
-      final QueryOptions options =
-          QueryOptions(document: gql(graphQLDocumentGetSettings));
-      final QueryResult response = await client.query(options);
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
+        document: gql(graphQLDocumentGetSettings),
+      );
+      final QueryResult<Map<String, dynamic>> response =
+          await client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {

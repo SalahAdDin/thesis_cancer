@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:thesis_cancer/core/presentation/helpers.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 
+/// Access Denied icon file
 const String accessDenied =
     'assets/svg/errors/undraw_access_denied_re_awnf.svg';
 
+///
 class ErrorScreen extends StatelessWidget {
+  ///
   const ErrorScreen({
     required this.onPressed,
     this.reason,

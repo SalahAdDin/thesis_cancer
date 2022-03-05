@@ -1,13 +1,18 @@
 import 'package:audio_session/audio_session.dart';
+import 'package:colorize/colorize.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart' as ja;
 import 'package:rxdart/rxdart.dart';
 import 'package:thesis_cancer/core/presentation/widgets/seek_bar.dart';
 
+///
 class AudioPlayer extends StatefulWidget {
+  ///
   const AudioPlayer({Key? key, required this.dataSource}) : super(key: key);
 
+  ///
   final String dataSource;
 
   @override
@@ -38,14 +43,18 @@ class _AudioPlayerState extends State<AudioPlayer> with WidgetsBindingObserver {
     _audioPlayer.playbackEventStream.listen(
       (ja.PlaybackEvent event) {},
       onError: (Object e, StackTrace stackTrace) {
-        print('A stream error occurred: $e');
+        if (kDebugMode) {
+          print(Colorize('A stream error occurred: $e').red());
+        }
       },
     );
     try {
       //await _audioSource.clearCache();
       await _audioPlayer.setAudioSource(_audioSource);
     } catch (e) {
-      print("Error loading audio source: $e");
+      if (kDebugMode) {
+        print(Colorize("Error loading audio source: $e").red());
+      }
     }
   }
 
@@ -119,6 +128,7 @@ class _AudioPlayerState extends State<AudioPlayer> with WidgetsBindingObserver {
   }
 }
 
+///
 class ControlButtons extends StatelessWidget {
   ///
   const ControlButtons({required this.player});

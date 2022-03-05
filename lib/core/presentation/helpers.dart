@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
@@ -33,6 +31,7 @@ Color getUserAvatarNameColor(String url) {
 }
 
 // Can be replaced by proper i18n
+///
 List<String> localizeFailure(dynamic reason, BuildContext context) {
   if (reason is FailureReason) {
     // Describes a GraphQL error.

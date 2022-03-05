@@ -26,7 +26,7 @@ class CachedNetworkVideo extends StatefulWidget {
   final bool enableControls;
 
   /// A [Function] to call once the video is finished.
-  final Function? onFinished;
+  final Function()? onFinished;
 
   @override
   _CachedNetworkVideoState createState() => _CachedNetworkVideoState();

@@ -1,4 +1,5 @@
 import 'package:colorize/colorize.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_local_notifications_platform_interface/src/types.dart';
@@ -87,11 +88,13 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
     if (settings == Settings.empty) {
       try {
-        print(
-          Colorize(
-            '[Settings Notifier Provider]: Fetching settings from server.',
-          ).blue(),
-        );
+        if (kDebugMode) {
+          print(
+            Colorize(
+              '[Settings Notifier Provider]: Fetching settings from server.',
+            ).blue(),
+          );
+        }
         final Settings fetchedSettings =
             await _settingsRepository.fetchSettings();
         await _dataStore.writeSettings(fetchedSettings);
@@ -105,15 +108,19 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
         state = fetchedSettings;
       } on SettingsFailure catch (error) {
-        print(Colorize(error.toString()).red());
+        if (kDebugMode) {
+          print(Colorize(error.toString()).red());
+        }
         state = Settings.empty;
       }
     } else {
-      print(
-        Colorize(
-          '[Settings Notifier Provider]: Fetching settings from storage.',
-        ).blue(),
-      );
+      if (kDebugMode) {
+        print(
+          Colorize(
+            '[Settings Notifier Provider]: Fetching settings from storage.',
+          ).blue(),
+        );
+      }
       state = settings;
     }
   }

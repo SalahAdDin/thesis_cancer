@@ -6,7 +6,9 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 
+///
 class AboutUsScreen extends HookWidget {
+  ///
   const AboutUsScreen({Key? key}) : super(key: key);
 
   @override

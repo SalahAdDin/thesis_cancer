@@ -3,9 +3,11 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:colorize/colorize.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as fc_types;
@@ -61,7 +63,7 @@ class ChatNotifier extends StateNotifier<bool> {
   }
 
   ///
-  void handleMessageTap(_, fc_types.Message message) async {
+  Future<void> handleMessageTap(_, fc_types.Message message) async {
     if (message is fc_types.FileMessage) {
       String localPath = message.uri;
       if (message.uri.startsWith('http')) {
@@ -126,7 +128,9 @@ class ChatNotifier extends StateNotifier<bool> {
           state = false;
         } on FirebaseException catch (error) {
           state = false;
-          print("[File Picker] Error: $error");
+          if (kDebugMode) {
+            print(Colorize("[File Picker] Error: $error").red());
+          }
         }
       } else {
         // User canceled the picker
@@ -170,7 +174,9 @@ class ChatNotifier extends StateNotifier<bool> {
         state = false;
       } on FirebaseException catch (error) {
         state = false;
-        print("[Image Picker] Error: $error");
+        if (kDebugMode) {
+          print(Colorize("[Image Picker] Error: $error").red());
+        }
       }
     } else {
       // User canceled the picker

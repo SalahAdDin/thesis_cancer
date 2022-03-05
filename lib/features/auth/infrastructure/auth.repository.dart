@@ -30,6 +30,7 @@ class GraphQLAuthRepository implements AuthRepository {
     return result;
   }
 
+  ///
   Message extractMessage(GraphQLError graphQLError) {
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,
@@ -43,13 +44,15 @@ class GraphQLAuthRepository implements AuthRepository {
   @override
   Future<bool> forgotPassword({required String email}) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentForgotPassword),
         variables: <String, dynamic>{
           "email": email,
         },
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -92,7 +95,8 @@ class GraphQLAuthRepository implements AuthRepository {
     required String confirmationCode,
   }) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentResetPassword),
         variables: <String, dynamic>{
           "password": password,
@@ -100,7 +104,8 @@ class GraphQLAuthRepository implements AuthRepository {
           "code": confirmationCode
         },
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -148,7 +153,8 @@ class GraphQLAuthRepository implements AuthRepository {
     String? provider,
   }) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         fetchPolicy: FetchPolicy.networkOnly,
         document: gql(graphQLDocumentLoginUser),
         variables: <String, dynamic>{
@@ -157,7 +163,8 @@ class GraphQLAuthRepository implements AuthRepository {
           "provider": provider
         },
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -199,7 +206,8 @@ class GraphQLAuthRepository implements AuthRepository {
     required String password,
   }) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentRegisterUser),
         variables: <String, dynamic>{
           'username': username,
@@ -207,7 +215,8 @@ class GraphQLAuthRepository implements AuthRepository {
           'password': password
         },
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
