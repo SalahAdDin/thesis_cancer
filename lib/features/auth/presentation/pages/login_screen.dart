@@ -134,7 +134,7 @@ class LoginScreen extends HookWidget {
           SurveyScreen(
             onCompleteSurvey: () => pushAndReplaceToPage(
               context,
-              LobbyScreen(),
+              const LobbyScreen(),
             ),
             surveyID: registerSurveyID,
           ),

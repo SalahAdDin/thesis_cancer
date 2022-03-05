@@ -7,6 +7,7 @@ import 'package:thesis_cancer/features/survey/domain/survey/survey.repository.da
 import 'package:thesis_cancer/features/survey/infrastructure/result.repository.dart';
 import 'package:thesis_cancer/features/survey/infrastructure/survey.repository.dart';
 
+///
 final StateProvider<Survey> surveyEntityProvider = StateProvider<Survey>(
   (_) => Survey.empty,
   name: "Survey Entity Provider",

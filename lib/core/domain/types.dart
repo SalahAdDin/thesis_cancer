@@ -41,6 +41,7 @@ enum RoleOptions {
 /// User status.
 enum UserStatus { UNCONFIRMED, ADMIN, INTRODUCTION, TUTORIAL, FINAL }
 
+///
 enum LobbyMode {
   NEW,
   CONTROL,

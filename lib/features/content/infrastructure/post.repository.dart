@@ -32,11 +32,13 @@ class GraphQLPostRepository implements PostRepository {
   @override
   Future<void> createPost(Post post) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentCreatePost),
         variables: <String, dynamic>{"data": post},
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -64,10 +66,12 @@ class GraphQLPostRepository implements PostRepository {
   @override
   Future<List<Post>> findAll() async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentListPosts),
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -97,14 +101,16 @@ class GraphQLPostRepository implements PostRepository {
   @override
   Future<List<Post>> findByContentType(PostType contentType) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         fetchPolicy: FetchPolicy.networkOnly,
         document: gql(graphQLDocumentListPostsByContentType),
         variables: <String, dynamic>{
           "contentType": EnumToString.convertToString(contentType)
         },
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -137,11 +143,13 @@ class GraphQLPostRepository implements PostRepository {
   @override
   Future<Post> findById(String id) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentGetPost),
         variables: <String, dynamic>{"id": id},
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -169,11 +177,13 @@ class GraphQLPostRepository implements PostRepository {
   @override
   Future<List<Post>> findByUserId(String id) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentListPostsByUserId),
         variables: <String, dynamic>{"id": id},
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -203,11 +213,13 @@ class GraphQLPostRepository implements PostRepository {
   @override
   Future<void> removePost(String postId) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentDeletePost),
         variables: <String, dynamic>{"id": postId},
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -239,11 +251,13 @@ class GraphQLPostRepository implements PostRepository {
   @override
   Future<Post> updatePost(Post post) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentUpdatePost),
         variables: <String, dynamic>{"id": post.id, "data": post},
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {

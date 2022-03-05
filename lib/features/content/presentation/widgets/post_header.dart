@@ -21,7 +21,7 @@ class PostHeader extends StatelessWidget {
       leading: UserAvatar(userAvatarUrl: author.profile?.profilePhoto?.url),
       title: GestureDetector(
         onTap: () => pushToPage(
-          context,
+          Navigator.of(context),
           ProfileScreen(user: author),
         ),
         child: Text(

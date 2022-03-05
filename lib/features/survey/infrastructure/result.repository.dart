@@ -34,11 +34,13 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
     required String surveyId,
   }) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentCountResults),
         variables: <String, dynamic>{"surveyID": surveyId, "userID": userId},
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -64,11 +66,13 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
   @override
   Future<void> createUserSurveyResult(UserSurveyResult userSurveyResult) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentCreateResult),
         variables: <String, dynamic>{"data": userSurveyResult},
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {

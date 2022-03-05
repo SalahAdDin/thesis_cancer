@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 
+///
 class Button extends StatelessWidget {
+  ///
   const Button.primary({
     required this.buttonLabel,
     required this.onPressed,
   }) : isPrimary = true;
 
+  ///
   const Button.accent({
     required this.buttonLabel,
     required this.onPressed,
   }) : isPrimary = false;
 
+  ///
   final String buttonLabel;
+
+  ///
   final VoidCallback? onPressed;
+
+  ///
   final bool isPrimary;
 
   @override

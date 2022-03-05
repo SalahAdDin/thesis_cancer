@@ -30,6 +30,8 @@ class ActivityFeed with _$ActivityFeed {
   /// Builds an [ActivityFeed] from a given json [String].
   factory ActivityFeed.fromJson(Map<String, Object?> json) =>
       _$ActivityFeedFromJson(json);
+
+  ///
   static const ActivityFeed empty =
       ActivityFeed(type: ActivityType.NEW_POST, issuerID: '', description: '');
 

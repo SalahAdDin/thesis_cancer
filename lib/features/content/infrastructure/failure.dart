@@ -1,5 +1,6 @@
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 
+///
 enum PostFailureReason {
   unknown,
   unauthorized,
@@ -9,7 +10,9 @@ enum PostFailureReason {
   unexpectedResult,
 }
 
+///
 class PostFailure extends Failure {
+  ///
   PostFailure({required this.reason});
 
   @override

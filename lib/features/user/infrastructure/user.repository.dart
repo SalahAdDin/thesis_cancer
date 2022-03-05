@@ -18,7 +18,8 @@ class GraphQLUserRepository implements UserRepository {
 
   GraphQLClient get _client => reader(graphQLClientProvider);
 
-  Extension extractException(QueryResult response) {
+  ///
+  Extension extractException(QueryResult<Map<String, dynamic>> response) {
     final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,
@@ -61,13 +62,15 @@ class GraphQLUserRepository implements UserRepository {
     required Map<String, dynamic> query,
   }) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentFindUsers),
         variables: <String, dynamic>{
           "where": query,
         },
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {

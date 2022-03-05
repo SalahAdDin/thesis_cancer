@@ -14,7 +14,9 @@ import 'package:thesis_cancer/features/content/application/post.state.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
 import 'package:thesis_cancer/features/content/presentation/widgets/post_widget.dart';
 
+///
 class PostsList extends HookWidget {
+  ///
   PostsList({required this.type});
 
   ///

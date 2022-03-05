@@ -66,14 +66,10 @@ class _SeekBarState extends State<SeekBar> {
                 setState(() {
                   _dragValue = value;
                 });
-                if (widget.onChanged != null) {
-                  widget.onChanged!(Duration(milliseconds: value.round()));
-                }
+                widget.onChanged?.call(Duration(milliseconds: value.round()));
               },
               onChangeEnd: (double value) {
-                if (widget.onChangeEnd != null) {
-                  widget.onChangeEnd!(Duration(milliseconds: value.round()));
-                }
+                widget.onChangeEnd?.call(Duration(milliseconds: value.round()));
                 _dragValue = null;
               },
             ),
@@ -93,14 +89,11 @@ class _SeekBarState extends State<SeekBar> {
               setState(() {
                 _dragValue = value;
               });
-              if (widget.onChanged != null) {
-                widget.onChanged!(Duration(milliseconds: value.round()));
-              }
+              widget.onChanged?.call(Duration(milliseconds: value.round()));
             },
             onChangeEnd: (double value) {
-              if (widget.onChangeEnd != null) {
-                widget.onChangeEnd!(Duration(milliseconds: value.round()));
-              }
+              widget.onChangeEnd?.call(Duration(milliseconds: value.round()));
+
               _dragValue = null;
             },
           ),

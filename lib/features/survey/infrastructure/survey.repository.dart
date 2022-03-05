@@ -19,7 +19,8 @@ class GraphQLSurveyRepository implements SurveyRepository {
   /// Injecting the required [GraphQLClient] by reading it from providers.
   GraphQLClient get client => reader(graphQLClientProvider);
 
-  Extension extractException(QueryResult response) {
+  ///
+  Extension extractException(QueryResult<Map<String, dynamic>> response) {
     final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,
@@ -30,10 +31,12 @@ class GraphQLSurveyRepository implements SurveyRepository {
   @override
   Future<List<Survey>> findAll() async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentListSurveys),
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -69,11 +72,13 @@ class GraphQLSurveyRepository implements SurveyRepository {
   @override
   Future<Survey> findById(String id) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentGetSurvey),
         variables: <String, dynamic>{"id": id},
       );
-      final QueryResult response = await client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {

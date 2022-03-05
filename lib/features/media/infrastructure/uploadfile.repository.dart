@@ -23,7 +23,7 @@ class GraphQLFileRepository implements UploadFileRepository {
   GraphQLClient get _client => reader(graphQLClientProvider);
 
   ///
-  Extension extractExtension(QueryResult response) {
+  Extension extractExtension(QueryResult<Map<String, dynamic>> response) {
     final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,
@@ -58,13 +58,15 @@ class GraphQLFileRepository implements UploadFileRepository {
   @override
   Future<List<UploadFile>> multiUploadFile(List<File> files) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentMultiUploadFile),
         variables: <String, dynamic>{
           "files": files,
         },
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
           throw GraphQLFailure(reason: FailureReason.unableToConnect);
@@ -97,11 +99,13 @@ class GraphQLFileRepository implements UploadFileRepository {
   @override
   Future<void> removeFile(String fileId) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentDeleteFile),
         variables: <String, dynamic>{"fileId": fileId},
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -142,14 +146,16 @@ class GraphQLFileRepository implements UploadFileRepository {
     required MultipartFile file,
   }) async {
     try {
-      final QueryOptions options = QueryOptions(
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
         document: gql(graphQLDocumentUploadFile),
         variables: <String, dynamic>{
           "file": file,
           "info": fileInfo,
         },
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
           throw GraphQLFailure(reason: FailureReason.unableToConnect);

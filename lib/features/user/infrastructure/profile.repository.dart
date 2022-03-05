@@ -20,7 +20,7 @@ class GraphQLProfileRepository implements ProfileRepository {
   /// Injecting the required [GraphQLClient] by reading it from providers.
   GraphQLClient get _client => reader(graphQLClientProvider);
 
-  Extension _extractException(QueryResult response) {
+  Extension _extractException(QueryResult<Map<String, dynamic>> response) {
     final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,
@@ -36,7 +36,8 @@ class GraphQLProfileRepository implements ProfileRepository {
         document: gql(graphQLDocumentGetProfile),
         variables: <String, dynamic>{"id": profileId},
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {
@@ -70,7 +71,8 @@ class GraphQLProfileRepository implements ProfileRepository {
         document: gql(graphQLDocumentGetProfileByUserId),
         variables: <String, dynamic>{"userId": userId},
       );
-      final QueryResult response = await _client.query(options);
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
 
       if (response.hasException) {
         if (response.exception?.linkException is NetworkException) {

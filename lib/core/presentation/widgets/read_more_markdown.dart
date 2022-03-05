@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+///
 class ReadMoreMarkdown extends StatefulWidget {
   // TODO: handling trim text in the best way
   // TODO: Animation at expanding/collapsing
   // TODO: Parse markdown to avoid breaking at trimming
   // Base: https://github.com/jonataslaw/readmore/blob/master/lib/readmore.dart
+
+  ///
   const ReadMoreMarkdown({
     Key? key,
     this.trimLength = 240,
@@ -19,9 +22,13 @@ class ReadMoreMarkdown extends StatefulWidget {
   /// Used on TrimMode.Length
   final int trimLength;
 
+  ///
   final String trimExpandedText;
+
+  ///
   final String trimCollapsedText;
 
+  ///
   final String data;
 
   @override

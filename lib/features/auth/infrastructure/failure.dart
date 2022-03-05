@@ -26,6 +26,7 @@ enum AuthFailureReason {
   localPassword,
 }
 
+///
 enum ResetPasswordFailureReason {
   unknown,
   incorrectCode,
@@ -34,6 +35,7 @@ enum ResetPasswordFailureReason {
   errorAtSendingMessage,
 }
 
+///
 enum ForgotPasswordFailureReason {
   unknown,
   invalidEmail,
@@ -41,6 +43,7 @@ enum ForgotPasswordFailureReason {
   errorAtSendingMessage,
 }
 
+///
 enum RegisterFailureReason {
   unknown,
   registeringActionNotAllowed,
@@ -50,28 +53,36 @@ enum RegisterFailureReason {
   emailAlreadyTaken,
 }
 
+///
 class LogInFailure extends Failure {
+  ///
   LogInFailure({required this.reason});
 
   @override
   final AuthFailureReason reason;
 }
 
+///
 class ForgotPasswordFailure extends Failure {
+  ///
   ForgotPasswordFailure({required this.reason});
 
   @override
   final ForgotPasswordFailureReason reason;
 }
 
+///
 class ResetPasswordFailure extends Failure {
+  ///
   ResetPasswordFailure({required this.reason});
 
   @override
   final ResetPasswordFailureReason reason;
 }
 
+///
 class SignUpFailure extends Failure {
+  ///
   SignUpFailure({required this.reason});
 
   @override
