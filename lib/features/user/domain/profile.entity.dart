@@ -16,6 +16,7 @@ class Profile with _$Profile {
     UploadFile? profilePhoto,
     @Default(UserRole.GUEST) UserRole role,
     String? uid, // Firebase user id
+    String? token, // Firebase device token
     String? phoneNumber,
     bool? hasSeenTutorial,
     bool? hasSeenIntroductoryVideo,
