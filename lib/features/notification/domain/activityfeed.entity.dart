@@ -15,6 +15,7 @@ class ActivityFeed with _$ActivityFeed {
     required ActivityType type,
     required String issuerID,
     required String description,
+    @Default(false) bool isRead,
   }) = _ActivityFeed;
 
   const ActivityFeed._();
@@ -31,7 +32,7 @@ class ActivityFeed with _$ActivityFeed {
   factory ActivityFeed.fromJson(Map<String, Object?> json) =>
       _$ActivityFeedFromJson(json);
 
-  ///
+  /// Builds a empty(dummy) [ActivityFeed].
   static const ActivityFeed empty =
       ActivityFeed(type: ActivityType.NEW_POST, issuerID: '', description: '');
 
