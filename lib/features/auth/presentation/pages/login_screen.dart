@@ -1,4 +1,6 @@
+import 'package:colorize/colorize.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -15,6 +17,10 @@ import 'package:thesis_cancer/features/auth/application/auth.state.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
+import 'package:thesis_cancer/features/user/application/user.provider.dart';
+import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
+import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
+import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 /// Login Screen
 class LoginScreen extends HookWidget {
@@ -129,13 +135,40 @@ class LoginScreen extends HookWidget {
       },
       onSubmitAnimationCompleted: () => authScreenState.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        signedUp: () => pushToPage(
+        signedUp: (User signedUser) => pushToPage(
           Navigator.of(context),
           SurveyScreen(
-            onCompleteSurvey: () => pushAndReplaceToPage(
-              context,
-              const LobbyScreen(),
-            ),
+            onCompleteSurvey: () async {
+              final NavigatorState navigator = Navigator.of(context);
+
+              // We need to register save the device token from Firebase on backend to send Push Messages
+              try {
+                final ProfileRepository _profileRepository = context.read(
+                  profileRepositoryProvider,
+                );
+                final Profile sessionUserProfile =
+                    await _profileRepository.findByUserId(signedUser.id);
+                await _profileRepository.updateProfile(
+                  updatedProfile: sessionUserProfile.copyWith(
+                    uid: signedUser.profile?.uid,
+                    token: signedUser.profile?.token,
+                  ),
+                );
+
+                pushAndReplaceToPage(
+                  navigator,
+                  const LobbyScreen(),
+                );
+              } on Failure catch (error) {
+                if (kDebugMode) {
+                  print(
+                    Colorize(
+                      "Error on sending token and uid for User ${signedUser.id}: $error",
+                    ).red(),
+                  );
+                }
+              }
+            },
             surveyID: registerSurveyID,
           ),
         ),
@@ -144,7 +177,8 @@ class LoginScreen extends HookWidget {
         error: (Failure? error) => ErrorScreen(
           reason: error?.reason,
           actionLabel: AppLocalizations.of(context)!.homeLabel,
-          onPressed: () => pushAndReplaceToPage(context, MainScreen()),
+          onPressed: () =>
+              pushAndReplaceToPage(Navigator.of(context), MainScreen()),
         ),
       ),
     );
