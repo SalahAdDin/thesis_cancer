@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
@@ -35,6 +36,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   FirebaseAnalytics get _firebaseAnalytics => reader(firebaseAnalyticsProvider);
 
+  FirebaseMessaging get _firebaseMessaging => reader(firebaseMessagingProvider);
+
   // StreamSubscription? _subscription;
 
   @override
@@ -54,19 +57,33 @@ class AuthNotifier extends StateNotifier<AuthState> {
         email: username,
         password: password,
       );
+
       final fb.UserCredential credentials =
           await _fireBaseAuth.createUserWithEmailAndPassword(
         email: username,
         password: password,
       );
+
+      final String? token = await _firebaseMessaging.getToken();
+      await _firebaseMessaging.subscribeToTopic('posts');
+
       await _firebaseAnalytics.setUserId(id: credentials.user?.uid);
       await _firebaseAnalytics.setUserProperty(
         name: 'backend_user_id',
         value: _userController.state!.id,
       );
       await _firebaseAnalytics.logSignUp(signUpMethod: "email");
-      _userController.state = newUser.copyWith(confirmed: false);
-      state = const AuthState.signedUp();
+
+      final User newUserWithProfile = newUser.copyWith(
+        confirmed: false,
+        profile: Profile.empty.copyWith(
+          uid: credentials.user?.uid,
+          token: token,
+        ),
+      );
+      _userController.state = newUserWithProfile;
+      _tokenController.state = newUser.token!;
+      state = AuthState.signedUp(newUserWithProfile);
     } on SignUpFailure catch (_) {
       rethrow;
     } on fb.FirebaseAuthException catch (e) {
@@ -88,18 +105,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String password,
   }) async {
     try {
-      User sessionUser = await _authRepository.signIn(
+      final User sessionUser = await _authRepository.signIn(
         identifier: username,
         password: password,
       );
       if (sessionUser.confirmed != false) {
-        final fb.UserCredential credentials =
-            await _fireBaseAuth.signInWithEmailAndPassword(
+        await _fireBaseAuth.signInWithEmailAndPassword(
           email: username,
           password: password,
-        );
-        sessionUser = sessionUser.copyWith(
-          profile: Profile.empty.copyWith(uid: credentials.user?.uid),
         );
         _tokenController.state = sessionUser.token!;
       }

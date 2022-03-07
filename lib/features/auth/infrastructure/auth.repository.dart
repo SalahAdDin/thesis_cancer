@@ -80,7 +80,8 @@ class GraphQLAuthRepository implements AuthRepository {
           );
         }
       }
-      final bool result = response.data?['forgotPassword']['ok'] as bool;
+      final bool result = (response.data?['forgotPassword']
+          as Map<String, dynamic>)['ok'] as bool;
 
       return result;
     } on Exception catch (_) {
@@ -190,6 +191,7 @@ class GraphQLAuthRepository implements AuthRepository {
           throw LogInFailure(reason: AuthFailureReason.unknown);
         }
       }
+
       final Map<String, dynamic> data =
           response.data?['login'] as Map<String, dynamic>;
 
@@ -254,13 +256,7 @@ class GraphQLAuthRepository implements AuthRepository {
       final Map<String, dynamic> data =
           response.data?['register'] as Map<String, dynamic>;
 
-      // Keeping variable's immutability.
-      final Map<String, dynamic> flattenResult =
-          data['user'] as Map<String, dynamic>;
-      flattenResult['token'] = data['jwt'];
-      final Map<String, dynamic> result = flattenResult;
-
-      return User.fromJson(result);
+      return User.fromJson(flatAuthResponse(data: data));
     } on Exception catch (_) {
       throw SignUpFailure(reason: RegisterFailureReason.unknown);
     }
