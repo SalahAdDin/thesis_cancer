@@ -160,7 +160,7 @@ class UserNotifier extends StateNotifier<UserState> {
   ///
   Future<void> init() async {
     final User sessionUser = _userController.state!;
-    final String? firebaseUserUID = sessionUser.profile?.uid;
+
     if (sessionUser.confirmed == true &&
         sessionUser.profile?.role == UserRole.GUEST) {
       try {
@@ -168,7 +168,7 @@ class UserNotifier extends StateNotifier<UserState> {
             await _profileRepository.findByUserId(sessionUser.id);
 
         final User sessionUserWithProfile = sessionUser.copyWith(
-          profile: sessionUserProfile.copyWith(uid: firebaseUserUID),
+          profile: sessionUserProfile,
         );
 
         await _dataStore.writeUserProfile(sessionUserWithProfile);
@@ -183,6 +183,7 @@ class UserNotifier extends StateNotifier<UserState> {
                     schedule.role == RoleOptions.ALL,
               )
               .toList();
+
           _settingsController.scheduleNotifications(userRelatedSurveys);
         }
 

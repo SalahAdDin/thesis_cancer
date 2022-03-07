@@ -129,7 +129,6 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
         updatedProfile: updatedProfile.copyWith(
           id: _profile.id,
           role: _profile.role,
-          uid: _profile.uid,
         ),
       );
 
