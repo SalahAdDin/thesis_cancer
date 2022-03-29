@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -7,6 +6,7 @@ import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/presentation/widgets/helpers.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
 class ProfileWidget extends HookWidget {
@@ -50,7 +50,7 @@ class ProfileWidget extends HookWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Expanded(
                       child: Text(
-                        AppLocalizations.of(context)!.profileNoNameWarning,
+                        context.l10n!.profileNoNameWarning,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.error,
                           fontSize: 14.0,
@@ -90,8 +90,7 @@ class ProfileWidget extends HookWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           StatsColumn(
-                            label:
-                                AppLocalizations.of(context)!.postNumberLabel,
+                            label: context.l10n!.postNumberLabel,
                             number: postsCount,
                           ),
                         ],

@@ -1,6 +1,5 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -15,6 +14,7 @@ import 'package:thesis_cancer/features/auth/application/auth.state.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 /// Login Screen
 class LoginScreen extends HookWidget {
@@ -44,30 +44,23 @@ class LoginScreen extends HookWidget {
       footer: AppLiterals.copyRight,
       // TODO: logo: '',
       messages: LoginMessages(
-        userHint: AppLocalizations.of(context)!.userHint,
-        passwordHint: AppLocalizations.of(context)!.passwordHint,
-        confirmPasswordHint: AppLocalizations.of(context)!.confirmPasswordHint,
-        forgotPasswordButton:
-            AppLocalizations.of(context)!.forgotPasswordButton,
-        loginButton: AppLocalizations.of(context)!.loginButton,
-        signupButton: AppLocalizations.of(context)!.signupButton,
-        recoverPasswordButton:
-            AppLocalizations.of(context)!.recoverPasswordButton,
-        recoverPasswordIntro:
-            AppLocalizations.of(context)!.recoverPasswordIntro,
-        recoverPasswordDescription:
-            AppLocalizations.of(context)!.recoverPasswordDescription,
-        goBackButton: AppLocalizations.of(context)!.back,
-        confirmPasswordError:
-            AppLocalizations.of(context)!.confirmPasswordError,
+        userHint: context.l10n!.userHint,
+        passwordHint: context.l10n!.passwordHint,
+        confirmPasswordHint: context.l10n!.confirmPasswordHint,
+        forgotPasswordButton: context.l10n!.forgotPasswordButton,
+        loginButton: context.l10n!.loginButton,
+        signupButton: context.l10n!.signupButton,
+        recoverPasswordButton: context.l10n!.recoverPasswordButton,
+        recoverPasswordIntro: context.l10n!.recoverPasswordIntro,
+        recoverPasswordDescription: context.l10n!.recoverPasswordDescription,
+        goBackButton: context.l10n!.back,
+        confirmPasswordError: context.l10n!.confirmPasswordError,
         recoverCodePasswordDescription:
-            AppLocalizations.of(context)!.recoverCodePasswordDescription,
-        recoverPasswordSuccess:
-            AppLocalizations.of(context)!.recoverPasswordSuccess,
-        flushbarTitleError: AppLocalizations.of(context)!.errorLabel,
-        flushbarTitleSuccess:
-            AppLocalizations.of(context)!.flushBarTitleSuccess,
-        signUpSuccess: AppLocalizations.of(context)!.signUpSuccess,
+            context.l10n!.recoverCodePasswordDescription,
+        recoverPasswordSuccess: context.l10n!.recoverPasswordSuccess,
+        flushbarTitleError: context.l10n!.errorLabel,
+        flushbarTitleSuccess: context.l10n!.flushBarTitleSuccess,
+        signUpSuccess: context.l10n!.signUpSuccess,
       ),
       navigateBackAfterRecovery: true,
       /* TODO:
@@ -143,8 +136,7 @@ class LoginScreen extends HookWidget {
         // TODO: block backward arrow button on this screen (LoginScreen breaks here).
         error: (Failure? error) => ErrorScreen(
           reason: error?.reason,
-          actionLabel: AppLocalizations.of(context)!.homeLabel,
-          onPressed: () =>
+          actionLabel: context.l10n!.homeLabel,
               pushAndReplaceToPage(Navigator.of(context), MainScreen()),
         ),
       ),
