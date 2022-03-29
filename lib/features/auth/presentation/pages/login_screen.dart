@@ -144,7 +144,8 @@ class LoginScreen extends HookWidget {
         error: (Failure? error) => ErrorScreen(
           reason: error?.reason,
           actionLabel: AppLocalizations.of(context)!.homeLabel,
-          onPressed: () => pushAndReplaceToPage(context, MainScreen()),
+          onPressed: () =>
+              pushAndReplaceToPage(Navigator.of(context), MainScreen()),
         ),
       ),
     );
