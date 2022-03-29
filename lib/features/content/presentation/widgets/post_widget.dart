@@ -3,7 +3,6 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
@@ -14,6 +13,7 @@ import 'package:thesis_cancer/core/presentation/widgets/read_more_markdown.dart'
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
 import 'package:thesis_cancer/features/content/presentation/widgets/post_header.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 /// Post Widget
 class PostWidget extends HookWidget {
@@ -167,8 +167,8 @@ class PostWidget extends HookWidget {
             ),
             child: ReadMoreMarkdown(
               data: post.description,
-              trimCollapsedText: AppLocalizations.of(context)!.more,
-              trimExpandedText: AppLocalizations.of(context)!.less,
+              trimCollapsedText: context.l10n!.more,
+              trimExpandedText: context.l10n!.less,
             ),
           ),
         ],

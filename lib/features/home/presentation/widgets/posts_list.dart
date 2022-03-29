@@ -1,7 +1,6 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -13,6 +12,7 @@ import 'package:thesis_cancer/features/content/application/post.provider.dart';
 import 'package:thesis_cancer/features/content/application/post.state.dart';
 import 'package:thesis_cancer/features/content/domain/post/post.entity.dart';
 import 'package:thesis_cancer/features/content/presentation/widgets/post_widget.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
 class PostsList extends HookWidget {
@@ -65,7 +65,7 @@ class PostsList extends HookWidget {
       error: (Failure? error) => ErrorScreen(
         onPressed: _refreshProvider,
         reason: error?.reason,
-        actionLabel: AppLocalizations.of(context)!.tryAgain,
+        actionLabel: context.l10n!.tryAgain,
       ),
       data: () => SmartRefresher(
         /*
@@ -79,15 +79,15 @@ class PostsList extends HookWidget {
           builder: (BuildContext context, LoadStatus? mode) {
             Widget body;
             if (mode == LoadStatus.idle) {
-              body = Text(AppLocalizations.of(context)!.pullUpLoad);
+              body = Text(context.l10n!.pullUpLoad);
             } else if (mode == LoadStatus.loading) {
               body = const CupertinoActivityIndicator();
             } else if (mode == LoadStatus.failed) {
-              body = Text(AppLocalizations.of(context)!.loadFile);
+              body = Text(context.l10n!.loadFile);
             } else if (mode == LoadStatus.canLoading) {
-              body = Text(AppLocalizations.of(context)!.releaseToLoadMore);
+              body = Text(context.l10n!.releaseToLoadMore);
             } else {
-              body = Text(AppLocalizations.of(context)!.noMoreData);
+              body = Text(context.l10n!.noMoreData);
             }
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 25),

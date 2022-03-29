@@ -1,11 +1,11 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/presentation/widgets/cached_network_video.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 /// Introductory Screen
 class IntroductoryScreen extends HookWidget {
@@ -59,7 +59,7 @@ class IntroductoryScreen extends HookWidget {
           ),
         ],
         done: Text(
-          AppLocalizations.of(context)!.done,
+          context.l10n!.done,
           style: const TextStyle(fontWeight: FontWeight.w600),
         ),
         showDoneButton: _isVideoFinished.value,
