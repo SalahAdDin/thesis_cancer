@@ -126,7 +126,7 @@ class LoginScreen extends HookWidget {
           Navigator.of(context),
           SurveyScreen(
             onCompleteSurvey: () => pushAndReplaceToPage(
-              context,
+              Navigator.of(context),
               const LobbyScreen(),
             ),
             surveyID: registerSurveyID,
@@ -137,6 +137,7 @@ class LoginScreen extends HookWidget {
         error: (Failure? error) => ErrorScreen(
           reason: error?.reason,
           actionLabel: context.l10n!.homeLabel,
+          onPressed: () =>
               pushAndReplaceToPage(Navigator.of(context), MainScreen()),
         ),
       ),
