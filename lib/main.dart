@@ -131,10 +131,7 @@ class CancerApp extends HookWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const <Locale>[
-        Locale('en', ''), // English, no country code
-        Locale('tr', ''), // Turkish, no country code
-      ],
+      supportedLocales: AppLocalizations.supportedLocales,
       title: 'Thesis Cancer',
       theme: lightTheme,
       darkTheme: darkTheme,
