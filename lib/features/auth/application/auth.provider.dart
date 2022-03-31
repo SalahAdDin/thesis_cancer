@@ -31,10 +31,11 @@ final Provider<FirebaseAuth> firebaseAuthProvider = Provider<FirebaseAuth>(
   name: "FirebaseAuth Instance Provider",
 );
 
-///
+/*
 final StreamProvider<User?> authStateChangesProvider = StreamProvider<User?>(
   (ProviderReference ref) {
     return ref.watch(firebaseAuthProvider).authStateChanges();
   },
   name: " Firebase Auth Changes Provider",
 );
+*/
