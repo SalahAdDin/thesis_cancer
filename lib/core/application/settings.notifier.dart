@@ -70,7 +70,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
           (PendingNotificationRequest notification) =>
               notification.id == iterationFeed.hashCode,
         );
-        if (existingLocalNotification == false) {
+        if (!existingLocalNotification) {
           LocalNotificationService().scheduleNotificationByWeeks(
             feed: iterationFeed,
             notificationDetails:

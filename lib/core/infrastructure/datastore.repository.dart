@@ -55,7 +55,7 @@ class SembastDataStore implements DataStoreRepository {
   ///
   static Future<SembastDataStore> makeDefault() async {
     final Directory appDocDir = await getApplicationDocumentsDirectory();
-    
+
     return SembastDataStore(
       await databaseFactory.openDatabase('${appDocDir.path}/default.db'),
     );

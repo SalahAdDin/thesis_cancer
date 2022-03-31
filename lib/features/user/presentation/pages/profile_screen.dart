@@ -41,8 +41,7 @@ class ProfileScreen extends HookWidget {
     final Map<String, dynamic> _profileInitialValuesMap =
         _userProfileInitialValues.toJson()
           ..removeWhere(
-            (String key, _) =>
-                formKey.currentState!.value.containsKey(key) == false,
+            (String key, _) => !formKey.currentState!.value.containsKey(key),
           );
     final Map<String, dynamic> initialStatus = <String, dynamic>{
       ...formKey.currentState!.value,
@@ -50,11 +49,7 @@ class ProfileScreen extends HookWidget {
     };
 
     formKey.currentState!.save();
-    if (mapEquals(
-          initialStatus,
-          formKey.currentState!.value,
-        ) ==
-        false) {
+    if (!mapEquals(initialStatus, formKey.currentState!.value)) {
       final bool isValid = formKey.currentState!.validate();
       if (isValid) {
         final Map<String, dynamic> updatedFields = formKey.currentState!.value;
