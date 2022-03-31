@@ -17,7 +17,7 @@ class AppLiterals {
 class BackendURL {
   static const String devURL = "http://172.16.0.63:1337/";
   static const String testURL = "http://95.173.162.150:1337/";
-  static const String productionURL = "";
+  static const String productionURL = "https://strapi.cloudnesil.net/";
 }
 
 // CloudFront

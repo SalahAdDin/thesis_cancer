@@ -7,8 +7,11 @@ Future<void> pushToPage(NavigatorState navigator, Widget widget) async =>
     );
 
 /// Navigate to page by replacing the current one on the stack.
-Future<void> pushAndReplaceToPage(BuildContext context, Widget widget) async =>
-    Navigator.of(context).pushReplacement(
+Future<void> pushAndReplaceToPage(
+  NavigatorState navigator,
+  Widget widget,
+) async =>
+    navigator.pushReplacement(
       MaterialPageRoute<Widget>(builder: (_) => widget),
     );
 

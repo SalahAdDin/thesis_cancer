@@ -11,7 +11,7 @@ import 'package:thesis_cancer/core/presentation/helpers.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
-import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart';
+import 'package:thesis_cancer/features/auth/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
 import 'package:thesis_cancer/l10n/l10n.dart';
@@ -126,7 +126,7 @@ class LoginScreen extends HookWidget {
           Navigator.of(context),
           SurveyScreen(
             onCompleteSurvey: () => pushAndReplaceToPage(
-              context,
+              Navigator.of(context),
               const LobbyScreen(),
             ),
             surveyID: registerSurveyID,
@@ -137,7 +137,8 @@ class LoginScreen extends HookWidget {
         error: (Failure? error) => ErrorScreen(
           reason: error?.reason,
           actionLabel: context.l10n!.homeLabel,
-          onPressed: () => pushAndReplaceToPage(context, MainScreen()),
+          onPressed: () =>
+              pushAndReplaceToPage(Navigator.of(context), MainScreen()),
         ),
       ),
     );

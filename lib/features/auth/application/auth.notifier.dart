@@ -49,7 +49,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String password,
   }) async {
     try {
-      final User newUser = await _authRepository.signUp(
+      /*final User newUser = await _authRepository.signUp(
         username: username.split("@")[0],
         email: username,
         password: password,
@@ -64,7 +64,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
         name: 'backend_user_id',
         value: _userController.state!.id,
       );
-      await _firebaseAnalytics.logSignUp(signUpMethod: "email");
+      await _firebaseAnalytics.logSignUp(signUpMethod: "email");*/
+      const User newUser = User.empty;
       _userController.state = newUser.copyWith(confirmed: false);
       state = const AuthState.signedUp();
     } on SignUpFailure catch (_) {
