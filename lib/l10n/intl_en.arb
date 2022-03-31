@@ -9,6 +9,7 @@
   "incorrect": "False",
   "homeLabel": "Home",
   "roomLabel": "Room",
+  "notificationsTitle": "Notifications",
   "patientsLabel": "Patients",
   "specialistsLabel": "Specialist",
   "noRoomsLabel": "No rooms",
