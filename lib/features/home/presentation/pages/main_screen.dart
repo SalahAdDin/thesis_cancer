@@ -527,7 +527,8 @@ class MainLayout extends HookWidget {
                   constraints: const BoxConstraints(minWidth: 10),
                   iconSize: 20,
                   tooltip: 'Bildirim',
-                  onPressed: () => pushToPage(context, NotificationsScreen()),
+                  onPressed: () =>
+                      pushToPage(Navigator.of(context), NotificationsScreen()),
                 ),
               ),
               loading: () => const Center(

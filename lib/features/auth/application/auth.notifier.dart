@@ -52,7 +52,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String password,
   }) async {
     try {
-      /*final User newUser = await _authRepository.signUp(
+      final User newUser = await _authRepository.signUp(
         username: username.split("@")[0],
         email: username,
         password: password,
