@@ -8,19 +8,19 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/domain/constants.dart';
+import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/presentation/helpers.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
-import 'package:thesis_cancer/features/auth/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
-import 'package:thesis_cancer/l10n/l10n.dart';
+import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
-import 'package:thesis_cancer/features/user/application/user.provider.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 /// Login Screen
 class LoginScreen extends HookWidget {
@@ -30,6 +30,8 @@ class LoginScreen extends HookWidget {
     final String registerSurveyID =
         useProvider(settingsNotifierProvider).registeringSurvey ?? '';
     final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+    final DataStoreRepository _dataStore =
+        useProvider(dataStoreRepositoryProvider);
 
     Future<void> _setScreenAnalytics() async {
       await _analytics.setCurrentScreen(
@@ -137,26 +139,27 @@ class LoginScreen extends HookWidget {
           Navigator.of(context),
           SurveyScreen(
             onCompleteSurvey: () async {
-              final NavigatorState navigator = Navigator.of(context);
-
               // We need to register save the device token from Firebase on backend to send Push Messages
               try {
                 final ProfileRepository _profileRepository = context.read(
                   profileRepositoryProvider,
                 );
+
                 final Profile sessionUserProfile =
                     await _profileRepository.findByUserId(signedUser.id);
-                await _profileRepository.updateProfile(
+
+                final Profile updatedProfile =
+                    await _profileRepository.updateProfile(
                   updatedProfile: sessionUserProfile.copyWith(
                     uid: signedUser.profile?.uid,
                     token: signedUser.profile?.token,
                   ),
                 );
 
-                pushAndReplaceToPage(
-                  navigator,
-                  const LobbyScreen(),
-                );
+                final User updatedUser =
+                    signedUser.copyWith(profile: updatedProfile);
+
+                await _dataStore.writeUserProfile(updatedUser);
               } on Failure catch (error) {
                 if (kDebugMode) {
                   print(
