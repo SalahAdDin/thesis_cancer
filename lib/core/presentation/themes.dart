@@ -3,11 +3,6 @@ import 'package:flutter/material.dart';
 ///
 const Color primary = Color(0xff00a478);
 
-// Which is the default value for this?
-// It affects the disabled button style.
-///
-const Color onSurface = primary; // Color(0xffb4e4d7);
-
 ///
 MaterialColor materialJadeColor = const MaterialColor(
   0xff00a478,

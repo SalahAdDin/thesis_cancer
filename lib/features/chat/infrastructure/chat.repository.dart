@@ -90,6 +90,7 @@ class FireBaseChatRepository implements ChatRepository {
       );
 
       final fc_types.Room room = await _chatCore.createRoom(otherUser);
+
       return room;
     } on Exception catch (_) {
       rethrow;

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:group_button/group_button.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
@@ -8,6 +7,7 @@ import 'package:thesis_cancer/core/presentation/themes.dart';
 import 'package:thesis_cancer/features/survey/domain/answer/answer.entity.dart';
 import 'package:thesis_cancer/features/survey/domain/question/question.entity.dart';
 import 'package:thesis_cancer/features/survey/presentation/widgets/debounce_text_form_field.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
 typedef SingleStringCallback = Function(String);
@@ -89,19 +89,17 @@ class QuestionWidget extends StatelessWidget {
           validator: FormBuilderValidators.compose(<String? Function(String?)>[
             FormBuilderValidators.required(
               context,
-              errorText: AppLocalizations.of(context)!.validationAnswerRequired,
+              errorText: context.l10n!.validationAnswerRequired,
             ),
             FormBuilderValidators.minLength(
               context,
               15,
-              errorText:
-                  AppLocalizations.of(context)!.validationAnswerMinLength,
+              errorText: context.l10n!.validationAnswerMinLength,
             ),
             FormBuilderValidators.maxLength(
               context,
               50,
-              errorText:
-                  AppLocalizations.of(context)!.validationAnswerMaxLength,
+              errorText: context.l10n!.validationAnswerMaxLength,
             ),
           ]),
           initialText: userAnswer?.answer,
@@ -119,19 +117,17 @@ class QuestionWidget extends StatelessWidget {
           validator: FormBuilderValidators.compose(<String? Function(String?)>[
             FormBuilderValidators.required(
               context,
-              errorText: AppLocalizations.of(context)!.validationAnswerRequired,
+              errorText: context.l10n!.validationAnswerRequired,
             ),
             FormBuilderValidators.minLength(
               context,
               50,
-              errorText:
-                  AppLocalizations.of(context)!.validationAnswerMinLength,
+              errorText: context.l10n!.validationAnswerMinLength,
             ),
             FormBuilderValidators.maxLength(
               context,
               500,
-              errorText:
-                  AppLocalizations.of(context)!.validationAnswerMaxLength,
+              errorText: context.l10n!.validationAnswerMaxLength,
             ),
           ]),
           keyboardType: TextInputType.multiline,
@@ -142,8 +138,8 @@ class QuestionWidget extends StatelessWidget {
         break;
       case QuestionType.BOOL:
         final List<String> buttons = <String>[
-          AppLocalizations.of(context)!.incorrect,
-          AppLocalizations.of(context)!.correct
+          context.l10n!.incorrect,
+          context.l10n!.correct
         ];
         final String selectedButton = userAnswer?.answer ?? '';
 
@@ -204,6 +200,7 @@ class QuestionWidget extends StatelessWidget {
         );
         break;
     }
+
     return answerWidget;
   }
 

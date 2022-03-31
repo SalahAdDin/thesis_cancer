@@ -7,7 +7,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -19,12 +18,13 @@ import 'package:thesis_cancer/core/application/provider.logger.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/infrastructure/datastore.repository.dart';
+import 'package:thesis_cancer/core/presentation/pages/splash_screen.dart';
 import 'package:thesis_cancer/core/presentation/themes.dart';
 import 'package:thesis_cancer/features/auth/presentation/pages/login_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
-import 'package:thesis_cancer/features/home/presentation/pages/splash_screen.dart';
 import 'package:thesis_cancer/features/notification/domain/activityfeed.entity.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -119,6 +119,7 @@ class CancerApp extends HookWidget {
       () {
         _logAppOpen();
         _setDeviceProperties();
+
         return null;
       },
       const <Object>[],
@@ -131,10 +132,7 @@ class CancerApp extends HookWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const <Locale>[
-        Locale('en', ''), // English, no country code
-        Locale('tr', ''), // Turkish, no country code
-      ],
+      supportedLocales: AppLocalizations.supportedLocales,
       title: 'Thesis Cancer',
       theme: lightTheme,
       darkTheme: darkTheme,
@@ -201,7 +199,7 @@ class CancerApp extends HookWidget {
               CupertinoDialogAction(
                 isDefaultAction: true,
                 onPressed: () async => _onSelectNotification(jsonEncode(feed)),
-                child: Text(AppLocalizations.of(context)!.ok),
+                child: Text(context.l10n!.ok),
               )
             ],
           ),

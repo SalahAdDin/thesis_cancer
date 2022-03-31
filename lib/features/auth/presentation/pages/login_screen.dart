@@ -2,7 +2,6 @@ import 'package:colorize/colorize.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,13 +13,14 @@ import 'package:thesis_cancer/core/presentation/helpers.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
-import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart';
+import 'package:thesis_cancer/features/auth/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
-import 'package:thesis_cancer/features/user/application/user.provider.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
+import 'package:thesis_cancer/features/user/application/user.provider.dart';
 
 /// Login Screen
 class LoginScreen extends HookWidget {
@@ -40,6 +40,7 @@ class LoginScreen extends HookWidget {
     useEffect(
       () {
         _setScreenAnalytics();
+
         return null;
       },
       const <Object>[],
@@ -50,30 +51,23 @@ class LoginScreen extends HookWidget {
       footer: AppLiterals.copyRight,
       // TODO: logo: '',
       messages: LoginMessages(
-        userHint: AppLocalizations.of(context)!.userHint,
-        passwordHint: AppLocalizations.of(context)!.passwordHint,
-        confirmPasswordHint: AppLocalizations.of(context)!.confirmPasswordHint,
-        forgotPasswordButton:
-            AppLocalizations.of(context)!.forgotPasswordButton,
-        loginButton: AppLocalizations.of(context)!.loginButton,
-        signupButton: AppLocalizations.of(context)!.signupButton,
-        recoverPasswordButton:
-            AppLocalizations.of(context)!.recoverPasswordButton,
-        recoverPasswordIntro:
-            AppLocalizations.of(context)!.recoverPasswordIntro,
-        recoverPasswordDescription:
-            AppLocalizations.of(context)!.recoverPasswordDescription,
-        goBackButton: AppLocalizations.of(context)!.back,
-        confirmPasswordError:
-            AppLocalizations.of(context)!.confirmPasswordError,
+        userHint: context.l10n!.userHint,
+        passwordHint: context.l10n!.passwordHint,
+        confirmPasswordHint: context.l10n!.confirmPasswordHint,
+        forgotPasswordButton: context.l10n!.forgotPasswordButton,
+        loginButton: context.l10n!.loginButton,
+        signupButton: context.l10n!.signupButton,
+        recoverPasswordButton: context.l10n!.recoverPasswordButton,
+        recoverPasswordIntro: context.l10n!.recoverPasswordIntro,
+        recoverPasswordDescription: context.l10n!.recoverPasswordDescription,
+        goBackButton: context.l10n!.back,
+        confirmPasswordError: context.l10n!.confirmPasswordError,
         recoverCodePasswordDescription:
-            AppLocalizations.of(context)!.recoverCodePasswordDescription,
-        recoverPasswordSuccess:
-            AppLocalizations.of(context)!.recoverPasswordSuccess,
-        flushbarTitleError: AppLocalizations.of(context)!.errorLabel,
-        flushbarTitleSuccess:
-            AppLocalizations.of(context)!.flushBarTitleSuccess,
-        signUpSuccess: AppLocalizations.of(context)!.signUpSuccess,
+            context.l10n!.recoverCodePasswordDescription,
+        recoverPasswordSuccess: context.l10n!.recoverPasswordSuccess,
+        flushbarTitleError: context.l10n!.errorLabel,
+        flushbarTitleSuccess: context.l10n!.flushBarTitleSuccess,
+        signUpSuccess: context.l10n!.signUpSuccess,
       ),
       navigateBackAfterRecovery: true,
       /* TODO:
@@ -95,6 +89,7 @@ class LoginScreen extends HookWidget {
                 username: data.name!,
                 password: data.password!,
               );
+
           return null;
         } on Failure catch (error) {
           return localizeFailure(error.reason, context).last;
@@ -106,6 +101,7 @@ class LoginScreen extends HookWidget {
                 username: data.name,
                 password: data.password,
               );
+
           return null;
         } on Failure catch (error) {
           return localizeFailure(error.reason, context).last;
@@ -116,6 +112,7 @@ class LoginScreen extends HookWidget {
           await context
               .read(authNotifierProvider.notifier)
               .requestPasswordRecovery(email: identifier);
+
           return null;
         } on Failure catch (error) {
           return localizeFailure(error.reason, context).last;
@@ -128,6 +125,7 @@ class LoginScreen extends HookWidget {
                 passwordConfirmation: data.password,
                 confirmationCode: confirmationCode,
               );
+
           return null;
         } on Failure catch (error) {
           return localizeFailure(error.reason, context).last;
@@ -176,7 +174,7 @@ class LoginScreen extends HookWidget {
         // TODO: block backward arrow button on this screen (LoginScreen breaks here).
         error: (Failure? error) => ErrorScreen(
           reason: error?.reason,
-          actionLabel: AppLocalizations.of(context)!.homeLabel,
+          actionLabel: context.l10n!.homeLabel,
           onPressed: () =>
               pushAndReplaceToPage(Navigator.of(context), MainScreen()),
         ),

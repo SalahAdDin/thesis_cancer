@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as fc_types;
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
@@ -23,6 +22,7 @@ import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/presentation/widgets/edit_profile_widget.dart';
 import 'package:thesis_cancer/features/user/presentation/widgets/profile_widget.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
 class ProfileScreen extends HookWidget {
@@ -41,8 +41,7 @@ class ProfileScreen extends HookWidget {
     final Map<String, dynamic> _profileInitialValuesMap =
         _userProfileInitialValues.toJson()
           ..removeWhere(
-            (String key, _) =>
-                formKey.currentState!.value.containsKey(key) == false,
+            (String key, _) => !formKey.currentState!.value.containsKey(key),
           );
     final Map<String, dynamic> initialStatus = <String, dynamic>{
       ...formKey.currentState!.value,
@@ -50,11 +49,7 @@ class ProfileScreen extends HookWidget {
     };
 
     formKey.currentState!.save();
-    if (mapEquals(
-          initialStatus,
-          formKey.currentState!.value,
-        ) ==
-        false) {
+    if (!mapEquals(initialStatus, formKey.currentState!.value)) {
       final bool isValid = formKey.currentState!.validate();
       if (isValid) {
         final Map<String, dynamic> updatedFields = formKey.currentState!.value;
@@ -92,6 +87,7 @@ class ProfileScreen extends HookWidget {
     useEffect(
       () {
         _setScreenAnalytics();
+
         return null;
       },
       const <Object>[],
@@ -177,7 +173,7 @@ class ProfileScreen extends HookWidget {
         error: (Failure? error) => ErrorScreen(
           onPressed: () => Navigator.of(context).maybePop(),
           reason: error?.reason,
-          actionLabel: AppLocalizations.of(context)!.tryAgain,
+          actionLabel: context.l10n!.tryAgain,
         ),
         editing: () => EditProfileWidget(
           formKey: _formKey,

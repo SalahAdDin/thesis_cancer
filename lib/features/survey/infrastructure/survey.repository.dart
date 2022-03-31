@@ -25,6 +25,7 @@ class GraphQLSurveyRepository implements SurveyRepository {
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,
     );
+
     return extension;
   }
 
@@ -57,6 +58,7 @@ class GraphQLSurveyRepository implements SurveyRepository {
       final List<Survey> result = data
           .map((dynamic item) => Survey.fromJson(item as Map<String, dynamic>))
           .toList();
+
       return result;
     } on Exception catch (_) {
       throw SurveyFailure(reason: SurveyFailureReason.unknown);
@@ -102,6 +104,7 @@ class GraphQLSurveyRepository implements SurveyRepository {
 
       final Map<String, dynamic> data =
           response.data?['survey'] as Map<String, dynamic>;
+
       return Survey.fromJson(data);
     } on Exception catch (_) {
       throw SurveyFailure(reason: SurveyFailureReason.unknown);

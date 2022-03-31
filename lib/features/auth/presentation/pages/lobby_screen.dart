@@ -1,11 +1,11 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
 class LobbyScreen extends HookWidget {
@@ -29,6 +29,7 @@ class LobbyScreen extends HookWidget {
     useEffect(
       () {
         _setScreenAnalytics();
+
         return null;
       },
       const <Object>[],
@@ -38,15 +39,15 @@ class LobbyScreen extends HookWidget {
       switch (mode) {
         case LobbyMode.NEW:
           return <String>[
-            AppLocalizations.of(context)!.lobbyParagraphOne,
-            AppLocalizations.of(context)!.lobbyParagraphTwo,
-            AppLocalizations.of(context)!.lobbyParagraphThree
+            context.l10n!.lobbyParagraphOne,
+            context.l10n!.lobbyParagraphTwo,
+            context.l10n!.lobbyParagraphThree
           ];
         case LobbyMode.CONTROL:
           return <String>[
-            AppLocalizations.of(context)!.lobbyParagraphControlOne,
-            AppLocalizations.of(context)!.lobbyParagraphControlTwo,
-            AppLocalizations.of(context)!.lobbyParagraphControlThree
+            context.l10n!.lobbyParagraphControlOne,
+            context.l10n!.lobbyParagraphControlTwo,
+            context.l10n!.lobbyParagraphControlThree
           ];
       }
     }
@@ -68,7 +69,7 @@ class LobbyScreen extends HookWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      AppLocalizations.of(context)!.lobbyTitle,
+                      context.l10n!.lobbyTitle,
                       style: Theme.of(context).textTheme.headline1!.copyWith(
                             fontSize: 40,
                             fontWeight: FontWeight.bold,
@@ -113,7 +114,7 @@ class LobbyScreen extends HookWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Button.primary(
-                        buttonLabel: AppLocalizations.of(context)!.back,
+                        buttonLabel: context.l10n!.back,
                         // TODO: It does not work at the user's registering
                         onPressed: () {
                           context.read(launcherProvider.notifier).signOut();

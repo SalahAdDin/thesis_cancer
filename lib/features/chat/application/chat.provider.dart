@@ -26,6 +26,7 @@ final AutoDisposeStreamProviderFamily<fc_types.Room, String> roomProvider =
     StreamProvider.autoDispose.family<fc_types.Room, String>(
   (AutoDisposeProviderReference ref, String roomId) {
     final ChatRepository _chatRepository = ref.read(chatRepositoryProvider);
+
     return _chatRepository.findRoomById(
       roomId: roomId,
     );

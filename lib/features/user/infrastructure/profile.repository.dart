@@ -25,6 +25,7 @@ class GraphQLProfileRepository implements ProfileRepository {
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,
     );
+
     return extension;
   }
 
@@ -57,6 +58,7 @@ class GraphQLProfileRepository implements ProfileRepository {
 
       final Map<String, dynamic> data =
           response.data?['profile'] as Map<String, dynamic>;
+
       return Profile.fromJson(data);
     } on Exception catch (_) {
       throw ProfileFailure(reason: ProfileFailureReason.unknown);
@@ -95,6 +97,7 @@ class GraphQLProfileRepository implements ProfileRepository {
 
       final Map<String, dynamic> data =
           response.data?['profiles'][0] as Map<String, dynamic>;
+
       return Profile.fromJson(data);
     } on Exception catch (_) {
       throw GraphQLFailure(reason: FailureReason.unknown);
@@ -142,6 +145,7 @@ class GraphQLProfileRepository implements ProfileRepository {
 
       final Map<String, dynamic> data =
           response.data?['updateProfile']['profile'] as Map<String, dynamic>;
+
       return Profile.fromJson(data);
     } on Exception catch (_) {
       throw GraphQLFailure(reason: FailureReason.unknown);
@@ -222,6 +226,7 @@ class GraphQLProfileRepository implements ProfileRepository {
         }
       }
       final int count = response.data?['postsCount'] as int;
+
       return count;
     } on Exception catch (_) {
       throw GraphQLFailure(reason: FailureReason.unknown);
@@ -261,6 +266,7 @@ class GraphQLProfileRepository implements ProfileRepository {
 
       final List<dynamic> profiles =
           response.data?["profiles"] as List<dynamic>;
+
       return profiles
           .map(
             (dynamic profile) =>

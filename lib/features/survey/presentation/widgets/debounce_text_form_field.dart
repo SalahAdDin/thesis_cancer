@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
 typedef SingleStringCallback = Function(String);
@@ -65,16 +65,14 @@ class DebounceTextFormField extends HookWidget {
           timer?.cancel();
           timer = Timer(Duration(milliseconds: debounceTime ?? 1000), () {
             final bool? isValid = _formKey.currentState?.validate();
-            if (textController.text != "") {
-              if (isValid != null && !isValid) {
-              } else {
-                onAnswer(textController.text);
-              }
+            if (textController.text != "" && isValid == true) {
+              onAnswer(textController.text);
             }
           });
         }
 
         textController.addListener(listener);
+
         return () {
           timer?.cancel();
           textController.removeListener(listener);
@@ -91,8 +89,7 @@ class DebounceTextFormField extends HookWidget {
         controller: textController,
         validator: validator,
         decoration: InputDecoration(
-          hintText: hintText ??
-              AppLocalizations.of(context)!.defaultTextFieldHintText,
+          hintText: hintText ?? context.l10n!.defaultTextFieldHintText,
         ),
         keyboardType: keyboardType,
         maxLines: maxLines,

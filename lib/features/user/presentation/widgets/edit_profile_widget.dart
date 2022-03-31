@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -9,6 +8,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
 class EditProfileWidget extends HookWidget {
@@ -48,7 +48,7 @@ class EditProfileWidget extends HookWidget {
           TextButton(
             onPressed: onEditPhoto,
             child: Text(
-              AppLocalizations.of(context)!.changePhotoLabel,
+              context.l10n!.changePhotoLabel,
             ),
           ),
           Padding(
@@ -61,7 +61,7 @@ class EditProfileWidget extends HookWidget {
                     name: 'firstName',
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.firstNameLabel,
+                      labelText: context.l10n!.firstNameLabel,
                     ),
                     initialValue: userProfile.firstName,
                     validator: FormBuilderValidators
@@ -69,14 +69,12 @@ class EditProfileWidget extends HookWidget {
                       FormBuilderValidators.minLength(
                         context,
                         3,
-                        errorText: AppLocalizations.of(context)!
-                            .validationNameMinLength,
+                        errorText: context.l10n!.validationNameMinLength,
                       ),
                       FormBuilderValidators.maxLength(
                         context,
                         15,
-                        errorText: AppLocalizations.of(context)!
-                            .validationNameMaxLength,
+                        errorText: context.l10n!.validationNameMaxLength,
                       )
                     ]),
                   ),
@@ -85,21 +83,19 @@ class EditProfileWidget extends HookWidget {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     initialValue: userProfile.lastName,
                     decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.lastNameLabel,
+                      labelText: context.l10n!.lastNameLabel,
                     ),
                     validator: FormBuilderValidators
                         .compose(<String? Function(String?)>[
                       FormBuilderValidators.minLength(
                         context,
                         3,
-                        errorText: AppLocalizations.of(context)!
-                            .validationNameMinLength,
+                        errorText: context.l10n!.validationNameMinLength,
                       ),
                       FormBuilderValidators.maxLength(
                         context,
                         15,
-                        errorText: AppLocalizations.of(context)!
-                            .validationNameMaxLength,
+                        errorText: context.l10n!.validationNameMaxLength,
                       )
                     ]),
                   ),
@@ -109,7 +105,7 @@ class EditProfileWidget extends HookWidget {
                     inputFormatters: <TextInputFormatter>[_phoneMaskFormatter],
                     initialValue: userProfile.phoneNumber,
                     decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.phoneNumberLabel,
+                      labelText: context.l10n!.phoneNumberLabel,
                     ),
                     validator: FormBuilderValidators
                         .compose(<String? Function(String?)>[
@@ -117,20 +113,20 @@ class EditProfileWidget extends HookWidget {
                         context,
                         18,
                         allowEmpty: true,
-                        errorText: AppLocalizations.of(context)!
-                            .validationPhoneNumberWrongFormat,
+                        errorText:
+                            context.l10n!.validationPhoneNumberWrongFormat,
                       ),
                       FormBuilderValidators.maxLength(
                         context,
                         22,
-                        errorText: AppLocalizations.of(context)!
-                            .validationPhoneNumberWrongFormat,
+                        errorText:
+                            context.l10n!.validationPhoneNumberWrongFormat,
                       ),
                       FormBuilderValidators.match(
                         context,
                         r"^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$",
-                        errorText: AppLocalizations.of(context)!
-                            .validationPhoneNumberWrongFormat,
+                        errorText:
+                            context.l10n!.validationPhoneNumberWrongFormat,
                       ),
                     ]),
                   ),
@@ -145,18 +141,16 @@ class EditProfileWidget extends HookWidget {
                         context,
                         125,
                         allowEmpty: true,
-                        errorText: AppLocalizations.of(context)!
-                            .validationBioMinLength,
+                        errorText: context.l10n!.validationBioMinLength,
                       ),
                       FormBuilderValidators.maxLength(
                         context,
                         350,
-                        errorText: AppLocalizations.of(context)!
-                            .validationBioMaxLength,
+                        errorText: context.l10n!.validationBioMaxLength,
                       )
                     ]),
                     decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.bioLabel,
+                      labelText: context.l10n!.bioLabel,
                     ),
                   ),
                 ],

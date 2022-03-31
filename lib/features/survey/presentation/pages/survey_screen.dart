@@ -1,7 +1,6 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,6 +16,7 @@ import 'package:thesis_cancer/features/survey/domain/question/question.entity.da
 import 'package:thesis_cancer/features/survey/domain/survey/survey.entity.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/completed_survey_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/widgets/question_widget.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 /// Survey Screen
 class SurveyScreen extends HookWidget {
@@ -47,6 +47,7 @@ class SurveyScreen extends HookWidget {
     useEffect(
       () {
         _setScreenAnalytics();
+
         return null;
       },
       const <Object>[],
@@ -59,7 +60,7 @@ class SurveyScreen extends HookWidget {
       // TODO: It could be custom or Navigator.of(context).pop() ?
       completed: () => CompletedSurveyScreen(
         onPressed: onCompleteSurvey,
-        actionLabel: AppLocalizations.of(context)!.next,
+        actionLabel: context.l10n!.next,
       ),
       data: (_) => SurveyWidget(
         surveyID: surveyID,
@@ -67,7 +68,7 @@ class SurveyScreen extends HookWidget {
       error: (Failure? error) => ErrorScreen(
         onPressed: () => Navigator.of(context).maybePop(),
         reason: error?.reason,
-        actionLabel: AppLocalizations.of(context)!.back,
+        actionLabel: context.l10n!.back,
       ),
     );
   }
@@ -212,15 +213,13 @@ class SurveyWidget extends HookWidget {
                                 Visibility(
                                   visible: currentQuestionIndex != 0,
                                   child: Button.accent(
-                                    buttonLabel:
-                                        AppLocalizations.of(context)!.back,
+                                    buttonLabel: context.l10n!.back,
                                     onPressed: () =>
                                         surveyNotifier.lastQuestion(),
                                   ),
                                 ),
                                 Button.primary(
-                                  buttonLabel:
-                                      AppLocalizations.of(context)!.next,
+                                  buttonLabel: context.l10n!.next,
                                   onPressed:
                                       answeredQuestion(currentQuestionIndex)
                                           ? () => surveyNotifier.nextQuestion()
@@ -235,7 +234,7 @@ class SurveyWidget extends HookWidget {
                             padding:
                                 const EdgeInsets.only(left: 30.0, right: 8.0),
                             child: Text(
-                              AppLocalizations.of(context)!.noQuestionsSurvey,
+                              context.l10n!.noQuestionsSurvey,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!

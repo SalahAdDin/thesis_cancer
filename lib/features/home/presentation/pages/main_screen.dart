@@ -1,7 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
@@ -15,11 +14,11 @@ import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
 import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
+import 'package:thesis_cancer/features/auth/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/features/chat/presentation/pages/rooms_page.dart';
 import 'package:thesis_cancer/features/home/application/home.provider.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/introductory_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/knowledge_screen.dart';
-import 'package:thesis_cancer/features/home/presentation/pages/lobby_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/research_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/stories_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/therapy_screen.dart';
@@ -33,6 +32,7 @@ import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/application/user.state.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/presentation/pages/profile_screen.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 /// Main Screen
@@ -102,7 +102,7 @@ class MainScreen extends HookWidget {
       completed: () => MainLayout(),
       error: (Failure? error) => ErrorScreen(
         reason: error?.reason,
-        actionLabel: AppLocalizations.of(context)!.homeLabel,
+        actionLabel: context.l10n!.homeLabel,
         onPressed: () {
           context.read(launcherProvider.notifier).signOut();
           Navigator.of(context).maybePop();
@@ -170,7 +170,7 @@ class MainLayout extends HookWidget {
           key: _knowledgeButtonKey,
         ),
         label: '',
-        tooltip: AppLocalizations.of(context)!.knowledge,
+        tooltip: context.l10n!.knowledge,
       ),
       BottomNavigationBarItem(
         icon: Icon(
@@ -178,7 +178,7 @@ class MainLayout extends HookWidget {
           key: _treatmentButtonKey,
         ),
         label: '',
-        tooltip: AppLocalizations.of(context)!.therapy,
+        tooltip: context.l10n!.therapy,
       ),
       BottomNavigationBarItem(
         icon: Icon(
@@ -186,7 +186,7 @@ class MainLayout extends HookWidget {
           key: _academyButtonKey,
         ),
         label: '',
-        tooltip: AppLocalizations.of(context)!.developments,
+        tooltip: context.l10n!.developments,
       ),
       BottomNavigationBarItem(
         icon: Icon(
@@ -194,7 +194,7 @@ class MainLayout extends HookWidget {
           key: _successStoriesButtonKey,
         ),
         label: '',
-        tooltip: AppLocalizations.of(context)!.successStories,
+        tooltip: context.l10n!.successStories,
       ),
       BottomNavigationBarItem(
         icon: UserAvatar(
@@ -202,7 +202,7 @@ class MainLayout extends HookWidget {
           key: _profileButtonKey,
         ),
         label: '',
-        tooltip: AppLocalizations.of(context)!.myProfile,
+        tooltip: context.l10n!.myProfile,
       ),
     ];
 
@@ -289,7 +289,7 @@ class MainLayout extends HookWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      AppLocalizations.of(context)!.knowledge,
+                      context.l10n!.knowledge,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -303,7 +303,7 @@ class MainLayout extends HookWidget {
                         bottom: 56,
                       ),
                       child: Text(
-                        AppLocalizations.of(context)!.knowledgeDescription,
+                        context.l10n!.knowledgeDescription,
                         style: const TextStyle(color: Colors.white),
                       ),
                     )
@@ -323,7 +323,7 @@ class MainLayout extends HookWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
-                      AppLocalizations.of(context)!.therapy,
+                      context.l10n!.therapy,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -333,7 +333,7 @@ class MainLayout extends HookWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 56),
                       child: Text(
-                        AppLocalizations.of(context)!.therapyDescription,
+                        context.l10n!.therapyDescription,
                         style: const TextStyle(color: Colors.white),
                         textAlign: TextAlign.center,
                       ),
@@ -355,7 +355,7 @@ class MainLayout extends HookWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
-                      AppLocalizations.of(context)!.developments,
+                      context.l10n!.developments,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -365,7 +365,7 @@ class MainLayout extends HookWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 56),
                       child: Text(
-                        AppLocalizations.of(context)!.developmentsDescription,
+                        context.l10n!.developmentsDescription,
                         style: const TextStyle(color: Colors.white),
                         textAlign: TextAlign.center,
                       ),
@@ -387,7 +387,7 @@ class MainLayout extends HookWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
-                      AppLocalizations.of(context)!.successStories,
+                      context.l10n!.successStories,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -401,7 +401,7 @@ class MainLayout extends HookWidget {
                         left: 56,
                       ),
                       child: Text(
-                        AppLocalizations.of(context)!.successStoriesDescription,
+                        context.l10n!.successStoriesDescription,
                         style: const TextStyle(color: Colors.white),
                         textAlign: TextAlign.right,
                       ),
@@ -424,7 +424,7 @@ class MainLayout extends HookWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     Text(
-                      AppLocalizations.of(context)!.myProfile,
+                      context.l10n!.myProfile,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -434,7 +434,7 @@ class MainLayout extends HookWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Text(
-                        AppLocalizations.of(context)!.myProfileDescription,
+                        context.l10n!.myProfileDescription,
                         style: const TextStyle(color: Colors.white),
                         textAlign: TextAlign.right,
                       ),
@@ -500,7 +500,7 @@ class MainLayout extends HookWidget {
               icon: const Icon(Icons.chat_outlined),
               constraints: const BoxConstraints(minWidth: 10),
               iconSize: 20,
-              tooltip: AppLocalizations.of(context)!.messages,
+              tooltip: context.l10n!.messages,
               onPressed: () => pushToPage(Navigator.of(context), RoomsPage()),
             ),
           ),

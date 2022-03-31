@@ -1,10 +1,10 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/presentation/widgets/button.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
 class CompletedSurveyScreen extends HookWidget {
@@ -34,6 +34,7 @@ class CompletedSurveyScreen extends HookWidget {
     useEffect(
       () {
         _setScreenAnalytics();
+
         return null;
       },
       const <Object>[],
@@ -55,7 +56,7 @@ class CompletedSurveyScreen extends HookWidget {
               child: Column(
                 children: <Widget>[
                   Text(
-                    AppLocalizations.of(context)!.completedSurveyTitle,
+                    context.l10n!.completedSurveyTitle,
                     style: Theme.of(context).textTheme.headline1!.copyWith(
                           fontSize: 40,
                           fontWeight: FontWeight.w400,
@@ -65,7 +66,7 @@ class CompletedSurveyScreen extends HookWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24),
                     child: Text(
-                      AppLocalizations.of(context)!.completedSurveyParagraph,
+                      context.l10n!.completedSurveyParagraph,
                       style: Theme.of(context).textTheme.bodyText1,
                       textAlign: TextAlign.center,
                     ),

@@ -21,11 +21,12 @@ class GraphQLPostRepository implements PostRepository {
   /// Injecting the required [GraphQLClient] by reading it from providers.
   GraphQLClient get _client => reader(graphQLClientProvider);
 
-  Extension _extractExtension(QueryResult response) {
+  Extension _extractExtension(QueryResult<Map<String, dynamic>> response) {
     final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,
     );
+
     return extension;
   }
 
@@ -92,6 +93,7 @@ class GraphQLPostRepository implements PostRepository {
       final List<Post> result = data
           .map((dynamic item) => Post.fromJson(item as Map<String, dynamic>))
           .toList();
+
       return result;
     } on Exception catch (_) {
       throw SettingsFailure(reason: SettingsFailureReason.unknown);
@@ -134,6 +136,7 @@ class GraphQLPostRepository implements PostRepository {
       final List<Post> result = data
           .map((dynamic item) => Post.fromJson(item as Map<String, dynamic>))
           .toList();
+
       return result;
     } on Exception catch (_) {
       throw SettingsFailure(reason: SettingsFailureReason.unknown);
@@ -168,6 +171,7 @@ class GraphQLPostRepository implements PostRepository {
 
       final Map<String, dynamic> data =
           response.data?['post'] as Map<String, dynamic>;
+
       return Post.fromJson(data);
     } on Exception catch (_) {
       throw SettingsFailure(reason: SettingsFailureReason.unknown);
@@ -204,6 +208,7 @@ class GraphQLPostRepository implements PostRepository {
       final List<Post> result = data
           .map((dynamic item) => Post.fromJson(item as Map<String, dynamic>))
           .toList();
+
       return result;
     } on Exception catch (_) {
       throw SettingsFailure(reason: SettingsFailureReason.unknown);
@@ -276,6 +281,7 @@ class GraphQLPostRepository implements PostRepository {
 
       final Map<String, dynamic> data =
           response.data?['updatePost']['post'] as Map<String, dynamic>;
+
       return Post.fromJson(data);
     } on Exception catch (_) {
       throw SettingsFailure(reason: SettingsFailureReason.unknown);

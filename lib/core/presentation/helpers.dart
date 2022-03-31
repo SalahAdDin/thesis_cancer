@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter/widgets.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/content/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/media/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/survey/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/infrastructure/failure.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 /// List of colors to randomize backgrounds.
 const List<Color> colors = <Color>[
@@ -27,6 +27,7 @@ const List<Color> colors = <Color>[
 /// based on the user's avatar's url.
 Color getUserAvatarNameColor(String url) {
   final int index = url.hashCode % colors.length;
+
   return colors[index];
 }
 
@@ -35,322 +36,184 @@ Color getUserAvatarNameColor(String url) {
 List<String> localizeFailure(dynamic reason, BuildContext context) {
   if (reason is FailureReason) {
     // Describes a GraphQL error.
-    final String title = AppLocalizations.of(context)!.serverErrorTitle;
+    final String title = context.l10n!.serverErrorTitle;
     switch (reason) {
       case FailureReason.unknown:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.failureUnknownLabel
-        ];
+        return <String>[title, context.l10n!.failureUnknownLabel];
       case FailureReason.unauthorized:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.failureUnauthorizedLabel
-        ];
+        return <String>[title, context.l10n!.failureUnauthorizedLabel];
       case FailureReason.notFound:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.failureNotFoundLabel
-        ];
+        return <String>[title, context.l10n!.failureNotFoundLabel];
       case FailureReason.unableToConnect:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.failureUnableToConnectLabel
-        ];
+        return <String>[title, context.l10n!.failureUnableToConnectLabel];
       case FailureReason.unableToParse:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.failureUnableToParseLabel
-        ];
+        return <String>[title, context.l10n!.failureUnableToParseLabel];
     }
   } else if (reason is SettingsFailureReason) {
-    final String title = AppLocalizations.of(context)!.settingsErrorTitle;
+    final String title = context.l10n!.settingsErrorTitle;
     switch (reason) {
       case SettingsFailureReason.unknown:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.settingsFailureUnknown
-        ];
+        return <String>[title, context.l10n!.settingsFailureUnknown];
       case SettingsFailureReason.unauthorized:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.settingsFailureUnauthorized
-        ];
+        return <String>[title, context.l10n!.settingsFailureUnauthorized];
       case SettingsFailureReason.notFound:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.settingsFailureNotFound
-        ];
+        return <String>[title, context.l10n!.settingsFailureNotFound];
     }
   } else if (reason is AuthFailureReason) {
-    final String title = AppLocalizations.of(context)!.authenticationErrorTitle;
+    final String title = context.l10n!.authenticationErrorTitle;
     switch (reason) {
       case AuthFailureReason.unknown:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.authFailureUnknown
-        ];
+        return <String>[title, context.l10n!.authFailureUnknown];
       case AuthFailureReason.badRequest:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.authFailureBadRequest
-        ];
+        return <String>[title, context.l10n!.authFailureBadRequest];
       case AuthFailureReason.disabledProvider:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.authFailureDisabledProvider
-        ];
+        return <String>[title, context.l10n!.authFailureDisabledProvider];
       case AuthFailureReason.invalidUsernamePassword:
         return <String>[
           title,
-          AppLocalizations.of(context)!.authFailureInvalidUsernamePassword
+          context.l10n!.authFailureInvalidUsernamePassword
         ];
       case AuthFailureReason.unconfirmedEmail:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.authFailureUnconfirmedEmail
-        ];
+        return <String>[title, context.l10n!.authFailureUnconfirmedEmail];
       case AuthFailureReason.blockedAccount:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.authFailureBlockedAccount
-        ];
+        return <String>[title, context.l10n!.authFailureBlockedAccount];
       case AuthFailureReason.localPassword:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.authFailureLocalPassword
-        ];
+        return <String>[title, context.l10n!.authFailureLocalPassword];
     }
   } else if (reason is ResetPasswordFailureReason) {
-    final String title = AppLocalizations.of(context)!.resetPasswordErrorTItle;
+    final String title = context.l10n!.resetPasswordErrorTItle;
     switch (reason) {
       case ResetPasswordFailureReason.unknown:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.resetPasswordFailureUnknown
-        ];
+        return <String>[title, context.l10n!.resetPasswordFailureUnknown];
       case ResetPasswordFailureReason.incorrectCode:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.resetPasswordFailureIncorrectCode
-        ];
+        return <String>[title, context.l10n!.resetPasswordFailureIncorrectCode];
       case ResetPasswordFailureReason.passwordsNoMatch:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.resetPasswordFailureNotMatch
-        ];
+        return <String>[title, context.l10n!.resetPasswordFailureNotMatch];
       case ResetPasswordFailureReason.incorrectParams:
         return <String>[
           title,
-          AppLocalizations.of(context)!.resetPasswordFailureIncorrectParams
+          context.l10n!.resetPasswordFailureIncorrectParams
         ];
       case ResetPasswordFailureReason.errorAtSendingMessage:
         return <String>[
           title,
-          AppLocalizations.of(context)!.resetPasswordFailureAtSendingMessage
+          context.l10n!.resetPasswordFailureAtSendingMessage
         ];
     }
   } else if (reason is ForgotPasswordFailureReason) {
-    final String title = AppLocalizations.of(context)!.forgotPasswordErrorTitle;
+    final String title = context.l10n!.forgotPasswordErrorTitle;
     switch (reason) {
       case ForgotPasswordFailureReason.unknown:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.forgotPasswordFailureUnknown
-        ];
+        return <String>[title, context.l10n!.forgotPasswordFailureUnknown];
       case ForgotPasswordFailureReason.invalidEmail:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.forgotPasswordFailureInvalidEmail
-        ];
+        return <String>[title, context.l10n!.forgotPasswordFailureInvalidEmail];
       case ForgotPasswordFailureReason.emailDoesNotExist:
         return <String>[
           title,
-          AppLocalizations.of(context)!.forgotPasswordFailureEmailDoesNotExist
+          context.l10n!.forgotPasswordFailureEmailDoesNotExist
         ];
       case ForgotPasswordFailureReason.errorAtSendingMessage:
         return <String>[
           title,
-          AppLocalizations.of(context)!.forgotPasswordFailureAtSendingMessage
+          context.l10n!.forgotPasswordFailureAtSendingMessage
         ];
     }
   } else if (reason is RegisterFailureReason) {
-    final String title = AppLocalizations.of(context)!.registerErrorTitle;
+    final String title = context.l10n!.registerErrorTitle;
     switch (reason) {
       case RegisterFailureReason.unknown:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.registerFailureUnknown
-        ];
+        return <String>[title, context.l10n!.registerFailureUnknown];
       case RegisterFailureReason.registeringActionNotAllowed:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.registerFailureActionNotAllowed
-        ];
+        return <String>[title, context.l10n!.registerFailureActionNotAllowed];
       case RegisterFailureReason.moreThanThreeDollarSymbol:
         return <String>[
           title,
-          AppLocalizations.of(context)!.registerFailureMoreThanThreeDollarSymbol
+          context.l10n!.registerFailureMoreThanThreeDollarSymbol
         ];
       case RegisterFailureReason.defaultRoleNotFound:
         return <String>[
           title,
-          AppLocalizations.of(context)!.registerFailureDefaultRoleNotFound
+          context.l10n!.registerFailureDefaultRoleNotFound
         ];
       case RegisterFailureReason.invalidEmail:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.registerFailureInvalidEmail
-        ];
+        return <String>[title, context.l10n!.registerFailureInvalidEmail];
       case RegisterFailureReason.emailAlreadyTaken:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.registerFailureEmailAlreadyTaken
-        ];
+        return <String>[title, context.l10n!.registerFailureEmailAlreadyTaken];
     }
   } else if (reason is PostFailureReason) {
-    final String title = AppLocalizations.of(context)!.postErrorTitle;
+    final String title = context.l10n!.postErrorTitle;
     switch (reason) {
       case PostFailureReason.unknown:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.postFailureUnknown
-        ];
+        return <String>[title, context.l10n!.postFailureUnknown];
       case PostFailureReason.unauthorized:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.postFailureUnauthorized
-        ];
+        return <String>[title, context.l10n!.postFailureUnauthorized];
       case PostFailureReason.notFound:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.postFailureNotFound
-        ];
+        return <String>[title, context.l10n!.postFailureNotFound];
       case PostFailureReason.unexpectedResult:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.postFailureUnexpectedResult
-        ];
+        return <String>[title, context.l10n!.postFailureUnexpectedResult];
     }
   } else if (reason is FileFailureReason) {
-    final String title = AppLocalizations.of(context)!.fileErrorTitle;
+    final String title = context.l10n!.fileErrorTitle;
     switch (reason) {
       case FileFailureReason.unknown:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.fileFailureUnknown
-        ];
+        return <String>[title, context.l10n!.fileFailureUnknown];
       case FileFailureReason.unauthorized:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.fileFailureUnauthorized
-        ];
+        return <String>[title, context.l10n!.fileFailureUnauthorized];
       case FileFailureReason.notFound:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.fileFailureNotFound
-        ];
+        return <String>[title, context.l10n!.fileFailureNotFound];
       case FileFailureReason.unexpectedResult:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.fileFailureUnexpectedResult
-        ];
+        return <String>[title, context.l10n!.fileFailureUnexpectedResult];
     }
   } else if (reason is ResultFailureReason) {
-    final String title = AppLocalizations.of(context)!.surveyResultErrorTitle;
+    final String title = context.l10n!.surveyResultErrorTitle;
     switch (reason) {
       case ResultFailureReason.unknown:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.resultFailureUnknown
-        ];
+        return <String>[title, context.l10n!.resultFailureUnknown];
       case ResultFailureReason.unauthorized:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.resultFailureUnauthorized
-        ];
+        return <String>[title, context.l10n!.resultFailureUnauthorized];
       case ResultFailureReason.notFound:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.resultFailureNotFound
-        ];
+        return <String>[title, context.l10n!.resultFailureNotFound];
       case ResultFailureReason.unexpectedResult:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.resultFailureUnexpectedResult
-        ];
+        return <String>[title, context.l10n!.resultFailureUnexpectedResult];
     }
   } else if (reason is SurveyFailureReason) {
-    final String title = AppLocalizations.of(context)!.surveyErrorTitle;
+    final String title = context.l10n!.surveyErrorTitle;
     switch (reason) {
       case SurveyFailureReason.unknown:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.surveyFailureUnknown
-        ];
+        return <String>[title, context.l10n!.surveyFailureUnknown];
       case SurveyFailureReason.unauthorized:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.surveyFailureUnauthorized
-        ];
+        return <String>[title, context.l10n!.surveyFailureUnauthorized];
       case SurveyFailureReason.notFound:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.surveyFailureNotFound
-        ];
+        return <String>[title, context.l10n!.surveyFailureNotFound];
       case SurveyFailureReason.unexpectedResult:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.surveyFailureUnexpectedResult
-        ];
+        return <String>[title, context.l10n!.surveyFailureUnexpectedResult];
     }
   } else if (reason is ProfileFailureReason) {
-    final String title = AppLocalizations.of(context)!.profileErrorTitle;
+    final String title = context.l10n!.profileErrorTitle;
     switch (reason) {
       case ProfileFailureReason.unknown:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.profileFailureUnknown
-        ];
+        return <String>[title, context.l10n!.profileFailureUnknown];
       case ProfileFailureReason.unauthorized:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.profileFailureUnauthorized
-        ];
+        return <String>[title, context.l10n!.profileFailureUnauthorized];
       case ProfileFailureReason.notFound:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.profileFailureNotFound
-        ];
+        return <String>[title, context.l10n!.profileFailureNotFound];
       case ProfileFailureReason.notValidProfile:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.profileFailureNotValidProfile
-        ];
+        return <String>[title, context.l10n!.profileFailureNotValidProfile];
     }
   } else if (reason is UserFailureReason) {
-    final String title = AppLocalizations.of(context)!.userErrorTitle;
+    final String title = context.l10n!.userErrorTitle;
     switch (reason) {
       case UserFailureReason.unknown:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.userFailureUnknown
-        ];
+        return <String>[title, context.l10n!.userFailureUnknown];
       case UserFailureReason.unauthorized:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.userFailureUnauthorized
-        ];
+        return <String>[title, context.l10n!.userFailureUnauthorized];
       case UserFailureReason.notFound:
-        return <String>[
-          title,
-          AppLocalizations.of(context)!.userFailureNotFound
-        ];
+        return <String>[title, context.l10n!.userFailureNotFound];
     }
   } else {
     return <String>[
-      AppLocalizations.of(context)!.errorLabel,
-      AppLocalizations.of(context)!.defaultErrorMessage
+      context.l10n!.errorLabel,
+      context.l10n!.defaultErrorMessage
     ];
   }
 }

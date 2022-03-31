@@ -42,7 +42,7 @@ final Provider<GraphQLClient> graphQLClientProvider = Provider<GraphQLClient>(
     // String.fromEnvironment('API_URL'),
 
     /// Local development environment
-    const String graphQLEndpoint = '${BackendURL.testURL}graphql';
+    const String graphQLEndpoint = '${BackendURL.productionURL}graphql';
 
     // const String subscriptionEndpoint = "ws://10.30.30.176:3000/subscription";
 

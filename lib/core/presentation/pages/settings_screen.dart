@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:thesis_cancer/core/presentation/pages/about_us_screen.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
+import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
 class SettingsScreen extends StatelessWidget {
@@ -13,7 +13,7 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: Header(
-        pageTitle: AppLocalizations.of(context)!.aboutUsTitle,
+        pageTitle: context.l10n!.aboutUsTitle,
       ),
       body: const AboutUsScreen(),
     );
