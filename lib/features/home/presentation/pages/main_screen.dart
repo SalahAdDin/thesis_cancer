@@ -23,8 +23,6 @@ import 'package:thesis_cancer/features/home/presentation/pages/research_screen.d
 import 'package:thesis_cancer/features/home/presentation/pages/stories_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/therapy_screen.dart';
 import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
-import 'package:thesis_cancer/features/notification/application/activityfeed.provider.dart';
-import 'package:thesis_cancer/features/notification/presentation/pages/notifications_screen.dart';
 // import 'package:thesis_cancer/features/notification/presentation/pages/notifications_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
 import 'package:thesis_cancer/features/user/application/user.notifier.dart';
@@ -159,8 +157,10 @@ class MainLayout extends HookWidget {
 
     final User sessionUser = userEntityController.state;
 
+    /*
     final AsyncValue<int> notificationsCount =
         useProvider(notificationsCountProvider);
+    */
 
     final List<BottomNavigationBarItem> _navigationButtons =
         <BottomNavigationBarItem>[
@@ -506,7 +506,10 @@ class MainLayout extends HookWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(right: 10),
-            child: notificationsCount.when(
+            child: Container(),
+
+            /*
+            notificationsCount.when(
               data: (int count) => Badge(
                 animationType: BadgeAnimationType.scale,
                 position: BadgePosition.topEnd(top: 7.5, end: 5),
@@ -539,6 +542,7 @@ class MainLayout extends HookWidget {
                 icon: Icon(Icons.error_outline),
               ),
             ),
+            */
           ),
         ],
       ),
