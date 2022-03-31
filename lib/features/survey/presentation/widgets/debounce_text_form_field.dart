@@ -64,6 +64,7 @@ class DebounceTextFormField extends HookWidget {
         void listener() {
           timer?.cancel();
           timer = Timer(Duration(milliseconds: debounceTime ?? 1000), () {
+            _formKey.currentState?.save();
             final bool? isValid = _formKey.currentState?.validate();
             if (textController.text != "" && isValid == true) {
               onAnswer(textController.text);
