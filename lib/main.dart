@@ -119,6 +119,7 @@ class CancerApp extends HookWidget {
       () {
         _logAppOpen();
         _setDeviceProperties();
+
         return null;
       },
       const <Object>[],

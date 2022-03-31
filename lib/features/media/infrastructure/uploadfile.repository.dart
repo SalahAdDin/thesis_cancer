@@ -28,6 +28,7 @@ class GraphQLFileRepository implements UploadFileRepository {
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,
     );
+
     return extension;
   }
 

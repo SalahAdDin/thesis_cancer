@@ -251,6 +251,7 @@ class LocalNotificationService {
   Future<int> getPendingNotificationsCount() async {
     final List<PendingNotificationRequest> pendingNotificationRequests =
         await getPendingNotifications();
+
     return pendingNotificationRequests.length;
   }
 }

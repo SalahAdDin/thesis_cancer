@@ -90,6 +90,7 @@ class _AudioPlayerState extends State<AudioPlayer> with WidgetsBindingObserver {
       ) {
         final Duration duration = reportedDuration ?? Duration.zero;
         final Duration bufferedPosition = duration * downloadProgress;
+
         return PositionData(position, bufferedPosition, duration);
       });
 
@@ -105,6 +106,7 @@ class _AudioPlayerState extends State<AudioPlayer> with WidgetsBindingObserver {
           builder:
               (BuildContext context, AsyncSnapshot<PositionData> snapshot) {
             final PositionData? positionData = snapshot.data;
+
             return SeekBar(
               duration: positionData?.duration ?? Duration.zero,
               position: positionData?.position ?? Duration.zero,

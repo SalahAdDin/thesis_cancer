@@ -53,6 +53,7 @@ class PostsList extends HookWidget {
     useEffect(
       () {
         _setScreenAnalytics();
+
         return null;
       },
       const <Object>[],
@@ -89,6 +90,7 @@ class PostsList extends HookWidget {
             } else {
               body = Text(context.l10n!.noMoreData);
             }
+
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 25),
               child: Center(child: body),

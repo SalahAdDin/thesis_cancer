@@ -25,6 +25,7 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,
     );
+
     return extension;
   }
 
@@ -57,6 +58,7 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
         }
       }
       final int count = response.data?['resultsCount'] as int;
+
       return count;
     } on Exception catch (_) {
       throw ResultFailure(reason: ResultFailureReason.unknown);

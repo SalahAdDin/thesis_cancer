@@ -52,6 +52,7 @@ class ChatPage extends HookWidget {
     useEffect(
       () {
         _setScreenAnalytics();
+
         return null;
       },
       const <Object>[],
@@ -65,11 +66,10 @@ class ChatPage extends HookWidget {
             "profile": <String, dynamic>{"uid": interlocutor.id}
           },
         );
-        if (fetchedUsers != null && fetchedUsers.isNotEmpty) {
-          return fetchedUsers[0];
-        } else {
-          return User.empty;
-        }
+
+        return fetchedUsers != null && fetchedUsers.isNotEmpty
+            ? fetchedUsers[0]
+            : User.empty;
       } on Exception catch (_) {
         throw Exception();
       }

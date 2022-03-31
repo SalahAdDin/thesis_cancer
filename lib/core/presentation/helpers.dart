@@ -27,6 +27,7 @@ const List<Color> colors = <Color>[
 /// based on the user's avatar's url.
 Color getUserAvatarNameColor(String url) {
   final int index = url.hashCode % colors.length;
+
   return colors[index];
 }
 

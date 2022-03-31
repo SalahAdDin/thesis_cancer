@@ -21,6 +21,7 @@ class Failure implements Exception {
   String toString() {
     final Object? reason = this.reason;
     if (reason == null) return "Unexpected reason";
+
     return "$reason";
   }
 }

@@ -24,6 +24,7 @@ class GraphQLUserRepository implements UserRepository {
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,
     );
+
     return extension;
   }
 
@@ -87,6 +88,7 @@ class GraphQLUserRepository implements UserRepository {
         }
       }
       final List<dynamic> users = response.data?["users"] as List<dynamic>;
+
       return users
           .map((dynamic user) => User.fromJson(user as Map<String, dynamic>))
           .toList();

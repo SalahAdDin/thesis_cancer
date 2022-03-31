@@ -51,6 +51,7 @@ class GraphQLSettingsRepository implements SettingsRepository {
           rawSurveySchedules.map((dynamic data) {
         final Map<String, dynamic> flattenSurvey = data as Map<String, dynamic>;
         flattenSurvey['survey'] = data['survey']['id'];
+
         return flattenSurvey;
       }).toList();
       flattenResult['surveySchedules'] = flattenSurveySchedules;

@@ -75,6 +75,7 @@ class DebounceTextFormField extends HookWidget {
         }
 
         textController.addListener(listener);
+
         return () {
           timer?.cancel();
           textController.removeListener(listener);

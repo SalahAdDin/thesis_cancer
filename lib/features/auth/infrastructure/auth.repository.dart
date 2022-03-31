@@ -38,6 +38,7 @@ class GraphQLAuthRepository implements AuthRepository {
     // As far as we understood, at Strapi, a formatted message always
     // will return a data and message attributes,
     // https://github.com/strapi/strapi/blob/master/packages/strapi-plugin-users-permissions/controllers/Auth.js
+
     return extension.dataMessage!;
   }
 

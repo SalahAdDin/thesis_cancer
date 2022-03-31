@@ -200,6 +200,7 @@ class QuestionWidget extends StatelessWidget {
         );
         break;
     }
+
     return answerWidget;
   }
 

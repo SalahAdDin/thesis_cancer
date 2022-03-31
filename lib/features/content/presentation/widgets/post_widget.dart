@@ -93,6 +93,7 @@ class PostWidget extends HookWidget {
     useEffect(
       () {
         _setItemAnalytics();
+
         return null;
       },
       const <Object>[],
