@@ -53,8 +53,13 @@ class DebounceTextFormField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    /*
+    TODO: this does not work now, cause this field is no wrapped by a Form widget
+
     final GlobalKey<FormState> _formKey =
         useMemoized(() => GlobalKey<FormState>());
+    */
+
     final TextEditingController textController =
         useTextEditingController(text: initialText);
 
@@ -64,9 +69,10 @@ class DebounceTextFormField extends HookWidget {
         void listener() {
           timer?.cancel();
           timer = Timer(Duration(milliseconds: debounceTime ?? 1000), () {
-            _formKey.currentState?.save();
-            final bool? isValid = _formKey.currentState?.validate();
-            if (textController.text != "" && isValid == true) {
+            //_formKey.currentState?.save();
+            // final bool? isValid = _formKey.currentState?.validate();
+            // if (textController.text != "" && isValid == true) {
+            if (textController.text.isNotEmpty) {
               onAnswer(textController.text);
             }
           });

@@ -81,11 +81,7 @@ class QuestionWidget extends StatelessWidget {
       case QuestionType.OPEN_SHORT:
         answerWidget = DebounceTextFormField(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          onAnswer: (String answer) {
-            if (answer.isNotEmpty) {
-              onSelected!(answer);
-            }
-          },
+          onAnswer: (String answer) => onSelected!(answer),
           validator: FormBuilderValidators.compose(<String? Function(String?)>[
             FormBuilderValidators.required(
               context,
@@ -109,11 +105,7 @@ class QuestionWidget extends StatelessWidget {
       case QuestionType.OPEN_LONG:
         answerWidget = DebounceTextFormField(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          onAnswer: (String answer) {
-            if (answer.isNotEmpty) {
-              onSelected!(answer);
-            }
-          },
+          onAnswer: (String answer) => onSelected!(answer),
           validator: FormBuilderValidators.compose(<String? Function(String?)>[
             FormBuilderValidators.required(
               context,
