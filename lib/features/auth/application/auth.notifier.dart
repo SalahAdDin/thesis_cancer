@@ -75,7 +75,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
       await _firebaseAnalytics.logSignUp(signUpMethod: "email");
 
       final User newUserWithProfile = newUser.copyWith(
-        confirmed: false,
         profile: Profile.empty.copyWith(
           uid: credentials.user?.uid,
           token: token,
@@ -132,8 +131,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
           id: uuid.v4(),
           email: username,
           username: '',
-          role: UserRole.GUEST,
-          confirmed: false);
+          role: UserRole.GUEST,);
       this.userController.state = newProfile;
       state = AuthState.loggedIn(newProfile);
     } on LogInWithEmailAndPasswordFailure catch (_) {
