@@ -16,9 +16,6 @@ import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
-import 'package:thesis_cancer/features/user/application/user.provider.dart';
-import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
-import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/l10n/l10n.dart';
 
@@ -135,12 +132,13 @@ class LoginScreen extends HookWidget {
       },
       onSubmitAnimationCompleted: () => authScreenState.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        signedUp: (User signedUser) => pushToPage(
+        signedUp: (User signedUser) => pushAndReplaceToPage(
           Navigator.of(context),
           SurveyScreen(
             onCompleteSurvey: () async {
               // We need to register save the device token from Firebase on backend to send Push Messages
               try {
+/*
                 final ProfileRepository _profileRepository = context.read(
                   profileRepositoryProvider,
                 );
@@ -158,8 +156,11 @@ class LoginScreen extends HookWidget {
 
                 final User updatedUser =
                     signedUser.copyWith(profile: updatedProfile);
+*/
 
-                await _dataStore.writeUserProfile(updatedUser);
+                print("Signer User: ${signedUser.toString()}");
+
+                await _dataStore.writeUserProfile(signedUser);
               } on Failure catch (error) {
                 if (kDebugMode) {
                   print(

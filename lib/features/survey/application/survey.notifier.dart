@@ -70,6 +70,7 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   ///
   Future<void> completeSurvey() async {
     try {
+      /*
       final int iteration = await resultRepository.countUserSurveyResults(
         surveyId: surveyController.state.id,
         userId: currentUserId,
@@ -84,6 +85,7 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
       // TODO: persists answer on locale/cache.
 
       await resultRepository.createUserSurveyResult(userSurveyResult);
+      */
 
       state = const SurveyState.completed();
     } on ResultFailure catch (error) {

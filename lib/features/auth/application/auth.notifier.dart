@@ -11,7 +11,6 @@ import 'package:thesis_cancer/features/auth/application/auth.state.dart';
 import 'package:thesis_cancer/features/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
-import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 ///
@@ -52,6 +51,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String password,
   }) async {
     try {
+      /*
       final User newUser = await _authRepository.signUp(
         username: username.split("@")[0],
         email: username,
@@ -80,8 +80,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
           token: token,
         ),
       );
+      */
+      const User newUserWithProfile = User.empty;
       _userController.state = newUserWithProfile;
-      _tokenController.state = newUser.token!;
+      // _tokenController.state = newUser.token!;
+
       state = AuthState.signedUp(newUserWithProfile);
     } on SignUpFailure catch (_) {
       rethrow;
