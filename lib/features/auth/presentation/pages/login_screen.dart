@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/application/launcher/launcher.notifier.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/domain/constants.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
@@ -29,6 +30,8 @@ class LoginScreen extends HookWidget {
     final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
     final DataStoreRepository _dataStore =
         useProvider(dataStoreRepositoryProvider);
+    final LauncherNotifier _launcherProvider =
+        useProvider(launcherProvider.notifier);
 
     Future<void> _setScreenAnalytics() async {
       await _analytics.setCurrentScreen(
@@ -132,12 +135,13 @@ class LoginScreen extends HookWidget {
       },
       onSubmitAnimationCompleted: () => authScreenState.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        signedUp: (User signedUser) => pushAndReplaceToPage(
+        signedUp: (User signedUser) => pushToPage(
           Navigator.of(context),
           SurveyScreen(
             onCompleteSurvey: () async {
               // We need to register save the device token from Firebase on backend to send Push Messages
               try {
+                final NavigatorState navigator = Navigator.of(context);
 /*
                 final ProfileRepository _profileRepository = context.read(
                   profileRepositoryProvider,
@@ -158,9 +162,11 @@ class LoginScreen extends HookWidget {
                     signedUser.copyWith(profile: updatedProfile);
 */
 
-                print("Signer User: ${signedUser.toString()}");
-
                 await _dataStore.writeUserProfile(signedUser);
+
+                navigator.maybePop();
+
+                _launcherProvider.singIn();
               } on Failure catch (error) {
                 if (kDebugMode) {
                   print(
@@ -174,7 +180,7 @@ class LoginScreen extends HookWidget {
             surveyID: registerSurveyID,
           ),
         ),
-        loggedIn: () => context.read(launcherProvider.notifier).singIn(),
+        loggedIn: () => _launcherProvider.singIn(),
         // TODO: block backward arrow button on this screen (LoginScreen breaks here).
         error: (Failure? error) => ErrorScreen(
           reason: error?.reason,
