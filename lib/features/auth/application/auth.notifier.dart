@@ -11,6 +11,8 @@ import 'package:thesis_cancer/features/auth/application/auth.state.dart';
 import 'package:thesis_cancer/features/auth/domain/auth.repository.dart';
 import 'package:thesis_cancer/features/auth/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
+import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
+import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 ///
@@ -22,6 +24,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
   final Reader reader;
 
   AuthRepository get _authRepository => reader(authRepositoryProvider);
+
+  ProfileRepository get _profileRepository => reader(profileRepositoryProvider);
 
   DataStoreRepository get _dataStore => reader(dataStoreRepositoryProvider);
 
@@ -51,12 +55,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String password,
   }) async {
     try {
-      /*
       final User newUser = await _authRepository.signUp(
         username: username.split("@")[0],
         email: username,
         password: password,
       );
+
+      _tokenController.state = newUser.token!;
 
       final fb.UserCredential credentials =
           await _fireBaseAuth.createUserWithEmailAndPassword(
@@ -74,18 +79,25 @@ class AuthNotifier extends StateNotifier<AuthState> {
       );
       await _firebaseAnalytics.logSignUp(signUpMethod: "email");
 
-      final User newUserWithProfile = newUser.copyWith(
-        profile: Profile.empty.copyWith(
+      final Profile newUserProfile =
+          await _profileRepository.findByUserId(newUser.id);
+
+      // We need to register save the device token from Firebase on backend to send Push Messages
+      final Profile actualNewUserProfile =
+          await _profileRepository.updateProfile(
+        updatedProfile: newUserProfile.copyWith(
           uid: credentials.user?.uid,
           token: token,
         ),
       );
-      */
-      const User newUserWithProfile = User.empty;
-      _userController.state = newUserWithProfile;
-      // _tokenController.state = newUser.token!;
 
-      state = AuthState.signedUp(newUserWithProfile);
+      final User finalNewUser = newUser.copyWith(profile: actualNewUserProfile);
+
+      await _dataStore.writeUserProfile(finalNewUser);
+
+      _userController.state = finalNewUser;
+
+      state = const AuthState.signedUp();
     } on SignUpFailure catch (_) {
       rethrow;
     } on fb.FirebaseAuthException catch (e) {
@@ -118,9 +130,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
         );
         _tokenController.state = sessionUser.token!;
       }
+
       await _firebaseAnalytics.logLogin(loginMethod: 'email/password');
+
       await _dataStore.writeUserProfile(sessionUser);
+
       _userController.state = sessionUser;
+
       state = const AuthState.loggedIn();
     } on LogInFailure catch (_) {
       // state = AuthState.error(error.toString());
