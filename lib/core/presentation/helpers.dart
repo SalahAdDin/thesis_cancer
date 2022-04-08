@@ -81,7 +81,7 @@ List<String> localizeFailure(dynamic reason, BuildContext context) {
         return <String>[title, context.l10n!.authFailureLocalPassword];
     }
   } else if (reason is ResetPasswordFailureReason) {
-    final String title = context.l10n!.resetPasswordErrorTItle;
+    final String title = context.l10n!.resetPasswordErrorTitle;
     switch (reason) {
       case ResetPasswordFailureReason.unknown:
         return <String>[title, context.l10n!.resetPasswordFailureUnknown];

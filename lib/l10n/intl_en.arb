@@ -90,7 +90,7 @@
   "serverErrorTitle": "Server Error",
   "settingsErrorTitle": "Settings Error",
   "authenticationErrorTitle": "Authentication Error",
-  "resetPasswordErrorTItle": "Reset Password Error",
+  "resetPasswordErrorTitle": "Reset Password Error",
   "forgotPasswordErrorTitle": "Forgot Password Error",
   "registerErrorTitle": "Register Error",
   "postErrorTitle": "Post Error",
