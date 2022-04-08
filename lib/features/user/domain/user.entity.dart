@@ -18,7 +18,7 @@ class User with _$User {
     required String username,
     Profile? profile,
     String? token,
-    bool? confirmed,
+    @Default(false) bool? confirmed,
     List<UserSurveyResult>? surveyResults,
     List<Post>? posts,
     List<Comment>? comments,
