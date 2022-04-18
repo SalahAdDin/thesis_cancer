@@ -39,14 +39,14 @@ class QuestionWidget extends StatelessWidget {
   ///
   final VoidCallback? onRemove;
 
-  GroupButton _themedGroupButton({
+  GroupButton<String> _themedGroupButton({
     required List<String> buttons,
-    required Function(int index, bool isSelected) onSelected,
+    required Function(String value, int index, bool isSelected) onSelected,
     GroupButtonController? controller,
     bool isRadio = true,
     double? buttonWidth,
   }) =>
-      GroupButton(
+      GroupButton<String>(
         buttons: buttons,
         onSelected: onSelected,
         controller: controller,
@@ -141,8 +141,7 @@ class QuestionWidget extends StatelessWidget {
           controller: GroupButtonController(
             selectedIndex: selectedButton,
           ),
-          onSelected: (int index, bool isSelected) =>
-              onSelected!(buttons[index]),
+          onSelected: (String value, _, __) => onSelected!(value),
           buttonWidth: buttonWidth,
         );
         break;
@@ -154,8 +153,7 @@ class QuestionWidget extends StatelessWidget {
 
         answerWidget = _themedGroupButton(
           buttons: buttons.map((String label) => label.trim()).toList(),
-          onSelected: (int index, bool isSelected) =>
-              onSelected!(buttons[index]),
+          onSelected: (String value, _, __) => onSelected!(value),
           controller: GroupButtonController(
             selectedIndex: selectedButton,
           ),
@@ -173,14 +171,14 @@ class QuestionWidget extends StatelessWidget {
         answerWidget = _themedGroupButton(
           isRadio: false,
           buttons: buttons.map((String label) => label.trim()).toList(),
-          onSelected: (int index, bool isSelected) {
+          onSelected: (String value, _, bool isSelected) {
             final String rawAnswer = userAnswer?.answer ?? '';
             final List<String> currentAnswer = rawAnswer.split(",");
 
             if (isSelected) {
-              currentAnswer.add(buttons[index]);
+              currentAnswer.add(value);
             } else {
-              currentAnswer.remove(buttons[index]);
+              currentAnswer.remove(value);
             }
 
             if (currentAnswer.isNotEmpty) {

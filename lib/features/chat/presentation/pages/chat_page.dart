@@ -7,7 +7,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/navigator.dart';
 import 'package:thesis_cancer/core/presentation/widgets/header.dart';
-import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart';
+import 'package:thesis_cancer/core/presentation/widgets/user_avatar.dart'
+    as user_avatar;
 import 'package:thesis_cancer/features/chat/application/chat.notifier.dart';
 import 'package:thesis_cancer/features/chat/application/chat.provider.dart';
 import 'package:thesis_cancer/features/chat/domain/chat.repository.dart';
@@ -86,7 +87,8 @@ class ChatPage extends HookWidget {
           child: ListTile(
             contentPadding: EdgeInsets.zero,
             horizontalTitleGap: 0,
-            leading: UserAvatar(userAvatarUrl: interlocutor.imageUrl),
+            leading:
+                user_avatar.UserAvatar(userAvatarUrl: interlocutor.imageUrl),
             title: Text(
               "${interlocutor.firstName} ${interlocutor.lastName}",
               style: Theme.of(context).appBarTheme.titleTextStyle,
