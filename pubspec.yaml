@@ -51,8 +51,8 @@ dependencies:
   # flutter_whatsnew: ^1.0.3
   form_builder_validators: ^8.1.0
   freezed_annotation: ^0.14.3
-  graphql: ^5.0.1
-  group_button: ^4.8.0
+  graphql: ^5.1.1
+  group_button: ^5.0.0
   hooks_riverpod: ^0.14.0+5
   http: ^0.13.4
   http_parser: ^4.0.0

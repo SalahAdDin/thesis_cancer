@@ -74,16 +74,13 @@ class QuestionWidget extends StatelessWidget {
     final FormFieldValidator<String> shortAnswerValidator =
         FormBuilderValidators.compose(<String? Function(String?)>[
       FormBuilderValidators.required(
-        context,
         errorText: context.l10n!.validationAnswerRequired,
       ),
       FormBuilderValidators.minLength(
-        context,
         15,
         errorText: context.l10n!.validationAnswerMinLength,
       ),
       FormBuilderValidators.maxLength(
-        context,
         50,
         errorText: context.l10n!.validationAnswerMaxLength,
       ),
@@ -92,16 +89,13 @@ class QuestionWidget extends StatelessWidget {
     final FormFieldValidator<String> longAnswerValidator =
         FormBuilderValidators.compose(<String? Function(String?)>[
       FormBuilderValidators.required(
-        context,
         errorText: context.l10n!.validationAnswerRequired,
       ),
       FormBuilderValidators.minLength(
-        context,
         50,
         errorText: context.l10n!.validationAnswerMinLength,
       ),
       FormBuilderValidators.maxLength(
-        context,
         500,
         errorText: context.l10n!.validationAnswerMaxLength,
       ),

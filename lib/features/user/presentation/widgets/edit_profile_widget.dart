@@ -67,12 +67,10 @@ class EditProfileWidget extends HookWidget {
                     validator: FormBuilderValidators
                         .compose(<String? Function(String?)>[
                       FormBuilderValidators.minLength(
-                        context,
                         3,
                         errorText: context.l10n!.validationNameMinLength,
                       ),
                       FormBuilderValidators.maxLength(
-                        context,
                         15,
                         errorText: context.l10n!.validationNameMaxLength,
                       )
@@ -88,12 +86,10 @@ class EditProfileWidget extends HookWidget {
                     validator: FormBuilderValidators
                         .compose(<String? Function(String?)>[
                       FormBuilderValidators.minLength(
-                        context,
                         3,
                         errorText: context.l10n!.validationNameMinLength,
                       ),
                       FormBuilderValidators.maxLength(
-                        context,
                         15,
                         errorText: context.l10n!.validationNameMaxLength,
                       )
@@ -110,20 +106,17 @@ class EditProfileWidget extends HookWidget {
                     validator: FormBuilderValidators
                         .compose(<String? Function(String?)>[
                       FormBuilderValidators.minLength(
-                        context,
                         18,
                         allowEmpty: true,
                         errorText:
                             context.l10n!.validationPhoneNumberWrongFormat,
                       ),
                       FormBuilderValidators.maxLength(
-                        context,
                         22,
                         errorText:
                             context.l10n!.validationPhoneNumberWrongFormat,
                       ),
                       FormBuilderValidators.match(
-                        context,
                         r"^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$",
                         errorText:
                             context.l10n!.validationPhoneNumberWrongFormat,
@@ -138,13 +131,11 @@ class EditProfileWidget extends HookWidget {
                     validator: FormBuilderValidators
                         .compose(<String? Function(String?)>[
                       FormBuilderValidators.minLength(
-                        context,
                         125,
                         allowEmpty: true,
                         errorText: context.l10n!.validationBioMinLength,
                       ),
                       FormBuilderValidators.maxLength(
-                        context,
                         350,
                         errorText: context.l10n!.validationBioMaxLength,
                       )
