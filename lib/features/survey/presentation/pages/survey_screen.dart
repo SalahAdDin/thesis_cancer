@@ -95,7 +95,7 @@ class SurveyWidget extends HookConsumerWidget {
     // We get the state(not the StateController).
     final Survey currentSurvey = ref.watch(surveyEntityProvider);
     final SurveyNotifier surveyNotifier =
-        context.read(surveyNotifierProvider(surveyID).notifier);
+        ref.read(surveyNotifierProvider(surveyID).notifier);
 
     final List<Question>? surveyQuestions = currentSurvey.questions;
     final int currentQuestionIndex = surveyNotifier.currentQuestionIndex;

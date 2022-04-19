@@ -117,7 +117,7 @@ class LobbyScreen extends HookConsumerWidget {
                         buttonLabel: context.l10n!.back,
                         // TODO: It does not work at the user's registering
                         onPressed: () {
-                          context.read(launcherProvider.notifier).signOut();
+                          ref.read(launcherProvider.notifier).signOut();
                           Navigator.of(context).maybePop();
                         },
                       ),

@@ -43,7 +43,7 @@ class PostsList extends HookConsumerWidget {
 
     Future<void> _refreshProvider() async {
       try {
-        context.refresh(postsNotifierProvider(type).notifier);
+        ref.refresh(postsNotifierProvider(type).notifier);
         _refreshController.refreshCompleted();
       } on Exception {
         _refreshController.refreshFailed();

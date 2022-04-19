@@ -68,7 +68,7 @@ class MainScreen extends HookConsumerWidget {
         dataSource: introductoryVideo.url,
         onDone: () async {
           if (currentUserRole == UserRole.PILOT) {
-            await context
+            await ref
                 .read(homeScreenNotifierProvider.notifier)
                 .hasSeenIntroductoryVideo();
           } else {
@@ -77,7 +77,7 @@ class MainScreen extends HookConsumerWidget {
               SurveyScreen(
                 onCompleteSurvey: () async {
                   Navigator.of(context).pop();
-                  await context
+                  await ref
                       .read(homeScreenNotifierProvider.notifier)
                       .hasSeenIntroductoryVideo();
                 },
@@ -102,7 +102,7 @@ class MainScreen extends HookConsumerWidget {
         reason: error?.reason,
         actionLabel: context.l10n!.homeLabel,
         onPressed: () {
-          context.read(launcherProvider.notifier).signOut();
+          ref.read(launcherProvider.notifier).signOut();
           Navigator.of(context).maybePop();
         },
       ),
@@ -450,7 +450,7 @@ class MainLayout extends HookConsumerWidget {
 
     if (showTutorial) {
       _initializeTargets();
-      context.read(firebaseAnalyticsProvider).logTutorialBegin();
+      ref.read(firebaseAnalyticsProvider).logTutorialBegin();
       tutorialCoachMark = TutorialCoachMark(
         context,
         targets: targets,
@@ -478,7 +478,7 @@ class MainLayout extends HookConsumerWidget {
         */
         onFinish: () async {
           userNotifierProvider.hasSeenTutorial();
-          context.read(firebaseAnalyticsProvider).logTutorialComplete();
+          ref.read(firebaseAnalyticsProvider).logTutorialComplete();
         },
         onSkip: () async => userNotifierProvider.hasSeenTutorial(),
         paddingFocus: 7.5,

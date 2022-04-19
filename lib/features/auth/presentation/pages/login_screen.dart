@@ -81,7 +81,7 @@ class LoginScreen extends HookConsumerWidget {
       */
       onSignup: (SignupData data) async {
         try {
-          await context.read(authNotifierProvider.notifier).registerUser(
+          await ref.read(authNotifierProvider.notifier).registerUser(
                 username: data.name!,
                 password: data.password!,
               );
@@ -93,7 +93,7 @@ class LoginScreen extends HookConsumerWidget {
       },
       onLogin: (LoginData data) async {
         try {
-          await context.read(authNotifierProvider.notifier).signIn(
+          await ref.read(authNotifierProvider.notifier).signIn(
                 username: data.name,
                 password: data.password,
               );
@@ -105,8 +105,7 @@ class LoginScreen extends HookConsumerWidget {
       },
       onRecoverPassword: (String identifier) async {
         try {
-          await context
-              .read(authNotifierProvider.notifier)
+          await ref.read(authNotifierProvider.notifier)
               .requestPasswordRecovery(email: identifier);
 
           return null;
@@ -116,7 +115,7 @@ class LoginScreen extends HookConsumerWidget {
       },
       onConfirmRecover: (String confirmationCode, LoginData data) async {
         try {
-          await context.read(authNotifierProvider.notifier).recoverPassword(
+          await ref.read(authNotifierProvider.notifier).recoverPassword(
                 password: data.name,
                 passwordConfirmation: data.password,
                 confirmationCode: confirmationCode,
