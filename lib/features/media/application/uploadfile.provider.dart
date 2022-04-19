@@ -6,7 +6,7 @@ import 'package:thesis_cancer/features/media/infrastructure/uploadfile.repositor
 ///
 final Provider<UploadFileRepository> uploadFileRepositoryProvider =
     Provider<UploadFileRepository>(
-  (ProviderReference ref) => GraphQLFileRepository(reader: ref.read),
+  (ProviderRef<UploadFileRepository> ref) => GraphQLFileRepository(reader: ref.read),
   name: "Upload File Repository Provider",
 );
 

@@ -6,6 +6,6 @@ import 'package:thesis_cancer/features/user/application/user.state.dart';
 final AutoDisposeStateNotifierProvider<UserNotifier, UserState>
     homeScreenNotifierProvider =
     StateNotifierProvider.autoDispose<UserNotifier, UserState>(
-  (ProviderReference ref) => UserNotifier(reader: ref.read)..init(),
+  (AutoDisposeStateNotifierProviderRef<UserNotifier, UserState> ref) => UserNotifier(reader: ref.read)..init(),
   name: "Home Screen Notifier Provider",
 );

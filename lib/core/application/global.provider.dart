@@ -38,7 +38,7 @@ final Provider<FirebaseMessaging> firebaseMessagingProvider =
 /// GraphQL Client Provider
 /// Provides a [GraphQLClient] with/without an authentication token.
 final Provider<GraphQLClient> graphQLClientProvider = Provider<GraphQLClient>(
-  (ProviderReference ref) {
+  (ProviderRef<GraphQLClient> ref) {
     // String.fromEnvironment('API_URL'),
 
     /// Local development environment
@@ -80,14 +80,15 @@ final Provider<GraphQLClient> graphQLClientProvider = Provider<GraphQLClient>(
 /// the database [SembastDataStore] is initialized.
 final Provider<DataStoreRepository> dataStoreRepositoryProvider =
     Provider<DataStoreRepository>(
-  (ProviderReference ref) => throw UnimplementedError(),
+  (ProviderRef<DataStoreRepository> ref) => throw UnimplementedError(),
   name: 'Data Store Provider',
 );
 
 ///
 final Provider<SettingsRepository> settingsRepositoryProvider =
     Provider<SettingsRepository>(
-  (ProviderReference ref) => GraphQLSettingsRepository(reader: ref.read),
+  (ProviderRef<SettingsRepository> ref) =>
+      GraphQLSettingsRepository(reader: ref.read),
   name: 'Settings Repository Provider',
 );
 
@@ -95,13 +96,15 @@ final Provider<SettingsRepository> settingsRepositoryProvider =
 final StateNotifierProvider<SettingsNotifier, Settings>
     settingsNotifierProvider =
     StateNotifierProvider<SettingsNotifier, Settings>(
-  (ProviderReference ref) => SettingsNotifier(reader: ref.read)..init(),
+  (StateNotifierProviderRef<SettingsNotifier, Settings> ref) =>
+      SettingsNotifier(reader: ref.read)..init(),
   name: "Settings Notifier Provider",
 );
 
 ///
 final StateNotifierProvider<LauncherNotifier, LauncherState> launcherProvider =
     StateNotifierProvider<LauncherNotifier, LauncherState>(
-  (ProviderReference ref) => LauncherNotifier(reader: ref.read),
+  (StateNotifierProviderRef<LauncherNotifier, LauncherState> ref) =>
+      LauncherNotifier(reader: ref.read),
   name: 'Launcher Notifier Provider',
 );

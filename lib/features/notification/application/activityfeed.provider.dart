@@ -9,7 +9,7 @@ import 'package:thesis_cancer/features/notification/domain/activityfeed.entity.d
 
 final AutoDisposeStreamProvider<List<ActivityFeed>> notificationsProvider =
     StreamProvider.autoDispose<List<ActivityFeed>>(
-  (AutoDisposeProviderReference ref) {
+  (AutoDisposeStreamProviderRef<List<ActivityFeed>> ref) {
     final String authToken = ref.read(tokenProvider).state;
 
     final StreamController<List<ActivityFeed>> _socketStream =
@@ -67,7 +67,7 @@ final AutoDisposeStreamProvider<List<ActivityFeed>> notificationsProvider =
 
 final AutoDisposeStreamProvider<int> notificationsCountProvider =
     StreamProvider.autoDispose<int>(
-  (AutoDisposeProviderReference ref) async* {
+  (AutoDisposeStreamProviderRef<int> ref) async* {
     final Stream<List<ActivityFeed>> _notificationsStream =
         ref.watch(notificationsProvider.stream);
 

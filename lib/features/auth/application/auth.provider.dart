@@ -14,14 +14,14 @@ final StateProvider<String> tokenProvider = StateProvider<String>(
 ///
 final Provider<AuthRepository> authRepositoryProvider =
     Provider<AuthRepository>(
-  (ProviderReference ref) => GraphQLAuthRepository(reader: ref.read),
+  (ProviderRef<AuthRepository> ref) => GraphQLAuthRepository(reader: ref.read),
   name: 'Auth Repository Provider',
 );
 
 ///
 final StateNotifierProvider<AuthNotifier, AuthState> authNotifierProvider =
     StateNotifierProvider<AuthNotifier, AuthState>(
-  (ProviderReference ref) => AuthNotifier(reader: ref.read),
+  (StateNotifierProviderRef<AuthNotifier, AuthState> ref) => AuthNotifier(reader: ref.read),
   name: "Authentication Notifier Provider",
 );
 
