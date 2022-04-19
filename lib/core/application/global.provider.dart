@@ -50,7 +50,7 @@ final Provider<GraphQLClient> graphQLClientProvider = Provider<GraphQLClient>(
       graphQLEndpoint,
     );
 
-    final String token = ref.watch(tokenProvider).state;
+    final String token = ref.watch(tokenProvider);
 
     final AuthLink _authLink = AuthLink(
       getToken: () async => 'Bearer $token',
