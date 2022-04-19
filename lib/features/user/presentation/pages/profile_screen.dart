@@ -105,7 +105,7 @@ class ProfileScreen extends HookConsumerWidget {
             child: IconButton(
               onPressed: () async {
                 final NavigatorState navigator = Navigator.of(context);
-                final fc_types.Room room = await context
+                final fc_types.Room room = await ref
                     .read(chatRepositoryProvider)
                     .createRoom(profile: user.profile!);
                 pushToPage(
@@ -129,10 +129,10 @@ class ProfileScreen extends HookConsumerWidget {
                 Icon(Icons.light_mode_outlined),
                 Icon(Icons.dark_mode_outlined)
               ],
-              onPressed: (dynamic value) => context
+              onPressed: (dynamic value) => ref
                   .read(settingsNotifierProvider.notifier)
                   .toggleThemeMode(value as ThemeMode),
-              initialValue: context.read(settingsNotifierProvider).themeMode,
+              initialValue: ref.read(settingsNotifierProvider).themeMode,
             ),
           ),
           Visibility(
@@ -199,7 +199,7 @@ class ProfileScreen extends HookConsumerWidget {
             IconButton(
               color: Colors.grey,
               onPressed: () {
-                context.read(launcherProvider.notifier).signOut();
+                ref.read(launcherProvider.notifier).signOut();
                 Navigator.of(context).maybePop();
               },
               icon: const Icon(Icons.exit_to_app),
