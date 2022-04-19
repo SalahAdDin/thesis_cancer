@@ -17,15 +17,15 @@ import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.d
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 /// Login Screen
-class LoginScreen extends HookWidget {
+class LoginScreen extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final AuthState authScreenState = useProvider(authNotifierProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AuthState authScreenState = ref.watch(authNotifierProvider);
     final String registerSurveyID =
-        useProvider(settingsNotifierProvider).registeringSurvey ?? '';
-    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+        ref.watch(settingsNotifierProvider).registeringSurvey ?? '';
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
     final LauncherNotifier _launcherProvider =
-        useProvider(launcherProvider.notifier);
+        ref.watch(launcherProvider.notifier);
 
     Future<void> _setScreenAnalytics() async {
       await _analytics.setCurrentScreen(

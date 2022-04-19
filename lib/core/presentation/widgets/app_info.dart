@@ -6,10 +6,10 @@ import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/constants.dart';
 
 /// Application's basic information widget.
-class AppInfo extends HookWidget {
+class AppInfo extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    return useProvider(packageInfoProvider).when(
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ref.watch(packageInfoProvider).when(
       data: (PackageInfo info) => Text(
         "${AppLiterals.title} (v${info.version}+${info.buildNumber})",
         style: const TextStyle(

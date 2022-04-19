@@ -7,13 +7,13 @@ import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
-class AboutUsScreen extends HookWidget {
+class AboutUsScreen extends HookConsumerWidget {
   ///
   const AboutUsScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
 
     Future<void> _setScreenAnalytics() async {
       await _analytics.setCurrentScreen(

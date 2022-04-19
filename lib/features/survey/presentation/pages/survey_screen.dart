@@ -19,7 +19,7 @@ import 'package:thesis_cancer/features/survey/presentation/widgets/question_widg
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 /// Survey Screen
-class SurveyScreen extends HookWidget {
+class SurveyScreen extends HookConsumerWidget {
   ///
   const SurveyScreen({
     required this.onCompleteSurvey,
@@ -33,10 +33,10 @@ class SurveyScreen extends HookWidget {
   final String surveyID;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final SurveyState currentSurveyState =
-        useProvider(surveyNotifierProvider(surveyID));
-    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+        ref.watch(surveyNotifierProvider(surveyID));
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
 
     Future<void> _setScreenAnalytics() async {
       await _analytics.setCurrentScreen(
@@ -83,7 +83,7 @@ class SurveyScreen extends HookWidget {
 * */
 
 /// Survey Widget
-class SurveyWidget extends HookWidget {
+class SurveyWidget extends HookConsumerWidget {
   ///
   const SurveyWidget({required this.surveyID});
 
@@ -91,9 +91,9 @@ class SurveyWidget extends HookWidget {
   final String surveyID;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // We get the state(not the StateController).
-    final Survey currentSurvey = useProvider(surveyEntityProvider).state;
+    final Survey currentSurvey = ref.watch(surveyEntityProvider);
     final SurveyNotifier surveyNotifier =
         context.read(surveyNotifierProvider(surveyID).notifier);
 

@@ -25,7 +25,7 @@ import 'package:thesis_cancer/features/user/presentation/widgets/profile_widget.
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
-class ProfileScreen extends HookWidget {
+class ProfileScreen extends HookConsumerWidget {
   ///
   const ProfileScreen({Key? key, required this.user}) : super(key: key);
 
@@ -65,18 +65,17 @@ class ProfileScreen extends HookWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final GlobalKey<FormBuilderState> _formKey =
         useMemoized(() => GlobalKey<FormBuilderState>());
     final AutoDisposeStateNotifierProvider<ProfileNotifier, ProfileState>
         profileProvider = profileNotifierProvider(user);
 
-    final ProfileState profileState = useProvider(profileProvider);
-    final ProfileNotifier profileNotifier =
-        useProvider(profileProvider.notifier);
+    final ProfileState profileState = ref.watch(profileProvider);
+    final ProfileNotifier profileNotifier = ref.watch(profileProvider.notifier);
     final String sessionUserFullName =
-        useProvider(userEntityProvider).state.profile?.fullName ?? '';
-    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+        ref.watch(userEntityProvider).profile?.fullName ?? '';
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
 
     Future<void> _setScreenAnalytics() async {
       await _analytics.setCurrentScreen(

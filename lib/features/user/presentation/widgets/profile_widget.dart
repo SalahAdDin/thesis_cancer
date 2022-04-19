@@ -9,7 +9,7 @@ import 'package:thesis_cancer/features/user/presentation/widgets/helpers.dart';
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
-class ProfileWidget extends HookWidget {
+class ProfileWidget extends HookConsumerWidget {
   ///
   const ProfileWidget({
     Key? key,
@@ -24,9 +24,9 @@ class ProfileWidget extends HookWidget {
   final int postsCount;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final Profile sessionUserProfile =
-        useProvider(userEntityProvider).state.profile ?? Profile.empty;
+        ref.watch(userEntityProvider).profile ?? Profile.empty;
     final Profile widgetProfile = userProfile.id == sessionUserProfile.id
         ? sessionUserProfile
         : userProfile;

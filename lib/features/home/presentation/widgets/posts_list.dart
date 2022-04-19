@@ -15,7 +15,7 @@ import 'package:thesis_cancer/features/content/presentation/widgets/post_widget.
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
-class PostsList extends HookWidget {
+class PostsList extends HookConsumerWidget {
   ///
   PostsList({required this.type});
 
@@ -25,10 +25,10 @@ class PostsList extends HookWidget {
   final RefreshController _refreshController = RefreshController();
 
   @override
-  Widget build(BuildContext context) {
-    final PostsState screenNotifier = useProvider(postsNotifierProvider(type));
-    final List<Post> postList = useProvider(postListProvider(type)).state;
-    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final PostsState screenNotifier = ref.watch(postsNotifierProvider(type));
+    final List<Post> postList = ref.watch(postListProvider(type));
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
 
     Future<void> _setScreenAnalytics() async {
       await _analytics.setCurrentScreen(

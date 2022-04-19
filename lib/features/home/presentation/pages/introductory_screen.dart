@@ -8,7 +8,7 @@ import 'package:thesis_cancer/core/presentation/widgets/cached_network_video.dar
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 /// Introductory Screen
-class IntroductoryScreen extends HookWidget {
+class IntroductoryScreen extends HookConsumerWidget {
   ///
   const IntroductoryScreen({
     Key? key,
@@ -23,9 +23,9 @@ class IntroductoryScreen extends HookWidget {
   final VoidCallback onDone;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final ValueNotifier<bool> _isVideoFinished = useState(false);
-    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
 
     Future<void> _setScreenAnalytics() async {
       await _analytics.setCurrentScreen(

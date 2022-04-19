@@ -11,7 +11,7 @@ import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
-class EditProfileWidget extends HookWidget {
+class EditProfileWidget extends HookConsumerWidget {
   ///
   EditProfileWidget({
     Key? key,
@@ -31,9 +31,9 @@ class EditProfileWidget extends HookWidget {
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final Profile userProfile =
-        useProvider(userEntityProvider).state.profile ?? Profile.empty;
+        ref.watch(userEntityProvider).profile ?? Profile.empty;
 
     return SingleChildScrollView(
       child: Column(

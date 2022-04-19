@@ -7,7 +7,7 @@ import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
-class CompletedSurveyScreen extends HookWidget {
+class CompletedSurveyScreen extends HookConsumerWidget {
   ///
   const CompletedSurveyScreen({
     Key? key,
@@ -22,8 +22,8 @@ class CompletedSurveyScreen extends HookWidget {
   final String actionLabel;
 
   @override
-  Widget build(BuildContext context) {
-    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
 
     Future<void> _setScreenAnalytics() async {
       await _analytics.setCurrentScreen(

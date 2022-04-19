@@ -16,7 +16,7 @@ import 'package:thesis_cancer/features/media/domain/uploadfile.entity.dart';
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 /// Post Widget
-class PostWidget extends HookWidget {
+class PostWidget extends HookConsumerWidget {
   ///
   const PostWidget({
     Key? key,
@@ -72,11 +72,11 @@ class PostWidget extends HookWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final double swiperWidth = MediaQuery.of(context).size.width - 60;
     final double swiperHeight = swiperWidth * 3 / 4;
 
-    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
 
     Future<void> _setItemAnalytics() async {
       await _analytics.logViewItem(

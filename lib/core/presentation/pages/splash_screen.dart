@@ -6,10 +6,10 @@ import 'package:thesis_cancer/core/application/global.provider.dart';
 
 // TODO: Create a Splash Screen in the native way
 ///
-class SplashScreen extends HookWidget {
+class SplashScreen extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
 
     Future<void> _setScreenAnalytics() async {
       await _analytics.setCurrentScreen(
