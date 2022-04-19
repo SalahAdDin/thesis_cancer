@@ -6,7 +6,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 /// [ProviderObserver] which prints on console every change on providers.
 class Logger extends ProviderObserver {
   @override
-  void didUpdateProvider(ProviderBase provider, Object? newValue) {
+  void didUpdateProvider(
+    ProviderBase provider,
+    Object? previousValue,
+    Object? newValue,
+    ProviderContainer container,
+  ) {
     Colorize title;
     Colorize value;
     if (newValue is StateController<dynamic>) {
@@ -17,7 +22,13 @@ class Logger extends ProviderObserver {
       value = Colorize('\tValue: $newValue');
     }
     if (kDebugMode) {
-      print('${title.yellow()}${value.green()}');
+      print(
+        '''
+{
+  "provider": "${title.yellow()}",
+  "newValue": "${value.green()}"
+}''',
+      );
     }
   }
 }
