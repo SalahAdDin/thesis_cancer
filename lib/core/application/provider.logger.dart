@@ -16,18 +16,18 @@ class Logger extends ProviderObserver {
     Colorize value;
     if (newValue is StateController<dynamic>) {
       title = Colorize('[${provider.name ?? provider.runtimeType}]\n');
-      value = Colorize('\tValue: ${newValue.state}');
+      value = Colorize('\tvalue: ${newValue.state}');
     } else {
       title = Colorize('[${provider.name ?? provider.runtimeType}]\n');
-      value = Colorize('\tValue: $newValue');
+      value = Colorize('\tvalue: $newValue');
     }
     if (kDebugMode) {
       print(
         '''
-{
-  "provider": "${title.yellow()}",
-  "newValue": "${value.green()}"
-}''',
+        {
+          "provider": "${title.yellow()}",
+          "${value.green()}"
+        }''',
       );
     }
   }
