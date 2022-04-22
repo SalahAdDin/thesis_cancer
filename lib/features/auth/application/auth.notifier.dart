@@ -71,6 +71,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
       final String? token = await _firebaseMessaging.getToken();
       await _firebaseMessaging.subscribeToTopic('posts');
+      await _firebaseMessaging.subscribeToTopic('settings');
+      await _firebaseMessaging.subscribeToTopic('surveys');
 
       await _firebaseAnalytics.setUserId(id: credentials.user?.uid);
       await _firebaseAnalytics.setUserProperty(

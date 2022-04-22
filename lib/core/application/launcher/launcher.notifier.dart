@@ -1,6 +1,7 @@
 import 'package:colorize/colorize.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sembast/sembast.dart';
@@ -43,6 +44,8 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
 
   FirebaseAnalytics get _firebaseAnalytics => reader(firebaseAnalyticsProvider);
 
+  FirebaseMessaging get _firebaseMessaging => reader(firebaseMessagingProvider);
+
   @override
   void dispose() {
     // _subscription?.cancel();
@@ -80,6 +83,12 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
   /// [Database] and setting [LauncherState.needsProfile] as [LauncherState].
   Future<void> signOut() async {
     state = const LauncherState.needsProfile();
+
+    await _firebaseMessaging.unsubscribeFromTopic('posts');
+    await _firebaseMessaging.unsubscribeFromTopic('settings');
+    await _firebaseMessaging.unsubscribeFromTopic('surveys');
+    await _firebaseMessaging.unsubscribeFromTopic('admins');
+
     _tokenController.state = '';
     _userController.state = User.empty;
     await _dataStore.removeUserProfile();
