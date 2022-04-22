@@ -13,8 +13,9 @@ class ActivityFeed with _$ActivityFeed {
   const factory ActivityFeed({
     String? id,
     required ActivityType type,
-    required String issuerID,
-    required String description,
+    @Default(<String, Object>{}) Map<String, Object>? data,
+    required String body,
+    required String title,
     @Default(false) bool isRead,
   }) = _ActivityFeed;
 
@@ -33,26 +34,9 @@ class ActivityFeed with _$ActivityFeed {
       _$ActivityFeedFromJson(json);
 
   /// Builds a empty(dummy) [ActivityFeed].
-  static const ActivityFeed empty =
-      ActivityFeed(type: ActivityType.NEW_POST, issuerID: '', description: '');
-
-  /// Get a title for an [ActivityFeed] from its [ActivityType] type.
-  String get title {
-    switch (type) {
-      case ActivityType.NEW_COMMENT:
-        return "New comment";
-      case ActivityType.NEW_FOLLOW:
-        return "New follower";
-      case ActivityType.NEW_LIKE:
-        return "New like on Post";
-      case ActivityType.NEW_POST:
-        return "New post";
-      case ActivityType.NEW_SURVEY_SCHEDULED:
-        return "Scheduled survey";
-      case ActivityType.NEW_RECOMMENDATION:
-        return "New recommendation";
-      case ActivityType.NEW_REGISTERED_USER:
-        return "New registered user";
-    }
-  }
+  static const ActivityFeed empty = ActivityFeed(
+    type: ActivityType.NEW_POST,
+    body: 'New dummy feed',
+    title: 'Dummy Feed',
+  );
 }
