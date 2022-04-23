@@ -156,32 +156,26 @@ class CancerApp extends HookConsumerWidget {
     await LocalNotificationService().updateBadgeCount();
 
     switch (feed.type) {
-      case ActivityType.NEW_COMMENT:
-        // TODO: Handle this case.
-        break;
-      case ActivityType.NEW_FOLLOW:
-        // TODO: Handle this case.
-        break;
-      case ActivityType.NEW_LIKE:
-        // TODO: Handle this case.
-        break;
       case ActivityType.NEW_POST:
         // TODO: Handle this case.
         break;
-      case ActivityType.NEW_SURVEY_SCHEDULED:
+      case ActivityType.SCHEDULED_SURVEY_REMINDER:
         _navigatorKey.currentState!.push(
           MaterialPageRoute<Widget>(
             builder: (_) => SurveyScreen(
               onCompleteSurvey: () => _navigatorKey.currentState!.pop(),
-              surveyID: feed.issuerID,
+              surveyID: feed.data!["id"] as String,
             ),
           ),
         );
         break;
-      case ActivityType.NEW_RECOMMENDATION:
+      case ActivityType.NEW_USER_REGISTERED:
         // TODO: Handle this case.
         break;
-      case ActivityType.NEW_REGISTERED_USER:
+      case ActivityType.SETTINGS_UPDATED:
+        // TODO: Handle this case.
+        break;
+      case ActivityType.USER_CONFIRMED:
         // TODO: Handle this case.
         break;
     }
@@ -194,7 +188,7 @@ class CancerApp extends HookConsumerWidget {
           context: _navigatorKey.currentState!.context,
           builder: (BuildContext context) => CupertinoAlertDialog(
             title: Text(feed.title),
-            content: Text(feed.description),
+            content: Text(feed.body),
             actions: <Widget>[
               CupertinoDialogAction(
                 isDefaultAction: true,

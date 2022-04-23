@@ -59,9 +59,12 @@ class SettingsNotifier extends StateNotifier<Settings> {
         await LocalNotificationService().getPendingNotifications();
     for (final SurveySchedule element in surveySchedules) {
       final ActivityFeed feed = ActivityFeed(
-        type: ActivityType.NEW_SURVEY_SCHEDULED,
-        issuerID: element.survey,
-        description: "A new ${element.label} survey is waiting for you.",
+        type: ActivityType.SCHEDULED_SURVEY_REMINDER,
+        body: "${element.label} survey is waiting for you.",
+        title: 'Scheduled Survey Reminder',
+        data: <String, Object>{
+          "id": element.survey,
+        },
       );
       for (int i = 1; i < element.iterations; i++) {
         final ActivityFeed iterationFeed =

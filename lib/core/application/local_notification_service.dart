@@ -206,7 +206,7 @@ class LocalNotificationService {
       flutterLocalNotificationsPlugin.zonedSchedule(
         feed.hashCode,
         feed.title,
-        feed.description,
+        feed.body,
         tz.TZDateTime.now(tz.local).add(Duration(days: step * 7)),
         notificationDetails,
         payload: jsonEncode(feed),
@@ -224,7 +224,7 @@ class LocalNotificationService {
       flutterLocalNotificationsPlugin.show(
         feed.hashCode,
         feed.title,
-        feed.description,
+        feed.body,
         notificationDetails,
         payload: jsonEncode(feed),
       );

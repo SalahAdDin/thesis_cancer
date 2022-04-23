@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:thesis_cancer/core/infrastructure/failure.dart';
 import 'package:thesis_cancer/features/notification/domain/activityfeed.entity.dart';
 
 part 'activityfeed.state.freezed.dart';
@@ -14,4 +15,5 @@ class ActivityFeedState with _$ActivityFeedState {
   const factory ActivityFeedState.completed() = _Completed;
 
   const factory ActivityFeedState.error([String? message]) = _Error;
+  const factory ActivityFeedState.error([Failure? error]) = _Error;
 }

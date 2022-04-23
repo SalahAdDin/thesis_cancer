@@ -1,5 +1,6 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/settings.notifier.dart';
@@ -202,6 +203,11 @@ class UserNotifier extends StateNotifier<UserState> {
       name: 'backend_user_id',
       value: _userController.state!.id,
     );
+
+    if (sessionUser.profile?.role == UserRole.ADMIN) {
+      await _firebaseMessaging.subscribeToTopic('admins');
+    }
+
     deliverUserScreen();
   }
 }
