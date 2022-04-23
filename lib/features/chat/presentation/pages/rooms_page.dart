@@ -17,15 +17,14 @@ import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
-class RoomsPage extends HookWidget {
+class RoomsPage extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final AsyncValue<List<fc_types.Room>> rooms =
-        useProvider(roomsListProvider);
-    final User _sessionUser = useProvider(userEntityProvider).state;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<List<fc_types.Room>> rooms = ref.watch(roomsListProvider);
+    final User _sessionUser = ref.watch(userEntityProvider);
     final UserRole? _sessionUserRole = _sessionUser.profile?.role;
 
-    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
 
     Future<void> _setScreenAnalytics() async {
       await _analytics.setCurrentScreen(

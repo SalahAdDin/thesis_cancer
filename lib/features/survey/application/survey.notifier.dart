@@ -40,7 +40,7 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   DataStoreRepository get dataStore => reader(dataStoreRepositoryProvider);
 
   /// [String] current [User]'s id required to register the survey's answering user.
-  String get currentUserId => reader(userEntityProvider).state.id;
+  String get currentUserId => reader(userEntityProvider).id;
 
   /// Survey's provider [StateController] to manipulate the current survey.
   StateController<Survey> get surveyController =>

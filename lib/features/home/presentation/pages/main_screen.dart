@@ -34,7 +34,7 @@ import 'package:thesis_cancer/l10n/l10n.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 /// Main Screen
-class MainScreen extends HookWidget {
+class MainScreen extends HookConsumerWidget {
   /// Leads the user to its proper screen based on its status:
   ///   [UserState.isAdmin] User goes to Main Layout on Admin mode.
   ///   [UserState.unConfirmed] User goes to Lobby.
@@ -44,11 +44,11 @@ class MainScreen extends HookWidget {
   ///   [UserState.loading] It shows a circular indicator.
   ///   [UserState.error] It shows the Error Screen with the occurred error.
   @override
-  Widget build(BuildContext context) {
-    final UserState currentUserState = useProvider(homeScreenNotifierProvider);
-    final Settings settingsState = useProvider(settingsNotifierProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final UserState currentUserState = ref.watch(homeScreenNotifierProvider);
+    final Settings settingsState = ref.watch(settingsNotifierProvider);
     final UserRole currentUserRole =
-        useProvider(userEntityProvider).state.profile?.role ?? UserRole.GUEST;
+        ref.watch(userEntityProvider).profile?.role ?? UserRole.GUEST;
     final UploadFile introductoryVideo = settingsState.introductoryVideo
         .firstWhere(
           (IntroductoryVideo video) => video.role == currentUserRole,
@@ -68,7 +68,7 @@ class MainScreen extends HookWidget {
         dataSource: introductoryVideo.url,
         onDone: () async {
           if (currentUserRole == UserRole.PILOT) {
-            await context
+            await ref
                 .read(homeScreenNotifierProvider.notifier)
                 .hasSeenIntroductoryVideo();
           } else {
@@ -77,7 +77,7 @@ class MainScreen extends HookWidget {
               SurveyScreen(
                 onCompleteSurvey: () async {
                   Navigator.of(context).pop();
-                  await context
+                  await ref
                       .read(homeScreenNotifierProvider.notifier)
                       .hasSeenIntroductoryVideo();
                 },
@@ -102,7 +102,7 @@ class MainScreen extends HookWidget {
         reason: error?.reason,
         actionLabel: context.l10n!.homeLabel,
         onPressed: () {
-          context.read(launcherProvider.notifier).signOut();
+          ref.read(launcherProvider.notifier).signOut();
           Navigator.of(context).maybePop();
         },
       ),
@@ -113,7 +113,7 @@ class MainScreen extends HookWidget {
 /// Main Layout
 /// User's main screen. Shows the published posts grouped by their [PostType].
 /// Enables navigation through tabs by clicking on navigation bar or swiping the view.
-class MainLayout extends HookWidget {
+class MainLayout extends HookConsumerWidget {
   ///
   MainLayout({this.showTutorial = false});
 
@@ -144,16 +144,16 @@ class MainLayout extends HookWidget {
   final PageController _pageController = PageController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // [StateProvider] which handles the current screen's viewing tab.
     // TODO: make this local with useState
     final ValueNotifier<PostType> tabType = useState(PostType.INFORMATION);
 
     final UserNotifier userNotifierProvider =
-        useProvider(homeScreenNotifierProvider.notifier);
+        ref.watch(homeScreenNotifierProvider.notifier);
 
     final StateController<User> userEntityController =
-        useProvider(userEntityProvider);
+        ref.watch(userEntityProvider.state);
 
     final User sessionUser = userEntityController.state;
 
@@ -450,7 +450,7 @@ class MainLayout extends HookWidget {
 
     if (showTutorial) {
       _initializeTargets();
-      context.read(firebaseAnalyticsProvider).logTutorialBegin();
+      ref.read(firebaseAnalyticsProvider).logTutorialBegin();
       tutorialCoachMark = TutorialCoachMark(
         context,
         targets: targets,
@@ -478,7 +478,7 @@ class MainLayout extends HookWidget {
         */
         onFinish: () async {
           userNotifierProvider.hasSeenTutorial();
-          context.read(firebaseAnalyticsProvider).logTutorialComplete();
+          ref.read(firebaseAnalyticsProvider).logTutorialComplete();
         },
         onSkip: () async => userNotifierProvider.hasSeenTutorial(),
         paddingFocus: 7.5,

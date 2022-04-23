@@ -49,27 +49,27 @@ Future<void> main() async {
 }
 
 /// Main Application: Cancer App
-class CancerApp extends HookWidget {
+class CancerApp extends HookConsumerWidget {
   // This widget is the root of your application.
   final GlobalKey<NavigatorState> _navigatorKey =
       GlobalKey(debugLabel: "Main Navigator");
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     LocalNotificationService()
         .handleApplicationWasLaunchedFromNotification(_onSelectNotification);
     LocalNotificationService().setOnSelectNotification(_onSelectNotification);
     _configureDidReceiveLocalNotification();
 
     // final navigator = useProvider(navigatorProvider);
-    final Settings? _appSettings = useProvider(settingsNotifierProvider);
+    final Settings? _appSettings = ref.watch(settingsNotifierProvider);
     final ThemeMode _darkTheme = _appSettings?.themeMode ?? ThemeMode.system;
-    final LauncherState _launcherState = useProvider(launcherProvider);
+    final LauncherState _launcherState = ref.watch(launcherProvider);
     late PackageInfo _packageInfo;
     late String _osName;
     late String _osVersion;
 
-    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
 
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,

@@ -33,10 +33,11 @@ class UserNotifier extends StateNotifier<UserState> {
 
   // UserRepository get _userRepository => reader(userRepositoryProvider);
 
-  ///
   ProfileRepository get _profileRepository => reader(profileRepositoryProvider);
 
   FirebaseAnalytics get _firebaseAnalytics => reader(firebaseAnalyticsProvider);
+
+  FirebaseMessaging get _firebaseMessaging => reader(firebaseMessagingProvider);
 
   ///
   StateController<User?> get _userController =>

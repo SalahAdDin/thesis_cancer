@@ -16,14 +16,14 @@ final StateProvider<Post> postEntityProvider = StateProvider<Post>(
 /// Provide a list of [Post] fetched by [PostType] type.
 final StateProviderFamily<List<Post>, PostType> postListProvider =
     StateProvider.family<List<Post>, PostType>(
-  (ProviderReference ref, PostType contentType) => <Post>[],
+  (StateProviderRef<List<Post>> ref, PostType contentType) => <Post>[],
   name: "Post List by Content Type Provider",
 );
 
 /// Provide a [PostRepository] repository.
 final Provider<PostRepository> postRepositoryProvider =
     Provider<PostRepository>(
-  (ProviderReference ref) => GraphQLPostRepository(reader: ref.read),
+  (ProviderRef<PostRepository> ref) => GraphQLPostRepository(reader: ref.read),
   name: "Post Repository Provider",
 );
 
@@ -31,7 +31,7 @@ final Provider<PostRepository> postRepositoryProvider =
 final AutoDisposeStateNotifierProviderFamily<PostNotifier, PostsState, PostType>
     postsNotifierProvider = StateNotifierProvider.autoDispose
         .family<PostNotifier, PostsState, PostType>(
-  (ProviderReference ref, PostType type) => PostNotifier(
+  (AutoDisposeStateNotifierProviderRef<PostNotifier, PostsState> ref, PostType type) => PostNotifier(
     reader: ref.read,
     type: type,
   )..init(),

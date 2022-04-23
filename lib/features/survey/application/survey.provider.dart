@@ -16,14 +16,14 @@ final StateProvider<Survey> surveyEntityProvider = StateProvider<Survey>(
 ///
 final Provider<SurveyRepository> surveyRepositoryProvider =
     Provider<SurveyRepository>(
-  (ProviderReference ref) => GraphQLSurveyRepository(reader: ref.read),
+  (ProviderRef<SurveyRepository> ref) => GraphQLSurveyRepository(reader: ref.read),
   name: 'Survey Repository Provider',
 );
 
 ///
 final Provider<UserSurveyResultRepository> resultRepositoryProvider =
     Provider<UserSurveyResultRepository>(
-  (ProviderReference ref) => GraphQLResultRepository(reader: ref.read),
+  (ProviderRef<UserSurveyResultRepository> ref) => GraphQLResultRepository(reader: ref.read),
   name: 'Result Repository Provider',
 );
 
@@ -32,7 +32,7 @@ final AutoDisposeStateNotifierProviderFamily<SurveyNotifier, SurveyState,
         String> surveyNotifierProvider =
     StateNotifierProvider.autoDispose
         .family<SurveyNotifier, SurveyState, String>(
-  (ProviderReference ref, String surveyId) => SurveyNotifier(
+  (AutoDisposeStateNotifierProviderRef<SurveyNotifier, SurveyState> ref, String surveyId) => SurveyNotifier(
     reader: ref.read,
     surveyID: surveyId,
   )..init(),

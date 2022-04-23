@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -11,7 +10,7 @@ import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
-class EditProfileWidget extends HookWidget {
+class EditProfileWidget extends HookConsumerWidget {
   ///
   EditProfileWidget({
     Key? key,
@@ -31,9 +30,9 @@ class EditProfileWidget extends HookWidget {
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final Profile userProfile =
-        useProvider(userEntityProvider).state.profile ?? Profile.empty;
+        ref.watch(userEntityProvider).profile ?? Profile.empty;
 
     return SingleChildScrollView(
       child: Column(

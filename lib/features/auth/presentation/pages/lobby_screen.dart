@@ -8,7 +8,7 @@ import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
-class LobbyScreen extends HookWidget {
+class LobbyScreen extends HookConsumerWidget {
   ///
   const LobbyScreen({this.mode = LobbyMode.NEW});
 
@@ -17,8 +17,8 @@ class LobbyScreen extends HookWidget {
 
   // TODO: Improve style
   @override
-  Widget build(BuildContext context) {
-    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
 
     Future<void> _setScreenAnalytics() async {
       await _analytics.setCurrentScreen(
@@ -117,7 +117,7 @@ class LobbyScreen extends HookWidget {
                         buttonLabel: context.l10n!.back,
                         // TODO: It does not work at the user's registering
                         onPressed: () {
-                          context.read(launcherProvider.notifier).signOut();
+                          ref.read(launcherProvider.notifier).signOut();
                           Navigator.of(context).maybePop();
                         },
                       ),

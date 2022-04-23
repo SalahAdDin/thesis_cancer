@@ -8,7 +8,7 @@ import 'package:thesis_cancer/features/chat/infrastructure/chat.repository.dart'
 /// Provides a [FireBaseChatRepository] repository.
 final Provider<ChatRepository> chatRepositoryProvider =
     Provider<ChatRepository>(
-  (ProviderReference ref) => FireBaseChatRepository(
+  (ProviderRef<ChatRepository> ref) => FireBaseChatRepository(
     reader: ref.read,
   ),
   name: "Firebase Chat Repository Provider",
@@ -24,7 +24,7 @@ final AutoDisposeStreamProvider<List<fc_types.Room>> roomsListProvider =
 /// Provides a [Stream] with [fc_types.Room] room given a [String] room ID.
 final AutoDisposeStreamProviderFamily<fc_types.Room, String> roomProvider =
     StreamProvider.autoDispose.family<fc_types.Room, String>(
-  (AutoDisposeProviderReference ref, String roomId) {
+  (AutoDisposeStreamProviderRef<fc_types.Room> ref, String roomId) {
     final ChatRepository _chatRepository = ref.read(chatRepositoryProvider);
 
     return _chatRepository.findRoomById(
@@ -39,7 +39,11 @@ final AutoDisposeStreamProviderFamily<fc_types.Room, String> roomProvider =
 final AutoDisposeStateNotifierProviderFamily<ChatNotifier, bool, fc_types.Room>
     chatNotifierProvider =
     StateNotifierProvider.autoDispose.family<ChatNotifier, bool, fc_types.Room>(
-  (AutoDisposeProviderReference ref, fc_types.Room room) => ChatNotifier(
+  (
+    AutoDisposeStateNotifierProviderRef<ChatNotifier, bool> ref,
+    fc_types.Room room,
+  ) =>
+      ChatNotifier(
     reader: ref.read,
     currentRoom: room,
   ),

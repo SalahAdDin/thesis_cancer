@@ -23,7 +23,7 @@ class ActivityFeed with _$ActivityFeed {
   /// Builds an [ActivityFeed] from a given [String] payload.
   factory ActivityFeed.fromPayload({required String payload}) {
     final Map<String, dynamic> data =
-        jsonDecode(payload) as Map<String, dynamic>;
+        jsonDecode(payload) as Map<String, Object?>;
     final ActivityFeed result = ActivityFeed.fromJson(data);
     return result;
   }

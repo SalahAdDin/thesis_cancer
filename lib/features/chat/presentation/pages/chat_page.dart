@@ -18,7 +18,7 @@ import 'package:thesis_cancer/features/user/domain/user.repository.dart';
 import 'package:thesis_cancer/features/user/presentation/pages/profile_screen.dart';
 
 /// Chat Page
-class ChatPage extends HookWidget {
+class ChatPage extends HookConsumerWidget {
   ///
   const ChatPage({
     Key? key,
@@ -29,19 +29,19 @@ class ChatPage extends HookWidget {
   final fc_types.Room room;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final DefaultChatTheme chatTheme = DefaultChatTheme(
       primaryColor: Theme.of(context).primaryColor,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     );
-    final ChatRepository _chatRepository = useProvider(chatRepositoryProvider);
+    final ChatRepository _chatRepository = ref.watch(chatRepositoryProvider);
     final AsyncValue<fc_types.Room> currentRoom =
-        useProvider(roomProvider(room.id));
+        ref.watch(roomProvider(room.id));
     final fc_types.User interlocutor =
         _chatRepository.getInterlocutor(room: room);
-    final UserRepository _userRepository = useProvider(userRepositoryProvider);
+    final UserRepository _userRepository = ref.watch(userRepositoryProvider);
 
-    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
 
     Future<void> _setScreenAnalytics() async {
       await _analytics.setCurrentScreen(
@@ -99,11 +99,11 @@ class ChatPage extends HookWidget {
       body: currentRoom.when(
         data: (fc_types.Room room) {
           final AsyncValue<List<fc_types.Message>> messages =
-              useProvider(messagesByRoomProvider(room));
+              ref.watch(messagesByRoomProvider(room));
           final bool _isAttachmentUploading =
-              useProvider(chatNotifierProvider(room));
+              ref.watch(chatNotifierProvider(room));
           final ChatNotifier chatNotifier =
-              useProvider(chatNotifierProvider(room).notifier);
+              ref.watch(chatNotifierProvider(room).notifier);
 
           void _handleAttachmentPressed() {
             showModalBottomSheet<void>(

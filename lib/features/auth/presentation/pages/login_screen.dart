@@ -17,15 +17,15 @@ import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.d
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 /// Login Screen
-class LoginScreen extends HookWidget {
+class LoginScreen extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final AuthState authScreenState = useProvider(authNotifierProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AuthState authScreenState = ref.watch(authNotifierProvider);
     final String registerSurveyID =
-        useProvider(settingsNotifierProvider).registeringSurvey ?? '';
-    final FirebaseAnalytics _analytics = useProvider(firebaseAnalyticsProvider);
+        ref.watch(settingsNotifierProvider).registeringSurvey ?? '';
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
     final LauncherNotifier _launcherProvider =
-        useProvider(launcherProvider.notifier);
+        ref.watch(launcherProvider.notifier);
 
     Future<void> _setScreenAnalytics() async {
       await _analytics.setCurrentScreen(
@@ -81,7 +81,7 @@ class LoginScreen extends HookWidget {
       */
       onSignup: (SignupData data) async {
         try {
-          await context.read(authNotifierProvider.notifier).registerUser(
+          await ref.read(authNotifierProvider.notifier).registerUser(
                 username: data.name!,
                 password: data.password!,
               );
@@ -93,7 +93,7 @@ class LoginScreen extends HookWidget {
       },
       onLogin: (LoginData data) async {
         try {
-          await context.read(authNotifierProvider.notifier).signIn(
+          await ref.read(authNotifierProvider.notifier).signIn(
                 username: data.name,
                 password: data.password,
               );
@@ -105,8 +105,7 @@ class LoginScreen extends HookWidget {
       },
       onRecoverPassword: (String identifier) async {
         try {
-          await context
-              .read(authNotifierProvider.notifier)
+          await ref.read(authNotifierProvider.notifier)
               .requestPasswordRecovery(email: identifier);
 
           return null;
@@ -116,7 +115,7 @@ class LoginScreen extends HookWidget {
       },
       onConfirmRecover: (String confirmationCode, LoginData data) async {
         try {
-          await context.read(authNotifierProvider.notifier).recoverPassword(
+          await ref.read(authNotifierProvider.notifier).recoverPassword(
                 password: data.name,
                 passwordConfirmation: data.password,
                 confirmationCode: confirmationCode,
