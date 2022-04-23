@@ -8,7 +8,7 @@ import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 part 'user.entity.freezed.dart';
 part 'user.entity.g.dart';
 
-/// User Entity
+/// [User] Entity
 @freezed
 class User with _$User {
   /// Default builder
