@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorize/colorize.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
@@ -135,7 +134,7 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
           Colorize("Error Updating Profile at Sign In: ${error.reason}").red(),
         );
       }
-    } on FirebaseException catch (error) {
+    } on fb.FirebaseException catch (error) {
       if (kDebugMode) {
         print(
           Colorize("Error getting device token: $error").red(),

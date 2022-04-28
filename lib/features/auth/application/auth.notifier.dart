@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:colorize/colorize.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
@@ -13,6 +15,7 @@ import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
+import 'package:thesis_cancer/features/user/infrastructure/failure.dart';
 
 ///
 class AuthNotifier extends StateNotifier<AuthState> {
@@ -34,7 +37,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   StateController<String> get _tokenController =>
       reader(tokenProvider.notifier);
 
-  fb.FirebaseAuth get _fireBaseAuth => reader(firebaseAuthProvider);
+  fb.FirebaseAuth get _firebaseAuth => reader(firebaseAuthProvider);
 
   FirebaseAnalytics get _firebaseAnalytics => reader(firebaseAnalyticsProvider);
 
@@ -45,7 +48,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   ///
-  Future<void> registerUser({
+  Future<void> signUp({
     required String username,
     required String password,
   }) async {
@@ -59,7 +62,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       _tokenController.state = newUser.token!;
 
       final fb.UserCredential credentials =
-          await _fireBaseAuth.createUserWithEmailAndPassword(
+          await _firebaseAuth.createUserWithEmailAndPassword(
         email: username,
         password: password,
       );
@@ -92,6 +95,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = const AuthState.signedUp();
     } on SignUpFailure catch (_) {
       rethrow;
+    } on ProfileFailure catch (error) {
+      if (kDebugMode) {
+        print(
+          Colorize("Error Updating Profile at Sign Up: ${error.reason}").red(),
+        );
+      }
+      throw SignUpFailure(reason: RegisterFailureReason.unknown);
     } on fb.FirebaseAuthException catch (e) {
       if (e.code == "email-already-in-use") {
         throw SignUpFailure(reason: RegisterFailureReason.emailAlreadyTaken);
@@ -116,7 +126,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         password: password,
       );
       if (sessionUser.confirmed != false) {
-        await _fireBaseAuth.signInWithEmailAndPassword(
+        await _firebaseAuth.signInWithEmailAndPassword(
           email: username,
           password: password,
         );
@@ -134,6 +144,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
       // state = AuthState.error(error.toString());
       // return "E-posta veya şifre geçersiz.";
       rethrow;
+    } on fb.FirebaseException catch (error) {
+      if (kDebugMode) {
+        print(
+          Colorize("Error getting device token: $error").red(),
+        );
+      }
     }
     /*
     try {

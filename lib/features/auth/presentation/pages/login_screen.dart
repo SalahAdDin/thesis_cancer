@@ -81,7 +81,7 @@ class LoginScreen extends HookConsumerWidget {
       */
       onSignup: (SignupData data) async {
         try {
-          await ref.read(authNotifierProvider.notifier).registerUser(
+          await ref.read(authNotifierProvider.notifier).signUp(
                 username: data.name!,
                 password: data.password!,
               );
