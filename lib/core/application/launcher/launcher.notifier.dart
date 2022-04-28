@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colorize/colorize.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
@@ -13,6 +14,7 @@ import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
 import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
+import 'package:thesis_cancer/features/user/infrastructure/failure.dart';
 
 /// Launch Notifier
 /// Handles business logic related to the application launch.
@@ -105,26 +107,40 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
   /// Re-render the application based on [User] is fetched and persisted on local storage,
   /// the application needs to render the [MainScreen].
   Future<void> singIn() async {
-    final User? currentUser = _userController.state;
+    try {
+      final User? currentUser = _userController.state;
 
-    await _firebaseMessaging.subscribeToTopic('posts');
-    await _firebaseMessaging.subscribeToTopic('settings');
-    await _firebaseMessaging.subscribeToTopic('surveys');
+      await _firebaseMessaging.subscribeToTopic('posts');
+      await _firebaseMessaging.subscribeToTopic('settings');
+      await _firebaseMessaging.subscribeToTopic('surveys');
 
-    final String? token = await _firebaseMessaging.getToken();
+      final String? token = await _firebaseMessaging.getToken();
 
-    final Profile updatedProfile = await _profileRepository.updateProfile(
-      updatedProfile: currentUser!.profile!.copyWith(
-        token: token,
-      ),
-    );
+      final Profile updatedProfile = await _profileRepository.updateProfile(
+        updatedProfile: currentUser!.profile!.copyWith(
+          token: token,
+        ),
+      );
 
-    final User updatedUser = currentUser.copyWith(profile: updatedProfile);
+      final User updatedUser = currentUser.copyWith(profile: updatedProfile);
 
-    await _dataStore.writeUserProfile(updatedUser);
+      await _dataStore.writeUserProfile(updatedUser);
 
-    _userController.state = updatedUser;
+      _userController.state = updatedUser;
 
-    state = const LauncherState.profileLoaded();
+      state = const LauncherState.profileLoaded();
+    } on ProfileFailure catch (error) {
+      if (kDebugMode) {
+        print(
+          Colorize("Error Updating Profile at Sign In: ${error.reason}").red(),
+        );
+      }
+    } on FirebaseException catch (error) {
+      if (kDebugMode) {
+        print(
+          Colorize("Error getting device token: $error").red(),
+        );
+      }
+    }
   }
 }
