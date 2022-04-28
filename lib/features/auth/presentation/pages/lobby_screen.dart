@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
-import 'package:thesis_cancer/core/presentation/widgets/button.dart';
 import 'package:thesis_cancer/l10n/l10n.dart';
 
 ///
@@ -110,7 +109,8 @@ class LobbyScreen extends HookConsumerWidget {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    // TODO: Workaround, this should be done by a socket event.
+                    /*
+                    TODO: Workaround, this should be done by a socket event.
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Button.primary(
@@ -122,7 +122,8 @@ class LobbyScreen extends HookConsumerWidget {
                         },
                       ),
                     ),
-                    // TODO: TextButton(link) to cancel my application as footer.
+                    TODO: TextButton(link) to cancel my application as footer.
+                    */
                   ],
                 ),
               ),

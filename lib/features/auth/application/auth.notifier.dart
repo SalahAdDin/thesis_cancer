@@ -86,7 +86,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
         ),
       );
 
-      final User finalNewUser = newUser.copyWith(profile: actualNewUserProfile);
+      final User finalNewUser = newUser.copyWith(
+        profile: actualNewUserProfile,
+        confirmed: false,
+      );
 
       await _dataStore.writeUserProfile(finalNewUser);
 
