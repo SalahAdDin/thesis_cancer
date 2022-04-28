@@ -129,8 +129,8 @@ class QuestionWidget extends StatelessWidget {
         break;
       case QuestionType.BOOL:
         final List<String> buttons = <String>[
-          context.l10n!.incorrect,
-          context.l10n!.correct
+          context.l10n!.yes,
+          context.l10n!.no,
         ];
         final String rawAnswer = userAnswer?.answer ?? '';
         final int? selectedButton =
@@ -146,11 +146,14 @@ class QuestionWidget extends StatelessWidget {
         );
         break;
       case QuestionType.SINGLE:
-        final List<String> buttons = question.answer!.split(",");
+        final List<String> buttons = question.answer!
+            .split(",")
+            .map((String button) => button.trim())
+            .toList();
         final String rawAnswer = userAnswer?.answer ?? '';
         final int? selectedButton =
             rawAnswer != '' ? buttons.indexOf(rawAnswer) : null;
-
+print("Question Answers: ${question.answer!}");
         answerWidget = _themedGroupButton(
           buttons: buttons.map((String label) => label.trim()).toList(),
           onSelected: (String value, _, __) => onSelected!(value),
@@ -161,7 +164,10 @@ class QuestionWidget extends StatelessWidget {
         );
         break;
       case QuestionType.MULTIPLE:
-        final List<String> buttons = question.answer!.split(",");
+        final List<String> buttons = question.answer!
+            .split(",")
+            .map((String button) => button.trim())
+            .toList();
         final String rawAnswer = userAnswer?.answer ?? '';
         final List<int> selectedButtons = rawAnswer
             .split(",")
