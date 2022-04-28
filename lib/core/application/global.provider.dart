@@ -29,7 +29,7 @@ final Provider<FirebaseAnalytics> firebaseAnalyticsProvider =
 );
 
 ///
-final Provider<FirebaseMessaging> firebaseMessagingProvider =
+final Provider<FirebaseMessaging> firebaseMessagingInstanceProvider =
     Provider<FirebaseMessaging>(
   (_) => FirebaseMessaging.instance,
   name: "Firebase Messaging Instance Provider",
