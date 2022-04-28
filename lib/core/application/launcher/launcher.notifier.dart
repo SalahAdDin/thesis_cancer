@@ -10,6 +10,8 @@ import 'package:thesis_cancer/core/application/launcher/launcher.state.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
+import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
+import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 
 /// Launch Notifier
@@ -27,10 +29,16 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
   /// [Reader] provider reader.
   final Reader reader;
 
-  // StreamSubscription? _subscription;
-
-  /// [DataStoreRepository] to read the application's storage.
   DataStoreRepository get _dataStore => reader(dataStoreRepositoryProvider);
+
+  ProfileRepository get _profileRepository => reader(profileRepositoryProvider);
+
+  fb.FirebaseAuth get _firebaseAuth => reader(firebaseAuthProvider);
+
+  FirebaseAnalytics get _firebaseAnalytics => reader(firebaseAnalyticsProvider);
+
+  FirebaseMessaging get _firebaseMessaging =>
+      reader(firebaseMessagingInstanceProvider);
 
   /// User's provider [StateController] to manipulate the current user.
   StateController<User?> get _userController =>
@@ -39,12 +47,6 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
   /// Token's [StateController] to manipulate the current auth token.
   StateController<String> get _tokenController =>
       reader(tokenProvider.notifier);
-
-  fb.FirebaseAuth get _auth => reader(firebaseAuthProvider);
-
-  FirebaseAnalytics get _firebaseAnalytics => reader(firebaseAnalyticsProvider);
-
-  FirebaseMessaging get _firebaseMessaging => reader(firebaseMessagingProvider);
 
   @override
   void dispose() {
@@ -89,16 +91,40 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
     await _firebaseMessaging.unsubscribeFromTopic('surveys');
     await _firebaseMessaging.unsubscribeFromTopic('admins');
 
+    await _firebaseMessaging.deleteToken();
+
     _tokenController.state = '';
     _userController.state = User.empty;
+
     await _dataStore.removeUserProfile();
+
     _firebaseAnalytics.logEvent(name: "logout");
-    _auth.signOut();
+    _firebaseAuth.signOut();
   }
 
   /// Re-render the application based on [User] is fetched and persisted on local storage,
   /// the application needs to render the [MainScreen].
   Future<void> singIn() async {
+    final User? currentUser = _userController.state;
+
+    await _firebaseMessaging.subscribeToTopic('posts');
+    await _firebaseMessaging.subscribeToTopic('settings');
+    await _firebaseMessaging.subscribeToTopic('surveys');
+
+    final String? token = await _firebaseMessaging.getToken();
+
+    final Profile updatedProfile = await _profileRepository.updateProfile(
+      updatedProfile: currentUser!.profile!.copyWith(
+        token: token,
+      ),
+    );
+
+    final User updatedUser = currentUser.copyWith(profile: updatedProfile);
+
+    await _dataStore.writeUserProfile(updatedUser);
+
+    _userController.state = updatedUser;
+
     state = const LauncherState.profileLoaded();
   }
 }

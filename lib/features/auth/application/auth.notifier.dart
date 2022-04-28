@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb;
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
@@ -39,10 +38,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   FirebaseAnalytics get _firebaseAnalytics => reader(firebaseAnalyticsProvider);
 
-  FirebaseMessaging get _firebaseMessaging => reader(firebaseMessagingProvider);
-
-  // StreamSubscription? _subscription;
-
   @override
   void dispose() {
     // _subscription?.cancel();
@@ -69,11 +64,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
         password: password,
       );
 
-      final String? token = await _firebaseMessaging.getToken();
-      await _firebaseMessaging.subscribeToTopic('posts');
-      await _firebaseMessaging.subscribeToTopic('settings');
-      await _firebaseMessaging.subscribeToTopic('surveys');
-
       await _firebaseAnalytics.setUserId(id: credentials.user?.uid);
       await _firebaseAnalytics.setUserProperty(
         name: 'backend_user_id',
@@ -84,12 +74,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final Profile newUserProfile =
           await _profileRepository.findByUserId(newUser.id);
 
-      // We need to register save the device token from Firebase on backend to send Push Messages
+      /* We need to register save the device token from Firebase on backend
+      to send Push Messages */
       final Profile actualNewUserProfile =
           await _profileRepository.updateProfile(
         updatedProfile: newUserProfile.copyWith(
           uid: credentials.user?.uid,
-          token: token,
         ),
       );
 
