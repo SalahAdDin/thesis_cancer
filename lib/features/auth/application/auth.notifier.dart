@@ -140,7 +140,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
       await _dataStore.writeUserProfile(sessionUser);
 
-      _userController.state = sessionUser;
+      _userController.state = sessionUser.copyWith(profile: Profile.empty);
 
       state = const AuthState.loggedIn();
     } on LogInFailure catch (_) {

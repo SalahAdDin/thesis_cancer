@@ -10,10 +10,7 @@ import 'package:thesis_cancer/core/application/launcher/launcher.state.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
-import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
-import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
-import 'package:thesis_cancer/features/user/infrastructure/failure.dart';
 
 /// Launch Notifier
 /// Handles business logic related to the application launch.
@@ -31,8 +28,6 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
   final Reader reader;
 
   DataStoreRepository get _dataStore => reader(dataStoreRepositoryProvider);
-
-  ProfileRepository get _profileRepository => reader(profileRepositoryProvider);
 
   fb.FirebaseAuth get _firebaseAuth => reader(firebaseAuthProvider);
 
@@ -106,40 +101,6 @@ class LauncherNotifier extends StateNotifier<LauncherState> {
   /// Re-render the application based on [User] is fetched and persisted on local storage,
   /// the application needs to render the [MainScreen].
   Future<void> singIn() async {
-    try {
-      final User? currentUser = _userController.state;
-
-      await _firebaseMessaging.subscribeToTopic('posts');
-      await _firebaseMessaging.subscribeToTopic('settings');
-      await _firebaseMessaging.subscribeToTopic('surveys');
-
-      final String? token = await _firebaseMessaging.getToken();
-
-      final Profile updatedProfile = await _profileRepository.updateProfile(
-        updatedProfile: currentUser!.profile!.copyWith(
-          token: token,
-        ),
-      );
-
-      final User updatedUser = currentUser.copyWith(profile: updatedProfile);
-
-      await _dataStore.writeUserProfile(updatedUser);
-
-      _userController.state = updatedUser;
-
-      state = const LauncherState.profileLoaded();
-    } on ProfileFailure catch (error) {
-      if (kDebugMode) {
-        print(
-          Colorize("Error Updating Profile at Sign In: ${error.reason}").red(),
-        );
-      }
-    } on fb.FirebaseException catch (error) {
-      if (kDebugMode) {
-        print(
-          Colorize("Error getting device token: $error").red(),
-        );
-      }
-    }
+    state = const LauncherState.profileLoaded();
   }
 }

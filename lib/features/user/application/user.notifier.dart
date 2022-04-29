@@ -1,6 +1,9 @@
+import 'package:colorize/colorize.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/application/settings.notifier.dart';
@@ -170,8 +173,16 @@ class UserNotifier extends StateNotifier<UserState> {
         final Profile sessionUserProfile =
             await _profileRepository.findByUserId(sessionUser.id);
 
+        final String? token = await _firebaseMessaging.getToken();
+
+        final Profile updatedProfile = await _profileRepository.updateProfile(
+          updatedProfile: sessionUserProfile.copyWith(
+            token: token,
+          ),
+        );
+
         final User sessionUserWithProfile = sessionUser.copyWith(
-          profile: sessionUserProfile,
+          profile: updatedProfile,
         );
 
         await _dataStore.writeUserProfile(sessionUserWithProfile);
@@ -190,11 +201,30 @@ class UserNotifier extends StateNotifier<UserState> {
           _settingsController.scheduleNotifications(userRelatedSurveys);
         }
 
+        await _firebaseMessaging.subscribeToTopic('posts');
+        await _firebaseMessaging.subscribeToTopic('settings');
+        await _firebaseMessaging.subscribeToTopic('surveys');
+
         _userController.state = sessionUserWithProfile;
       } on GraphQLFailure catch (error) {
         state = UserState.error(error);
       } on ProfileFailure catch (error) {
+        if (kDebugMode) {
+          print(
+            Colorize("Error Updating Profile at Sign In: ${error.reason}")
+                .red(),
+          );
+        }
         state = UserState.error(error);
+      } on FirebaseException catch (error) {
+        if (kDebugMode) {
+          print(
+            Colorize("Error getting device token: $error").red(),
+          );
+        }
+        state = UserState.error(
+          ProfileFailure(reason: ProfileFailureReason.unknown),
+        );
       }
     }
     await _firebaseAnalytics.setUserId(
