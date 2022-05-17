@@ -167,22 +167,33 @@ class UserNotifier extends StateNotifier<UserState> {
   Future<void> init() async {
     final User sessionUser = _userController.state!;
 
+    try {
+      final String? token = await _firebaseMessaging.getToken();
+
+      await _profileRepository.updateProfile(
+        updatedProfile: sessionUser.profile!.copyWith(
+          token: token,
+        ),
+      );
+    } on FirebaseException catch (error) {
+      if (kDebugMode) {
+        print(
+          Colorize("Error getting device token: $error").red(),
+        );
+      }
+      state = UserState.error(
+        ProfileFailure(reason: ProfileFailureReason.unknown),
+      );
+    }
+
     if (sessionUser.confirmed == true &&
         sessionUser.profile?.role == UserRole.GUEST) {
       try {
         final Profile sessionUserProfile =
             await _profileRepository.findByUserId(sessionUser.id);
 
-        final String? token = await _firebaseMessaging.getToken();
-
-        final Profile updatedProfile = await _profileRepository.updateProfile(
-          updatedProfile: sessionUserProfile.copyWith(
-            token: token,
-          ),
-        );
-
         final User sessionUserWithProfile = sessionUser.copyWith(
-          profile: updatedProfile,
+          profile: sessionUserProfile,
         );
 
         await _dataStore.writeUserProfile(sessionUserWithProfile);
@@ -216,15 +227,6 @@ class UserNotifier extends StateNotifier<UserState> {
           );
         }
         state = UserState.error(error);
-      } on FirebaseException catch (error) {
-        if (kDebugMode) {
-          print(
-            Colorize("Error getting device token: $error").red(),
-          );
-        }
-        state = UserState.error(
-          ProfileFailure(reason: ProfileFailureReason.unknown),
-        );
       }
     }
     await _firebaseAnalytics.setUserId(
