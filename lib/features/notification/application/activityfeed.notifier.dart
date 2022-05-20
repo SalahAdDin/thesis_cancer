@@ -4,16 +4,42 @@ import 'package:colorize/colorize.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:thesis_cancer/core/application/global.provider.dart';
+import 'package:thesis_cancer/core/application/launcher/launcher.notifier.dart';
+import 'package:thesis_cancer/core/application/settings.notifier.dart';
+import 'package:thesis_cancer/core/domain/types.dart';
+import 'package:thesis_cancer/features/notification/application/activityfeed.provider.dart';
 import 'package:thesis_cancer/features/notification/application/activityfeed.state.dart';
 import 'package:thesis_cancer/features/notification/domain/activityfeed.entity.dart';
-import 'package:thesis_cancer/features/notification/infrastructura/failure.dart';
+import 'package:thesis_cancer/features/notification/infrastructure/failure.dart';
+import 'package:thesis_cancer/features/user/application/user.provider.dart';
+import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
+import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
+import 'package:thesis_cancer/features/user/domain/user.entity.dart';
+import 'package:thesis_cancer/features/user/domain/user.repository.dart';
 
 ///
 class ActivityFeedNotifier extends StateNotifier<ActivityFeedState> {
   ///
-  ActivityFeedNotifier() : super(const ActivityFeedState.loading()) {
+  ActivityFeedNotifier({
+    required this.reader,
+  }) : super(const ActivityFeedState.loading()) {
     init();
   }
+
+  ///
+  final Reader reader;
+
+  Stream<RemoteMessage> get _feedProvider => reader(feedProvider.stream);
+
+  LauncherNotifier get _launcherProvider => reader(launcherProvider.notifier);
+
+  ProfileRepository get _profileRepository => reader(profileRepositoryProvider);
+
+  UserRepository get _userRepository => reader(userRepositoryProvider);
+
+  SettingsNotifier get _settingsController =>
+      reader(settingsNotifierProvider.notifier);
 
   ///
   List<ActivityFeed> feeds = <ActivityFeed>[];
@@ -30,6 +56,50 @@ class ActivityFeedNotifier extends StateNotifier<ActivityFeedState> {
   }
 
   ///
+  Future<String?> getAvatarURL(ActivityFeed feed) async {
+    if (feed.type == ActivityType.NEW_POST) {
+      final String? profileId = feed.data!["author"] as String?;
+
+      if (profileId != null) {
+        final Profile authorProfile =
+            await _profileRepository.findById(profileId);
+        return authorProfile.profilePhoto?.url;
+      }
+
+      return null;
+    }
+
+    if (feed.type == ActivityType.NEW_USER_REGISTERED) return null;
+
+    return 'none';
+  }
+
+  ///
+  Future<void> deliverFeedAction(ActivityFeed feed) async {
+    switch (feed.type) {
+      case ActivityType.NEW_POST:
+        final PostType postType = feed.data!["type"] as PostType;
+        break;
+      case ActivityType.SCHEDULED_SURVEY_REMINDER:
+        final String userId = feed.data!["id"] as String;
+        // TODO: Handle this case.
+        break;
+      case ActivityType.NEW_USER_REGISTERED:
+        final String userId = feed.data!["id"] as String;
+        final User aimedUser = await _userRepository.findById(userId);
+
+        // TODO: Handle this case.
+        break;
+      case ActivityType.SETTINGS_UPDATED:
+        _settingsController.getSettings();
+        break;
+      case ActivityType.USER_CONFIRMED:
+        _launcherProvider.signOut();
+        break;
+    }
+  }
+
+  ///
   void readFeed(String id) {
     feeds = feeds
         .map(
@@ -42,7 +112,7 @@ class ActivityFeedNotifier extends StateNotifier<ActivityFeedState> {
 
   ///
   void init() {
-    _subscription = FirebaseMessaging.onMessage.listen(
+    _subscription = _feedProvider.listen(
       (RemoteMessage message) {
         final ActivityFeed feed = ActivityFeed.fromJson(message.data);
         feeds.add(feed);
@@ -61,7 +131,7 @@ class ActivityFeedNotifier extends StateNotifier<ActivityFeedState> {
   }
 
   /*
-  
+
   void init() {
     _subscriptionOnCreateSurveyOperation = apiCategory.subscribe(
         request:

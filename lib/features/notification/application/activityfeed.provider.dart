@@ -6,6 +6,13 @@ import 'package:thesis_cancer/features/notification/domain/activityfeed.entity.d
 import 'package:uuid/uuid.dart';
 
 ///
+final AutoDisposeStreamProvider<RemoteMessage> feedProvider =
+    StreamProvider.autoDispose<RemoteMessage>(
+  (_) => FirebaseMessaging.onMessage,
+  name: "Feeds Provider",
+);
+
+///
 final AutoDisposeStreamProvider<List<ActivityFeed>> notificationsProvider =
     StreamProvider.autoDispose<List<ActivityFeed>>(
   (AutoDisposeStreamProviderRef<List<ActivityFeed>> ref) async* {
