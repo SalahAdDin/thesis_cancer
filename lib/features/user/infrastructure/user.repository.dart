@@ -19,7 +19,7 @@ class GraphQLUserRepository implements UserRepository {
   GraphQLClient get _client => reader(graphQLClientProvider);
 
   ///
-  Extension extractException(QueryResult<Map<String, dynamic>> response) {
+  Extension _extractException(QueryResult<Map<String, dynamic>> response) {
     final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,
@@ -41,9 +41,39 @@ class GraphQLUserRepository implements UserRepository {
   }
 
   @override
-  Future<User> findById(String id) {
-    // TODO: implement findById
-    throw UnimplementedError();
+  Future<User> findById(String id) async {
+    try {
+      final QueryOptions<Map<String, dynamic>> options =
+          QueryOptions<Map<String, dynamic>>(
+        document: gql(graphQLDocumentGetUser),
+        variables: <String, dynamic>{"id": id},
+      );
+      final QueryResult<Map<String, dynamic>> response =
+          await _client.query(options);
+
+      if (response.hasException) {
+        if (response.exception?.linkException is NetworkException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = _extractException(response);
+        final int errorCode = extension.statusCode!;
+
+        if (errorCode == 403) {
+          throw UserFailure(reason: UserFailureReason.unauthorized);
+        } else if (errorCode == 404) {
+          throw UserFailure(reason: UserFailureReason.notFound);
+        } else {
+          throw UserFailure(reason: UserFailureReason.unknown);
+        }
+      }
+
+      final Map<String, dynamic> data =
+          response.data?['user'] as Map<String, dynamic>;
+
+      return User.fromJson(data);
+    } on Exception catch (_) {
+      throw UserFailure(reason: UserFailureReason.unknown);
+    }
   }
 
   @override
@@ -77,7 +107,7 @@ class GraphQLUserRepository implements UserRepository {
         if (response.exception?.linkException is NetworkException) {
           throw GraphQLFailure(reason: FailureReason.unableToConnect);
         }
-        final Extension extension = extractException(response);
+        final Extension extension = _extractException(response);
         final int errorCode = extension.statusCode!;
         if (errorCode == 403) {
           throw UserFailure(reason: UserFailureReason.unauthorized);

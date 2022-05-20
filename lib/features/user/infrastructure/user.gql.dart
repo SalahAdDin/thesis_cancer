@@ -19,15 +19,9 @@ fragment UserFields on UsersPermissionsUser {
 String graphQLFragmentPost = '''
 fragment PostFields on User {
   posts {
-    items {
-      id
-      media(limit: 1) {
-        items {
-          description
-          id
-          url
-        }
-      }
+    id
+    gallery(limit: 1) {
+    ...UploadFileFields
     }
   }
 }
@@ -37,15 +31,12 @@ fragment PostFields on User {
 String graphQLFragmentSurveyResult = '''
 fragment SurveyFields on User {
   surveyResults {
-    items {
-      iteration
-      createdAt
-      answers {
-        items {
-          answer
-          questionID
-        }
-      }
+    iteration
+    createdAt
+    answers {
+      id
+      answer
+      statement
     }
   }
 }
@@ -54,15 +45,12 @@ fragment SurveyFields on User {
 ///
 String graphQLDocumentGetUser = '''
   $graphQLFragmentBody
-  $graphQLFragmentPost
-  $graphQLFragmentSurveyResult
   query GetUser(\$id: ID!) {
-    getUser(id: \$id) {
+    user(id: \$id) {
       ...UserFields
-      ...PostFields
-      ...SurveyFields
     }
-  }''';
+  }
+''';
 
 ///
 const String graphQLDocumentFindUsers = '''
