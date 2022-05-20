@@ -12,7 +12,6 @@ import 'package:thesis_cancer/core/presentation/helpers.dart';
 import 'package:thesis_cancer/core/presentation/pages/error_screen.dart';
 import 'package:thesis_cancer/features/auth/application/auth.provider.dart';
 import 'package:thesis_cancer/features/auth/application/auth.state.dart';
-import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
 import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
 import 'package:thesis_cancer/l10n/l10n.dart';
 
@@ -105,7 +104,8 @@ class LoginScreen extends HookConsumerWidget {
       },
       onRecoverPassword: (String identifier) async {
         try {
-          await ref.read(authNotifierProvider.notifier)
+          await ref
+              .read(authNotifierProvider.notifier)
               .requestPasswordRecovery(email: identifier);
 
           return null;
@@ -144,8 +144,9 @@ class LoginScreen extends HookConsumerWidget {
         error: (Failure? error) => ErrorScreen(
           reason: error?.reason,
           actionLabel: context.l10n!.homeLabel,
-          onPressed: () =>
-              pushAndReplaceToPage(Navigator.of(context), MainScreen()),
+          onPressed: () {
+            Navigator.of(context).maybePop();
+          },
         ),
       ),
     );
