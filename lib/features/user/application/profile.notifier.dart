@@ -1,3 +1,5 @@
+import 'package:colorize/colorize.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
@@ -63,7 +65,7 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
   ///
   void toProfileMode() => state = const ProfileState.data();
 
-  ///
+  /// Used when the handled profile is the own user's profile
   Future<void> updateProfilePhoto() async {
     final XFile? result = await ImagePicker().pickImage(
       imageQuality: 70,
@@ -121,7 +123,7 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
     } else {}
   }
 
-  ///
+  /// Used when the handled profile is the own user's profile
   Future<void> updateProfile(Profile updatedProfile) async {
     try {
       final Profile fetchedUpdatedProfile =
@@ -154,10 +156,20 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
   Future<void> init() async {
     try {
       postsCount = await _profileRepository.countPostsByUser(userId: user.id);
-    } on ProfileFailure catch (_) {}
+    } on ProfileFailure catch (error) {
+      if (kDebugMode) {
+        print(Colorize('A stream error occurred: $error').red());
+      }
+    }
     if (user.profile != null) {
       state = const ProfileState.data();
     } else {
+      /*
+        TODO: this function should get the profile from backend when the user
+        has no a profile, instead getting the profile from other scopes.
+
+      final Future<Profile> profile = _profileRepository.findByUserId(user.id);
+      */
       state = ProfileState.error(
         ProfileFailure(reason: ProfileFailureReason.notValidProfile),
       );
