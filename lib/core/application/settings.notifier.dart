@@ -86,36 +86,41 @@ class SettingsNotifier extends StateNotifier<Settings> {
   }
 
   ///
+  Future<void> getSettings() async {
+    try {
+      final Settings fetchedSettings =
+          await _settingsRepository.fetchSettings();
+
+      await _dataStore.writeSettings(fetchedSettings);
+
+      for (final IntroductoryVideo item in fetchedSettings.introductoryVideo) {
+        if (item.video.url != '') {
+          _cacheManager.downloadFile(item.video.url);
+        }
+      }
+
+      state = fetchedSettings;
+    } on SettingsFailure catch (error) {
+      if (kDebugMode) {
+        print(Colorize(error.toString()).red());
+      }
+      state = Settings.empty;
+    }
+  }
+
+  ///
   Future<void> init() async {
     final Settings settings = await _dataStore.getSettings();
 
     if (settings == Settings.empty) {
-      try {
-        if (kDebugMode) {
-          print(
-            Colorize(
-              '[Settings Notifier Provider]: Fetching settings from server.',
-            ).blue(),
-          );
-        }
-        final Settings fetchedSettings =
-            await _settingsRepository.fetchSettings();
-        await _dataStore.writeSettings(fetchedSettings);
-
-        for (final IntroductoryVideo item
-            in fetchedSettings.introductoryVideo) {
-          if (item.video.url != '') {
-            _cacheManager.downloadFile(item.video.url);
-          }
-        }
-
-        state = fetchedSettings;
-      } on SettingsFailure catch (error) {
-        if (kDebugMode) {
-          print(Colorize(error.toString()).red());
-        }
-        state = Settings.empty;
+      if (kDebugMode) {
+        print(
+          Colorize(
+            '[Settings Notifier Provider]: Fetching settings from server.',
+          ).blue(),
+        );
       }
+      await getSettings();
     } else {
       if (kDebugMode) {
         print(
