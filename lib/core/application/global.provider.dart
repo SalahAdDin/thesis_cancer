@@ -1,5 +1,4 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -26,13 +25,6 @@ final Provider<FirebaseAnalytics> firebaseAnalyticsProvider =
     Provider<FirebaseAnalytics>(
   (_) => FirebaseAnalytics.instance,
   name: "Firebase Analytics Instance Provider",
-);
-
-///
-final Provider<FirebaseMessaging> firebaseMessagingInstanceProvider =
-    Provider<FirebaseMessaging>(
-  (_) => FirebaseMessaging.instance,
-  name: "Firebase Messaging Instance Provider",
 );
 
 /// GraphQL Client Provider
