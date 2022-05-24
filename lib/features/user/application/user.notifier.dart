@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colorize/colorize.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -12,6 +14,7 @@ import 'package:thesis_cancer/core/domain/settings/schedules.entity.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
 import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/infrastructure/failure.dart';
+import 'package:thesis_cancer/features/notification/application/activityfeed.provider.dart';
 import 'package:thesis_cancer/features/user/application/user.provider.dart';
 import 'package:thesis_cancer/features/user/application/user.state.dart';
 import 'package:thesis_cancer/features/user/domain/profile.entity.dart';
@@ -59,11 +62,11 @@ class UserNotifier extends StateNotifier<UserState> {
   ///
   Profile? get currentUserProfile => currentUser?.profile;
 
-  // StreamSubscription? _subscription;
+  late StreamSubscription<String> _tokenSubscription;
 
   @override
   void dispose() {
-    // _subscription?.cancel();
+    _tokenSubscription.cancel();
     super.dispose();
   }
 
@@ -169,6 +172,16 @@ class UserNotifier extends StateNotifier<UserState> {
 
     try {
       final String? token = await _firebaseMessaging.getToken();
+
+      _tokenSubscription = _firebaseMessaging.onTokenRefresh.listen(
+        (String token) async {
+          await _profileRepository.updateProfile(
+            updatedProfile: sessionUser.profile!.copyWith(
+              token: token,
+            ),
+          );
+        },
+      );
 
       await _profileRepository.updateProfile(
         updatedProfile: sessionUser.profile!.copyWith(
