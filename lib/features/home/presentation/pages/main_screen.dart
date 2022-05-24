@@ -157,8 +157,8 @@ class MainLayout extends HookConsumerWidget {
 
     final User sessionUser = userEntityController.state;
 
-    final AsyncValue<int> notificationsCount =
-        ref.watch(notificationsCountProvider);
+    final int notificationsCount =
+        ref.watch(notificationsProvider.notifier).feedsCount;
 
     final List<BottomNavigationBarItem> _navigationButtons =
         <BottomNavigationBarItem>[
@@ -504,34 +504,25 @@ class MainLayout extends HookConsumerWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(right: 10),
-            child: notificationsCount.when(
-              data: (int count) => Badge(
-                animationType: BadgeAnimationType.scale,
-                position: BadgePosition.topEnd(top: 7.5, end: 5),
-                badgeContent: Text(
-                  count.toString(),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 7,
-                  ),
-                ),
-                showBadge: count > 0,
-                child: IconButton(
-                  // key: GlobalKeys().notificationButtonKey,
-                  icon: const Icon(Icons.notifications),
-                  constraints: const BoxConstraints(minWidth: 10),
-                  iconSize: 20,
-                  tooltip: context.l10n!.notificationsTitle,
-                  onPressed: () =>
-                      pushToPage(Navigator.of(context), NotificationsScreen()),
+            child: Badge(
+              animationType: BadgeAnimationType.scale,
+              position: BadgePosition.topEnd(top: 7.5, end: 5),
+              badgeContent: Text(
+                notificationsCount.toString(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 7,
                 ),
               ),
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
-              error: (Object error, StackTrace? stack) => const IconButton(
-                onPressed: null,
-                icon: Icon(Icons.error_outline),
+              showBadge: notificationsCount > 0,
+              child: IconButton(
+                // key: GlobalKeys().notificationButtonKey,
+                icon: const Icon(Icons.notifications),
+                constraints: const BoxConstraints(minWidth: 10),
+                iconSize: 20,
+                tooltip: context.l10n!.notificationsTitle,
+                onPressed: () =>
+                    pushToPage(Navigator.of(context), NotificationsScreen()),
               ),
             ),
           ),
