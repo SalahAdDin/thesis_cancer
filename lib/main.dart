@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:colorize/colorize.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -16,15 +19,25 @@ import 'package:thesis_cancer/core/application/launcher/launcher.state.dart';
 import 'package:thesis_cancer/core/application/local_notification_service.dart';
 import 'package:thesis_cancer/core/application/provider.logger.dart';
 import 'package:thesis_cancer/core/domain/settings/settings.entity.dart';
-import 'package:thesis_cancer/core/domain/types.dart';
 import 'package:thesis_cancer/core/infrastructure/datastore.repository.dart';
 import 'package:thesis_cancer/core/presentation/pages/splash_screen.dart';
 import 'package:thesis_cancer/core/presentation/themes.dart';
 import 'package:thesis_cancer/features/auth/presentation/pages/login_screen.dart';
 import 'package:thesis_cancer/features/home/presentation/pages/main_screen.dart';
+import 'package:thesis_cancer/features/notification/application/activityfeed.notifier.dart';
+import 'package:thesis_cancer/features/notification/application/activityfeed.provider.dart';
 import 'package:thesis_cancer/features/notification/domain/activityfeed.entity.dart';
-import 'package:thesis_cancer/features/survey/presentation/pages/survey_screen.dart';
 import 'package:thesis_cancer/l10n/l10n.dart';
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+
+  if (kDebugMode) {
+    print("Notifications:\nHandling a background Message ${message.messageId}");
+  }
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +46,8 @@ Future<void> main() async {
 
   await LocalNotificationService().init();
   await Firebase.initializeApp();
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(
     ProviderScope(
@@ -65,6 +80,8 @@ class CancerApp extends HookConsumerWidget {
     final Settings? _appSettings = ref.watch(settingsNotifierProvider);
     final ThemeMode _darkTheme = _appSettings?.themeMode ?? ThemeMode.system;
     final LauncherState _launcherState = ref.watch(launcherProvider);
+    final ActivityFeedNotifier _notificationProvider =
+        ref.watch(notificationsProvider.notifier);
     late PackageInfo _packageInfo;
     late String _osName;
     late String _osVersion;
@@ -119,7 +136,34 @@ class CancerApp extends HookConsumerWidget {
       () {
         _logAppOpen();
         _setDeviceProperties();
+        _notificationProvider.requestPermissions();
 
+        FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+          if (kDebugMode) {
+            print(
+              Colorize(
+                'Notifications:\nHandling a Message on Opened App $message',
+              ).blue(),
+            );
+          }
+
+          final ActivityFeed feed = ActivityFeed.fromJson(message.data);
+          /*
+               TODO: here `deliverFeedAction` should return a type
+                and a value or just a [String] value to send with Navigation:
+                - PostType
+                - SurveyId
+                - UserId
+
+                PostType: [String] to [enum] with the proper package.
+                It requires ProfileProvider to request Profile with
+                 userId when [User] does not have a [Profile].
+                */
+          _notificationProvider.deliverFeedAction(
+            feed,
+            _navigatorKey.currentState!,
+          );
+        });
         return null;
       },
       const <Object>[],
@@ -154,31 +198,6 @@ class CancerApp extends HookConsumerWidget {
     final ActivityFeed feed = ActivityFeed.fromPayload(payload: payload);
     await LocalNotificationService().cancelNotificationById(feed.hashCode);
     await LocalNotificationService().updateBadgeCount();
-
-    switch (feed.type) {
-      case ActivityType.NEW_POST:
-        // TODO: Handle this case.
-        break;
-      case ActivityType.SCHEDULED_SURVEY_REMINDER:
-        _navigatorKey.currentState!.push(
-          MaterialPageRoute<Widget>(
-            builder: (_) => SurveyScreen(
-              onCompleteSurvey: () => _navigatorKey.currentState!.pop(),
-              surveyID: feed.data!["id"] as String,
-            ),
-          ),
-        );
-        break;
-      case ActivityType.NEW_USER_REGISTERED:
-        // TODO: Handle this case.
-        break;
-      case ActivityType.SETTINGS_UPDATED:
-        // TODO: Handle this case.
-        break;
-      case ActivityType.USER_CONFIRMED:
-        // TODO: Handle this case.
-        break;
-    }
   }
 
   Future<void> _configureDidReceiveLocalNotification() async {
