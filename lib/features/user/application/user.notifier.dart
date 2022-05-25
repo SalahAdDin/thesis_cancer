@@ -173,38 +173,24 @@ class UserNotifier extends StateNotifier<UserState> {
     try {
       final String? token = await _firebaseMessaging.getToken();
 
+      final Profile sessionUserProfile =
+          (await _profileRepository.findByUserId(sessionUser.id))
+              .copyWith(token: token);
+
+      await _profileRepository.updateProfile(
+        updatedProfile: sessionUserProfile,
+      );
+
       _tokenSubscription = _firebaseMessaging.onTokenRefresh.listen(
         (String token) async {
           await _profileRepository.updateProfile(
-            updatedProfile: sessionUser.profile!.copyWith(
-              token: token,
-            ),
+            updatedProfile: sessionUserProfile.copyWith(token: token),
           );
         },
       );
 
-      await _profileRepository.updateProfile(
-        updatedProfile: sessionUser.profile!.copyWith(
-          token: token,
-        ),
-      );
-    } on FirebaseException catch (error) {
-      if (kDebugMode) {
-        print(
-          Colorize("Error getting device token: $error").red(),
-        );
-      }
-      state = UserState.error(
-        ProfileFailure(reason: ProfileFailureReason.unknown),
-      );
-    }
-
-    if (sessionUser.confirmed == true &&
-        sessionUser.profile?.role == UserRole.GUEST) {
-      try {
-        final Profile sessionUserProfile =
-            await _profileRepository.findByUserId(sessionUser.id);
-
+      if (sessionUser.confirmed == true &&
+          sessionUser.profile?.role == UserRole.GUEST) {
         final User sessionUserWithProfile = sessionUser.copyWith(
           profile: sessionUserProfile,
         );
@@ -230,21 +216,31 @@ class UserNotifier extends StateNotifier<UserState> {
         await _firebaseMessaging.subscribeToTopic('surveys');
 
         _userController.state = sessionUserWithProfile;
-      } on GraphQLFailure catch (error) {
-        state = UserState.error(error);
-      } on ProfileFailure catch (error) {
-        if (kDebugMode) {
-          print(
-            Colorize("Error Updating Profile at Sign In: ${error.reason}")
-                .red(),
-          );
-        }
-        state = UserState.error(error);
       }
+    } on GraphQLFailure catch (error) {
+      state = UserState.error(error);
+    } on ProfileFailure catch (error) {
+      if (kDebugMode) {
+        print(
+          Colorize("Error Updating Profile at Sign In: ${error.reason}").red(),
+        );
+      }
+      state = UserState.error(error);
+    } on FirebaseException catch (error) {
+      if (kDebugMode) {
+        print(
+          Colorize("Error getting device token: $error").red(),
+        );
+      }
+      state = UserState.error(
+        ProfileFailure(reason: ProfileFailureReason.unknown),
+      );
     }
+
     await _firebaseAnalytics.setUserId(
       id: _userController.state!.profile?.uid ?? 'guest_user',
     );
+
     await _firebaseAnalytics.setUserProperty(
       name: 'backend_user_id',
       value: _userController.state!.id,
