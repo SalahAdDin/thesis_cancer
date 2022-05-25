@@ -21,7 +21,6 @@ import 'package:thesis_cancer/features/user/domain/profile.repository.dart';
 import 'package:thesis_cancer/features/user/domain/user.entity.dart';
 import 'package:thesis_cancer/features/user/domain/user.repository.dart';
 import 'package:thesis_cancer/features/user/presentation/pages/profile_screen.dart';
-import 'package:uuid/uuid.dart';
 
 ///
 class ActivityFeedNotifier extends StateNotifier<ActivityFeedState> {
