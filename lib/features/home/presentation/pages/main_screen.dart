@@ -48,6 +48,8 @@ class MainScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final UserState currentUserState = ref.watch(homeScreenNotifierProvider);
+    final UserNotifier userNotifierProvider =
+        ref.watch(homeScreenNotifierProvider.notifier);
     final Settings settingsState = ref.watch(settingsNotifierProvider);
     final UserRole currentUserRole =
         ref.watch(userEntityProvider).profile?.role ?? UserRole.GUEST;
@@ -70,18 +72,14 @@ class MainScreen extends HookConsumerWidget {
         dataSource: introductoryVideo.url,
         onDone: () async {
           if (currentUserRole == UserRole.PILOT) {
-            await ref
-                .read(homeScreenNotifierProvider.notifier)
-                .hasSeenIntroductoryVideo();
+            await userNotifierProvider.hasSeenIntroductoryVideo();
           } else {
             pushToPage(
               Navigator.of(context),
               SurveyScreen(
                 onCompleteSurvey: () async {
                   Navigator.of(context).pop();
-                  await ref
-                      .read(homeScreenNotifierProvider.notifier)
-                      .hasSeenIntroductoryVideo();
+                  await userNotifierProvider.hasSeenIntroductoryVideo();
                 },
                 surveyID: scheduledSurveys
                     .firstWhere(
