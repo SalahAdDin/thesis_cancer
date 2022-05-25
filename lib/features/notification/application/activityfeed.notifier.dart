@@ -55,11 +55,11 @@ class ActivityFeedNotifier extends StateNotifier<ActivityFeedState> {
   ///
   int get feedsCount => feeds.where((ActivityFeed feed) => !feed.isRead).length;
 
-  late StreamSubscription<RemoteMessage> _subscription;
+  late StreamSubscription<RemoteMessage> _onMessageSubscription;
 
   @override
   void dispose() {
-    _subscription.cancel();
+    _onMessageSubscription.cancel();
     super.dispose();
   }
 
@@ -154,9 +154,13 @@ class ActivityFeedNotifier extends StateNotifier<ActivityFeedState> {
       );
     }
     final ActivityFeed feed = ActivityFeed.fromJson(message.data);
-    feeds.add(feed.copyWith(id: Uuid().v4()));
+    feeds.add(feed.copyWith(id: message.messageId));
     state = ActivityFeedState.data(notifications: feeds);
   }
+
+  ///
+  bool feedAlreadyExist(RemoteMessage message) =>
+      feeds.any((ActivityFeed feed) => feed.id == message.messageId);
 
   ///
   void readFeed(String id) {
@@ -179,13 +183,13 @@ class ActivityFeedNotifier extends StateNotifier<ActivityFeedState> {
 
     _firebaseMessaging.getInitialMessage().then(
       (RemoteMessage? message) {
-        if (message != null) {
+        if (message != null && feedAlreadyExist(message) == false) {
           handleMessage(message);
         }
       },
     );
 
-    _subscription = _feedOnMessageProvider.listen(
+    _onMessageSubscription = _feedOnMessageProvider.listen(
       handleMessage,
       onError: (Object error, StackTrace trace) {
         if (kDebugMode) {
