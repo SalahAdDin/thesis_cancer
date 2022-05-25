@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -82,11 +83,11 @@ class CancerApp extends HookConsumerWidget {
     final LauncherState _launcherState = ref.watch(launcherProvider);
     final ActivityFeedNotifier _notificationProvider =
         ref.watch(notificationsProvider.notifier);
+    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
+
     late PackageInfo _packageInfo;
     late String _osName;
     late String _osVersion;
-
-    final FirebaseAnalytics _analytics = ref.watch(firebaseAnalyticsProvider);
 
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
@@ -138,13 +139,26 @@ class CancerApp extends HookConsumerWidget {
         _setDeviceProperties();
         _notificationProvider.requestPermissions();
 
-        FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        return null;
+      },
+      const <Object>[],
+    );
+
+    useEffect(
+      () {
+        final StreamSubscription<RemoteMessage> _onOpenedAppSubscription =
+            FirebaseMessaging.onMessageOpenedApp
+                .listen((RemoteMessage message) {
           if (kDebugMode) {
             print(
               Colorize(
                 'Notifications:\nHandling a Message on Opened App $message',
               ).blue(),
             );
+          }
+
+          if (_notificationProvider.feedAlreadyExist(message) == false) {
+            _notificationProvider.handleMessage(message);
           }
 
           final ActivityFeed feed = ActivityFeed.fromJson(message.data);
@@ -159,14 +173,15 @@ class CancerApp extends HookConsumerWidget {
                 It requires ProfileProvider to request Profile with
                  userId when [User] does not have a [Profile].
                 */
+
           _notificationProvider.deliverFeedAction(
-            feed,
+            feed.copyWith(id: message.messageId),
             _navigatorKey.currentState!,
           );
         });
-        return null;
+        return _onOpenedAppSubscription.cancel;
       },
-      const <Object>[],
+      <Object>[FirebaseMessaging],
     );
 
     return MaterialApp(
