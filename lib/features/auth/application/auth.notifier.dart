@@ -77,8 +77,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final Profile newUserProfile =
           await _profileRepository.findByUserId(newUser.id);
 
-      /* We need to register save the device token from Firebase on backend
-      to send Push Messages */
       final Profile actualNewUserProfile =
           await _profileRepository.updateProfile(
         updatedProfile: newUserProfile.copyWith(
