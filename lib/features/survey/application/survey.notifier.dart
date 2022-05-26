@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:thesis_cancer/core/application/global.provider.dart';
 import 'package:thesis_cancer/core/domain/datastore.repository.dart';
 import 'package:thesis_cancer/features/survey/application/survey.provider.dart';
 import 'package:thesis_cancer/features/survey/application/survey.state.dart';
@@ -30,20 +29,20 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   PageController pageController = PageController();
 
   /// [SurveyRepository] to handle [Survey] API requests.
-  SurveyRepository get surveyRepository => reader(surveyRepositoryProvider);
+  SurveyRepository get _surveyRepository => reader(surveyRepositoryProvider);
 
   /// [UserSurveyResultRepository] to handle [UserSurveyResult] API request.
-  UserSurveyResultRepository get resultRepository =>
+  UserSurveyResultRepository get _resultRepository =>
       reader(resultRepositoryProvider);
 
   /// [DataStoreRepository] to read the application's storage.
-  DataStoreRepository get dataStore => reader(dataStoreRepositoryProvider);
+  // DataStoreRepository get _dataStore => reader(dataStoreRepositoryProvider);
 
   /// [String] current [User]'s id required to register the survey's answering user.
-  String get currentUserId => reader(userEntityProvider).id;
+  String get _currentUserId => reader(userEntityProvider).id;
 
   /// Survey's provider [StateController] to manipulate the current survey.
-  StateController<Survey> get surveyController =>
+  StateController<Survey> get _surveyController =>
       reader(surveyEntityProvider.notifier);
 
   ///
@@ -55,8 +54,8 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   ///
   Future<void> fetchSurvey() async {
     try {
-      final Survey result = await surveyRepository.findById(surveyID);
-      surveyController.state = result;
+      final Survey result = await _surveyRepository.findById(surveyID);
+      _surveyController.state = result;
       state = const SurveyState.data();
     } on SurveyFailure catch (error) {
       state = SurveyState.error(error);
@@ -70,20 +69,20 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
   ///
   Future<void> completeSurvey() async {
     try {
-      final int iteration = await resultRepository.countUserSurveyResults(
-        surveyId: surveyController.state.id,
-        userId: currentUserId,
+      final int iteration = await _resultRepository.countUserSurveyResults(
+        surveyId: _surveyController.state.id,
+        userId: _currentUserId,
       );
 
       final UserSurveyResult userSurveyResult = UserSurveyResult(
-        user: currentUserId,
-        survey: surveyController.state.id,
+        user: _currentUserId,
+        survey: _surveyController.state.id,
         answers: answers.values.toList(),
         iteration: iteration + 1,
       );
       // TODO: persists answer on locale/cache.
 
-      await resultRepository.createUserSurveyResult(userSurveyResult);
+      await _resultRepository.createUserSurveyResult(userSurveyResult);
 
       state = const SurveyState.completed();
     } on ResultFailure catch (error) {
@@ -108,7 +107,7 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
 
   ///
   dynamic nextQuestion() =>
-      currentQuestionIndex + 1 != surveyController.state.questions?.length
+      currentQuestionIndex + 1 != _surveyController.state.questions?.length
           ? goTo(currentQuestionIndex + 1)
           : completeSurvey();
 
@@ -142,7 +141,7 @@ class SurveyNotifier extends StateNotifier<SurveyState> {
 
   /* Provisional
   * TODO:
-  *  - first from data store.
+  * - first from data store.
   * - second fetching from API.
   * - even getting from datastore, how can we know the survey is not outdated?
   *  */
