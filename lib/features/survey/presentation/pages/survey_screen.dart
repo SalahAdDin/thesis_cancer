@@ -168,9 +168,7 @@ class SurveyWidget extends HookConsumerWidget {
                                                 position.toInt(),
                                               ))
                                       ? surveyNotifier.goTo(position.toInt())
-                                      : null
-                                  // print("Current index: $currentQuestion");
-                                  ,
+                                      : null,
                                 ),
                               ],
                             ),

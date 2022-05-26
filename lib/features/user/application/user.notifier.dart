@@ -173,6 +173,7 @@ class UserNotifier extends StateNotifier<UserState> {
     try {
       final String? token = await _firebaseMessaging.getToken();
 
+      // User must be confirmed to have access to Update mutation
       final Profile sessionUserProfile =
           (await _profileRepository.findByUserId(sessionUser.id))
               .copyWith(token: token);

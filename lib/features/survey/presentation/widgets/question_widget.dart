@@ -153,7 +153,6 @@ class QuestionWidget extends StatelessWidget {
         final String rawAnswer = userAnswer?.answer ?? '';
         final int? selectedButton =
             rawAnswer != '' ? buttons.indexOf(rawAnswer) : null;
-print("Question Answers: ${question.answer!}");
         answerWidget = _themedGroupButton(
           buttons: buttons.map((String label) => label.trim()).toList(),
           onSelected: (String value, _, __) => onSelected!(value),
