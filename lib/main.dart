@@ -152,7 +152,7 @@ class CancerApp extends HookConsumerWidget {
           if (kDebugMode) {
             print(
               Colorize(
-                'Notifications:\nHandling a Message on Opened App $message',
+                'Notifications:\nHandling a Message on Opened App ${message.toString()}',
               ).blue(),
             );
           }

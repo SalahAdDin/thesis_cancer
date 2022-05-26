@@ -150,7 +150,8 @@ class ActivityFeedNotifier extends StateNotifier<ActivityFeedState> {
   void handleMessage(RemoteMessage message) {
     if (kDebugMode) {
       print(
-        Colorize('Notifications:\nHandling a Message $message').blue(),
+        Colorize('Notifications:\nHandling a Message ${message.toString()}')
+            .blue(),
       );
     }
     final ActivityFeed feed = ActivityFeed.fromJson(message.data);
