@@ -45,6 +45,7 @@ class MainScreen extends HookConsumerWidget {
   ///   [UserState.completed] User goes to the Main Layout
   ///   [UserState.loading] It shows a circular indicator.
   ///   [UserState.error] It shows the Error Screen with the occurred error.
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final UserState currentUserState = ref.watch(homeScreenNotifierProvider);

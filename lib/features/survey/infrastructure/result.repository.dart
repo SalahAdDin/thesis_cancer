@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thesis_cancer/core/application/global.provider.dart';
@@ -20,7 +22,7 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
   GraphQLClient get client => reader(graphQLClientProvider);
 
   ///
-  Extension extractException(QueryResult<Map<String, dynamic>> response) {
+  Extension _extractException(QueryResult<Map<String, dynamic>> response) {
     final GraphQLError graphQLError = response.exception!.graphqlErrors[0];
     final Extension extension = Extension.fromJson(
       graphQLError.extensions!,
@@ -47,7 +49,10 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
         if (response.exception?.linkException is NetworkException) {
           throw GraphQLFailure(reason: FailureReason.unableToConnect);
         }
-        final Extension extension = extractException(response);
+        if (response.exception?.linkException is SocketException) {
+          throw GraphQLFailure(reason: FailureReason.unableToConnect);
+        }
+        final Extension extension = _extractException(response);
         final int errorCode = extension.statusCode!;
         if (errorCode == 403) {
           throw ResultFailure(reason: ResultFailureReason.unauthorized);
@@ -57,6 +62,7 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
           throw ResultFailure(reason: ResultFailureReason.unknown);
         }
       }
+
       final int count = response.data?['resultsCount'] as int;
 
       return count;
@@ -81,7 +87,7 @@ class GraphQLResultRepository implements UserSurveyResultRepository {
           throw GraphQLFailure(reason: FailureReason.unableToConnect);
         }
 
-        final Extension extension = extractException(response);
+        final Extension extension = _extractException(response);
 
         final int errorCode = extension.statusCode!;
         if (errorCode == 403) {
