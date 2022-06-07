@@ -30,13 +30,22 @@ import 'package:thesis_cancer/features/notification/application/activityfeed.pro
 import 'package:thesis_cancer/features/notification/domain/activityfeed.entity.dart';
 import 'package:thesis_cancer/l10n/l10n.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+Future<void> _firebaseMessagingBackgroundHandler(
+  RemoteMessage message,
+  ProviderContainer ref,
+) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
+  final ActivityFeedNotifier _notificationProvider =
+      ref.read(notificationsProvider.notifier);
 
   if (kDebugMode) {
     print("Notifications:\nHandling a background Message ${message.messageId}");
+  }
+
+  if (_notificationProvider.feedAlreadyExist(message) == false) {
+    _notificationProvider.handleMessage(message);
   }
 }
 
@@ -45,20 +54,27 @@ Future<void> main() async {
 
   final SembastDataStore dataStore = await SembastDataStore.makeDefault();
 
+  final ProviderContainer container = ProviderContainer(
+    // Provides our custom logger.
+    observers: <ProviderObserver>[Logger()],
+    // Injects the data store on the data store repository once
+    // data store is initialized.
+    overrides: <Override>[
+      dataStoreRepositoryProvider.overrideWithValue(dataStore)
+    ],
+  );
+
   await LocalNotificationService().init();
   await Firebase.initializeApp();
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(
+    (RemoteMessage message) async =>
+        _firebaseMessagingBackgroundHandler(message, container),
+  );
 
   runApp(
-    ProviderScope(
-      // Provides our custom logger.
-      observers: <ProviderObserver>[Logger()],
-      // Injects the data store on the data store repository once
-      // data store is initialized.
-      overrides: <Override>[
-        dataStoreRepositoryProvider.overrideWithValue(dataStore)
-      ],
+    UncontrolledProviderScope(
+      container: container,
       child: CancerApp(),
     ),
   );
